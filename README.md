@@ -29,7 +29,7 @@ Backend: nodejs with typescript ?
 
 - libs (express, body-parser, cors, nodemailer, jsonwebtoken, mariadb, dotenv)
 
-Front: react tsc -> Théo
+Front: react tsc -> Théo & Clément
 Mobile: react native tsc -> Justin
 Server: nodejs tsc-> Victor & Nico
 BDD: mariadb
