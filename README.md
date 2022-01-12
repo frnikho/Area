@@ -34,8 +34,6 @@ Mobile: react native tsc -> Justin
 Server: nodejs tsc-> Victor & Nico
 BDD: mariadb
 
-Passe partout: Clement ?
-
 ## Docker
 
 services: 
@@ -59,8 +57,6 @@ client_mobile:
 | *table name* | uuid | email | password | firstname | lastname | auth_type | verified | 
 |--|--|--|--|--|--|--|--|--|--|--|
 | users | varchar(255) [primary key] | varchar(255) [not null] | varchar(255) | varchar(255) | varchar(255) | enum {native, google?, github?} [not null] | boolean [not null]
-
-
 
 
 ## Services
