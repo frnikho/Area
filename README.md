@@ -91,12 +91,13 @@ Gmail:
 
 Google calendar
 - add an event
+- event
 
 Google drive
-- 
+- file / directory upload
 
 Discord
-- receive a message
+- receive a message (tag?)
 
 Reaction:
 
@@ -115,5 +116,5 @@ Spotify:
 - change current song
 - change play state
 
-- Telegram
-- Gmail
+Telegram
+- send a message
