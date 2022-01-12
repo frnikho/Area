@@ -11,7 +11,7 @@ native auth:
 - password (required)
 
 IMPORTANT !
-every user using native auth must verifiy their adresse email 
+every user using native auth must verifiy their adresse email
 
 third parts login:
 - google ?
@@ -38,25 +38,25 @@ Passe partout: Clement ?
 
 ## Docker
 
-services: 
+services:
 
 bdd: mariadb
 - port: 3306
 
 server: nodejs
-- port: 8080 
+- port: 8080
 
 client_web:
 - port: 8081
 
 client_mobile:
- job: build the apk and put it into the build directory 
+ job: build the apk and put it into the build directory
 
 
 
 ## Database schema:
 
-| *table name* | uuid | email | password | firstname | lastname | auth_type | verified | 
+| *table name* | uuid | email | password | firstname | lastname | auth_type | verified |
 |--|--|--|--|--|--|--|--|--|--|--|
 | users | varchar(255) [primary key] | varchar(255) [not null] | varchar(255) | varchar(255) | varchar(255) | enum {native, google?, github?} [not null] | boolean [not null]
 
@@ -88,9 +88,15 @@ Github:
 
 Gmail:
 - receive a email
-Google calendar ?
-Google drive ?
-Discord ?
+
+Google calendar
+- add an event
+
+Google drive
+- 
+
+Discord
+- receive a message
 
 Reaction:
 
