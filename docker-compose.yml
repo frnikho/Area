@@ -24,15 +24,15 @@ services:
 
   mariadb:
     image: mariadb:10.7.1-focal
-    container_name: mariadb
+    container_name: services
     ports:
       - "3306:3306"
     networks:
       - yep
     command: --init-file /docker-entrypoint-initdb.d/dump.sql --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./database/mariadb/dump.sql:/docker-entrypoint-initdb.d/dump.sql
-      - mariadb:/var/lib/mysql
+      - ./database/services/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - services:/var/lib/mysql
     environment:
       MARIADB_USER: admin
       MARIADB_PASSWORD: admin
