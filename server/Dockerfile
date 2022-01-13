@@ -1,10 +1,15 @@
 FROM node:16-alpine3.13
 
-COPY src src
-COPY public public
-COPY package.json .
-COPY .env .env
+WORKDIR /app
 
-WORKDIR .
+COPY src /app/src
+COPY public /app/public
+COPY package.json /app/package.json
+COPY .env /app/.env
+
+EXPOSE 8080
+
 RUN npm install
-CMD ["npm", "run", "start"]
+RUN npm run build
+
+CMD ["npm", "run", "prod"]

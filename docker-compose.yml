@@ -1,14 +1,6 @@
 version: "3"
 services:
-  client_dashboard:
-    build: web/
-    image: web
-    container_name : client_web_year_end_project
-    ports:
-      - "8081:8081"
-    networks:
-      - year-end-project
-    restart: always
+
 
   server:
     build: server/
