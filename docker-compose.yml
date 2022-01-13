@@ -1,15 +1,23 @@
 version: "3"
 services:
-
+  client_web:
+    build: web/
+    image: web
+    container_name : client_web_yep
+    ports:
+      - "8081:8081"
+    networks:
+      - yep
+    restart: always
 
   server:
     build: server/
     image: server
-    container_name: server_year_end_project
+    container_name: server_yep
     ports:
       - "8080:8080"
     networks:
-      - year-end-project
+      - yep
     depends_on:
       - mariadb
     restart: always
@@ -20,7 +28,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - year-end-project
+      - yep
     command: --init-file /docker-entrypoint-initdb.d/dump.sql --default-authentication-plugin=mysql_native_password
     volumes:
       - ./database/mariadb/dump.sql:/docker-entrypoint-initdb.d/dump.sql
@@ -28,12 +36,12 @@ services:
     environment:
       MARIADB_USER: admin
       MARIADB_PASSWORD: admin
-      MARIADB_DATABASE: year-end-project
+      MARIADB_DATABASE: yep
       MARIADB_ROOT_PASSWORD: rootpassword
     restart: always
 
 networks:
-  year-end-project:
+  yep:
     driver: bridge
 
 volumes:
