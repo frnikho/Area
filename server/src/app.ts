@@ -1,8 +1,10 @@
 import {Express} from "express";
+import NotificationEpitechIntraYephook from "./yephook/IntraEpitech/NotificationEpitechIntraYephook";
 
 const express = require('express');
 const dotenv = require('dotenv');
 import http = require("http");
+
 const DEFAULT_PORT = 8080;
 
 export default class App {
@@ -25,6 +27,10 @@ export default class App {
     public start(): void {
         this.server.listen(this.port, () => {
             console.log(`server is listening on ${this.port}`);
+
+            let yephook: NotificationEpitechIntraYephook = new NotificationEpitechIntraYephook({email: "nicolas.sansd@gmail.com"});
+            yephook.startChecking();
+
         })
     }
 
