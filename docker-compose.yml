@@ -3,21 +3,33 @@ services:
   client_web:
     build: web/
     image: web
-    container_name : client_web_yep
+    container_name : client_web_area
     ports:
       - "8081:8081"
     networks:
-      - yep
+      - area
+    volumes:
+      - apk:/app/public/:ro
+    depends_on:
+      - client_mobile
+      - server
     restart: always
+
+  client_mobile:
+    build: mobile/
+    image: mobile
+    container_name : client_mobile_area
+    volumes:
+      - apk:/app/android/app/build/outputs/apk/:rw
 
   server:
     build: server/
     image: server
-    container_name: server_yep
+    container_name: server_area
     ports:
       - "8080:8080"
     networks:
-      - yep
+      - area
     depends_on:
       - mariadb
     restart: always
@@ -28,7 +40,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - yep
+      - area
     command: --init-file /docker-entrypoint-initdb.d/dump.sql --default-authentication-plugin=mysql_native_password
     volumes:
       - ./database/mariadb/dump.sql:/docker-entrypoint-initdb.d/dump.sql
@@ -36,13 +48,14 @@ services:
     environment:
       MARIADB_USER: admin
       MARIADB_PASSWORD: admin
-      MARIADB_DATABASE: yep
+      MARIADB_DATABASE: area
       MARIADB_ROOT_PASSWORD: rootpassword
     restart: always
 
 networks:
-  yep:
+  area:
     driver: bridge
 
 volumes:
   mariadb:
+  apk:

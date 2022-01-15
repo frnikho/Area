@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "YEP's server ",
+  "description": "YEP's server",
   "scripts": {
     "dev": "nodemon --watch \"src/**/*\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/app.ts\"",
     "prod": "node build/app.js",
