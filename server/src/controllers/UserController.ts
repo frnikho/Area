@@ -24,6 +24,24 @@ export default class UserController {
         });
     }
 
+    public login(email: string, password: string, success: (user: User) => void, error: (msg) => void) {
+        DBService.query(`SELECT password FROM users WHERE email = '${email}'`, (response) => {
+            if (response.length === 0)
+                return error('Cannot found user !');
+            new EncryptService(password).compare(response[0].password, (same) => {
+               if (!same)
+                   return error('Invalid password !');
+               this.getByEmail(email, (user) => {
+                   if (user === undefined)
+                       return error('An error occurred ! please try again later ');
+                   return success(user);
+               })
+            });
+        }, (err) => {
+            return error(err);
+        })
+    }
+
     public getByUuid(uuid: string, result: (user: User | undefined) => void): void {
         DBService.query(`SELECT uuid, email, password, firstname, lastname FROM users WHERE uuid = '${uuid}'`, (rows) => {
             if (rows.length === 0)
@@ -34,7 +52,17 @@ export default class UserController {
         })
     }
 
-    public verifyUserEmail(userUuid, token, success: () => void, error: (msg) => void) {
+    public getByEmail(email: string, result: (user: User | undefined) => void): void {
+        DBService.query(`SELECT uuid, email, password, firstname, lastname FROM users WHERE email = '${email}'`, (rows) => {
+            if (rows.length === 0)
+                return result(undefined)
+            result(rows[0]);
+        }, () => {
+            result(undefined);
+        })
+    }
+
+    public verifyUserEmail(userUuid: string, token: string, success: () => void, error: (msg) => void) {
         this.getByUuid(userUuid, (user) => {
             if (user === undefined)
                 return error('invalid user uuid !');

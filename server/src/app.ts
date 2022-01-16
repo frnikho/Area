@@ -1,12 +1,10 @@
 import {Express} from "express";
-import NotificationEpitechIntraYephook from "./yephook/IntraEpitech/NotificationEpitechIntraYephook";
 
 const express = require('express');
 const dotenv = require('dotenv');
 import http = require("http");
 import cors = require('cors');
 import bodyParser = require('body-parser');
-import DBService from "./services/DBService";
 import RegisterRoute from "./routes/auth/RegisterRoute";
 import LoginRoute from "./routes/auth/LoginRoute";
 import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";

@@ -1,6 +1,8 @@
 import Route from "../../Route";
 
 import express = require('express');
+import UserController from "../../controllers/UserController";
+import JWTService from "../../services/JWTService";
 
 export default class LoginRoute extends Route {
 
@@ -19,7 +21,14 @@ export default class LoginRoute extends Route {
     }
 
     private post(req: express.Request, res: express.Response): void {
-
+        new UserController().login(req['email'], req['password'], (user) => {
+            res.status(200).json({success: true, token: new JWTService({
+                    uuid: user.uuid,
+                    email: user.email,
+                }).sign()})
+        }, (msg) => {
+            return res.status(400).json({success: false, error: msg});
+        });
     }
 
 }
