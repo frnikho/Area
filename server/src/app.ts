@@ -10,6 +10,7 @@ import LoginRoute from "./routes/auth/LoginRoute";
 import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
+import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -44,6 +45,7 @@ export default class App {
         new LoginRoute().register(this.app, '/auth/login');
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
+        new GoogleLoginRoute().register(this.app, '/auth/google');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');

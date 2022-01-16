@@ -5,10 +5,15 @@ import uuid = require('uuid');
 import EmailService from "../services/EmailService";
 import EncryptService from "../services/EncryptService";
 import {getGithubUserFirstname, getGithubUserLastname, GithubUser} from "../models/GithubUser";
+import {GoogleUser} from "../models/GoogleUser";
+
+type success = (user: User) => void;
+type contextSuccess = (context: string, user: User) => void;
+type error = (msg) => void;
 
 export default class UserController {
 
-    public register(data: RegisterBody, success: (user: User) => void, error: (msg) => void) {
+    public register(data: RegisterBody, success: success, error: error) {
         new EncryptService(data.password).hash((hashedPassword) => {
             if (hashedPassword === undefined)
                 return error(`Can't hashed password !`);
@@ -25,7 +30,7 @@ export default class UserController {
         });
     }
 
-    public login(email: string, password: string, success: (user: User) => void, error: (msg) => void) {
+    public login(email: string, password: string, success: success, error: error) {
         DBService.query(`SELECT password FROM users WHERE email = '${email}'`, (response) => {
             if (response.length === 0)
                 return error('Cannot found user !');
@@ -43,7 +48,7 @@ export default class UserController {
         })
     }
 
-    private registerWithGithub(user: GithubUser, success: (context: string, user: User) => void, error: (msg) => void) {
+    private registerWithGithub(user: GithubUser, success: contextSuccess, error: error) {
         let firstname = getGithubUserFirstname(user);
         let lastname = getGithubUserLastname(user);
         DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), firstname, lastname, 'github', '1'], (response) => {
@@ -51,7 +56,13 @@ export default class UserController {
         }, (err) => error(err));
     }
 
-    public loginWithGithub(user: GithubUser, success: (context: string, user: User) => void, error: (msg) => void) {
+    private registerWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
+        DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), user.given_name, user.family_name, 'google', '1'], (response) => {
+            success('register', response[0]);
+        }, (err) => error(err));
+    }
+
+    public loginWithGithub(user: GithubUser, success: contextSuccess, error: error) {
         DBService.query(`SELECT uuid, email, firstname, lastname, auth_type FROM users WHERE email = '${user.email}'`, (result) => {
             if (result.length === 0)
                 return error('User not found !');
@@ -59,13 +70,31 @@ export default class UserController {
         }, err => error(err));
     }
 
-    public authWithGithub(githubUser: GithubUser, success: (context: string, user: User) => void, error: (msg) => void) {
+    public loginWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
+        DBService.query(`SELECT uuid, email, firstname, lastname, auth_type FROM users WHERE email = '${user.email}'`, (result) => {
+            if (result.length === 0)
+                return error('User not found !');
+            success('login', result[0]);
+        }, err => error(err));
+    }
+
+    public authWithGithub(githubUser: GithubUser, success: contextSuccess, error: error) {
         this.getByEmail(githubUser.email, (user) => {
             if (user === undefined)
                 return this.registerWithGithub(githubUser, success, error);
             if (user.auth_type !== 'github')
                 return error('Invalid auth method !');
             return this.loginWithGithub(githubUser, success, error);
+        },);
+    }
+
+    public authWithGoogle(googleUser: GoogleUser, success: contextSuccess, error: error) {
+        this.getByEmail(googleUser.email, (user) => {
+            if (user === undefined)
+                return this.registerWithGoogle(googleUser, success, error);
+            if (user.auth_type !== 'github')
+                return error('Invalid auth method !');
+            return this.loginWithGoogle(googleUser, success, error);
         },);
     }
 
@@ -89,7 +118,7 @@ export default class UserController {
         })
     }
 
-    public verifyUserEmail(userUuid: string, token: string, success: () => void, error: (msg) => void) {
+    public verifyUserEmail(userUuid: string, token: string, success: () => void, error: error) {
         this.getByUuid(userUuid, (user) => {
             if (user === undefined)
                 return error('invalid user uuid !');
@@ -104,7 +133,7 @@ export default class UserController {
         })
     }
 
-    public sendEmailVerification(user: User, success: (info?) => void, error: (msg) => void) {
+    public sendEmailVerification(user: User, success: (info?) => void, error: error) {
         new EncryptService(user.email).hash((hashedEmail) => {
             const mailData = {
                 from: 'nicolas.sansd@gmail.com',
