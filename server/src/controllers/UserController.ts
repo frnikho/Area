@@ -8,16 +8,20 @@ import EncryptService from "../services/EncryptService";
 export default class UserController {
 
     public register(data: RegisterBody, success: (user: User) => void, error: (msg) => void) {
-        DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname) VALUES (?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), data.email, data.password, data.firstname, data.lastname], (result) => {
-            this.sendEmailVerification(result[0] as User, (info) => {
-                console.log(info);
-                success(result[0]);
+        new EncryptService(data.password).hash((hashedPassword) => {
+            if (hashedPassword === undefined)
+                return error(`Can't hashed password !`);
+            DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname) VALUES (?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), data.email, hashedPassword, data.firstname, data.lastname], (result) => {
+                this.sendEmailVerification(result[0] as User, (info) => {
+                    console.log(info);
+                    success(result[0]);
+                }, (err) => {
+                    error(err);
+                });
             }, (err) => {
                 error(err);
-            });
-        }, (err) => {
-            error(err);
-        })
+            })
+        });
     }
 
     public getByUuid(uuid: string, result: (user: User | undefined) => void): void {
