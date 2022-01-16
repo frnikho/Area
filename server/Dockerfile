@@ -7,8 +7,6 @@ COPY public /app/public
 COPY package.json /app/package.json
 COPY .env /app/.env
 
-RUN ls -l /app/src
-
 EXPOSE 8080
 
 RUN npm install

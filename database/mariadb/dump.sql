@@ -24,6 +24,12 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `yep` /*!40100 DEFAULT CHARACTER SET ut
 USE `yep`;
 
 --
+-- Grant privileges for user admin
+--
+
+GRANT ALL PRIVILEGES ON yep.* TO 'admin'@'%' IDENTIFIED BY 'admin';
+
+--
 -- Table structure for table `users`
 --
 
