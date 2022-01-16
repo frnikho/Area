@@ -8,6 +8,7 @@ import bodyParser = require('body-parser');
 import RegisterRoute from "./routes/auth/RegisterRoute";
 import LoginRoute from "./routes/auth/LoginRoute";
 import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
+import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -40,6 +41,7 @@ export default class App {
         new RegisterRoute().register(this.app, '/auth/register');
         new LoginRoute().register(this.app, '/auth/login');
         new VerifyEmailRoute().register(this.app, '/auth/verify');
+        new GithubLoginRoute().register(this.app, '/auth/github');
     }
 
     public start(): void {
