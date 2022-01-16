@@ -92,7 +92,7 @@ export default class UserController {
         this.getByEmail(googleUser.email, (user) => {
             if (user === undefined)
                 return this.registerWithGoogle(googleUser, success, error);
-            if (user.auth_type !== 'github')
+            if (user.auth_type !== 'google')
                 return error('Invalid auth method !');
             return this.loginWithGoogle(googleUser, success, error);
         },);
