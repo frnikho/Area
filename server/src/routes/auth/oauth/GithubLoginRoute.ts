@@ -38,7 +38,10 @@ export default class GithubLoginRoute extends Route {
                 new UserController().authWithGithub(data, (type, user) => {
                     return res.status(200).json({
                         success: true,
-                        token: new JWTService(user).sign()
+                        token: new JWTService({
+                            uuid: user.uuid,
+                            email: user.email,
+                        }).sign()
                     });
                 }, (err) => {
                     console.log(err);
