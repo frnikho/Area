@@ -54,8 +54,6 @@ export default class App {
     public start(): void {
         this.server.listen(this.port, () => {
             console.log(`server is listening on http://localhost:${this.port}/`);
-            /*let yephook: NotificationEpitechIntraYephook = new NotificationEpitechIntraYephook({email: "nicolas.sansd@gmail.com"});
-            yephook.startChecking();*/
         });
     }
 
