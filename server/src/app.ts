@@ -3,6 +3,15 @@ import {Express} from "express";
 const express = require('express');
 const dotenv = require('dotenv');
 import http = require("http");
+import cors = require('cors');
+import bodyParser = require('body-parser');
+import RegisterRoute from "./routes/auth/RegisterRoute";
+import LoginRoute from "./routes/auth/LoginRoute";
+import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
+import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
+import MeRoute from "./routes/users/MeRoute";
+import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
+
 const DEFAULT_PORT = 8080;
 
 export default class App {
@@ -15,6 +24,8 @@ export default class App {
         this.initConfig();
         this.port =  Number.parseInt(process.env.PORT) || DEFAULT_PORT;
         this.app = express();
+        this.initMiddlewares();
+        this.initRoutes();
         this.server = http.createServer(this.app);
     }
 
@@ -22,10 +33,28 @@ export default class App {
         dotenv.config();
     }
 
+    private initMiddlewares(): void {
+        this.app.use(cors())
+        this.app.use(bodyParser.urlencoded({extended: true}));
+        this.app.use(bodyParser.json());
+    }
+
+    private initRoutes(): void  {
+        // AUTH ROUTES
+        new RegisterRoute().register(this.app, '/auth/register');
+        new LoginRoute().register(this.app, '/auth/login');
+        new VerifyEmailRoute().register(this.app, '/auth/verify');
+        new GithubLoginRoute().register(this.app, '/auth/github');
+        new GoogleLoginRoute().register(this.app, '/auth/google');
+
+        // USERS ROUTES
+        new MeRoute().register(this.app, '/me');
+    }
+
     public start(): void {
         this.server.listen(this.port, () => {
-            console.log(`server is listening on ${this.port}`);
-        })
+            console.log(`server is listening on http://localhost:${this.port}/`);
+        });
     }
 
     public setPort(port: number): void {
