@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {response} from "express";
 import {GithubUser} from "../models/GithubUser";
 
 export default class GithubService {
