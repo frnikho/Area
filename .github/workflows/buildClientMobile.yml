@@ -29,7 +29,6 @@ jobs:
       - name: Generate APK
         run: ./gradlew assembleRelease
         working-directory: mobile/android
-      - name: Artifacts
       - name: Upload apk
         uses: actions/upload-artifact@v2
         with:
