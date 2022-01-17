@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build client Project
+    name: Build Client Mobile
     runs-on: ubuntu-latest
     container: reactnativecommunity/react-native-android:latest
     steps:
