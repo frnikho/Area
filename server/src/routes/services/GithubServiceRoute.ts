@@ -14,10 +14,11 @@ export default class GithubServiceRoute extends Route {
 
     private callback(req: express.Request, res: express.Response) {
         randomstring.generate();
+        console.log(req.query);
     }
 
     private login(req: express.Request, res: express.Response) {
-        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URL_SERVICE}`
+        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&`
             + `scope=admin:repo_hook`);
     }
 

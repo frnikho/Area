@@ -13,6 +13,7 @@ import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
 import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
+import AppletRoute from "./routes/applets/AppletRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -54,6 +55,9 @@ export default class App {
 
         // SERVICES ROUTES
         new GithubServiceRoute().register(this.app, '/services/github');
+
+        // APPLETS ROUTES
+        new AppletRoute().register(this.app, '/applets');
     }
 
     public start(): void {
