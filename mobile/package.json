@@ -1,6 +1,7 @@
 {
-  "name": "area",
+  "name": "mobile",
   "version": "0.0.1",
+  "description": "YEP's mobile client",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

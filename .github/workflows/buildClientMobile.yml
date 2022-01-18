@@ -1,0 +1,37 @@
+name: "Build Client Mobile"
+on:
+  push:
+    branches:
+      - master
+      - dev/*
+      - devops
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build Client Mobile
+    runs-on: ubuntu-latest
+    container: reactnativecommunity/react-native-android:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install all dependencies
+        run: npm i
+        working-directory: mobile
+      - name: Clean android folder
+        run: ./gradlew clean
+        working-directory: mobile/android
+      - name: Setup
+        run: npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+        working-directory: mobile
+      - name: Remove duplications
+        run: rm -rf app/src/main/res/drawable-*
+        working-directory: mobile/android
+      - name: Generate APK
+        run: ./gradlew assembleRelease
+        working-directory: mobile/android
+      - name: Upload apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: |
+            mobile/android/app/build/outputs/apk/release/app-release.apk
