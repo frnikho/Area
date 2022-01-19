@@ -1,116 +1,105 @@
-# Action REAction
+<div align="center">
+    <h1>AREA - Epitech 2021</h1>
 
-## About
+    Author : Nicolas SANS, Justin MENARD, Victor SAUVAGET, Théo FARGEAS, Clément BOULAY- EPITECH Promo 2024
+</div>
 
-### Auth:
-
-native auth:
-- email (required)
-- firstname (optional)
-- lastname (optional)
-- password (required)
-
-IMPORTANT !
-every user using native auth must verifiy their adresse email
-
-third parts login:
-- google ?
-- github ?
-
-## Technologies
-
-all parts use MVC
-
-Frontend and mobile: maybe react native ?
-
-- libs (react-mui?)
-
-Backend: nodejs with typescript ?
-
-- libs (express, body-parser, cors, nodemailer, jsonwebtoken, mariadb, dotenv)
-
-Front: react tsc -> Théo & Clément
-Mobile: react native tsc -> Justin
-Server: nodejs tsc-> Victor & Nico
-BDD: mariadb
-
-## Docker
-
-services:
-
-bdd: mariadb
-- port: 3306
-
-server: nodejs
-- port: 8080
-
-client_web:
-- port: 8081
-
-client_mobile:
- job: build the apk and put it into the build directory
-
-
-
-## Database schema:
-
-| *table name* | uuid | email | password | firstname | lastname | auth_type | verified |
-|--|--|--|--|--|--|--|--|--|--|--|
-| users | varchar(255) [primary key] | varchar(255) [not null] | varchar(255) | varchar(255) | varchar(255) | enum {native, google?, github?} [not null] | boolean [not null]
+## Aims of the project
 
 
 ## Services
 
-*REQUIRED: 6 Services & 15 Action, Reaction*
 
-Github
-Gmail
-Discord
-Slack
-Google Calendar
-Telegram ?
-Intra Epitech
+## Language used and tools
+
+### Language :
+
+| Side                  |          Language      |
+| --------------------- |:----------------------:|
+| Server                | Node.js with Express   |
+| Client Web            | React with Material UI |
+| Client Mobile         | React native           |
+
+### Tools :
+
+#### Database
+
+Mariadb
 
 
+#### Build and Run
+
+npm
+
+Docker Compose
+
+## Installation
+
+### Clone repository
+
+```
+$ git clone https://github.com/EpitechPromo2024/B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget.git
+```
+
+### Go to directory
+
+```
+$ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
+```
+## Build
+
+Prerequisites
 
 
-Action (If):
+- Fill the 'example.env' in server, web and mobile directories and rename them in '.env'.
 
-Github:
-- push
-- open pull request
-- close pull request
-- add new release
+- Setup your database by using the .sql file in database/mariadb/.
 
-Gmail:
-- receive a email
+-
 
-Google calendar
-- add an event
-- event
+#### Server
 
-Google drive
-- file / directory upload
+##### Prerequisites
 
-Discord
-- receive a message (tag?)
+- Fill the 'example.env' in server directory and rename it in '.env'.
+- Generate ssl credentials :
+    ```
+    $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCertificate/sslKey.key -out sslCertificate/sslCertificate.crt
+    ```
 
-Reaction (Then):
+```shell
+$ cd server && npm i
+$ npm run start
+```
 
-Gmail:
-- send a email
+:warning: **Be careful the server run on** ```https://localhost:8080```
 
-Slack
-- send a message
-- send a private message
+#### Client
 
-Discord
-- send a private message
-- send a channel message
+```shell
+$ cd client && npm i
+$ npm run build
+# you need to launch the client with a http server like 'serve'
+$ serve build
+```
 
-Spotify:
-- change current song
-- change play state
+### Docker
 
-Telegram
-- send a message
+At the root of the repository
+
+```shell
+$ sudo docker-compose build && sudo docker-compose up
+```
+
+OR
+
+```shell
+$ ./docker.sh
+```
+
+:warning: **Be careful the server run on** ```https://docker-ip:8080```
+
+## Authors
+
+- [Victor SAUVAGET](https://github.com/VicSAU/)
+- [Nicolas SANS](https://github.com/frnikho/)
