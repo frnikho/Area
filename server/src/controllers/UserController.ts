@@ -6,6 +6,7 @@ import EmailService from "../services/EmailService";
 import EncryptService from "../services/EncryptService";
 import {getGithubUserFirstname, getGithubUserLastname, GithubUser} from "../models/GithubUser";
 import {GoogleUser} from "../models/GoogleUser";
+import ServiceController from "./ServiceController";
 
 type success = (user: User) => void;
 type contextSuccess = (context: string, user: User) => void;
@@ -18,15 +19,13 @@ export default class UserController {
             if (hashedPassword === undefined)
                 return error(`Can't hashed password !`);
             DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname) VALUES (?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), data.email, hashedPassword, data.firstname, data.lastname], (result) => {
-                this.sendEmailVerification(result[0] as User, (info) => {
-                    console.log(info);
-                    success(result[0]);
-                }, (err) => {
-                    error(err);
-                });
-            }, (err) => {
-                error(err);
-            })
+                new ServiceController().createTableForUser((result[0] as User).uuid, () => {
+                    this.sendEmailVerification(result[0] as User, (info) => {
+                        console.log(info);
+                        success(result[0]);
+                    }, error);
+                }, error);
+            }, error);
         });
     }
 
@@ -52,14 +51,18 @@ export default class UserController {
         let firstname = getGithubUserFirstname(user);
         let lastname = getGithubUserLastname(user);
         DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), firstname, lastname, 'github', '1'], (response) => {
-            success('register', response[0]);
-        }, (err) => error(err));
+            new ServiceController().createTableForUser((response[0] as User).uuid, () => {
+                success('register', response[0]);
+            }, error);
+        }, error);
     }
 
     private registerWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
         DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), user.given_name, user.family_name, 'google', '1'], (response) => {
-            success('register', response[0]);
-        }, (err) => error(err));
+             new ServiceController().createTableForUser((response[0] as User).uuid, () => {
+                 success('register', response[0]);
+             }, error);
+        }, error);
     }
 
     public loginWithGithub(user: GithubUser, success: contextSuccess, error: error) {
