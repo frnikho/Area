@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center } from 'native-base';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default class LoginScreen extends Component {
+    constructor(props: any) {
+      super(props);
+    }
+
     render() {
       return (
         <Center>
@@ -56,7 +61,7 @@ export default class LoginScreen extends Component {
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}
-                  href="#"
+                  onPress={() => this.props.navigation.navigate('register')}
                 >
                   Sign Up
                 </Link>

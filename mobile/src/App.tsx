@@ -21,15 +21,21 @@ import {
 
 import { NativeBaseProvider, Box } from 'native-base';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 
 export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
         <NativeBaseProvider>
-          <LoginScreen/>
+          <Stack.Navigator initialRouteName='login'>
+            <Stack.Screen name="login" component={LoginScreen} />
+            <Stack.Screen name="register" component={RegisterScreen} />
+          </Stack.Navigator>
         </NativeBaseProvider>
       </NavigationContainer>
     );

@@ -5,7 +5,7 @@ export default class RegisterScreen extends Component {
     render() {
       return (
         <Center>
-          <Box safeArea p="2" py="8" w="90%" maxW="290" mt="24%">
+          <Box safeArea p="2" py="8" w="90%" maxW="290" mt="10%">
             <Heading
               size="lg"
               fontWeight="600"
@@ -25,10 +25,18 @@ export default class RegisterScreen extends Component {
               fontWeight="medium"
               size="xs"
             >
-              Welcome to area
+              Register to AREA
             </Heading>
 
             <VStack space={3} mt="5">
+              <FormControl>
+                <FormControl.Label>First name</FormControl.Label>
+                <Input />
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Last name</FormControl.Label>
+                <Input />
+              </FormControl>
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input />
@@ -37,8 +45,12 @@ export default class RegisterScreen extends Component {
                 <FormControl.Label>Password</FormControl.Label>
                 <Input type="password" />
               </FormControl>
+              <FormControl>
+                <FormControl.Label>Retype password</FormControl.Label>
+                <Input type="password" />
+              </FormControl>
               <Button mt="2" colorScheme="indigo">
-                Sign in
+                Register
               </Button>
               <HStack mt="6" justifyContent="center">
                 <Text
@@ -48,7 +60,7 @@ export default class RegisterScreen extends Component {
                     color: "warmGray.200",
                   }}
                 >
-                  I'm a new user.{" "}
+                  Already have an account.{" "}
                 </Text>
                 <Link
                   _text={{
@@ -56,9 +68,9 @@ export default class RegisterScreen extends Component {
                     fontWeight: "medium",
                     fontSize: "sm",
                   }}
-                  href="#"
+                  onPress={() => this.props.navigation.navigate('login')}
                 >
-                  Sign Up
+                  Login
                 </Link>
               </HStack>
             </VStack>
