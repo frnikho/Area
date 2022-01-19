@@ -54,8 +54,10 @@ $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 
 - Fill the 'example.env' in server directory and rename it in '.env'.
 - Generate ssl credentials :
+    Go to server directory
     ```
-    $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCertificate/sslKey.key -out sslCertificate/sslCertificate.crt
+    $ mkdir -p sslCredentials
+    $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
     ```
 
 ```shell

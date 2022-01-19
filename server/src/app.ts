@@ -15,7 +15,7 @@ import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
 import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
-import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
+import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -55,13 +55,13 @@ export default class App {
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
         new GoogleLoginRoute().register(this.app, '/auth/google');
-        new SlackLoginRoute().register(this.app, '/auth/slack');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
         new GithubServiceRoute().register(this.app, '/services/github');
+        new SlackServiceRoute().register(this.app, '/services/auth/slack');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
