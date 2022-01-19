@@ -56,7 +56,7 @@ $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 - Generate ssl credentials :
     Go to server directory
     ```
-    $ mkdir sslCredentials
+    $ mkdir -p sslCredentials
     $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
     ```
 
