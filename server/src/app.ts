@@ -15,7 +15,7 @@ import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
 import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
-import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
+import SlackLoginRoute from "./routes/services/SlackServiceRoute";
 
 const DEFAULT_PORT = 8080;
 

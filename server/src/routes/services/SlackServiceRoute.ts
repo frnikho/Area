@@ -1,10 +1,9 @@
-import Route from "../../../Route";
+import Route from "../../Route";
 
 import axios from 'axios';
 import express = require('express');
-import SlackService from '../../../services/SlackService'
 
-export default class SlackLoginRoute extends Route {
+export default class SlackServiceRoute extends Route {
 
     constructor() {
         super();
@@ -19,7 +18,6 @@ export default class SlackLoginRoute extends Route {
             + "client_id=" + process.env.SLACK_CLIENT_ID + "&"
             + "client_secret=" + process.env.SLACK_CLIENT_SECRET + "&"
             + "code=" + code;
-        console.log(oauthUrl);
         axios.post(oauthUrl,
             {
             headers: {
@@ -29,8 +27,7 @@ export default class SlackLoginRoute extends Route {
             let {error, error_description} = response.data;
             if (error)
                 return res.status(400).json({success: false, error: error_description});
-            console.log(response.data['access_token']);
-
+            console.log(response);
             return res.status(200);
             }, (msg) => {
                 return res.status(400).json({success: false, error: msg});
