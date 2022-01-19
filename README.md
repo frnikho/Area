@@ -8,6 +8,9 @@
 
 ## Aims of the project
 
+The goals of the project is to implement a software suite that functions similar to that of IFTTT.
+
+The project allowing its users to create simple instruction strings called applets. An applet is triggered by changes that occur within web services such as Github, Slack, Discord. For example an applet can send an Slack message in a channel if the user push something on a Github repository.
 
 ## Services
 
