@@ -12,7 +12,7 @@ WORKDIR /app/android/
 
 # Clean android folder
 
-RUN ./gradlew clean && cd ..
+RUN ./gradlew clean
 
 WORKDIR /app
 
@@ -26,11 +26,4 @@ RUN rm -rf app/src/main/res/drawable-*
 
 # Generate APK
 
-# CMD ["./gradlew", "assembleRelease"]
-
-RUN ./gradlew assembleRelease
-
-
-WORKDIR /
-
-RUN find . -name "*.apk"
+CMD ["./gradlew", "assembleRelease"]

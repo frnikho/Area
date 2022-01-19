@@ -1,0 +1,22 @@
+name: "Build Client Web"
+on:
+  push:
+    branches:
+      - master
+      - dev/*
+      - devops
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build Client Web
+    runs-on: ubuntu-latest
+    container: node:16-alpine3.13
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install all dependencies
+        run: npm i --force
+        working-directory: web
+      - name: Build client application
+        run: npm run build
+        working-directory: web
