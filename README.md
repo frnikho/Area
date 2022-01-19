@@ -2,7 +2,7 @@
     <h1>AREA - Epitech 2021-2022</h1>
 
     Author : Nicolas SANS, Justin MENARD, Victor SAUVAGET, Théo FARGEAS, Clément BOULAY
-    
+
     EPITECH Promo 2024
 </div>
 
@@ -68,8 +68,11 @@ Go to server directory
 ##### Build and run
 
 ```shell
+# Install dependencies
 $ npm install
+# Build
 $ npm run build
+# Run
 $ npm run prod or dev
 ```
 
