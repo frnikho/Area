@@ -32,8 +32,9 @@ Mariadb
 #### Build and Run
 
 npm
-
-Docker Compose
+serve
+gradlew
+docker-compose
 
 ## Installation
 
