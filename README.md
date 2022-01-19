@@ -51,9 +51,9 @@ $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 ```
 ## Build and Run
 
-#### Server
+### Server
 
-##### Prerequisites
+#### Prerequisites
 
 Go to server directory
 
@@ -65,7 +65,7 @@ Go to server directory
     $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
     ```
 
-##### Build and run
+#### Build and run
 
 ```shell
 # Install dependencies
@@ -83,9 +83,9 @@ With 'dev' option server is reloaded at any change.
 <br />
 <br />
 
-#### Client Mobile
+### Client Mobile
 
-##### Prerequisites
+#### Prerequisites
 
 - Fill the 'example.env' in mobile directory and rename it in '.env'.
 - Specify your JAVA SDK directory :
@@ -99,7 +99,7 @@ With 'dev' option server is reloaded at any change.
         sdk.dir = your-path-to-your-java-sdk
         ```
 
-##### Build and run
+#### Build and run
 
 ```shell
 # Install dependencies
@@ -119,13 +119,13 @@ $ ./gradlew assembleRelease
 <br />
 <br />
 
-#### Client Mobile
+### Client Mobile
 
-##### Prerequisites
+#### Prerequisites
 
 - Fill the 'example.env' in web directory and rename it in '.env'.
 
-##### Build and run
+#### Build and run
 
 ```shell
 $ cd web
@@ -141,7 +141,7 @@ $ serve -s build -p 8081
 <br />
 <br />
 
-#### Docker
+### Docker
 
 At the root of the repository
 
