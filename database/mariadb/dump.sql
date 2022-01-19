@@ -1,6 +1,6 @@
 -- MySQL dump 10.19  Distrib 10.3.32-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: yep
+-- Host: 127.0.0.1    Database: area
 -- ------------------------------------------------------
 -- Server version	10.7.1-MariaDB-1:10.7.1+maria~focal
 
@@ -16,18 +16,18 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `yep`
+-- Current Database: `area`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `yep` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `area` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `yep`;
+USE `area`;
 
 --
 -- Grant privileges for user admin
 --
 
-GRANT ALL PRIVILEGES ON yep.* TO 'admin'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON area.* TO 'admin'@'%' IDENTIFIED BY 'admin';
 
 --
 -- Table structure for table `users`
