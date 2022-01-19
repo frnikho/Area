@@ -89,15 +89,15 @@ With 'dev' option server is reloaded at any change.
 
 - Fill the 'example.env' in mobile directory and rename it in '.env'.
 - Specify your JAVA SDK directory :
-    1. Go to ./mobile/android/
-    2. Create 'local.properties' file
-        ```shell
-        $ touch local.properties
-        ```
-    3. Add properties
-        ```shell
-        sdk.dir = your-path-to-your-java-sdk
-        ```
+1. Go to ./mobile/android/
+2. Create 'local.properties' file
+    ```shell
+    $ touch local.properties
+    ```
+3. Add properties
+    ```shell
+    sdk.dir = your-path-to-your-java-sdk
+    ```
 
 #### Build and run
 
@@ -119,7 +119,7 @@ $ ./gradlew assembleRelease
 <br />
 <br />
 
-### Client Mobile
+### Client Web
 
 #### Prerequisites
 
