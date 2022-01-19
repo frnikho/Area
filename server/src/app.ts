@@ -3,6 +3,8 @@ import {Express} from "express";
 const express = require('express');
 const dotenv = require('dotenv');
 import cors = require('cors');
+import fs = require("fs");
+import https = require("https");
 import bodyParser = require('body-parser');
 import RegisterRoute from "./routes/auth/RegisterRoute";
 import LoginRoute from "./routes/auth/LoginRoute";
@@ -10,9 +12,10 @@ import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
+import GithubService from "./services/GithubService";
+import GithubServiceRoute from "./routes/services/GithubServiceRoute";
+import AppletRoute from "./routes/applets/AppletRoute";
 import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
-import fs = require("fs");
-import https = require("https");
 
 const DEFAULT_PORT = 8080;
 
@@ -56,6 +59,12 @@ export default class App {
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
+
+        // SERVICES ROUTES
+        new GithubServiceRoute().register(this.app, '/services/github');
+
+        // APPLETS ROUTES
+        new AppletRoute().register(this.app, '/applets');
     }
 
     public start(): void {
