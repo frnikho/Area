@@ -48,15 +48,6 @@ $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 ```
 ## Build
 
-Prerequisites
-
-
-- Fill the 'example.env' in server, web and mobile directories and rename them in '.env'.
-
-- Setup your database by using the .sql file in database/mariadb/.
-
--
-
 #### Server
 
 ##### Prerequisites
