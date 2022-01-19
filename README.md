@@ -52,31 +52,82 @@ $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 
 ##### Prerequisites
 
+Go to server directory
+
 - Fill the 'example.env' in server directory and rename it in '.env'.
 - Generate ssl credentials :
-    Go to server directory
-    ```
+
+    ```shell
     $ mkdir -p sslCredentials
     $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
     ```
 
+##### Build and run
+
 ```shell
-$ cd server && npm i
-$ npm run start
+$ npm install
+$ npm run build
+$ npm run prod or dev
 ```
+
+With 'dev' option server is reloaded at any change.
 
 :warning: **Be careful the server run on** ```https://localhost:8080```
 
-#### Client
+#### Client Mobile
+
+##### Prerequisites
+
+- Fill the 'example.env' in mobile directory and rename it in '.env'.
+- Specify your JAVA SDK directory :
+    1. Go to ./mobile/android/
+    2. Create 'local.properties' file
+        ```shell
+        $ touch local.properties
+        ```
+    3. Add properties
+        ```shell
+        sdk.dir = your-path-to-your-java-sdk
+        ```
+
+##### Build and run
 
 ```shell
-$ cd client && npm i
-$ npm run build
-# you need to launch the client with a http server like 'serve'
-$ serve build
+# Install dependencies
+$ cd mobile
+$ npm install
+# Clean android folder
+$ cd android
+$ ./gradlew clean
+$ cd ..
+$ npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+# Remove duplications
+$ cd android
+$ rm -rf app/src/main/res/drawable-*
+# Generate APK
+$ ./gradlew assembleRelease
 ```
 
-### Docker
+#### Client Mobile
+
+##### Prerequisites
+
+- Fill the 'example.env' in web directory and rename it in '.env'.
+
+##### Build and run
+
+```shell
+$ cd web
+# Install dependencies
+$ npm install
+$ npm install -g serve
+# Build
+$ npm run build
+# Run
+$ serve -s build -p 8081
+```
+
+#### Docker
 
 At the root of the repository
 
@@ -92,7 +143,38 @@ $ ./docker.sh
 
 :warning: **Be careful the server run on** ```https://docker-ip:8080```
 
+## Usages
+
+- How to provide the Android version of mobile client ?
+
+```
+https://localhost:8081/client.apk
+```
+
+- How to read the 'about.js' ?
+
+```
+https://localhost:8080/about.js
+```
+
+- How to launch web client ?
+
+```
+http://localhost:8081/
+```
+
+## Documentation
+
+Server:
+
+```
+https://localhost:8080/docs
+```
+
 ## Authors
 
 - [Victor SAUVAGET](https://github.com/VicSAU/)
 - [Nicolas SANS](https://github.com/frnikho/)
+- [Justin MENARD](https://github.com/JusteUn)
+- [Théo FARGEAS](https://github.com/theofrgs)
+- [Clément BOULAY](https://github.com/boulayclement)
