@@ -1,7 +1,9 @@
 <div align="center">
-    <h1>AREA - Epitech 2021</h1>
+    <h1>AREA - Epitech 2021-2022</h1>
 
-    Author : Nicolas SANS, Justin MENARD, Victor SAUVAGET, Théo FARGEAS, Clément BOULAY- EPITECH Promo 2024
+    Author : Nicolas SANS, Justin MENARD, Victor SAUVAGET, Théo FARGEAS, Clément BOULAY
+    
+    EPITECH Promo 2024
 </div>
 
 ## Aims of the project
