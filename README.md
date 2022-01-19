@@ -49,7 +49,7 @@ $ git clone https://github.com/EpitechPromo2024/B-YEP-500-NAN-5-1-yearendproject
 ```
 $ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
 ```
-## Build
+## Build and Run
 
 #### Server
 
@@ -79,6 +79,9 @@ $ npm run prod or dev
 With 'dev' option server is reloaded at any change.
 
 :warning: **Be careful the server run on** ```https://localhost:8080```
+
+<br />
+<br />
 
 #### Client Mobile
 
@@ -113,6 +116,8 @@ $ rm -rf app/src/main/res/drawable-*
 # Generate APK
 $ ./gradlew assembleRelease
 ```
+<br />
+<br />
 
 #### Client Mobile
 
@@ -132,6 +137,9 @@ $ npm run build
 # Run
 $ serve -s build -p 8081
 ```
+
+<br />
+<br />
 
 #### Docker
 
