@@ -39,13 +39,13 @@ export default class GoogleLoginRoute extends Route {
                         }).sign()
                     });
                 }, (err) => {
-                    console.log(err);
+                    return res.status(400).json({success: false, error: err})
                 })
             }, (err) => {
-                console.log(err);
+                return res.status(400).json({success: false, error: err})
             })
         }).catch((err) => {
-            console.log(err);
+            return res.status(400).json({success: false, error: err})
         });
     }
 
