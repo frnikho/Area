@@ -10,6 +10,7 @@ import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
+import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
 import fs = require("fs");
 import https = require("https");
 
@@ -51,6 +52,7 @@ export default class App {
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
         new GoogleLoginRoute().register(this.app, '/auth/google');
+        new SlackLoginRoute().register(this.app, '/auth/slack');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
