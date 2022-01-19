@@ -1,7 +1,49 @@
 import React, { Component } from 'react';
-import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center } from 'native-base';
+import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, useToast } from 'native-base';
+const axios = require('axios');
+import { BACKEND_URL } from "@env";
 
 export default class RegisterScreen extends Component {
+
+    state: {
+      firstName: String | undefined,
+      lastName: String | undefined,
+      email: String | undefined,
+      password: String | undefined,
+      rePassword: String | undefined
+    };
+
+    constructor(props: any) {
+      super(props);
+      this.state = {
+        firstName: undefined,
+        lastName: undefined,
+        email: undefined,
+        password: undefined,
+        rePassword: undefined,
+      };
+      this.onRegister = this.onRegister.bind(this);
+    }
+
+    onRegister() {
+      if (this.state.firstName === undefined || this.state.lastName === undefined || this.state.email === undefined || this.state.password === undefined || this.state.rePassword === undefined) {
+        return;
+      }
+      if (this.state.password !== this.state.rePassword) {
+        return;
+      }
+      axios.post(`${BACKEND_URL}/auth/register`, {
+        email: this.state.email,
+        password: this.state.password,
+        firstname: this.state.firstName,
+        lastname: this.state.lastName,
+      }).then((response: any) => {
+        console.log(response);
+      }).catch((err: any) => {
+        console.log(err);
+      })
+    }
+
     render() {
       return (
         <Center>
@@ -31,25 +73,25 @@ export default class RegisterScreen extends Component {
             <VStack space={3} mt="5">
               <FormControl>
                 <FormControl.Label>First name</FormControl.Label>
-                <Input />
+                <Input onChangeText={(val) => this.setState({firstName: val})} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Last name</FormControl.Label>
-                <Input />
+                <Input onChangeText={(val) => this.setState({lastName: val})} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
-                <Input />
+                <Input onChangeText={(val) => this.setState({email: val})} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Password</FormControl.Label>
-                <Input type="password" />
+                <Input type="password" onChangeText={(val) => this.setState({password: val})}/>
               </FormControl>
               <FormControl>
                 <FormControl.Label>Retype password</FormControl.Label>
-                <Input type="password" />
+                <Input type="password" onChangeText={(val) => this.setState({rePassword: val})} />
               </FormControl>
-              <Button mt="2" colorScheme="indigo">
+              <Button mt="2" colorScheme="indigo" onPress={this.onRegister}>
                 Register
               </Button>
               <HStack mt="6" justifyContent="center">
