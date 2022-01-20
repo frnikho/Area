@@ -16,6 +16,7 @@ import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
+import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -60,8 +61,9 @@ export default class App {
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/github');
+        new GithubServiceRoute().register(this.app, '/services/auth/github');
         new SlackServiceRoute().register(this.app, '/services/auth/slack');
+        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');

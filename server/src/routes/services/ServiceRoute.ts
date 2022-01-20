@@ -10,15 +10,8 @@ export default class ServiceRoute {
     constructor() {
     }
 
-    public request(url: string, userUUID:string, tokenType: string, success: token, error: error): void {
-        axios.post(url,
-            {
-
-            }, {
-                headers: {
-                    "Accept": "application/json"
-                }
-            }).then((response) => {
+    public request(url: string, body: URLSearchParams, header: object , userUUID:string, tokenType: string, success: token, error: error): void {
+        axios.post(url, body, header).then((response) => {
                 let {error, error_description, access_token, refresh_token} = response.data;
                 if (error)
                     return error(error_description);
@@ -37,7 +30,7 @@ export default class ServiceRoute {
                     return error(err);
                 })
             }).catch((err) => {
-                console.log(err);
+                console.log(err.response.data);
                 return error(err);
             })
     }
