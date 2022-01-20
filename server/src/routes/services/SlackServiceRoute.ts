@@ -5,6 +5,7 @@ import express = require('express');
 import randomstring = require('randomstring');
 import ServiceController, {TokenData} from "../../controllers/ServiceController";
 import {authorization} from "../../middlewares/AuthMiddleware";
+import ServiceRoute from "./ServiceRoute"
 
 export default class SlackServiceRoute extends Route {
 
@@ -21,33 +22,11 @@ export default class SlackServiceRoute extends Route {
             + "client_id=" + process.env.SLACK_CLIENT_ID + "&"
             + "client_secret=" + process.env.SLACK_CLIENT_SECRET + "&"
             + "code=" + code;
-        axios.post(oauthUrl,
-            {
-            headers: {
-                "Accept": "application/json"
-            }
-        }).then((response) => {
-            let {error, error_description, access_token, refresh_token} = response.data;
-            if (error)
-                return res.status(400).json({success: false, error: error_description});
-            let token: TokenData = {
-                key: randomstring.generate(),
-                created_at: new Date(),
-                type: 'slack',
-                token: {
-                    access_token: access_token,
-                    refresh_token: refresh_token,
-                }
-            }
-            new ServiceController().registerUserToken(req['user']['uuid'], token, () => {
-                return res.status(200).json({success: true, token: token});
-            }, (err) => {
-                return res.status(400).json({success: false, error: err});
-            })
-            }, (msg) => {
-                return res.status(400).json({success: false, error: msg});
-            }
-        );
+        new ServiceRoute().request(oauthUrl, req['user']['uuid'], "slack", (token) => {
+            return res.status(200).json({success: true, token: token});
+        }, (err) => {
+            return res.status(400).json({success: false, error: err});
+        });
     }
 
     private login(req: express.Request, res: express.Response) {
