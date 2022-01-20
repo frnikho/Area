@@ -158,7 +158,7 @@ OR
 $ ./docker.sh
 ```
 
-:warning: **Be careful the server run on** ```https://docker-ip:8080```
+:warning: **Be careful the server run on** ```https://localhost:8080```
 
 ## Usages
 
