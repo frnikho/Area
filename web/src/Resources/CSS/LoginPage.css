@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap");
+
+.font {
+  font-family: Dongle;
+}
+
+.background {
+  background-color: #8c8c8c;
+}
+
+.titleRight {
+  font-family: Dongle;
+  font-size: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  justify-content: center;
+  margin-right: 30px;
+}
+
+.titleLeft {
+  font-family: Dongle;
+  font-size: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  justify-content: center;
+  margin-left: 30px;
+}
+
+.space {
+  margin: 200px;
+}

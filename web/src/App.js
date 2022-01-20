@@ -1,22 +1,21 @@
 import React from 'react';
-import {Route, Routes} from "react-router-dom";
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Login from "./Controllers/Auth/Login";
+import RegisterPage from "./Views/Auth/RegisterPage";
 
 export default class App extends React.Component {
-  render() {
-    return (
-        <div className="App">
+
+    render() {
+        return (
             <Routes>
                 <Route path={"/"}>
+                    <Route path='' element={<Navigate to ="/auth/login" />} />
                     <Route path={"auth"}>
-                        <Route path={"login"} element={<LoginPage/>}/>
-                        <Route path={"register"} element={<RegisterPage/>}/>
+                        <Route path={"login"} element={<Login />} />
+                        <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                 </Route>
-
             </Routes>
-        </div>
-    );
-  }
+        );
+    }
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import OAuth2Login from 'react-simple-oauth2-login';
-import app from "../../utils/Axios";
+import RegisterPage from "../../Views/Auth/RegisterPage.js"
 
-export default class LoginPage extends React.Component {
+export default class Register extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,23 +14,30 @@ export default class LoginPage extends React.Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.onClickLogin = this.onClickLogin.bind(this);
-        this.onResumeGithubLogin = this.onResumeGithubLogin.bind(this);
+        this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
+        this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
     }
 
     onClickLogin() {
-        app.get('/auth/github').then((response) => {
-            console.log(response);
-        })
+        console.log("db")
+        // app.get('/auth/github').then((response) => {
+        //     console.log(response);
+        // })
     }
 
-    onResumeGithubLogin(data) {
-        app.post(`/auth/github/code`, {
-            code: data['code']
-        }).then((response) => {
-            console.log(response.data);
-        }).catch((err) => {
-            console.log(err.response);
-        });
+    onClickGoogleLogin() {
+        console.log("google")
+    }
+
+    onClickGithubLogin(data) {
+        console.log("github");
+        // app.post(`/auth/github/code`, {
+        //     code: data['code']
+        // }).then((response) => {
+        //     console.log(response.data);
+        // }).catch((err) => {
+        //     console.log(err.response);
+        // });
     }
 
     handleEmailChange(event) {
@@ -60,21 +67,8 @@ export default class LoginPage extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.showLoginPopup()}
-                <label>
-                    Email
-                    <input type="text" onChange={this.handleEmailChange} />
-                </label>
-                <label>
-                    Password
-                    <input type="text" onChange={this.handlePasswordChange} />
-                </label>
-
-                <button onClick={this.onClickLogin}>Login</button>
-
-            </div>
-        );
+            <RegisterPage {...this}/>
+        )
     }
 
 }
