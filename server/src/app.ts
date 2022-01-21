@@ -3,8 +3,9 @@ import {Express} from "express";
 const express = require('express');
 const dotenv = require('dotenv');
 
-import http = require("http");
 import cors = require('cors');
+import fs = require("fs");
+import https = require("https");
 import bodyParser = require('body-parser');
 import RegisterRoute from "./routes/auth/RegisterRoute";
 import LoginRoute from "./routes/auth/LoginRoute";
@@ -16,24 +17,29 @@ import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
 import GithubWebhook from "./webhooks/GithubWebhook";
 
-const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
+const { createNodeMiddleware } = require("@octokit/webhooks");
+import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
 
 const DEFAULT_PORT = 8080;
 
 export default class App {
 
     private port: number;
-    private readonly server: http.Server;
+    private readonly server: https.Server;
     private readonly app: Express;
+    private readonly privateKey: string;
+    private readonly privateCertificate: string;
 
     constructor() {
         this.initConfig();
-        this.port =  Number.parseInt(process.env.PORT) || DEFAULT_PORT;
+        this.port = Number.parseInt(process.env.PORT) || DEFAULT_PORT;
+        this.privateKey = fs.readFileSync("./sslCredentials/sslKey.key", "utf8");
+        this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
         this.app = express();
         this.initMiddlewares();
         this.initWebhooks();
         this.initRoutes();
-        this.server = http.createServer(this.app);
+        this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate}, this.app);
     }
 
     private initConfig(): void {
@@ -59,6 +65,7 @@ export default class App {
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
         new GoogleLoginRoute().register(this.app, '/auth/google');
+        new SlackLoginRoute().register(this.app, '/auth/slack');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
@@ -72,7 +79,7 @@ export default class App {
 
     public start(): void {
         this.server.listen(this.port, () => {
-            console.log(`server is listening on http://localhost:${this.port}/`);
+            console.log(`server is listening on https://localhost:${this.port}/`);
         });
     }
 

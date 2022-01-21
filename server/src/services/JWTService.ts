@@ -12,7 +12,7 @@ export default class JWTService {
         return jsonwebtoken.sign(this.payload, process.env.JWT_SECRET);
     }
 
-    public static verify(token: string): jsonwebtoken.JwtPayload {
+    public static verify(token: string) {
         return jsonwebtoken.verify(token, process.env.JWT_SECRET);
     }
 
