@@ -1,6 +1,6 @@
 -- MySQL dump 10.19  Distrib 10.3.32-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: yep
+-- Host: 127.0.0.1    Database: area
 -- ------------------------------------------------------
 -- Server version	10.7.1-MariaDB-1:10.7.1+maria~focal
 
@@ -16,18 +16,78 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `yep`
+-- Current Database: `area`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `yep` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `area` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `yep`;
+USE `area`;
 
 --
 -- Grant privileges for user admin
 --
 
-GRANT ALL PRIVILEGES ON yep.* TO 'admin'@'%' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON area.* TO 'admin'@'%' IDENTIFIED BY 'admin';
+
+-- MySQL dump 10.19  Distrib 10.3.32-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: 127.0.0.1    Database: area
+-- ------------------------------------------------------
+-- Server version	10.7.1-MariaDB-1:10.7.1+maria~focal
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `applets`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `applets` (
+  `uuid` varchar(255) NOT NULL DEFAULT uuid(),
+  `user_uuid` varchar(255) NOT NULL,
+  `action` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{}',
+  `action_type` varchar(255) NOT NULL,
+  `reactions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{}',
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp(),
+  `enable` tinyint(1) DEFAULT 1,
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `services`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_uuid` varchar(255) NOT NULL,
+  `spotify` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `github` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `google` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `discord` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `slack` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `epitech_intra` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `services_user_uuid_uindex` (`user_uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `services`
+--
 
 -- MySQL dump 10.19  Distrib 10.3.32-MariaDB, for debian-linux-gnu (x86_64)
 --

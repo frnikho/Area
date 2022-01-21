@@ -19,6 +19,8 @@ import GithubWebhook from "./webhooks/GithubWebhook";
 
 const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
+import SlackServiceRoute from "./routes/services/SlackServiceRoute";
+import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -65,13 +67,14 @@ export default class App {
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
         new GoogleLoginRoute().register(this.app, '/auth/google');
-        new SlackLoginRoute().register(this.app, '/auth/slack');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/github');
+        new GithubServiceRoute().register(this.app, '/services/auth/github');
+        new SlackServiceRoute().register(this.app, '/services/auth/slack');
+        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');

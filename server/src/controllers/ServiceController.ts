@@ -46,9 +46,8 @@ export default class ServiceController {
                 console.log("empty tokens !");
                 tokensArray = [];
             }
-            console.log(tokensArray);
             tokensArray.push(token);
-            DBService.query(`UPDATE yep.services t SET t.${token.type} = '${JSON.stringify(tokensArray)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
+            DBService.query(`UPDATE area.services t SET t.${token.type} = '${JSON.stringify(tokensArray)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
                 if (result['affectedRows'] >= 1)
                     return success();
                 return error('An error occurred, please try again later !');
