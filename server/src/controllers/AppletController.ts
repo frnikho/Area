@@ -1,7 +1,8 @@
-import {ActionType, Applet} from "../models/Applet";
+import {ActionType, Applet, Ingredient, ReactionType} from "../models/Applet";
 import DBService from "../services/DBService";
 import App from "../app";
 import * as randomstring from "randomstring";
+import ServiceController from "./ServiceController";
 
 type successGet = (applet: Applet) => void;
 type successGets = (applet: Applet[]) => void;
@@ -9,18 +10,30 @@ type successBool = (success: boolean) => void;
 
 type error = (error: string) => void;
 
+
 export default class AppletController {
 
-    public registerApplets(applet: Applet, userUuid: string, success: successGet, error: error) {
-        let action_type = applet.action_type;
+    public callReactions(applet: Applet, ingredients: Ingredient[], end: error) {
+        console.log(ingredients);
+        applet.reactions.forEach((reaction) => {
+            new ServiceController().getTokenByKeyAndService(applet.user_uuid, ReactionType[reaction.type], reaction.tokenKey, (key) => {
+                if (key === undefined)
+                    return;
 
-        DBService.queryValues(`INSERT INTO applets (user_uuid, action, action_type, reactions, enable) VALUES (?, ?, ?, ?, ?)`, [userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1'], (result) => {
-
+            }, end)
         });
     }
 
-    public getAppletsByActionTypeAndUserUuid(type: string, uuid: string, success: successGets, error: error): void {
-        DBService.query(`SELECT * FROM applets WHERE action_type = '${type}' AND user_uuid = '${uuid}'`, (result) => {
+    public registerApplets(applet: Applet, userUuid: string, success: successGet, error: error) {
+        DBService.queryValues(`INSERT INTO applets (user_uuid, action, action_type, reactions, enable) VALUES (?, ?, ?, ?, ?) RETURNING uuid, user_uuid, action, action_type, reactions, updated_at, enable, created_at`, [userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1'], (result) => {
+            result[0]['action'] = JSON.parse(result[0]['action']);
+            result[0]['reactions'] = JSON.parse(result[0]['reactions']);
+            return success(result[0]);
+        }, error);
+    }
+
+    public getAppletsByTypeAndKey(type: string, key: string, success: successGets, error: error): void {
+        DBService.query(`SELECT * FROM applets WHERE action_type = '${type}' AND action_key = '${key}'`, (result) => {
             if (result.length === 0)
                 return success([]);
             return success(result.map((app) => app as Applet));

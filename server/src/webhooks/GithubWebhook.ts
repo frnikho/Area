@@ -1,5 +1,7 @@
 import {Webhooks} from "@octokit/webhooks";
 import AppletController from "../controllers/AppletController";
+import {ingredientsHook} from "../utils/Ingredients";
+import {ActionType} from "../models/Applet";
 
 const EventSource = require('eventsource');
 
@@ -17,13 +19,28 @@ export default class GithubWebhook {
     }
 
     private onPush(data): void {
+        let key: number = data.payload.installation.id;
+        let repo_name: string = data.payload.repository.full_name;
+        const appletController = new AppletController();
+        appletController.getAppletsByTypeAndKey('github_repository_push', key.toString(), (applets) => {
+            applets.forEach((applet) => {
+                let parameters: object[] = JSON.parse((<any>applet.action))['parameters'];
+                let repository = parameters.filter((param) => param['name'] === 'repository_name')[0];
 
-
-        //new AppletController().getAppletsByActionTypeAndUserUuid('github_repository_push')
-
-        console.log(data.name);
-        console.log(data.payload.repository.full_name);
-
+                if (repository['value'] === repo_name) {
+                    console.log("");
+                    appletController.callReactions(applet, ingredientsHook(data.payload, ActionType.github_repository_push),(error) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("successful call applets reactions !");
+                        }
+                    }, )
+                }
+            });
+        }, (err) => {
+            console.log(err)
+        });
     }
 
     private onRepositoryCreated(data): void {

@@ -30,13 +30,7 @@ export default class ServiceController {
                 console.log('abc', ex);
             }
 
-        }, err => {
-            if (err === undefined) {
-                console.log("ABC");
-                return success(null);
-            }
-            return error(err)
-        });
+        }, error);
     }
 
     public registerUserToken(userUuid: string, token: TokenData, success: success, error: error) {
@@ -60,6 +54,15 @@ export default class ServiceController {
             if (result.length === 0)
                 return success([]);
             return success(result);
+        }, error);
+    }
+
+    public getTokenByKeyAndService(userUuid: string, service: string, key: string, success: (token: string | undefined) => void, error: error) {
+        this.getTokensForService(userUuid, service, (tokens) => {
+            let good = tokens.filter((token) => token.key === key);
+            if (good.length === 0)
+                return (0);
+            return (good[0]);
         }, error);
     }
 

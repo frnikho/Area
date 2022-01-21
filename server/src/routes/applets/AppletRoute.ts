@@ -29,10 +29,11 @@ export default class AppletRoute extends Route {
     }
 
     private create(req: express.Request, res: express.Response) {
-
-        new AppletController();
-
-        return res.status(200).json(req['applet']);
+        new AppletController().registerApplets(req['applet'], req['user']['uuid'],(applet) => {
+            return res.status(200).json({success: true, applet: applet});
+        }, (err) => {
+            return res.status(400).json({success: false, error: err})
+        });
     }
 
     private delete(req: express.Request, res: express.Response) {

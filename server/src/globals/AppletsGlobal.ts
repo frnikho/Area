@@ -6,11 +6,6 @@ export const GithubAppletActionsAbout =
             type: 'github_repository_push',
             parameters: [
                 {
-                    name: "application_id",
-                    type: 'string',
-                    required: true,
-                },
-                {
                     name: "repository_name",
                     type: 'string',
                     required: true

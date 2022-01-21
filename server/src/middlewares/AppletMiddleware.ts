@@ -1,6 +1,6 @@
 import express = require('express');
 import AppletController from "../controllers/AppletController";
-import {Action, ActionType, Reaction, ReactionType} from "../models/Applet";
+import {Action, ActionType, Applet, Reaction, ReactionType} from "../models/Applet";
 import {AppAbout, GithubAppletActionsAbout} from "../globals/AppletsGlobal";
 import App from "../app";
 
@@ -39,13 +39,16 @@ const parse = (uuid: string, req: express.Request, res: express.Response, next: 
 }
 
 export const checkNewApplet = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    let {action_type, action, reactions}: {
+    let {action_type, action, reactions, action_key}: {
         action_type: string,
         action: Action,
-        reactions: Reaction[]
+        reactions: Reaction[],
+        action_key: string,
     } = req.body;
 
     const type: ActionType = ActionType[action_type];
+    if (action_key === undefined)
+        return res.status(400).json({success: false, error: "Required action key !"});
     if (type === undefined)
         return res.status(400).json({success: false, error: "Invalid action type !"});
     if (reactions === undefined || reactions.length === undefined)
@@ -74,7 +77,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         })
         service.reactions.forEach((serviceReaction) => {
             reactions.filter((reaction) => ReactionType[reaction.type] === ReactionType[serviceReaction.type]).forEach((reaction) => {
-                let reactionData = {missing: [], good: []};
+                let reactionData = {type: reaction.type, token: reaction.tokenKey, missing: [], good: []};
                 serviceReaction.parameters.forEach((params) => {
                     const {name, type, required}: {name: string, type: string, required: boolean} = params;
                     let p = reaction.parameters.filter((p) => p['name'] === name)[0];
@@ -93,6 +96,21 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
    if (applets.reactions.filter((reaction) => reaction['missing'].length > 0).length > 0)
        return res.status(400).json({success: false, error: `Missing parameters for reactions !`})
 
-    req['applet'] = applets;
+    let applet: Applet = {
+        action_type: type,
+        action: {
+            parameters: applets.action.good,
+        },
+        action_key: action_key,
+        reactions: applets.reactions.map((reaction) => {
+            return {
+                type: reaction['type'],
+                tokenKey: reaction['token'],
+                parameters: reaction['good'],
+            }
+        }),
+        user_uuid: req['user']['uuid']
+    }
+    req['applet'] = applet;
     next();
 }

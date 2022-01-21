@@ -10,28 +10,26 @@ export default class ServiceRoute {
     constructor() {
     }
 
-    public request(url: string, body: URLSearchParams, header: object , userUUID:string, tokenType: string, success: token, error: error): void {
+    public request(url: string, body, header, userUUID:string, tokenType: string, success: token, errorFunc: error): void {
         axios.post(url, body, header).then((response) => {
-                let {error, error_description, access_token, refresh_token} = response.data;
-                if (error)
-                    return error(error_description);
-                let token: TokenData = {
-                    key: randomstring.generate(),
-                    created_at: new Date(),
-                    type: tokenType,
-                    token: {
-                        access_token: access_token,
-                        refresh_token: refresh_token,
-                    }
+            let {error, access_token, refresh_token} = response.data;
+            if (error)
+                return errorFunc(error);
+
+            let token: TokenData = {
+                key: randomstring.generate(),
+                created_at: new Date(),
+                type: tokenType,
+                token: {
+                    access_token: access_token,
+                    refresh_token: refresh_token,
                 }
-                new ServiceController().registerUserToken(userUUID, token, () => {
-                    return success(token);
-                }, (err) => {
-                    return error(err);
-                })
-            }).catch((err) => {
-                console.log(err.response.data);
-                return error(err);
-            })
+            }
+            new ServiceController().registerUserToken(userUUID, token, () => {
+                return success(token);
+            }, error)
+        }).catch((err) => {
+            return errorFunc(err);
+        })
     }
 }
