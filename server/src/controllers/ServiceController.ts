@@ -23,24 +23,43 @@ export default class ServiceController {
         DBService.query(`SELECT ${service} FROM services WHERE user_uuid = '${userUuid}'`, (result) => {
             if (result.length === 0)
                 return success(null);
-            return success(result[0][service]);
+            try {
+                console.log(result[0][service]);
+                return success(result[0][service]);
+            } catch (ex) {
+                console.log('abc', ex);
+            }
+
         }, err => {
-            if (err === undefined)
+            if (err === undefined) {
+                console.log("ABC");
                 return success(null);
+            }
             return error(err)
         });
     }
 
     public registerUserToken(userUuid: string, token: TokenData, success: success, error: error) {
         this.getUserTokens(userUuid, token.type, (tokens) => {
-            if (tokens === undefined || tokens === null)
-                tokens = [];
-            tokens.push(token);
-            DBService.query(`UPDATE area.services t SET t.${token.type} = '${JSON.stringify(tokens)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
+            let tokensArray = JSON.parse(tokens);
+            if (tokensArray === undefined || tokensArray === null) {
+                console.log("empty tokens !");
+                tokensArray = [];
+            }
+            tokensArray.push(token);
+            DBService.query(`UPDATE area.services t SET t.${token.type} = '${JSON.stringify(tokensArray)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
                 if (result['affectedRows'] >= 1)
                     return success();
                 return error('An error occurred, please try again later !');
             });
+        }, error);
+    }
+
+    public getTokensForService(userUuid: string, service: string, success: (tokens) => void, error: error): void {
+        DBService.query(`SELECT ${service} FROM services WHERE user_uuid = '${userUuid}'`, (result) => {
+            if (result.length === 0)
+                return success([]);
+            return success(result);
         }, error);
     }
 

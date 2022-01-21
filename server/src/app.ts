@@ -2,6 +2,7 @@ import {Express} from "express";
 
 const express = require('express');
 const dotenv = require('dotenv');
+
 import cors = require('cors');
 import fs = require("fs");
 import https = require("https");
@@ -12,9 +13,12 @@ import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
-import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
+import GithubWebhook from "./webhooks/GithubWebhook";
+
+const { createNodeMiddleware } = require("@octokit/webhooks");
+import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 
@@ -35,6 +39,7 @@ export default class App {
         this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
         this.app = express();
         this.initMiddlewares();
+        this.initWebhooks();
         this.initRoutes();
         this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate}, this.app);
     }
@@ -47,6 +52,12 @@ export default class App {
         this.app.use(cors())
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(bodyParser.json());
+    }
+
+    private initWebhooks(): void {
+        let github = new GithubWebhook();
+        this.app.use(createNodeMiddleware(github.getWebhooks()));
+        github.init();
     }
 
     private initRoutes(): void  {

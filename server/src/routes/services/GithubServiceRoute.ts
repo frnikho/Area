@@ -1,6 +1,7 @@
 import Route from "../../Route";
 import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
+import GithubService from "../../services/GithubService";
 
 import ServiceRoute from "./ServiceRoute";
 
@@ -9,7 +10,14 @@ export default class GithubServiceRoute extends Route {
     constructor() {
         super();
         this.router.get('/callback', authorization, this.callback);
+        this.router.get('/list', authorization, this.list);
         this.router.get('/', this.login);
+    }
+
+    private list(req: express.Request, res: express.Response) {
+        new ServiceController().getTokensForService(req['user']['uuid'], 'github', () => {
+          
+        }, err => {});
     }
 
     private callback(req: express.Request, res: express.Response) {
@@ -35,7 +43,6 @@ export default class GithubServiceRoute extends Route {
     }
 
     private login(req: express.Request, res: express.Response) {
-        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_SERVICES_CLIENT_ID}`);
+        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_SERVICES_CLIENT_ID}&scope=repo%20admin:repo_hook`);
     }
-
 }
