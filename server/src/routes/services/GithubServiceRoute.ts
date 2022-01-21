@@ -7,6 +7,7 @@ import axios from "axios";
 
 import ServiceController, {TokenData} from "../../controllers/ServiceController";
 import {authorization} from "../../middlewares/AuthMiddleware";
+import GithubService from "../../services/GithubService";
 
 export default class GithubServiceRoute extends Route {
 
@@ -14,10 +15,17 @@ export default class GithubServiceRoute extends Route {
         super();
         this.router.get('/login', this.login);
         this.router.get('/callback', authorization, this.callback);
+        this.router.get('/list', authorization, this.list);
+    }
+
+    private list(req: express.Request, res: express.Response) {
+        new ServiceController().getTokensForService(req['user']['uuid'], 'github', () => {
+
+        }, err => {});
     }
 
     private callback(req: express.Request, res: express.Response) {
-        let {code} = req.query;
+        let {code, installation_id} = req.query;
 
         axios.post(`https://github.com/login/oauth/access_token`, {
             client_id: process.env.GITHUB_SERVICES_CLIENT_ID,
@@ -41,6 +49,7 @@ export default class GithubServiceRoute extends Route {
                 token: {
                     access_token: access_token,
                     refresh_token: refresh_token,
+                    installation_id
                 }
             }
             new ServiceController().registerUserToken(req['user']['uuid'], token, () => {
@@ -56,7 +65,7 @@ export default class GithubServiceRoute extends Route {
     }
 
     private login(req: express.Request, res: express.Response) {
-        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_SERVICES_CLIENT_ID}`);
+        return res.redirect(`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_SERVICES_CLIENT_ID}&scope=repo%20admin:repo_hook`);
     }
 
 }

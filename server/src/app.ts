@@ -2,6 +2,7 @@ import {Express} from "express";
 
 const express = require('express');
 const dotenv = require('dotenv');
+
 import http = require("http");
 import cors = require('cors');
 import bodyParser = require('body-parser');
@@ -11,9 +12,11 @@ import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
-import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
+import GithubWebhook from "./webhooks/GithubWebhook";
+
+const { Webhooks, createNodeMiddleware } = require("@octokit/webhooks");
 
 const DEFAULT_PORT = 8080;
 
@@ -28,6 +31,7 @@ export default class App {
         this.port =  Number.parseInt(process.env.PORT) || DEFAULT_PORT;
         this.app = express();
         this.initMiddlewares();
+        this.initWebhooks();
         this.initRoutes();
         this.server = http.createServer(this.app);
     }
@@ -40,6 +44,12 @@ export default class App {
         this.app.use(cors())
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(bodyParser.json());
+    }
+
+    private initWebhooks(): void {
+        let github = new GithubWebhook();
+        this.app.use(createNodeMiddleware(github.getWebhooks()));
+        github.init();
     }
 
     private initRoutes(): void  {

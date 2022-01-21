@@ -1,19 +1,21 @@
 export enum ActionType {
+    github_repository_push,
     GMAIL_RECEIVE_EMAIL,
     DISCORD_GET_CHANNEL_MESSAGE
 }
 
 export enum ReactionType {
-    DISCORD_SEND_MESSAGE
+    discord_send_message,
+    discord_create_channel
 }
 
 export interface Action {
-    type: string,
     parameters: object[]
 }
 
 export interface Reaction {
     type: ReactionType,
+    tokenKey: string,
     parameters: object[],
 }
 
