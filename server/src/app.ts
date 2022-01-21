@@ -18,7 +18,6 @@ import AppletRoute from "./routes/applets/AppletRoute";
 import GithubWebhook from "./webhooks/GithubWebhook";
 
 const { createNodeMiddleware } = require("@octokit/webhooks");
-import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 

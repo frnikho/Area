@@ -1,9 +1,9 @@
 import Route from "../../Route";
 import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
-import GithubService from "../../services/GithubService";
 
 import ServiceRoute from "./ServiceRoute";
+import ServiceController from "../../controllers/ServiceController";
 
 export default class GithubServiceRoute extends Route {
 
@@ -16,7 +16,7 @@ export default class GithubServiceRoute extends Route {
 
     private list(req: express.Request, res: express.Response) {
         new ServiceController().getTokensForService(req['user']['uuid'], 'github', () => {
-          
+
         }, err => {});
     }
 
