@@ -63,13 +63,18 @@ export default function LoginPage(props) {
                             Log in
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Button
-                                onClick={props.onClickGoogleLogin}
-                                color={"error"}
-                                variant="contained"
-                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                <FaGoogle />
-                            </Button>
+                            <GoogleLogin
+                                clientId={process.env.GOOGLE_CLIENT_ID}
+                                render={renderProps => (
+                                    <FaGoogle onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                                        Log In
+                                    </FaGoogle>
+                                )}
+                                buttonText="Login"
+                                onSuccess={props.onClickGoogleLogin}
+                                onFailure={props.onClickGoogleLogin}
+                                cookiePolicy={'single_host_origin'}
+                            />
                             <Box sx={{ padding: 1 }} />
                             <Button
                                 onClick={props.onClickGithubLogin}

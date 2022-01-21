@@ -1,5 +1,8 @@
 import React from "react";
 import LoginPage from "../../Views/Auth/LoginPage.js"
+// import Database from "../../Models/Auth/DataBase"
+import Github from "../../Models/Auth/Github.js"
+import Google from "../../Models/Auth/Google.js"
 
 export default class Login extends React.Component {
 
@@ -40,12 +43,31 @@ export default class Login extends React.Component {
         this.setState({ notification: value });
     }
 
-    onClickGoogleLogin() {
+    onClickGoogleLogin(response) {
         console.log("google")
+
+        if (response.error) {
+            this.setNotification({ message: "Error with google", show: true, type: "error" });
+        } else {
+            Google.connect();
+        }
     }
 
-    onClickGithubLogin(data) {
+    onClickGithubLogin() {
         console.log("github");
+
+        return (
+            <OAuth2Login
+                authorizationUrl="https://github.com/login/oauth/authorize"
+                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                responseType="code"
+                scope={"user:email"}
+                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                onSuccess={Github.connect()}
+                onFailure={(abc) => console.error(abc)}
+                buttonText={"Github"}
+            />
+        )
     }
 
     handleEmailChange(value) {
