@@ -7,8 +7,8 @@ export default class Google extends Model {
         super();
     }
 
-    Connect() {
-        app.post(`/auth/github/code`, {
+    Connect(data) {
+        app.post(`/auth/Google/code`, {
             code: data['code']
         }).then((response) => {
             // if (response.data)

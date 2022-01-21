@@ -7,7 +7,7 @@ COPY public /app/public
 COPY src /app/src
 COPY .env /app/.env
 
-RUN npm install
+RUN npm install --force
 RUN npm install -g serve
 
 RUN npm run build
