@@ -1,6 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
+  "description": "YEP's web client",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",

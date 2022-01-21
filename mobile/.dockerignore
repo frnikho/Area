@@ -1,3 +1,7 @@
 node_modules
+android/.gradle/
+android/app/build/
+ios/
+__tests__
 
-!/node/node_modules/react-native/react.gradle
+# !/node/node_modules/react-native/react.gradle
