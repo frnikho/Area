@@ -17,9 +17,13 @@ import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
 import GithubWebhook from "./webhooks/GithubWebhook";
 
+const SmeeClient = require('smee-client')
 const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
+import DiscordWebhook from "./webhooks/DiscordWebhook";
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const DEFAULT_PORT = 8080;
 
@@ -40,7 +44,7 @@ export default class App {
         this.initMiddlewares();
         this.initWebhooks();
         this.initRoutes();
-        this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate}, this.app);
+        this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false}, this.app);
     }
 
     private initConfig(): void {
@@ -54,8 +58,18 @@ export default class App {
     }
 
     private initWebhooks(): void {
+        const smee = new SmeeClient({
+            source: 'https://smee.io/FCdyd6j7WO0JTMa',
+            target: 'https://localhost:8080/api/discord/webhook',
+            logger: console
+        })
+
+        const events = smee.start()
+
         let github = new GithubWebhook();
+        let discord = new DiscordWebhook();
         this.app.use(createNodeMiddleware(github.getWebhooks()));
+        this.app.use(discord.createMiddleware());
         github.init();
     }
 
