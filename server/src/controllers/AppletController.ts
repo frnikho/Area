@@ -14,18 +14,18 @@ type error = (error: string) => void;
 export default class AppletController {
 
     public callReactions(applet: Applet, ingredients: Ingredient[], end: error) {
-        console.log(ingredients);
-        applet.reactions.forEach((reaction) => {
+        let reactions = JSON.parse(<any>applet.reactions);
+        reactions.forEach((reaction) => {
             new ServiceController().getTokenByKeyAndService(applet.user_uuid, ReactionType[reaction.type], reaction.tokenKey, (key) => {
                 if (key === undefined)
                     return;
-
-            }, end)
+                console.log(key);
+            }, (abc) => console.log("abc"));
         });
     }
 
     public registerApplets(applet: Applet, userUuid: string, success: successGet, error: error) {
-        DBService.queryValues(`INSERT INTO applets (user_uuid, action, action_type, reactions, enable) VALUES (?, ?, ?, ?, ?) RETURNING uuid, user_uuid, action, action_type, reactions, updated_at, enable, created_at`, [userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1'], (result) => {
+        DBService.queryValues(`INSERT INTO applets (user_uuid, action, action_type, reactions, enable, action_key) VALUES (?, ?, ?, ?, ?, ?) RETURNING uuid, user_uuid, action, action_type, reactions, updated_at, enable, created_at, action_key`, [userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1', applet?.action_key], (result) => {
             result[0]['action'] = JSON.parse(result[0]['action']);
             result[0]['reactions'] = JSON.parse(result[0]['reactions']);
             return success(result[0]);

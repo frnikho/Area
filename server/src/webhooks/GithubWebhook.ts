@@ -28,18 +28,13 @@ export default class GithubWebhook {
                 let repository = parameters.filter((param) => param['name'] === 'repository_name')[0];
 
                 if (repository['value'] === repo_name) {
-                    console.log("");
                     appletController.callReactions(applet, ingredientsHook(data.payload, ActionType.github_repository_push),(error) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log("successful call applets reactions !");
-                        }
-                    }, )
+
+                    });
                 }
             });
         }, (err) => {
-            console.log(err)
+            console.log("Error", err);
         });
     }
 

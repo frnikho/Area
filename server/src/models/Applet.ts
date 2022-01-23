@@ -5,6 +5,14 @@ export enum ActionType {
     DISCORD_GET_CHANNEL_MESSAGE
 }
 
+const githubPushData: hookFunc[] = [{type: ActionType.github_repository_push, serviceName: 'github'}]
+
+type hookFunc = {type: ActionType, serviceName: string}
+
+export const getReactionService = (type: ReactionType) => {
+
+}
+
 export enum ReactionType {
     discord_send_message,
     discord_create_channel
@@ -21,7 +29,7 @@ export interface Action {
 
 export interface Reaction {
     type: ReactionType,
-    tokenKey: string,
+    token_key: string,
     parameters: object[],
 }
 

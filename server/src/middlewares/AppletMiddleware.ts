@@ -77,7 +77,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         })
         service.reactions.forEach((serviceReaction) => {
             reactions.filter((reaction) => ReactionType[reaction.type] === ReactionType[serviceReaction.type]).forEach((reaction) => {
-                let reactionData = {type: reaction.type, token: reaction.tokenKey, missing: [], good: []};
+                let reactionData = {type: reaction.type, token_key: reaction.token_key, missing: [], good: []};
                 serviceReaction.parameters.forEach((params) => {
                     const {name, type, required}: {name: string, type: string, required: boolean} = params;
                     let p = reaction.parameters.filter((p) => p['name'] === name)[0];
@@ -105,7 +105,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         reactions: applets.reactions.map((reaction) => {
             return {
                 type: reaction['type'],
-                tokenKey: reaction['token'],
+                token_key: reaction['token_key'],
                 parameters: reaction['good'],
             }
         }),

@@ -19,6 +19,7 @@ export default class DBService {
             }).then(async () => {
                 await conn.end();
             }).catch((err) => {
+                console.log(err);
                 error(Errors.queryError(err.code));
             })
         }).catch((err) => {

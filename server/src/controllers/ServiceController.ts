@@ -59,10 +59,11 @@ export default class ServiceController {
 
     public getTokenByKeyAndService(userUuid: string, service: string, key: string, success: (token: string | undefined) => void, error: error) {
         this.getTokensForService(userUuid, service, (tokens) => {
+            console.log(tokens);
             let good = tokens.filter((token) => token.key === key);
             if (good.length === 0)
-                return (0);
-            return (good[0]);
+                return success(undefined);
+            return success(good[0]);
         }, error);
     }
 
