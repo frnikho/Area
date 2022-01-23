@@ -13,6 +13,7 @@ export default class ServiceRoute {
     public request(url: string, body, header, userUUID:string, tokenType: string, success: token, errorFunc: error): void {
         axios.post(url, body, header).then((response) => {
             let {error, access_token, refresh_token} = response.data;
+            console.log(response.data);
             if (error)
                 return errorFunc(error);
 
