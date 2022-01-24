@@ -1,16 +1,11 @@
-const { WebClient } = require("@slack/web-api");
+import SlackBot from "../../bots/SlackBot";
 
 export default class SlackService {
 
-    private readonly client;
-
-    constructor() {
-        this.client = new WebClient(process.env.SLACK_BOT_TOKEN)
-    }
-
     public async SendMessageToChannel(channelId : string, message : string) {
         try {
-            const result = await this.client.chat.postMessage({channel: channelId, text: message});
+            const result = await SlackBot.getClient().chat.postMessage({channel: channelId, text: message});
+            console.log(result);
         } catch (error) {
             console.log(error);
         }

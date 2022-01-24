@@ -23,6 +23,7 @@ import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
 import {RouteNotFoundMiddleware} from "./middlewares/RouteNotFoundMiddleware";
 import AboutRoute from "./routes/AboutRoute";
+import SlackBot from "./bots/SlackBot";
 
 const DEFAULT_PORT = 8080;
 
@@ -66,6 +67,7 @@ export default class App {
     private initBot(): void {
         let discord = new DiscordBot();
         discord.login();
+        let slack = new SlackBot();
     }
 
     private initRoutes(): void  {
