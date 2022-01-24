@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
-import Login from "./Controllers/Auth/Login";
-import Register from "./Controllers/Auth/Register";
+import ControllerLogin from "./Controllers/Auth/ControllerLogin";
+import ControllerRegister from "./Controllers/Auth/ControllerRegister";
+import ControllerDescription from "./Controllers/ControllerDescription.js"
 import Home from "./Controllers/Home";
-import {AuthContext} from "./Contexts/AuthContext";
-import {withCookies} from "react-cookie";
+import { AuthContext } from "./Contexts/AuthContext";
+import { withCookies } from "react-cookie";
 
 class App extends React.Component {
 
@@ -19,7 +20,7 @@ class App extends React.Component {
 
     componentDidMount() {
         const auth = this.context;
-        const {cookies} = this.props;
+        const { cookies } = this.props;
         const token = cookies.get('session');
         auth.loginFromCache(token, (user) => {
             this.setAppRoutes();
@@ -31,10 +32,10 @@ class App extends React.Component {
     setAppRoutes() {
         this.setState({
             data: (<Routes>
-                <Route path='/' element={<Home/>} />
+                <Route path='/' element={<Home />} />
                 <Route path="auth">
-                    <Route path={"login"} element={<Login />} />
-                    <Route path={"register"} element={<Register />} />
+                    <Route path={"login"} element={<ControllerLogin />} />
+                    <Route path={"register"} element={<ControllerRegister />} />
                 </Route>
             </Routes>)
         })
@@ -44,11 +45,12 @@ class App extends React.Component {
         return (
             <div>
                 {this.state.data !== undefined ? <Routes>
-                    <Route path='/' element={<Home/>} />
+                    <Route path='/' element={<Home />} />
                     <Route path="auth">
-                        <Route path={"login"} element={<Login />} />
-                        <Route path={"register"} element={<Register />} />
+                        <Route path={"login"} element={<ControllerLogin />} />
+                        <Route path={"register"} element={<ControllerRegister />} />
                     </Route>
+                    <Route path={"description"} element={<ControllerDescription />} />
                 </Routes> : null}
             </div>
         );

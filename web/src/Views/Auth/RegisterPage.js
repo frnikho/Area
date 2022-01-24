@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
+import style from "../../Resources/CSS/RegisterPage.css";
 
 const theme = createTheme({
     palette: {
@@ -21,9 +22,9 @@ export default function RegisterPage(props) {
             <div className="titleLeft">
                 Epitech 2022 Project
             </div>
-            <div className="titleRight">
+            <button className="buttonRight" onClick={() => props.setRedirectUrl("/description")}>
                 Area
-            </div>
+            </button>
             <div className="space" />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

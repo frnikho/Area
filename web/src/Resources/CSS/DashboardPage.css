@@ -8,9 +8,18 @@
   background-color: #8c8c8c;
 }
 
+.titleRight {
+  font-family: Dongle;
+  font-size: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  justify-content: center;
+  margin-right: 30px;
+}
+
 .buttonRight {
-  padding-left: 12px;
-  padding-right: 12px;
   font-family: Dongle;
   background: black;
   color: white;
@@ -23,17 +32,6 @@
   justify-content: center;
   margin-right: 30px;
   margin-top: 10px;
-}
-
-.titleRight {
-  font-family: Dongle;
-  font-size: 60px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: center;
-  justify-content: center;
-  margin-right: 30px;
 }
 
 .titleLeft {

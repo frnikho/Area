@@ -8,7 +8,6 @@ import { GoogleLogin } from 'react-google-login';
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
 
-// eslint-disable-next-line
 import style from "../../Resources/CSS/LoginPage.css";
 
 const theme = createTheme({
@@ -24,9 +23,9 @@ export default function LoginPage(props) {
             <div className="titleLeft">
                 Epitech 2022 Project
             </div>
-            <div className="titleRight">
+            <button className="buttonRight" onClick={() => props.setRedirectUrl("/description")}>
                 Area
-            </div>
+            </button>
             <div className="space" />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
