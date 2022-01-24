@@ -38,7 +38,7 @@ export default class UserController {
                    return error('Invalid password !');
                this.getByEmail(email, (user) => {
                    if (user === undefined)
-                       return error('An error occurred ! please try again later ');
+                       return error('An error occurred ! please try again later');
                    return success(user);
                })
             });
