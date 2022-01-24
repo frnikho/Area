@@ -1,3 +1,52 @@
+export const DiscordAppletActionsAbout = [
+    {
+        name: "When a Discord chanel created",
+        description: '',
+        type: 'discord_channel_created',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            },
+            {
+                name: "user_id",
+                type: 'string',
+                required: false,
+            }
+        ]
+    },
+    {
+        name: "When receive a private message",
+        description: '',
+        type: 'discord_private_message_received',
+        parameters: [
+            {
+                name: 'user_id',
+                type: 'string',
+                required: true,
+            }
+        ]
+    },
+    {
+        name: "When receive a guild message",
+        description: '',
+        type: 'discord_guild_message_received',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            },
+            {
+                name: "user_id",
+                type: 'string',
+                required: false,
+            }
+        ]
+    }
+]
+
 export const GithubAppletActionsAbout =
     [
         {
@@ -15,6 +64,7 @@ export const GithubAppletActionsAbout =
         {
             name: 'New repository created',
             type: 'github_repository_created',
+            description: '',
             parameters: [
                 {
                     name: "application_id",
@@ -25,32 +75,51 @@ export const GithubAppletActionsAbout =
         }
     ]
 
-export const GithubAppletReactionsAbout =
+export const DiscordAppletReactionsAbout =
     [
         {
-            name: 'Discord send channel message',
-            description: 'Send a message into a discord channel',
-            type: 'discord_send_message',
+            name: 'Send chanel message',
+            description: '',
+            type: 'discord_send_chanel_message',
             parameters: [
+                {
+                    name: 'chanel_id',
+                    type: 'string',
+                    required: true
+                },
                 {
                     name: 'text',
-                    type: 'string',
-                    required: true,
-                },
-            ]
-        },
-        {
-            name: 'Discord create a channel',
-            description: 'Create a channel',
-            type: 'discord_create_channel',
-            parameters: [
-                {
-                    name: 'title',
                     type: 'string',
                     required: true,
                 }
             ]
         }
+    ]
+
+export const SlackAppletReactionsAbout =
+    [
+        {
+            name: 'Send chanel message',
+            description: '',
+            type: 'slack_send_chanel_message',
+            parameters: [
+                {
+                    name: 'chanel_id',
+                    type: 'string',
+                    required: true
+                },
+                {
+                    name: 'text',
+                    type: 'string',
+                    required: true,
+                }
+            ]
+        }
+    ]
+
+export const GithubAppletReactionsAbout =
+    [
+
     ]
 
 export const AppAbout = {
@@ -63,6 +132,15 @@ export const AppAbout = {
             name: "Github",
             actions: GithubAppletActionsAbout,
             reactions: GithubAppletReactionsAbout
+        }, {
+            name: "Discord",
+            actions: DiscordAppletActionsAbout,
+            reactions: DiscordAppletReactionsAbout,
+        }, {
+
+            name: "Slack",
+            actions: [],
+            reactions: SlackAppletReactionsAbout,
         }]
     }
 }

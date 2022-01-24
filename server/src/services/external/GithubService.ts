@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {GithubUser} from "../models/GithubUser";
-import {TokenData} from "../controllers/ServiceController";
+import {GithubUser} from "../../models/GithubUser";
+import {TokenData} from "../../controllers/ServiceController";
 
 type successRefresh = (data: object) => void;
 type error = (error: string) => void;

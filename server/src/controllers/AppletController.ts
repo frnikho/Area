@@ -2,7 +2,8 @@ import {ActionType, Applet, Ingredient, ReactionType} from "../models/Applet";
 import DBService from "../services/DBService";
 import App from "../app";
 import * as randomstring from "randomstring";
-import ServiceController from "./ServiceController";
+import ServiceController, {TokenData} from "./ServiceController";
+import ReactionManager from "../managers/ReactionManager";
 
 type successGet = (applet: Applet) => void;
 type successGets = (applet: Applet[]) => void;
@@ -16,10 +17,15 @@ export default class AppletController {
     public callReactions(applet: Applet, ingredients: Ingredient[], end: error) {
         let reactions = JSON.parse(<any>applet.reactions);
         reactions.forEach((reaction) => {
-            new ServiceController().getTokenByKeyAndService(applet.user_uuid, ReactionType[reaction.type], reaction.tokenKey, (key) => {
+            let service = reaction.type.split('_')[0];
+            new ServiceController().getTokenByKeyAndService(applet.user_uuid, service, reaction.token_key, (key) => {
                 if (key === undefined)
                     return;
-                console.log(key);
+                ReactionManager.get().callReaction(reaction, ingredients, key, () => {
+                    console.log("All reactions called !");
+                }, () => {
+                    console.log("An error occurred when call a reaction !");
+                });
             }, (abc) => console.log("abc"));
         });
     }

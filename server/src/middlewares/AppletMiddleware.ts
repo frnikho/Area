@@ -68,7 +68,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
                     const {name, type, required}: {name: string, type: string, required: boolean} = params;
                     let p = action.parameters.filter((p) => p['name'] === name)[0];
 
-                    if (p === undefined && required)
+                    if (p === undefined)
                         applets.action.missing.push(name);
                     else
                         applets.action.good.push(p);

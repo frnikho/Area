@@ -20,8 +20,9 @@ import GithubWebhook from "./webhooks/GithubWebhook";
 const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
-import DiscordWebhook from "./webhooks/DiscordWebhook";
+import DiscordBot from "./bots/DiscordBot";
 import {RouteNotFoundMiddleware} from "./middlewares/RouteNotFoundMiddleware";
+import AboutRoute from "./routes/AboutRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -59,8 +60,8 @@ export default class App {
         let github = new GithubWebhook();
         this.app.use(createNodeMiddleware(github.getWebhooks()));
         github.init();
-        let discord = new DiscordWebhook();
-        discord.loginBot();
+        let discord = new DiscordBot();
+        discord.login();
     }
 
     private initRoutes(): void  {
@@ -81,6 +82,9 @@ export default class App {
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
+
+        // ABOUT ROUTE
+        new AboutRoute().register(this.app, '/about.json');
 
         // 404 ROUTE
         //this.app.use('*', RouteNotFoundMiddleware);

@@ -57,10 +57,12 @@ export default class ServiceController {
         }, error);
     }
 
-    public getTokenByKeyAndService(userUuid: string, service: string, key: string, success: (token: string | undefined) => void, error: error) {
+    public getTokenByKeyAndService(userUuid: string, service: string, key: string, success: (token: TokenData | undefined) => void, error: error) {
+        if (service === undefined)
+            return error("Invalid reaction service type !");
         this.getTokensForService(userUuid, service, (tokens) => {
-            console.log(tokens);
-            let good = tokens.filter((token) => token.key === key);
+            let obj = JSON.parse(tokens[0][service]);
+            let good = obj.filter((token) => token.key === key);
             if (good.length === 0)
                 return success(undefined);
             return success(good[0]);

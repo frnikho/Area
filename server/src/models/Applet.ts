@@ -1,6 +1,9 @@
 export enum ActionType {
     github_repository_push,
     github_repository_created,
+    discord_channel_created,
+    discord_private_message_received,
+    discord_guild_message_received,
     GMAIL_RECEIVE_EMAIL,
     DISCORD_GET_CHANNEL_MESSAGE
 }
@@ -14,7 +17,7 @@ export const getReactionService = (type: ReactionType) => {
 }
 
 export enum ReactionType {
-    discord_send_message,
+    discord_send_chanel_message,
     discord_create_channel
 }
 
