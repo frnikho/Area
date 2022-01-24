@@ -5,25 +5,29 @@ import LoginPage from "../../Views/Auth/LoginPage.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import Github from "../../Models/Auth/Github.js"
 import Google from "../../Models/Auth/Google.js"
+import {AuthContext} from "../../Contexts/AuthContext";
+import {withCookies} from "react-cookie";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
+
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
         this.state = {
-            email: undefined,
-            password: undefined,
             notification: undefined,
+            redirectUrl: undefined,
         }
-        this.handleEmailChange = this.handleEmailChange.bind(this)
-        this.handlePasswordChange = this.handlePasswordChange.bind(this)
+        this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
-
         this.setNotification = this.setNotification.bind(this)
-
         this.loginDb = this.loginDb.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
+    }
+
+    componentDidMount() {
+        this.auth = this.context;
     }
 
     handleSubmit(event) {
@@ -35,8 +39,8 @@ export default class Login extends React.Component {
         if (!data.has('password') || data.get('password') === "")
             return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
 
-        this.handleEmailChange(data.get('email'))
-        this.handleEmailChange(data.get('password'))
+/*        this.handleEmailChange(data.get('email'))
+        this.handleEmailChange(data.get('password'))*/
 
         this.loginDb(data.get('email'), data.get('password'));
     }
@@ -46,7 +50,7 @@ export default class Login extends React.Component {
     }
 
     onClickGoogleLogin(response) {
-        console.log("google")
+        console.log(this.auth);
 
         console.log(response)
         if (response.error) {
@@ -66,24 +70,25 @@ export default class Login extends React.Component {
                 responseType="code"
                 scope={"user:email"}
                 redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                onSuccess={Github.connect()}
+                onSuccess={() => Github.connect()}
                 onFailure={(abc) => console.error(abc)}
                 buttonText={"Github"}
             />
         )
     }
 
-    loginDb() {
-        console.log("db");
-
-    }
-
-    handleEmailChange(value) {
-        this.setState({ email: value })
-    }
-
-    handlePasswordChange(value) {
-        this.setState({ password: value })
+    loginDb(email, password) {
+        const {cookies} = this.props;
+        this.auth.loginFromWeb({email: email, password: password}, (token) => {
+            console.log("Success !");
+            cookies.set('session', token, {path: '/'});
+            this.setState({
+                redirectUrl: '/',
+            });
+        }, (err) => {
+            console.log(err);
+            console.log("Error !");
+        });
     }
 
     render() {
@@ -93,3 +98,5 @@ export default class Login extends React.Component {
     }
 
 }
+
+export default withCookies(Login);

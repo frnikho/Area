@@ -4,10 +4,10 @@ import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormContr
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import { GoogleLogin } from 'react-google-login';
+import {Navigate} from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
-import style from "../../Resources/CSS/LoginPage.css";
 
 const theme = createTheme({
     palette: {
@@ -19,6 +19,7 @@ export default function LoginPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
+            {props.state.redirectUrl !== undefined ? <Navigate to={props.state.redirectUrl}/> : null}
             <div className="titleLeft">
                 Epitech 2022 Project
             </div>

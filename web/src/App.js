@@ -2,20 +2,57 @@ import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Controllers/Auth/Login";
 import RegisterPage from "./Views/Auth/RegisterPage";
+import Home from "./Controllers/Auth/Home";
+import {AuthContext} from "./Contexts/AuthContext";
+import {withCookies} from "react-cookie";
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+    static contextType = AuthContext;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: undefined
+        }
+    }
+
+    componentDidMount() {
+        const auth = this.context;
+        const {cookies} = this.props;
+        const token = cookies.get('session');
+        auth.loginFromCache(token, (user) => {
+            this.setAppRoutes();
+        }, () => {
+            this.setAppRoutes();
+        })
+    }
+
+    setAppRoutes() {
+        this.setState({
+            data: (<Routes>
+                <Route path='/' element={<Home/>} />
+                <Route path="auth">
+                    <Route path={"login"} element={<Login />} />
+                    <Route path={"register"} element={<RegisterPage />} />
+                </Route>
+            </Routes>)
+        })
+    }
 
     render() {
         return (
-            <Routes>
-                <Route path={"/"}>
-                    <Route path='' element={<Navigate to ="/auth/login" />} />
-                    <Route path={"auth"}>
+            <div>
+                {this.state.data !== undefined ? <Routes>
+                    <Route path='/' element={<Home/>} />
+                    <Route path="auth">
                         <Route path={"login"} element={<Login />} />
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>
-                </Route>
-            </Routes>
+                </Routes> : null}
+            </div>
         );
     }
 }
+
+export default withCookies(App);

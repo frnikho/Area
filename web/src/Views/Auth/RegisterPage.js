@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
