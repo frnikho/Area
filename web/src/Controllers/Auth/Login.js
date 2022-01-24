@@ -49,15 +49,20 @@ class Login extends React.Component {
         this.setState({ notification: value });
     }
 
-    onClickGoogleLogin(response) {
-        console.log(this.auth);
+    onClickGoogleLogin() {
 
-        console.log(response)
-        if (response.error) {
-            this.setNotification({ message: "Error with google", show: true, type: "error" });
-        } else {
-            Google.connect();
-        }
+        return (
+            <OAuth2Login
+                authorizationUrl="https://github.com/login/oauth/authorize"
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                responseType="code"
+                scope={"user:email"}
+                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+                onSuccess={Google.connect()}
+                onFailure={(abc) => console.error(abc)}
+                buttonText={"Github"}
+            />
+        )
     }
 
     onClickGithubLogin() {

@@ -2,6 +2,7 @@ import {Express} from "express";
 
 const express = require('express');
 const dotenv = require('dotenv');
+
 import cors = require('cors');
 import fs = require("fs");
 import https = require("https");
@@ -12,10 +13,13 @@ import VerifyEmailRoute from "./routes/auth/VerifyEmailRoute";
 import GithubLoginRoute from "./routes/auth/oauth/GithubLoginRoute";
 import MeRoute from "./routes/users/MeRoute";
 import GoogleLoginRoute from "./routes/auth/oauth/GoogleLoginRoute";
-import GithubService from "./services/GithubService";
 import GithubServiceRoute from "./routes/services/GithubServiceRoute";
 import AppletRoute from "./routes/applets/AppletRoute";
-import SlackLoginRoute from "./routes/auth/oauth/SlackLoginRoute";
+import GithubWebhook from "./webhooks/GithubWebhook";
+
+const { createNodeMiddleware } = require("@octokit/webhooks");
+import SlackServiceRoute from "./routes/services/SlackServiceRoute";
+import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -34,6 +38,7 @@ export default class App {
         this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
         this.app = express();
         this.initMiddlewares();
+        this.initWebhooks();
         this.initRoutes();
         this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate}, this.app);
     }
@@ -48,6 +53,12 @@ export default class App {
         this.app.use(bodyParser.json());
     }
 
+    private initWebhooks(): void {
+        let github = new GithubWebhook();
+        this.app.use(createNodeMiddleware(github.getWebhooks()));
+        github.init();
+    }
+
     private initRoutes(): void  {
         // AUTH ROUTES
         new RegisterRoute().register(this.app, '/auth/register');
@@ -55,13 +66,14 @@ export default class App {
         new VerifyEmailRoute().register(this.app, '/auth/verify');
         new GithubLoginRoute().register(this.app, '/auth/github');
         new GoogleLoginRoute().register(this.app, '/auth/google');
-        new SlackLoginRoute().register(this.app, '/auth/slack');
 
         // USERS ROUTES
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/github');
+        new GithubServiceRoute().register(this.app, '/services/auth/github');
+        new SlackServiceRoute().register(this.app, '/services/auth/slack');
+        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');

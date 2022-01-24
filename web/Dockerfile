@@ -2,16 +2,19 @@ FROM node:16-alpine3.13
 
 WORKDIR /app
 
-COPY package.json /app/package.json
-COPY public /app/public
-COPY src /app/src
-COPY .env /app/.env
+# Copy src
+COPY package.json package.json
+COPY public public
+COPY src src
+COPY .env .env
 
 RUN npm install --force
 RUN npm install -g serve
 
+#Build
 RUN npm run build
 
 EXPOSE 8081
 
+# RUn
 CMD ["serve", "-s", "build", "-p", "8081"]
