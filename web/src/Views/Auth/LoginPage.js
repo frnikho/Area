@@ -64,18 +64,30 @@ export default function LoginPage(props) {
                             Log in
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <GoogleLogin
-                                clientId={process.env.GOOGLE_CLIENT_ID}
+                            {/* <GoogleLogin
+                                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                                 render={renderProps => (
-                                    <FaGoogle onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                                        Log In
-                                    </FaGoogle>
+                                    <Button
+                                        onClick={renderProps.onClick}
+                                        color={"error"}
+                                        variant="contained"
+                                        sx={{ mt: 0, mb: 2, py: 1.5 }}>
+                                        <FaGoogle onClick={renderProps.onClick} />
+                                    </Button>
                                 )}
                                 buttonText="Login"
                                 onSuccess={props.onClickGoogleLogin}
                                 onFailure={props.onClickGoogleLogin}
                                 cookiePolicy={'single_host_origin'}
-                            />
+                            /> */}
+
+                            <Button
+                                onClick={props.onClickGithubLogin}
+                                color={"secondary"}
+                                variant="contained"
+                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
+                                <FaGithubSquare />
+                            </Button>
                             <Box sx={{ padding: 1 }} />
                             <Button
                                 onClick={props.onClickGithubLogin}
