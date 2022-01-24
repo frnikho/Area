@@ -15,14 +15,6 @@ export class ReactionEnd {
         this._success = success;
         this._error = error;
     }
-
-    get success(): boolean {
-        return this._success;
-    }
-
-    get error(): string {
-        return this._error;
-    }
 }
 
 export default class ReactionManager {
