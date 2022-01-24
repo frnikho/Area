@@ -43,6 +43,7 @@ export default class App {
         this.initMiddlewares();
         this.initWebhooks();
         this.initRoutes();
+        this.initBot();
         this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false}, this.app);
     }
 
@@ -60,6 +61,9 @@ export default class App {
         let github = new GithubWebhook();
         this.app.use(createNodeMiddleware(github.getWebhooks()));
         github.init();
+    }
+
+    private initBot(): void {
         let discord = new DiscordBot();
         discord.login();
     }

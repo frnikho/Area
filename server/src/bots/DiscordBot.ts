@@ -18,7 +18,7 @@ export default class DiscordBot {
         });
         DiscordBot.client.on("ready", () => {
             DiscordBot.client.user.setActivity("Generate some OP code :0", {type: "WATCHING"});
-            console.log("Bot online !");
+            console.log("Discord Bot is online !");
         })
         DiscordBot.client.on("messageCreate", this.onMessageCreated.bind(this));
         DiscordBot.client.on("channelCreate", this.onChannelCreated.bind(this));

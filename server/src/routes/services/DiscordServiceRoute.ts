@@ -39,8 +39,8 @@ export default class DiscordServiceRoute extends Route {
     private login(req: express.Request, res: express.Response) {
         return res.redirect("https://discord.com/api/oauth2/authorize?"
         + "client_id=" + process.env.DISCORD_SERVICES_CLIENT_ID + "&"
-        + "scope=bot&"
-        + "permissions=274877908992&"
+        + "scope=identify%20email%20guilds%20connections%20bot%20messages.read&"
+        + "permissions=8&"
         + "response_type=code");
     }
 }
