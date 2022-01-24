@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./Controllers/Auth/Login";
-import RegisterPage from "./Views/Auth/RegisterPage";
-import Home from "./Controllers/Auth/Home";
+import Register from "./Controllers/Auth/Register";
+import Home from "./Controllers/Home";
 import {AuthContext} from "./Contexts/AuthContext";
 import {withCookies} from "react-cookie";
 
@@ -34,7 +34,7 @@ class App extends React.Component {
                 <Route path='/' element={<Home/>} />
                 <Route path="auth">
                     <Route path={"login"} element={<Login />} />
-                    <Route path={"register"} element={<RegisterPage />} />
+                    <Route path={"register"} element={<Register />} />
                 </Route>
             </Routes>)
         })
@@ -47,7 +47,7 @@ class App extends React.Component {
                     <Route path='/' element={<Home/>} />
                     <Route path="auth">
                         <Route path={"login"} element={<Login />} />
-                        <Route path={"register"} element={<RegisterPage />} />
+                        <Route path={"register"} element={<Register />} />
                     </Route>
                 </Routes> : null}
             </div>

@@ -8,14 +8,6 @@ export default class Google extends Model {
     }
 
     Connect(data) {
-
-
-        console.log(response)
-        if (response.error) {
-            this.setNotification({ message: "Error with google", show: true, type: "error" });
-        } else {
-            Google.connect();
-        }
         app.post(`/auth/Google/code`, {
             code: data['code']
         }).then((response) => {

@@ -1,73 +1,95 @@
 import React from "react";
 import OAuth2Login from 'react-simple-oauth2-login';
 import RegisterPage from "../../Views/Auth/RegisterPage.js"
+import Github from "../../Models/Auth/Github.js"
+import Google from "../../Models/Auth/Google.js"
+import { AuthContext } from "../../Contexts/AuthContext";
+import { Navigate } from "react-router-dom";
+
 
 export default class Register extends React.Component {
+
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
         this.state = {
-            email: undefined,
-            password: undefined,
+            redirectUrl: undefined,
+            notification: undefined,
         }
 
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.onClickLogin = this.onClickLogin.bind(this);
+        this.cookies = props;
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.registerDb = this.registerDb.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
+        this.setNotification = this.setNotification.bind(this)
     }
 
-    onClickLogin() {
-        console.log("db")
-        // app.get('/auth/github').then((response) => {
-        //     console.log(response);
-        // })
+    componentDidMount() {
+        this.auth = this.context;
     }
 
-    onClickGoogleLogin() {
-        console.log("google")
+    setNotification(value) {
+        this.setState({ notification: value });
     }
 
-    onClickGithubLogin(data) {
-        console.log("github");
-        // app.post(`/auth/github/code`, {
-        //     code: data['code']
-        // }).then((response) => {
-        //     console.log(response.data);
-        // }).catch((err) => {
-        //     console.log(err.response);
-        // });
+    onClickGoogleLogin(response) {
+
+        if (response.error) {
+            // temporay
+            if (response.error !== "idpiframe_initialization_failed")
+                this.setNotification({ message: "Error with google", show: true, type: "error" });
+        } else {
+            Google.connect();
+        }
     }
 
-    handleEmailChange(event) {
-        this.setState({
-            email: event.target.value
-        })
+    registerDb(email, password) {
+        this.auth.register({ email: email, password: password }, () => {
+            this.setState({
+                redirectUrl: '/auth/login',
+            });
+        }, (err) => {
+            console.log(err);
+            console.log("Error !");
+        });
     }
 
-    handlePasswordChange(event) {
-        this.setState({
-            password: event.target.value
-        })
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        if (!data.has('email') || data.get('email') === "")
+            return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
+        if (!data.has('password') || data.get('password') === "")
+            return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
+        if (!data.has('confpassword') || data.get('confpassword') === "" || data.get('confpassword') !== data.get('password'))
+            return this.setNotification({ message: "passwords are not the same !", show: true, type: "error" });
+        this.registerDb(data.get('email'), data.get('password'));
     }
 
-    showLoginPopup() {
-        return (<OAuth2Login
-            authorizationUrl="https://github.com/login/oauth/authorize"
-            clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
-            responseType="code"
-            scope={"user:email"}
-            redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-            onSuccess={this.onResumeGithubLogin}
-            onFailure={(abc) => console.error(abc)}
-            buttonText={"Github"}
-        />)
+    onClickGithubLogin() {
+        return (
+            <OAuth2Login
+                authorizationUrl="https://github.com/login/oauth/authorize"
+                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                responseType="code"
+                scope={"user:email"}
+                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                onSuccess={() => Github.connect()}
+                onFailure={(abc) => console.error(abc)}
+                buttonText={"Github"}
+            />
+        )
     }
 
     render() {
         return (
-            <RegisterPage {...this}/>
+            <>
+                <RegisterPage {...this} />
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+            </>
         )
     }
 

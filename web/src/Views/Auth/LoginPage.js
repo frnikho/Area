@@ -4,10 +4,12 @@ import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormContr
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import { GoogleLogin } from 'react-google-login';
-import {Navigate} from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
+
+// eslint-disable-next-line
+import style from "../../Resources/CSS/LoginPage.css";
 
 const theme = createTheme({
     palette: {
@@ -19,7 +21,6 @@ export default function LoginPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            {props.state.redirectUrl !== undefined ? <Navigate to={props.state.redirectUrl}/> : null}
             <div className="titleLeft">
                 Epitech 2022 Project
             </div>
@@ -65,7 +66,7 @@ export default function LoginPage(props) {
                             Log in
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            {/* <GoogleLogin
+                            <GoogleLogin
                                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                                 render={renderProps => (
                                     <Button
@@ -73,22 +74,14 @@ export default function LoginPage(props) {
                                         color={"error"}
                                         variant="contained"
                                         sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                        <FaGoogle onClick={renderProps.onClick} />
+                                        <FaGoogle />
                                     </Button>
                                 )}
                                 buttonText="Login"
                                 onSuccess={props.onClickGoogleLogin}
                                 onFailure={props.onClickGoogleLogin}
                                 cookiePolicy={'single_host_origin'}
-                            /> */}
-
-                            <Button
-                                onClick={props.onClickGithubLogin}
-                                color={"secondary"}
-                                variant="contained"
-                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                <FaGithubSquare />
-                            </Button>
+                            />
                             <Box sx={{ padding: 1 }} />
                             <Button
                                 onClick={props.onClickGithubLogin}

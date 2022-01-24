@@ -50,7 +50,23 @@ class Auth extends React.Component {
         })
     }
 
-    register = () => {
+    register = ({email, password}, onSuccess, onError) => {
+        app.post(`/auth/register`, {
+            email: email,
+            password: password,
+        }).then((response) => {
+            let data = response.data;
+            if (data.success === true) {
+                onSuccess(data.token);
+            } else {
+                onError(data);
+            }
+        }).catch((err) => {
+            if (err.response === undefined)
+                onError(err);
+            else
+                onError(err.response);
+        })
 
     }
 

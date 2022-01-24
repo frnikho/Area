@@ -1,6 +1,6 @@
 import React from "react";
-import {AuthContext} from "../../Contexts/AuthContext";
-import HomePage from "../../Views/Auth/HomePage";
+import {AuthContext} from "../Contexts/AuthContext";
+import HomePage from "../Views/HomePage";
 
 export default class Home extends React.Component {
 

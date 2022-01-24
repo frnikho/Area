@@ -5,8 +5,10 @@ import LoginPage from "../../Views/Auth/LoginPage.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import Github from "../../Models/Auth/Github.js"
 import Google from "../../Models/Auth/Google.js"
-import {AuthContext} from "../../Contexts/AuthContext";
-import {withCookies} from "react-cookie";
+import { AuthContext } from "../../Contexts/AuthContext";
+import { withCookies } from "react-cookie";
+import { Navigate } from "react-router-dom";
+
 
 class Login extends React.Component {
 
@@ -38,10 +40,6 @@ class Login extends React.Component {
             return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
         if (!data.has('password') || data.get('password') === "")
             return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
-
-/*        this.handleEmailChange(data.get('email'))
-        this.handleEmailChange(data.get('password'))*/
-
         this.loginDb(data.get('email'), data.get('password'));
     }
 
@@ -49,24 +47,17 @@ class Login extends React.Component {
         this.setState({ notification: value });
     }
 
-    onClickGoogleLogin() {
-
-        return (
-            <OAuth2Login
-                authorizationUrl="https://github.com/login/oauth/authorize"
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                responseType="code"
-                scope={"user:email"}
-                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-                onSuccess={Google.connect()}
-                onFailure={(abc) => console.error(abc)}
-                buttonText={"Github"}
-            />
-        )
+    onClickGoogleLogin(response) {
+        if (response.error) {
+            // temporay
+            if (response.error !== "idpiframe_initialization_failed")
+                this.setNotification({ message: "Error with google", show: true, type: "error" });
+        } else {
+            Google.connect();
+        }
     }
 
     onClickGithubLogin() {
-        console.log("github");
 
         return (
             <OAuth2Login
@@ -83,10 +74,10 @@ class Login extends React.Component {
     }
 
     loginDb(email, password) {
-        const {cookies} = this.props;
-        this.auth.loginFromWeb({email: email, password: password}, (token) => {
+        const { cookies } = this.props;
+        this.auth.loginFromWeb({ email: email, password: password }, (token) => {
             console.log("Success !");
-            cookies.set('session', token, {path: '/'});
+            cookies.set('session', token, { path: '/' });
             this.setState({
                 redirectUrl: '/',
             });
@@ -98,7 +89,10 @@ class Login extends React.Component {
 
     render() {
         return (
-            <LoginPage {...this} />
+            <>
+                <LoginPage {...this} />
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+            </>
         );
     }
 
