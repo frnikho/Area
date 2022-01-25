@@ -7,8 +7,7 @@ import { GoogleLogin } from 'react-google-login';
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
-
-import useStyles from "../../Components/styleAuth.js"
+import useStyles from "../../Components/Styles/styleAuth.js"
 
 const theme = createTheme({
     palette: {

@@ -2,31 +2,9 @@ import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
 
 // eslint-disable-next-line
-import style from "../Resources/CSS/DashboardPage.css"
 import Card from "@material-ui/core/Card";
-import ServicePage from "./ServicePage.js"
-import { makeStyles } from "@material-ui/core/styles";
-
-// const useStyles = makeStyles({
-//     root: {
-//         width: "100%",
-//         height: "100%",
-//         display: "flex",
-//         flexDirection: "column"
-//     },
-//     header: {
-//         display: "flex",
-//         alignItems: "center",
-//         padding: "0.5rem"
-//     },
-//     spacer: {
-//         flexGrow: 1
-//     },
-//     body: {
-//         padding: "0.5rem",
-//         flexGrow: 1
-//     }
-// });
+import ControllerService from "../Controllers/ControllerService"
+import useStyles from "../Components/Styles/styleDashboard"
 
 const theme = createTheme({
     palette: {
@@ -62,23 +40,24 @@ export default function DashboardPage(props) {
         }
     ]
 
+    const classe = useStyles()
 
     return (
         <ThemeProvider theme={theme}>
-            <div className="titleLeft">
+            <div className={classe.titleLeft}>
                 Epitech 2022 Project
             </div>
-            <button className="buttonRight" onClick={() => props.setRedirectUrl("/description")}>
+            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
                 Area
             </button>
-            <div className="space" />
-            <div className="container">
+            <div className={classe.space} />
+            <div className={classe.container}>
                 My applets
             </div>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {applets.map((it) => (
-                        <ServicePage {... it.name}/>
+                        <ControllerService {... it.name}/>
                     ))}
                 </Grid>
             </Box>

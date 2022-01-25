@@ -1,5 +1,5 @@
-// import style from "../Resources/CSS/AuthFont.css";
-import { makeStyles } from "@material-ui/core/styles";
+import style from "../../Resources/CSS/Font.css";
+import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
     font: {
@@ -8,9 +8,13 @@ const useStyles = makeStyles({
     background: {
         backgroundColor: "#8c8c8c",
     },
+    container: {
+        margin: "0 auto",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+    },
     buttonRight: {
-        paddingKeft: "12px",
-        paddingRight: "12px",
         fontFamily: "Dongle",
         background: "black",
         color: "white",
@@ -23,6 +27,24 @@ const useStyles = makeStyles({
         justifyContent: "center",
         marginRight: "30px",
         marginTop: "10px",
+    },
+    description: {
+        paddingRight: "20px",
+        paddingLeft: "20px",
+        fontSize: "30px",
+        fontFamily: "Mochiy Pop P One",
+    },
+    rect: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "auto auto",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        borderRadius: "30px",
+        width: "800px",
+        height: "800px",
     },
     titleRight: {
         fontFamily: "Dongle",
@@ -45,7 +67,10 @@ const useStyles = makeStyles({
         marginLeft: "30px",
     },
     space: {
-      margin: "200px",
+        margin: "200px",
+    },
+    littleSpace: {
+        margin: "20px",
     }
 });
 
