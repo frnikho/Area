@@ -8,6 +8,7 @@ import { GoogleLogin } from 'react-google-login';
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
 
+// eslint-disable-next-line
 import style from "../../Resources/CSS/LoginPage.css";
 
 const theme = createTheme({

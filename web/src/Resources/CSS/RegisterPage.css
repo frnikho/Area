@@ -9,6 +9,8 @@
 }
 
 .buttonRight {
+  padding-left: 12px;
+  padding-right: 12px;
   font-family: Dongle;
   background: black;
   color: white;

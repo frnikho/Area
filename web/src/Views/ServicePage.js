@@ -6,10 +6,11 @@ import { Box } from "@mui/material";
 
 export default class ServiceView extends React.Component {
 
-    constructor(props, name) {
+    constructor(props) {
         super(props);
-        this.name = name
+        this.name = props.name
     }
+
 
     render() {
         return (

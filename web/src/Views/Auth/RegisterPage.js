@@ -6,6 +6,8 @@ import { Navigate } from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
+
+// eslint-disable-next-line
 import style from "../../Resources/CSS/RegisterPage.css";
 
 const theme = createTheme({

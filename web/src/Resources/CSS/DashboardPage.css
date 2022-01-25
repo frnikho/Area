@@ -4,6 +4,14 @@
   font-family: Dongle;
 }
 
+.container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: Dongle;
+    font-size: 60px;
+}
+
 .background {
   background-color: #8c8c8c;
 }
@@ -20,6 +28,8 @@
 }
 
 .buttonRight {
+  padding-left: 12px;
+  padding-right: 12px;
   font-family: Dongle;
   background: black;
   color: white;
@@ -46,5 +56,5 @@
 }
 
 .space {
-  margin: 200px;
+  margin: 125px;
 }
