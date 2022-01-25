@@ -32,7 +32,9 @@ export default class RegisterScreen extends Component {
       if (this.state.password !== this.state.rePassword) {
         return;
       }
-      axios.post(`${BACKEND_URL}/auth/register`, {
+      // console.log(BACKEND_URL)
+      // axios.get(`https://10.0.2.2:8000/`)
+      axios.post(`https://10.0.2.2:8080/auth/register`, {
         email: this.state.email,
         password: this.state.password,
         firstname: this.state.firstName,
