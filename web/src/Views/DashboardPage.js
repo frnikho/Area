@@ -5,6 +5,28 @@ import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
 import style from "../Resources/CSS/DashboardPage.css"
 import Card from "@material-ui/core/Card";
 import ServicePage from "./ServicePage.js"
+import { makeStyles } from "@material-ui/core/styles";
+
+// const useStyles = makeStyles({
+//     root: {
+//         width: "100%",
+//         height: "100%",
+//         display: "flex",
+//         flexDirection: "column"
+//     },
+//     header: {
+//         display: "flex",
+//         alignItems: "center",
+//         padding: "0.5rem"
+//     },
+//     spacer: {
+//         flexGrow: 1
+//     },
+//     body: {
+//         padding: "0.5rem",
+//         flexGrow: 1
+//     }
+// });
 
 const theme = createTheme({
     palette: {

@@ -3,12 +3,11 @@ import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typograp
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import { GoogleLogin } from 'react-google-login';
 import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
-
-// eslint-disable-next-line
-import style from "../../Resources/CSS/RegisterPage.css";
+import useStyles from "../../Components/styleAuth.js"
 
 const theme = createTheme({
     palette: {
@@ -18,16 +17,17 @@ const theme = createTheme({
 
 export default function RegisterPage(props) {
 
+    const classe = useStyles()
+
     return (
         <ThemeProvider theme={theme}>
-            {props.state.redirectUrl !== undefined ? <Navigate to={props.state.redirectUrl} /> : null}
-            <div className="titleLeft">
+            <div className={classe.titleLeft}>
                 Epitech 2022 Project
             </div>
-            <button className="buttonRight" onClick={() => props.setRedirectUrl("/description")}>
+            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
                 Area
             </button>
-            <div className="space" />
+            <div className={classe.space} />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />
@@ -97,6 +97,11 @@ export default function RegisterPage(props) {
                                 <FaGithubSquare />
                             </Button>
                         </Box>
+                        <div style={{ textAlign: "center" }}>
+                            <Link to="/auth/login">
+                                Already have an account? Log in
+                            </Link>
+                        </div>
                     </Box>
                 </Box>
                 {NotifAuthComponent(props.state.notification)}

@@ -8,8 +8,7 @@ import { GoogleLogin } from 'react-google-login';
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
 
-// eslint-disable-next-line
-import style from "../../Resources/CSS/LoginPage.css";
+import useStyles from "../../Components/styleAuth.js"
 
 const theme = createTheme({
     palette: {
@@ -19,15 +18,17 @@ const theme = createTheme({
 
 export default function LoginPage(props) {
 
+    const classe = useStyles()
+
     return (
         <ThemeProvider theme={theme}>
-            <div className="titleLeft">
+            <div className={classe.titleLeft}>
                 Epitech 2022 Project
             </div>
-            <button className="buttonRight" onClick={() => props.setRedirectUrl("/description")}>
+            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
                 Area
             </button>
-            <div className="space" />
+            <div className={classe.space} />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Lottie animationData={logo} style={{ height: 200 }} />
