@@ -19,6 +19,7 @@ class ControllerService extends React.Component {
         this.setRedirectUrl = this.setRedirectUrl.bind(this)
         this.setNotification = this.setNotification.bind(this)
         this.name = props.name
+        this.color = props.color
     }
 
     componentDidMount() {
