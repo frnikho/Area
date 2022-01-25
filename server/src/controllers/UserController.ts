@@ -14,7 +14,23 @@ type error = (msg) => void;
 
 export default class UserController {
 
-    public register(data: RegisterBody, success: success, error: error) {
+    public update(user: User, success: () => void, error: error): void {
+        DBService.query(`UPDATE users SET firstname = '${user.firstname}', lastname = '${user.lastname}' WHERE uuid = '${user.uuid}';`, (result) => {
+            success();
+        }, error);
+    }
+
+    public delete(user: User, success: () => void, error: error): void {
+        DBService.query(`DELETE FROM users WHERE uuid = '${user.uuid}'`, (result) => {
+            DBService.query(`DELETE FROM services WHERE user_uuid = '${user.uuid}'`, (result) => {
+                DBService.query(`DELETE FROM applets WHERE user_uuid = '${user.uuid}'`, (result) => {
+                    return success();
+                }, error)
+            }, error);
+        }, error);
+    }
+
+    public register(data: RegisterBody, success: success, error: error): void {
         new EncryptService(data.password).hash((hashedPassword) => {
             if (hashedPassword === undefined)
                 return error(`Can't hashed password !`);
@@ -38,7 +54,7 @@ export default class UserController {
                    return error('Invalid password !');
                this.getByEmail(email, (user) => {
                    if (user === undefined)
-                       return error('An error occurred ! please try again later ');
+                       return error('An error occurred ! please try again later');
                    return success(user);
                })
             });

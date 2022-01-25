@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GoogleUser} from "../models/GoogleUser";
+import {GoogleUser} from "../../models/GoogleUser";
 
 export default class GoogleService {
 
