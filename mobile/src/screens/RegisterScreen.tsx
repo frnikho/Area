@@ -33,17 +33,22 @@ export default class RegisterScreen extends Component {
         return;
       }
       // console.log(BACKEND_URL)
-      // axios.get(`https://10.0.2.2:8000/`)
-      axios.post(`https://10.0.2.2:8080/auth/register`, {
-        email: this.state.email,
-        password: this.state.password,
-        firstname: this.state.firstName,
-        lastname: this.state.lastName,
-      }).then((response: any) => {
+      fetch("https://10.29.124.173:8080/about.json").then(function (response) {
         console.log(response);
-      }).catch((err: any) => {
+      }).catch(function (err) {
         console.log(err);
       })
+      // axios.get(`https://10.0.2.2:8000/`)
+      // axios.post(`https://10.0.2.2:8080/auth/register`, {
+      //   email: this.state.email,
+      //   password: this.state.password,
+      //   firstname: this.state.firstName,
+      //   lastname: this.state.lastName,
+      // }).then((response: any) => {
+      //   console.log(response);
+      // }).catch((err: any) => {
+      //   console.log(err);
+      // })
     }
 
     render() {
