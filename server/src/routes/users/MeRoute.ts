@@ -3,7 +3,6 @@ import {authorization} from "../../middlewares/AuthMiddleware";
 
 import express = require('express');
 import UserController from "../../controllers/UserController";
-import DBService from "../../services/DBService";
 
 export default class MeRoute extends Route {
 
