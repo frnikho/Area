@@ -21,7 +21,6 @@ const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
-import {RouteNotFoundMiddleware} from "./middlewares/RouteNotFoundMiddleware";
 import AboutRoute from "./routes/AboutRoute";
 import SlackBot from "./bots/SlackBot";
 
