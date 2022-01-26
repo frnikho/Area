@@ -2,6 +2,7 @@ import Route from "../../Route";
 import express = require('express');
 import ServiceRoute from "./ServiceRoute"
 import {authorization} from "../../middlewares/AuthMiddleware";
+import {Services} from "../../models/Services"
 
 export default class DiscordServiceRoute extends Route {
 
@@ -28,7 +29,7 @@ export default class DiscordServiceRoute extends Route {
         params.append('scope', "bot");
         params.append('redirect_uri', process.env.DISCORD_SERVICES_REDIRECT_URL);
 
-        new ServiceRoute().request("https://discord.com/api/oauth2/token", params, headers, req['user']['uuid'], "discord", (token) => {
+        new ServiceRoute().postRequest("https://discord.com/api/oauth2/token", params, headers, req['user']['uuid'], Services.DISCORD.valueOf(), (token) => {
             console.log(token);
             return res.status(200).json({success: true, token: token});
         }, (err) => {

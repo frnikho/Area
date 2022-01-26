@@ -1,9 +1,9 @@
 import Route from "../../Route";
 import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
-
 import ServiceRoute from "./ServiceRoute";
 import ServiceController from "../../controllers/ServiceController";
+import {Services} from "../../models/Services"
 
 export default class GithubServiceRoute extends Route {
 
@@ -37,7 +37,7 @@ export default class GithubServiceRoute extends Route {
             redirect_uri: process.env.GITHUB_SERVICES_REDIRECT_URL,
         }
 
-        new ServiceRoute().request("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], "github", (token) => {
+        new ServiceRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], Services.GITHUB.valueOf(), (token) => {
             return res.status(200).json({success: true, token: token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
