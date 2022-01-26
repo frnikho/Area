@@ -31,6 +31,15 @@ export default class LoginScreen extends Component {
       }).then(async(response: any) => {
         if (response.status === 200) {
           await AsyncStorage.setItem('@token', response.data.token);
+          Toast.show({
+            title: "You are successfully authenticated",
+            status: "success",
+            description: "You can now navigate in the dashboard.",
+            duration: 2000
+          });
+          setTimeout(() => {
+            this.props.navigation.navigate('home')
+          }, 2000);
         }
       }).catch((err: any) => {
         console.log(err);
