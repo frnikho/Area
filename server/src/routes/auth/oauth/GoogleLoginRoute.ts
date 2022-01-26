@@ -2,7 +2,7 @@ import Route from "../../../Route";
 
 import express = require('express');
 import axios from 'axios';
-import GoogleService from "../../../services/GoogleService";
+import GoogleService from "../../../services/external/GoogleService";
 import UserController from "../../../controllers/UserController";
 import JWTService from "../../../services/JWTService";
 
@@ -39,13 +39,13 @@ export default class GoogleLoginRoute extends Route {
                         }).sign()
                     });
                 }, (err) => {
-                    console.log(err);
+                    return res.status(400).json({success: false, error: err})
                 })
             }, (err) => {
-                console.log(err);
+                return res.status(400).json({success: false, error: err})
             })
         }).catch((err) => {
-            console.log(err);
+            return res.status(400).json({success: false, error: err})
         });
     }
 
