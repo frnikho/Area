@@ -42,7 +42,7 @@ export default class SlackServiceRoute extends Route {
         const key: string = req.query['key'] as string;
 
         try {
-            new ServiceController().getTokenByKeyAndService(req['user']['uuid'], "slack", key, (token) => {
+            new ServiceController().getTokenByKeyAndService(req['user']['uuid'],  Services.SLACK.valueOf(), key, (token) => {
                 if (token === undefined)
                     return res.status(400).json({success: false, error: "Error during query."});
                 new SlackService().ListChannelsOfTeam(new SlackBot((<TokenData>token).token["access_token"]), (allChannels) => {

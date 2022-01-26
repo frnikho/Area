@@ -84,10 +84,10 @@ export default class App {
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/auth/github');
+        new GithubServiceRoute().register(this.app, '/services/github');
         new SlackServiceRoute().register(this.app, '/services/slack');
-        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
-        new TrelloServiceRoute().register(this.app, '/services/auth/trello');
+        new DiscordServiceRoute().register(this.app, '/services/discord');
+        new TrelloServiceRoute().register(this.app, '/services/trello');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
