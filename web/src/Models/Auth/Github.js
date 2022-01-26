@@ -9,6 +9,7 @@ export default class Github extends Model {
     }
 
     Connect(data) {
+        console.log("call githbu")
         app.post(`/auth/github/code`, {
             code: data['code']
         }).then((response) => {

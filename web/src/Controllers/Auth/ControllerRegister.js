@@ -1,8 +1,7 @@
 import React from "react";
-import OAuth2Login from 'react-simple-oauth2-login';
 import RegisterPage from "../../Views/Auth/RegisterPage.js"
-import Github from "../../Models/Auth/Github.js"
 import Google from "../../Models/Auth/Google.js"
+import Github from "../../Models/Auth/Github.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 
@@ -43,8 +42,10 @@ export default class ControllerRegister extends React.Component {
 
         if (response.error) {
             // temporay
-            if (response.error !== "idpiframe_initialization_failed")
+            if (response.error !== "idpiframe_initialization_failed") {
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
+                console.log(response.error)
+            }
         } else {
             Google.connect();
         }
@@ -79,19 +80,13 @@ export default class ControllerRegister extends React.Component {
         this.registerDb(data.get('email'), data.get('firstname'), data.get('lastname'), data.get('password'));
     }
 
-    onClickGithubLogin() {
-        return (
-            <OAuth2Login
-                authorizationUrl="https://github.com/login/oauth/authorize"
-                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
-                responseType="code"
-                scope={"user:email"}
-                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                onSuccess={() => Github.connect()}
-                onFailure={(abc) => console.error(abc)}
-                buttonText={"Github"}
-            />
-        )
+    onClickGithubLogin(response) {
+        if (response.error) {
+            this.setNotification({ message: "Error with Github", show: true, type: "error" });
+            console.log(response.error)
+        } else {
+            Github.connect()
+        }
     }
 
     render() {

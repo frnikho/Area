@@ -30,7 +30,7 @@ class ControllerLogin extends React.Component {
     }
 
     setRedirectUrl(url) {
-        this.setState({ redirectUrl: url})
+        this.setState({ redirectUrl: url })
     }
 
     componentDidMount() {

@@ -11,6 +11,7 @@ export default class Google extends Model {
         app.post(`/auth/Google/code`, {
             code: data['code']
         }).then((response) => {
+            console.log(response)
             // if (response.data)
             //     setStatusLog(response.data);
             // if (response.data === "User logged") {

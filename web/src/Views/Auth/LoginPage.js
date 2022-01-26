@@ -8,6 +8,7 @@ import { GoogleLogin } from 'react-google-login';
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
 import useStyles from "../../Components/Styles/styleAuth.js"
+import OAuth2Login from 'react-simple-oauth2-login';
 
 const theme = createTheme({
     palette: {
@@ -83,13 +84,25 @@ export default function LoginPage(props) {
                                 cookiePolicy={'single_host_origin'}
                             />
                             <Box sx={{ padding: 1 }} />
-                            <Button
-                                onClick={props.onClickGithubLogin}
-                                color={"secondary"}
-                                variant="contained"
-                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                <FaGithubSquare />
-                            </Button>
+                            <OAuth2Login
+                                authorizationUrl="https://github.com/login/oauth/authorize"
+                                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                                responseType="code"
+                                scope={"user:email"}
+                                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                                onSuccess={() => props.onClickGithubLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Github"}
+                                render={renderProps => (
+                                    <Button
+                                        onClick={renderProps.onClick}
+                                        color={"secondary"}
+                                        variant="contained"
+                                        sx={{ mt: 0, mb: 2, py: 1.5 }}>
+                                        <FaGithubSquare />
+                                    </Button>
+                                )}
+                            />
                         </Box>
                         <div style={{ textAlign: "center" }}>
                             <Link to="/auth/register">
@@ -100,6 +113,6 @@ export default function LoginPage(props) {
                 </Box>
                 {NotifAuthComponent(props.state.notification)}
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     );
 }
