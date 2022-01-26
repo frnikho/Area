@@ -1,116 +1,197 @@
-# Action REAction
+<div align="center">
+    <h1>AREA - Epitech 2021-2022</h1>
 
-## About
+    Author : Nicolas SANS, Justin MENARD, Victor SAUVAGET, Théo FARGEAS, Clément BOULAY
 
-### Auth:
+    EPITECH Promo 2024
+</div>
 
-native auth:
-- email (required)
-- firstname (optional)
-- lastname (optional)
-- password (required)
+## Aims of the project
 
-IMPORTANT !
-every user using native auth must verifiy their adresse email
+The goals of the project is to implement a software suite that functions similar to that of IFTTT.
 
-third parts login:
-- google ?
-- github ?
-
-## Technologies
-
-all parts use MVC
-
-Frontend and mobile: maybe react native ?
-
-- libs (react-mui?)
-
-Backend: nodejs with typescript ?
-
-- libs (express, body-parser, cors, nodemailer, jsonwebtoken, mariadb, dotenv)
-
-Front: react tsc -> Théo & Clément
-Mobile: react native tsc -> Justin
-Server: nodejs tsc-> Victor & Nico
-BDD: mariadb
-
-## Docker
-
-services:
-
-bdd: mariadb
-- port: 3306
-
-server: nodejs
-- port: 8080
-
-client_web:
-- port: 8081
-
-client_mobile:
- job: build the apk and put it into the build directory
-
-
-
-## Database schema:
-
-| *table name* | uuid | email | password | firstname | lastname | auth_type | verified |
-|--|--|--|--|--|--|--|--|--|--|--|
-| users | varchar(255) [primary key] | varchar(255) [not null] | varchar(255) | varchar(255) | varchar(255) | enum {native, google?, github?} [not null] | boolean [not null]
-
+The project allowing its users to create simple instruction strings called applets. An applet is triggered by changes that occur within web services such as Github, Slack, Discord. For example an applet can send an Slack message in a channel if the user push something on a Github repository.
 
 ## Services
 
-*REQUIRED: 6 Services & 15 Action, Reaction*
 
-Github
-Gmail
-Discord
-Slack
-Google Calendar
-Telegram ?
-Intra Epitech
+## Language used and tools
+
+### Language :
+
+| Side                  |          Language      |
+| --------------------- |:----------------------:|
+| Server                | Node.js with Express   |
+| Client Web            | React with Material UI |
+| Client Mobile         | React native           |
+
+### Tools :
+
+#### Database
+
+Mariadb
 
 
+#### Build and Run
 
+npm
+serve
+gradlew
+docker-compose
 
-Action (If):
+## Installation
 
-Github:
-- push
-- open pull request
-- close pull request
-- add new release
+### Clone repository
 
-Gmail:
-- receive a email
+```
+$ git clone https://github.com/EpitechPromo2024/B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget.git
+```
 
-Google calendar
-- add an event
-- event
+### Go to directory
 
-Google drive
-- file / directory upload
+```
+$ cd B-YEP-500-NAN-5-1-yearendproject-victor.sauvaget
+```
+## Build and Run
 
-Discord
-- receive a message (tag?)
+### Server
 
-Reaction (Then):
+#### Prerequisites
 
-Gmail:
-- send a email
+Go to server directory
 
-Slack
-- send a message
-- send a private message
+- Fill the 'example.env' in server directory and rename it in '.env'.
+- Generate ssl credentials :
 
-Discord
-- send a private message
-- send a channel message
+    ```shell
+    $ mkdir -p sslCredentials
+    $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
+    ```
 
-Spotify:
-- change current song
-- change play state
+#### Build and run
 
-Telegram
-- send a message
+```shell
+# Install dependencies
+$ npm install
+# Build
+$ npm run build
+# Run
+$ npm run prod or dev
+```
+
+With 'dev' option server is reloaded at any change.
+
+:warning: **Be careful the server run on** ```https://localhost:8080```
+
+<br />
+<br />
+
+### Client Mobile
+
+#### Prerequisites
+
+- Fill the 'example.env' in mobile directory and rename it in '.env'.
+- Specify your JAVA SDK directory :
+1. Go to ./mobile/android/
+2. Create 'local.properties' file
+    ```shell
+    $ touch local.properties
+    ```
+3. Add properties
+    ```shell
+    sdk.dir = your-path-to-your-java-sdk
+    ```
+
+#### Build and run
+
+```shell
+# Install dependencies
+$ cd mobile
+$ npm install
+# Clean android folder
+$ cd android
+$ ./gradlew clean
+$ cd ..
+$ npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+# Remove duplications
+$ cd android
+$ rm -rf app/src/main/res/drawable-*
+# Generate APK
+$ ./gradlew assembleRelease
+```
+<br />
+<br />
+
+### Client Web
+
+#### Prerequisites
+
+- Fill the 'example.env' in web directory and rename it in '.env'.
+
+#### Build and run
+
+```shell
+$ cd web
+# Install dependencies
+$ npm install
+$ npm install -g serve
+# Build
+$ npm run build
+# Run
+$ serve -s build -p 8081
+```
+
+<br />
+<br />
+
+### Docker
+
+At the root of the repository
+
+```shell
+$ sudo docker-compose build && sudo docker-compose up
+```
+
+OR
+
+```shell
+$ ./docker.sh
+```
+
+:warning: **Be careful the server run on** ```https://localhost:8080```
+
+## Usages
+
+- How to provide the Android version of mobile client ?
+
+```
+https://localhost:8081/client.apk
+```
+
+- How to read the 'about.js' ?
+
+```
+https://localhost:8080/about.js
+```
+
+- How to launch web client ?
+
+```
+http://localhost:8081/
+```
+
+## Documentation
+
+Server:
+
+```
+https://localhost:8080/docs
+```
+
+## Authors
+
+- [Victor SAUVAGET](https://github.com/VicSAU/)
+- [Nicolas SANS](https://github.com/frnikho/)
+- [Justin MENARD](https://github.com/JusteUn)
+- [Théo FARGEAS](https://github.com/theofrgs)
+- [Clément BOULAY](https://github.com/boulayclement)
