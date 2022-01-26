@@ -55,6 +55,7 @@ export default class ControllerRegister extends React.Component {
             this.setState({
                 redirectUrl: '/auth/login',
             });
+            this.setNotification("Register !");
         }, (err) => {
             console.log(err);
             this.setNotification(err.message);
