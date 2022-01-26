@@ -20,26 +20,21 @@ import {
 } from 'react-native';
 
 import { NativeBaseProvider, Box } from 'native-base';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/HomeScreen';
 import {is_logged_in} from './auth'
-
-const Stack = createNativeStackNavigator();
+import Router from './router'
 
 export default class App extends Component {
 
   state: {
-    isLoggedIn: boolean,
+    isLoggedIn: boolean | undefined,
   }
 
   constructor(props: any) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-    };
+      isLoggedIn: undefined,
+    }
   }
 
   componentDidMount() {
@@ -54,32 +49,39 @@ export default class App extends Component {
         })
       }
     })
-    // console.log(this.state.initialRoute)
   }
 
-  authNavigation() {
-    return (
-      <Stack.Navigator initialRouteName="login" screenOptions={{headerShown: false}} >
-        <Stack.Screen name="login" component={LoginScreen} />
-        <Stack.Screen name="register" component={RegisterScreen} />
-        <Stack.Screen name="home" component={HomeScreen} />
-      </Stack.Navigator>
-    )
-  }
+  // authNavigation() {
+  //   return (
+  //     <Stack.Navigator initialRouteName="login" screenOptions={{headerShown: false}} >
+  //       <Stack.Screen name="login" component={LoginScreen} />
+  //       <Stack.Screen name="register" component={RegisterScreen} />
+  //       <Stack.Screen name="home" component={HomeScreen} />
+  //     </Stack.Navigator>
+  //   )
+  // }
 
-  homeNavigation() {
-    return (
-      <Stack.Navigator initialRouteName="home" screenOptions={{headerShown: false}} >
-        <Stack.Screen name="home" component={HomeScreen} />
-      </Stack.Navigator>
-    )
+  // homeNavigation() {
+  //   return (
+  //     <Stack.Navigator initialRouteName="home" screenOptions={{headerShown: false}} >
+  //       <Stack.Screen name="login" component={LoginScreen} />
+  //       <Stack.Screen name="register" component={RegisterScreen} />
+  //       <Stack.Screen name="home" component={HomeScreen} />
+  //     </Stack.Navigator>
+  //   )
+  // }
+
+  renderRouter() {
+    if (this.state.isLoggedIn !== undefined) {
+      return <Router isLoggedIn={this.state.isLoggedIn} />
+    }
   }
 
   render() {
     return (
       <NavigationContainer>
         <NativeBaseProvider>
-          {this.state.isLoggedIn ? this.homeNavigation() : this.authNavigation()}
+          {this.renderRouter()}
         </NativeBaseProvider>
       </NavigationContainer>
     );

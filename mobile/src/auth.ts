@@ -9,7 +9,6 @@ export const is_logged_in = (callback: (valid: boolean) => void):void => {
                 callback(true);
             }
         }).catch(async(err: any) => {
-            console.log(err)
             callback(false);
         })
     })
