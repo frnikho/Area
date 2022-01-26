@@ -9,7 +9,7 @@ export default class HomeScreen extends Component {
 
     async onDisconnect() {
         await AsyncStorage.removeItem("@token");
-        // this.props.navigation.navigate('login')
+        this.props.navigation.navigate('login')
     }
 
     render() {
