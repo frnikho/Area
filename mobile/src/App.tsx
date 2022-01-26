@@ -32,41 +32,54 @@ const Stack = createNativeStackNavigator();
 export default class App extends Component {
 
   state: {
-    initialRoute: string,
+    isLoggedIn: boolean,
   }
 
   constructor(props: any) {
     super(props);
     this.state = {
-      initialRoute: 'login',
+      isLoggedIn: false,
     };
   }
 
   componentDidMount() {
     is_logged_in((valid: boolean) => {
-      console.log("valid: ", valid);
       if (valid) {
         this.setState({
-          initialRoute: 'home',
+          isLoggedIn: true,
         })
       } else {
         this.setState({
-          initialRoute: 'login',
+          isLoggedIn: false,
         })
       }
     })
-    console.log(this.state.initialRoute)
+    // console.log(this.state.initialRoute)
+  }
+
+  authNavigation() {
+    return (
+      <Stack.Navigator initialRouteName="login" screenOptions={{headerShown: false}} >
+        <Stack.Screen name="login" component={LoginScreen} />
+        <Stack.Screen name="register" component={RegisterScreen} />
+        <Stack.Screen name="home" component={HomeScreen} />
+      </Stack.Navigator>
+    )
+  }
+
+  homeNavigation() {
+    return (
+      <Stack.Navigator initialRouteName="home" screenOptions={{headerShown: false}} >
+        <Stack.Screen name="home" component={HomeScreen} />
+      </Stack.Navigator>
+    )
   }
 
   render() {
     return (
       <NavigationContainer>
         <NativeBaseProvider>
-          <Stack.Navigator initialRouteName={this.state.initialRoute}>
-            <Stack.Screen name="login" component={LoginScreen} />
-            <Stack.Screen name="register" component={RegisterScreen} />
-            <Stack.Screen name="home" component={HomeScreen} />
-          </Stack.Navigator>
+          {this.state.isLoggedIn ? this.homeNavigation() : this.authNavigation()}
         </NativeBaseProvider>
       </NavigationContainer>
     );
