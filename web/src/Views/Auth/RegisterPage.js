@@ -38,14 +38,22 @@ export default function RegisterPage(props) {
                     </Box>
                     <Box component="form" onSubmit={props.handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
+                            autoFocus
                             margin="normal"
                             required
                             fullWidth
-                            name="username"
-                            label="Username"
-                            type="username"
-                            id="username"
-                            autoComplete="current-password" />
+                            name="firstname"
+                            label="Firstname"
+                            type="firstname"
+                            id="firstname"/>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="lastname"
+                            label="Lastname"
+                            type="lastname"
+                            id="lastname"/>
                         <TextField
                             margin="normal"
                             required
@@ -53,7 +61,6 @@ export default function RegisterPage(props) {
                             id="email"
                             label="Email"
                             name="email"
-                            autoFocus
                         />
                         <TextField
                             margin="normal"

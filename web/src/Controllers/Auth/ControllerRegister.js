@@ -28,7 +28,7 @@ export default class ControllerRegister extends React.Component {
     }
 
     setRedirectUrl(url) {
-        this.setState({ redirectUrl: url})
+        this.setState({ redirectUrl: url })
     }
 
     componentDidMount() {
@@ -50,8 +50,8 @@ export default class ControllerRegister extends React.Component {
         }
     }
 
-    registerDb(username, email, password) {
-        this.auth.register({ username: username, email: email, password: password }, () => {
+    registerDb(email, firstname, lastname, password) {
+        this.auth.register({ firstname: firstname, lastname: lastname, email: email, password: password }, () => {
             this.setState({
                 redirectUrl: '/auth/login',
             });
@@ -65,15 +65,17 @@ export default class ControllerRegister extends React.Component {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        if (!data.has('username') || data.get('username') === "")
-            return this.setNotification({ message: "Username cannot be empty !", show: true, type: "error" });
+        if (!data.has('firstname') || data.get('firstname') === "")
+            return this.setNotification({ message: "Firstname cannot be empty !", show: true, type: "error" });
+        if (!data.has('lastname') || data.get('lastname') === "")
+            return this.setNotification({ message: "Lastname cannot be empty !", show: true, type: "error" });
         if (!data.has('email') || data.get('email') === "")
             return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
         if (!data.has('password') || data.get('password') === "")
             return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
         if (!data.has('confpassword') || data.get('confpassword') === "" || data.get('confpassword') !== data.get('password'))
             return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
-        this.registerDb(data.get('username'), data.get('email'), data.get('password'));
+        this.registerDb(data.get('email'), data.get('firstname'), data.get('lastname'), data.get('password'));
     }
 
     onClickGithubLogin() {
