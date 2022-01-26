@@ -1,10 +1,45 @@
 import React, { Component } from 'react';
-import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
+import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast } from 'native-base';
+import app from '../axios_config';
+import { storeData } from '../async_storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class LoginScreen extends Component {
+
+    state: {
+      email: String | undefined,
+      password: String | undefined,
+    };
+
     constructor(props: any) {
       super(props);
+      this.state = {
+        email: undefined,
+        password: undefined,
+      };
+      this.onLogin = this.onLogin.bind(this);
+    }
+
+    onLogin() {
+      if (this.state.email === undefined || this.state.password === undefined ) {
+        return;
+      }
+
+      app.post(`/auth/login`, {
+        email: this.state.email,
+        password: this.state.password,
+      }).then(async(response: any) => {
+        if (response.status === 200) {
+          await AsyncStorage.setItem('@token', response.data.token);
+        }
+      }).catch((err: any) => {
+        console.log(err);
+        Toast.show({
+          title: err.response.data.error,
+          status: "warning",
+          description: "Please try again !",
+        })
+      })
     }
 
     render() {
@@ -36,13 +71,13 @@ export default class LoginScreen extends Component {
             <VStack space={3} mt="5">
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
-                <Input />
+                <Input onChangeText={(val) => this.setState({email: val})} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Password</FormControl.Label>
-                <Input type="password" />
+                <Input type="password" onChangeText={(val) => this.setState({password: val})} />
               </FormControl>
-              <Button mt="2" colorScheme="indigo">
+              <Button mt="2" colorScheme="indigo" onPress={this.onLogin} >
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">

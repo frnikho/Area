@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, useToast } from 'native-base';
-const axios = require('axios');
-import { BACKEND_URL } from "@env";
-
+import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast } from 'native-base';
+import app from '../axios_config';
+import { BACKEND_URL } from "@env"
 export default class RegisterScreen extends Component {
 
     state: {
@@ -30,25 +29,40 @@ export default class RegisterScreen extends Component {
         return;
       }
       if (this.state.password !== this.state.rePassword) {
+        Toast.show({
+          title: "Password does not match",
+          status: "warning",
+          description: "Please try again !",
+        })
         return;
       }
-      // console.log(BACKEND_URL)
-      fetch("https://10.29.124.173:8080/about.json").then(function (response) {
-        console.log(response);
-      }).catch(function (err) {
+
+      app.post(`${BACKEND_URL}/auth/register`, {
+        email: this.state.email,
+        password: this.state.password,
+        firstname: this.state.firstName,
+        lastname: this.state.lastName,
+      }).then((response: any) => {
+        if (response.status === 200) {
+          Toast.show({
+            title: "Account succesfuly created",
+            status: "success",
+            description: "You can now login with your new account.",
+            duration: 3000
+          });
+          setTimeout(() => {
+            this.props.navigation.navigate('login')
+          }, 3000);
+        } else {
+        }
+      }).catch((err: any) => {
         console.log(err);
+        Toast.show({
+          title: err.response.data.error,
+          status: "warning",
+          description: "Please try again !",
+        })
       })
-      // axios.get(`https://10.0.2.2:8000/`)
-      // axios.post(`https://10.0.2.2:8080/auth/register`, {
-      //   email: this.state.email,
-      //   password: this.state.password,
-      //   firstname: this.state.firstName,
-      //   lastname: this.state.lastName,
-      // }).then((response: any) => {
-      //   console.log(response);
-      // }).catch((err: any) => {
-      //   console.log(err);
-      // })
     }
 
     render() {
