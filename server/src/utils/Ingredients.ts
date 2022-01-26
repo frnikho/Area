@@ -1,6 +1,6 @@
 import {ActionType, Ingredient} from "../models/Applet";
 
-const githubPushData = (data) : Ingredient[] => [{key: "{{github_sender_login}}", value: `${data.sender.login}`}]
+const githubPushData = (data) : Ingredient[] => [{key: "{{sender_login}}", value: `${data.sender.login}`}, {key: "{{sender_email}}", value: data.sender.email}, {key: "{{repo_name}}", value: data.repository.name}]
 const githubCreatedData = (data) : Ingredient[] => [];
 const discordChanelMessageReceived = (data): Ingredient[] => [{key: "{{sender_id}}", value: `${data.author.id}`}, {key: "{{sender_username}}", value: `${data.author.username}`}];
 const intraNewNotification = (data): Ingredient[] => [{key: "{{notification_username}}", value: data.user.title}, {key: "{{notification_title}}", value: data.title}]

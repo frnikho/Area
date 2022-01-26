@@ -19,20 +19,18 @@ export default class GithubWebhook {
     }
 
     private onPush(data): void {
-        let key: number = data.payload.installation.id;
         let repo_name: string = data.payload.repository.full_name;
+        console.log(data.payload);
         const appletController = new AppletController();
-        appletController.getAppletsByTypeAndKey('github_repository_push', key.toString(), (applets) => {
+        appletController.getAppletsByTypeAndKey('github_repository_push', repo_name, (applets) => {
             applets.forEach((applet) => {
-                let parameters: object[] = JSON.parse((<any>applet.action))['parameters'];
+                let parameters: object[] = applet.action.parameters;
                 let repository = parameters.filter((param) => param['name'] === 'repository_name')[0];
-
                 if (repository['value'] === repo_name) {
-                    console.log("OUI LA DOT !");
-                    console.log(applet);
-                    /*appletController.callReactions(applet, ingredientsHook(data.payload, ActionType.github_repository_push),(error) => {
-
-                    });*/
+                    appletController.callReactions(applet, ingredientsHook(data.payload, ActionType.github_repository_push),(error) => {
+                        if (error)
+                            console.log(error);
+                    });
                 }
             });
         }, (err) => {

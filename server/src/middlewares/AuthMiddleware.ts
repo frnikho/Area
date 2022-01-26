@@ -15,7 +15,9 @@ export const authorization = (req: express.Request, res: express.Response, next:
         return sendUnauthorizedRequest(req, res);
     try {
         const data = JWTService.verify(token);
+        console.log(data);
         new UserController().getByUuid(data['uuid'], (user) => {
+            console.log(user);
             if (!user)
                 return sendUnauthorizedRequest(req, res);
             req['user'] = {
