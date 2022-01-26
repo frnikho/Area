@@ -1,11 +1,7 @@
 import React from "react";
-import classNames from 'classnames';
-import { FaGoogle, FaGithubSquare } from "react-icons/fa";
+import {FaGithubSquare } from "react-icons/fa";
 import { Box } from "@mui/material";
 
-// import useStyles from "../Components/Styles/styleService.js"
-
-import style from "../Resources/CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
 export default function ServicePage(props) {

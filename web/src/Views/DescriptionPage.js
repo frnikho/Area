@@ -1,6 +1,5 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { Navigate } from "react-router-dom";
 
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import useStyles from "../Components/Styles/styleDescription.js"

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import style from "../../Resources/CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 

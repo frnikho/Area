@@ -4,6 +4,7 @@ import app from "../../Components/utils/Axios"
 export default class Google extends Model {
     constructor() {
         super();
+        this.Connect = this.Connect.bind(this)
     }
 
     Connect(data) {

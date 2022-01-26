@@ -57,7 +57,7 @@ export default class ControllerRegister extends React.Component {
             });
         }, (err) => {
             console.log(err);
-            console.log("Error !");
+            this.setNotification(err.message);
         });
     }
 

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import style from "../../Resources/CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -45,7 +46,7 @@ const useStyles = makeStyles({
         marginLeft: "30px",
     },
     space: {
-      margin: "200px",
+      margin: "150px",
     }
 });
 

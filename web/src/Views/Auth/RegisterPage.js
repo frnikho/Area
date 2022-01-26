@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import { GoogleLogin } from 'react-google-login';
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"

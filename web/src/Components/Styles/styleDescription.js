@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import style from "../../Resources/CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -36,10 +37,8 @@ const useStyles = makeStyles({
     },
     rect: {
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
         margin: "auto auto",
-        alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
         borderRadius: "30px",
