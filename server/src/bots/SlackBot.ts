@@ -1,16 +1,14 @@
 const { WebClient } = require("@slack/web-api");
 
 export default class SlackBot {
-    private static client = undefined;
+    private client: any;
 
-    public constructor() {
-        if (SlackBot.client !== undefined)
-            throw "You can only create a instance of this class !";
-        SlackBot.client = new WebClient(process.env.SLACK_BOT_TOKEN);
-        console.log("Slack Bot is online !");
+    public constructor(token: string) {
+        this.client = new WebClient(token);
+        console.log("Slack Bot is created !");
     }
 
-    public static getClient() {
-        return SlackBot.client;
+    public getClient() {
+        return this.client;
     }
 }
