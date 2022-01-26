@@ -52,7 +52,7 @@ export default class RegisterScreen extends Component {
           });
           setTimeout(() => {
             this.props.navigation.navigate('login')
-          }, 3000);
+          }, 1000);
         } else {
         }
       }).catch((err: any) => {

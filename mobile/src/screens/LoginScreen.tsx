@@ -39,7 +39,7 @@ export default class LoginScreen extends Component {
           });
           setTimeout(() => {
             this.props.navigation.navigate('home')
-          }, 2000);
+          }, 1000);
         }
       }).catch((err: any) => {
         console.log(err);

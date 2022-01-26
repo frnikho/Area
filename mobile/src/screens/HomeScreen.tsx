@@ -5,11 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class HomeScreen extends Component {
     constructor(props: any) {
         super(props);
+        this.onDisconnect = this.onDisconnect.bind(this);
     }
 
-    async onDisconnect() {
-        await AsyncStorage.removeItem("@token");
-        this.props.navigation.navigate('login')
+    onDisconnect() {
+        AsyncStorage.removeItem("@token").then(() => {
+            this.props.navigation.navigate('login')
+        })
     }
 
     render() {
