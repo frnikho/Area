@@ -24,17 +24,48 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import {is_logged_in} from './auth'
 
 const Stack = createNativeStackNavigator();
 
 export default class App extends Component {
+
+  state: {
+    initialRoute: string,
+  }
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      initialRoute: 'login',
+    };
+  }
+
+  componentDidMount() {
+    is_logged_in((valid: boolean) => {
+      console.log("valid: ", valid);
+      if (valid) {
+        this.setState({
+          initialRoute: 'home',
+        })
+      } else {
+        this.setState({
+          initialRoute: 'login',
+        })
+      }
+    })
+    console.log(this.state.initialRoute)
+  }
+
   render() {
     return (
       <NavigationContainer>
         <NativeBaseProvider>
-          <Stack.Navigator initialRouteName='login'>
+          <Stack.Navigator initialRouteName={this.state.initialRoute}>
             <Stack.Screen name="login" component={LoginScreen} />
             <Stack.Screen name="register" component={RegisterScreen} />
+            <Stack.Screen name="home" component={HomeScreen} />
           </Stack.Navigator>
         </NativeBaseProvider>
       </NavigationContainer>
