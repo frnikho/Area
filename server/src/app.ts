@@ -22,7 +22,6 @@ import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
-import SlackBot from "./bots/SlackBot";
 import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 
@@ -71,7 +70,6 @@ export default class App {
     private initBot(): void {
         let discord = new DiscordBot();
         discord.login();
-        let slack = new SlackBot();
     }
 
     private initRoutes(): void  {
@@ -86,10 +84,10 @@ export default class App {
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/auth/github');
-        new SlackServiceRoute().register(this.app, '/services/auth/slack');
-        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
-        new TrelloServiceRoute().register(this.app, '/services/auth/trello');
+        new GithubServiceRoute().register(this.app, '/services/github');
+        new SlackServiceRoute().register(this.app, '/services/slack');
+        new DiscordServiceRoute().register(this.app, '/services/discord');
+        new TrelloServiceRoute().register(this.app, '/services/trello');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');

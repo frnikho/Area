@@ -4,6 +4,8 @@ import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceRoute from "./ServiceRoute"
 import SlackService from "../../services/external/SlackService";
 import {Services} from "../../models/Services"
+import ServiceController, { TokenData } from "../../controllers/ServiceController";
+import SlackBot from "../../bots/SlackBot"
 
 export default class SlackServiceRoute extends Route {
 
@@ -37,10 +39,22 @@ export default class SlackServiceRoute extends Route {
     }
 
     private list(req: express.Request, res: express.Response) {
-        new SlackService().ListChannelsOfTeam("T02UD1RENA1").then((userChannels) => {
-            return res.status(200).json({success: true, channels: userChannels});
-        }).catch((err) => {
+        const key: string = req.query['key'] as string;
+
+        try {
+            new ServiceController().getTokenByKeyAndService(req['user']['uuid'],  Services.SLACK.valueOf(), key, (token) => {
+                if (token === undefined)
+                    return res.status(400).json({success: false, error: "Error during query."});
+                new SlackService().ListChannelsOfTeam(new SlackBot((<TokenData>token).token["access_token"]), (allChannels) => {
+                    return res.status(200).json({success: true, channels: allChannels});
+                }, (err) => {
+                    return res.status(400).json({success: false, error: err});
+                });
+            }, (err) => {
+                return res.status(400).json({success: false, error: err});
+            });
+        } catch (err) {
             return res.status(400).json({success: false, error: err});
-        })
+        }
     }
 }
