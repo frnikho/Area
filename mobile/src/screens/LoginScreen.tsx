@@ -3,6 +3,8 @@ import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, C
 import app from '../axios_config';
 import { storeData } from '../async_storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 export default class LoginScreen extends Component {
 
@@ -89,6 +91,27 @@ export default class LoginScreen extends Component {
               <Button mt="2" colorScheme="indigo" onPress={this.onLogin} >
                 Sign in
               </Button>
+              <HStack justifyContent="center" alignItems='center' space={5}>
+                <Button
+                  w='46%'
+                  leftIcon={<Icon name="logo-github" size={25} color="white" />}
+                  style={{
+                    backgroundColor: '#111833',
+                  }}
+                >
+                  Github
+                </Button>
+                <Button
+                  w='46%'
+                  colorScheme="indigo"
+                  leftIcon={<Icon name="logo-google" size={25} color="white" />}
+                  style={{
+                    backgroundColor: '#b03f47',
+                  }}
+                >
+                  Google
+                </Button>
+              </HStack>
               <HStack mt="6" justifyContent="center">
                 <Text
                   fontSize="sm"
