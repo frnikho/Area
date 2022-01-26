@@ -1,3 +1,38 @@
+export const IntraAppletActionsAbout = [
+    {
+        name: "New notifications",
+        description: '',
+        type: 'intra_new_notifications',
+        base_key: undefined,
+        parameters: [
+            {
+                name: 'login_link',
+                type: 'string',
+                required: true
+            },
+            {
+                name: 'notification_type',
+                type: 'string',
+                required: false,
+            },
+        ],
+    },
+    {
+        name: "Credit updated",
+        description: '',
+        type: 'intra_credits_updated',
+        base_key: undefined,
+        parameters: []
+    },
+    {
+        name: "Gpa updated",
+        description: '',
+        type: 'intra_gpa_updated',
+        base_key: undefined,
+        parameters: []
+    }
+]
+
 export const DiscordAppletActionsAbout = [
     {
         name: "When a Discord chanel created",
@@ -141,6 +176,10 @@ export const AppAbout = {
             name: "Slack",
             actions: [],
             reactions: SlackAppletReactionsAbout,
+        }, {
+            name: "Intra Epitech",
+            actions: IntraAppletActionsAbout,
+            reactions: [],
         }]
     }
 }

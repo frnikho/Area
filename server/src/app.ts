@@ -21,9 +21,10 @@ const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
-import {RouteNotFoundMiddleware} from "./middlewares/RouteNotFoundMiddleware";
 import AboutRoute from "./routes/AboutRoute";
 import SlackBot from "./bots/SlackBot";
+import WorkerManager from "./managers/WorkerManager";
+import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -34,6 +35,7 @@ export default class App {
     private readonly app: Express;
     private readonly privateKey: string;
     private readonly privateCertificate: string;
+    private workerManager: WorkerManager;
 
     constructor() {
         this.initConfig();
@@ -45,6 +47,8 @@ export default class App {
         this.initWebhooks();
         this.initRoutes();
         this.initBot();
+        this.workerManager = WorkerManager.get();
+        this.workerManager.startWorkers();
         this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false}, this.app);
     }
 
@@ -85,6 +89,7 @@ export default class App {
         new GithubServiceRoute().register(this.app, '/services/auth/github');
         new SlackServiceRoute().register(this.app, '/services/auth/slack');
         new DiscordServiceRoute().register(this.app, '/services/auth/discord');
+        new TrelloServiceRoute().register(this.app, '/services/auth/trello');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
