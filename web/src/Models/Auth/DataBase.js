@@ -8,7 +8,7 @@ export default class DataBase extends Model {
 
     Connect(email, password, props) {
         const { cookies } = props.props;
-        this.auth.loginFromWeb({ email: email, password: password }, (token) => {
+        this.authContext.loginFromWeb({ email: email, password: password }, (token) => {
             console.log("Success !");
             cookies.set('session', token, { path: '/' });
             props.setState({
@@ -21,7 +21,7 @@ export default class DataBase extends Model {
     }
 
     Register(email, password, props) {
-        this.auth.register({ email: email, password: password }, (token) => {
+        this.authContext.register({ email: email, password: password }, (token) => {
             props.setState({
                 redirectUrl: '/auth/login',
             });

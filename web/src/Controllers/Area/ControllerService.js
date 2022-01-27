@@ -23,7 +23,7 @@ class ControllerService extends React.Component {
     }
 
     componentDidMount() {
-        this.auth = this.context;
+        this.authContext = this.context;
     }
 
     setRedirectUrl(url) {

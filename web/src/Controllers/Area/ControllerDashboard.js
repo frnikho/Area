@@ -18,12 +18,12 @@ class ControllerDashboard extends Controller {
     }
 
     componentDidMount() {
-        this.auth = this.context;
-        if (this.auth.getUser() === undefined) {
+        this.authContext = this.context;
+        if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
         } else {
             this.setState({
-                user: this.auth.getUser()
+                user: this.authContext.getUser()
             })
         }
     }
@@ -31,7 +31,7 @@ class ControllerDashboard extends Controller {
     logout() {
         const { cookies } = this.props;
         cookies.remove('session', { path: '/' })
-        this.auth.setUser(undefined)
+        this.authContext.setUser(undefined)
         this.setRedirectUrl("/")
     }
 

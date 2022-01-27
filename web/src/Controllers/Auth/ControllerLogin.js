@@ -22,8 +22,8 @@ class ControllerLogin extends Controller {
     }
 
     componentDidMount() {
-        this.auth = this.context;
-        if (this.auth.getUser() !== undefined) {
+        this.authContext = this.context;
+        if (this.authContext.getUser() !== undefined) {
             this.setRedirectUrl('/area/dashboard')
         }
     }
@@ -61,7 +61,7 @@ class ControllerLogin extends Controller {
 
     loginDb(email, password) {
         const { cookies } = this.props;
-        this.auth.loginFromWeb({ email: email, password: password }, (token) => {
+        this.authContext.loginFromWeb({ email: email, password: password }, (token) => {
             console.log("Success !");
             cookies.set('session', token, { path: '/' });
             this.setRedirectUrl('/')

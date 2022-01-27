@@ -20,8 +20,8 @@ export default class ControllerRegister extends Controller {
     }
 
     componentDidMount() {
-        this.auth = this.context;
-        if (this.auth.getUser() !== undefined) {
+        this.authContext = this.context;
+        if (this.authContext.getUser() !== undefined) {
             this.setRedirectUrl('/area/dashboard')
         }
     }
@@ -46,7 +46,7 @@ export default class ControllerRegister extends Controller {
     }
 
     registerDb(email, firstname, lastname, password) {
-        this.auth.register({ firstname: firstname, lastname: lastname, email: email, password: password }, () => {
+        this.authContext.register({ firstname: firstname, lastname: lastname, email: email, password: password }, () => {
             this.setRedirectUrl('/auth/login')
             this.setNotification("Register !");
         }, (err) => {
