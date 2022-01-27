@@ -1,6 +1,6 @@
 import React from "react";
-import DashboardPage from "../Views/DashboardPage.js"
-import { AuthContext } from "../Contexts/AuthContext";
+import DashboardPage from "../../Views/Area/DashboardPage.js"
+import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
 

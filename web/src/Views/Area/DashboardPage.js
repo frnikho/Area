@@ -3,8 +3,8 @@ import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
 
 // eslint-disable-next-line
 import Card from "@material-ui/core/Card";
-import ControllerService from "../Controllers/ControllerService"
-import useStyles from "../Components/Styles/styleDashboard"
+import ControllerService from "../../Controllers/Area/ControllerService"
+import useStyles from "../../Components/Styles/styleDashboard"
 
 const theme = createTheme({
     palette: {

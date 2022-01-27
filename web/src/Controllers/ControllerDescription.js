@@ -2,7 +2,7 @@ import React from "react";
 import DescriptionPage from "../Views/DescriptionPage"
 import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
-
+import Controller from "./Controller"
 
 class ControllerDashboard extends React.Component {
     constructor(props) {

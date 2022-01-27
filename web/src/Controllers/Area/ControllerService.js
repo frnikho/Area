@@ -1,6 +1,6 @@
 import React from "react";
-import ServicePage from "../Views/ServicePage.js"
-import { AuthContext } from "../Contexts/AuthContext";
+import ServicePage from "../../Views/ServicePage.js"
+import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
 
