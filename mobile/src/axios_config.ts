@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BACKEND_URL } from "@env";
 
-const baseURL = BACKEND_URL;
+const baseURL = `https://nikho.dev:8080`;
 
 const app = axios.create({
     baseURL: baseURL,

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast } from 'native-base';
+import {Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast, Icon} from 'native-base';
 import app from '../axios_config';
 import { storeData } from '../async_storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 
 export default class LoginScreen extends Component {
