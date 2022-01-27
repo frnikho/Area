@@ -29,8 +29,8 @@ export default function DescriptionPage(props) {
                     <div className={classe.description}>
                         What is Area ?
                         <div className={classe.littleSpace} />
-                        Area est un service web permettant à ses utilisateurs de créer des chaînes d'instruction simples appelées applets.
-                        Une applet est déclenchée par des changements qui interviennent au sein de services web tels que Gmail, Discord ou encore slack.
+                        Area is a web service that allows its users to create simple instruction strings called applets.
+                        An applet is triggered by changes in web services such as Gmail, Discord or slack.
                     </div>
                 </div>
             </div>
