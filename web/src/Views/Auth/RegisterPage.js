@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import { GoogleLogin } from 'react-google-login';
 import { Link } from "react-router-dom";
+import OAuth2Login from 'react-simple-oauth2-login';
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";

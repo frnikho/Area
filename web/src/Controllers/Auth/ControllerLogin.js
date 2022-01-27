@@ -2,7 +2,6 @@ import React from "react";
 import LoginPage from "../../Views/Auth/LoginPage.js"
 // import Database from "../../Models/Auth/DataBase"
 
-import OAuth2Login from 'react-simple-oauth2-login';
 import Github from "../../Models/Auth/Github.js"
 import Google from "../../Models/Auth/Google.js"
 import { AuthContext } from "../../Contexts/AuthContext";

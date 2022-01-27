@@ -3,7 +3,6 @@ import Lottie from "lottie-react";
 import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import { GoogleLogin } from 'react-google-login';
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
