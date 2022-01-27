@@ -1,3 +1,14 @@
+export const SpotifyAppletActionsAbout = [
+    {
+        name: "Song Changed",
+        description: '',
+        type: 'spotify_song_changed',
+        base_key: 'token_key',
+        parameters: [
+        ]
+    }
+]
+
 export const IntraAppletActionsAbout = [
     {
         name: "New notifications",
@@ -37,6 +48,7 @@ export const DiscordAppletActionsAbout = [
     {
         name: "When a Discord chanel created",
         description: '',
+        base_key: 'guild_id',
         type: 'discord_channel_created',
         parameters: [
             {
@@ -45,7 +57,7 @@ export const DiscordAppletActionsAbout = [
                 required: true,
             },
             {
-                name: "user_id",
+                name: "channel_type",
                 type: 'string',
                 required: false,
             }
@@ -82,8 +94,7 @@ export const DiscordAppletActionsAbout = [
     }
 ]
 
-export const GithubAppletActionsAbout =
-    [
+export const GithubAppletActionsAbout = [
         {
             name: "From new push in a repository",
             description: '',
@@ -110,8 +121,7 @@ export const GithubAppletActionsAbout =
         }
     ]
 
-export const DiscordAppletReactionsAbout =
-    [
+export const DiscordAppletReactionsAbout = [
         {
             name: 'Send chanel message',
             description: '',
@@ -131,8 +141,7 @@ export const DiscordAppletReactionsAbout =
         }
     ]
 
-export const SlackAppletReactionsAbout =
-    [
+export const SlackAppletReactionsAbout = [
         {
             name: 'Send chanel message',
             description: '',
@@ -152,8 +161,7 @@ export const SlackAppletReactionsAbout =
         }
     ]
 
-export const GithubAppletReactionsAbout =
-    [
+export const GithubAppletReactionsAbout = [
 
     ]
 
@@ -179,6 +187,10 @@ export const AppAbout = {
         }, {
             name: "Intra Epitech",
             actions: IntraAppletActionsAbout,
+            reactions: [],
+        }, {
+            name: "Spotify",
+            actions: SpotifyAppletActionsAbout,
             reactions: [],
         }]
     }

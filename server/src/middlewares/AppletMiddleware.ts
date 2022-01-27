@@ -63,7 +63,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
     }
     AppAbout.server.services.forEach((service) => {
         service.actions.forEach((serviceAction) => {
-            if (ActionType[serviceAction.type] === type) {
+            if (serviceAction.type === type) {
                 serviceAction.parameters.forEach((params) => {
                     const {name, type, required}: {name: string, type: string, required: boolean} = params;
                     let p = action.parameters.filter((p) => p['name'] === name)[0];

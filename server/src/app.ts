@@ -26,6 +26,7 @@ import SlackBot from "./bots/SlackBot";
 import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 import PaypalServiceRoute from "./routes/services/PaypalServiceRoute";
+import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -92,6 +93,7 @@ export default class App {
         new DiscordServiceRoute().register(this.app, '/services/auth/discord');
         new TrelloServiceRoute().register(this.app, '/services/auth/trello');
         new PaypalServiceRoute().register(this.app, '/services/auth/paypal');
+        new SpotifyServiceRoute().register(this.app, '/services/spotify');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
