@@ -1,8 +1,8 @@
 import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
 
-// eslint-disable-next-line
-import Card from "@material-ui/core/Card";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import ControllerService from "../../Controllers/Area/ControllerService"
 import useStyles from "../../Components/Styles/styleDashboard"
 
@@ -47,19 +47,22 @@ export default function DashboardPage(props) {
     return (
         <ThemeProvider theme={theme}>
             <div className={classe.titleLeft}>
-                Epitech 2022 Project
+                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
             </div>
-            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
-                Area
-            </button>
+            <div className={classe.menuRight}>
+                <Stack direction="row" spacing={2}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.logout()}>Logout</Button>
+                </Stack>
+            </div>
             <div className={classe.space} />
             <div className={classe.container}>
                 My applets
             </div>
             <Box sx={{ marginLeft: "2%", marginRight: "auto" }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {applets.map((it) => (
-                        <Grid item xs={2} sm={4} md={2.9}>
+                    {applets.map((it, index) => (
+                        <Grid item xs={2} sm={4} md={2.9} key={index}>
                             <ControllerService {...it} />
                         </Grid>
                     ))}

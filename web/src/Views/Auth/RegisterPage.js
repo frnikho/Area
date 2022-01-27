@@ -3,6 +3,7 @@ import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typograp
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import OAuth2Login from 'react-simple-oauth2-login';
+import Stack from '@mui/material/Stack';
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
@@ -21,11 +22,13 @@ export default function RegisterPage(props) {
     return (
         <ThemeProvider theme={theme}>
             <div className={classe.titleLeft}>
-                Epitech 2022 Project
+                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
             </div>
-            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
-                Area
-            </button>
+            <div className={classe.menuRight}>
+                <Stack direction="row" spacing={2}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                </Stack>
+            </div>
             <div className={classe.space} />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -1,5 +1,7 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import useStyles from "../Components/Styles/styleDescription.js"
@@ -17,11 +19,15 @@ export default function DescriptionPage(props) {
     return (
         <ThemeProvider theme={theme}>
             <div className={classe.titleLeft}>
-                Epitech 2022 Project
+                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
             </div>
-            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/")}>
-                ←
-            </button>
+            <div className={classe.menuRight}>
+                <Stack direction="row" spacing={2}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/")}>
+                        ←
+                    </Button>
+                </Stack>
+            </div>
             <div className={classe.space} />
             <div className={classe.container}>
                 <img style={{ width: '8%', height: '8%' }} src={DescriptionLogo} alt="loading..." />

@@ -9,6 +9,11 @@ class Auth extends React.Component {
         this.token = undefined;
         this.user = undefined;
         this.loginFromWeb = this.loginFromWeb.bind(this);
+        this.setUser = this.setUser.bind(this);
+    }
+
+    setUser(user) {
+        this.user = user
     }
 
     getUser = () => {

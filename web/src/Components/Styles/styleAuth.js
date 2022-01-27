@@ -9,11 +9,10 @@ const useStyles = makeStyles({
     background: {
         backgroundColor: "#8c8c8c",
     },
-    buttonRight: {
-        paddingKeft: "12px",
+    menuRight: {
+        paddingLeft: "12px",
         paddingRight: "12px",
         fontFamily: "Dongle",
-        background: "black",
         color: "white",
         borderRadius: "30px",
         fontSize: "60px",
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
         textAlign: "center",
         justifyContent: "center",
         marginRight: "30px",
-        marginTop: "10px",
+        // marginTop: "10px",
     },
     titleRight: {
         fontFamily: "Dongle",

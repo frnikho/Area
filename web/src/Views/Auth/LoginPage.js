@@ -3,6 +3,7 @@ import Lottie from "lottie-react";
 import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
+import Stack from '@mui/material/Stack';
 
 import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
 import * as logo from "../../Resources/assets/login.json"
@@ -22,11 +23,13 @@ export default function LoginPage(props) {
     return (
         <ThemeProvider theme={theme}>
             <div className={classe.titleLeft}>
-                Epitech 2022 Project
+                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
             </div>
-            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
-                Area
-            </button>
+            <div className={classe.menuRight}>
+                <Stack direction="row" spacing={2}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                </Stack>
+            </div>
             <div className={classe.space} />
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

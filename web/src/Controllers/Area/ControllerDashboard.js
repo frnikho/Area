@@ -14,6 +14,7 @@ class ControllerDashboard extends Controller {
             user: undefined,
         }
         this.cookies = props;
+        this.logout = this.logout.bind(this)
     }
 
     componentDidMount() {
@@ -25,6 +26,13 @@ class ControllerDashboard extends Controller {
                 user: this.auth.getUser()
             })
         }
+    }
+
+    logout() {
+        const { cookies } = this.props;
+        cookies.remove('session', { path: '/' })
+        this.auth.setUser(undefined)
+        this.setRedirectUrl("/")
     }
 
     render() {
