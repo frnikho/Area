@@ -24,6 +24,7 @@ import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
+import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -88,6 +89,7 @@ export default class App {
         new SlackServiceRoute().register(this.app, '/services/slack');
         new DiscordServiceRoute().register(this.app, '/services/discord');
         new TrelloServiceRoute().register(this.app, '/services/trello');
+        new TwitterServiceRoute().register(this.app, '/services/twitter');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
