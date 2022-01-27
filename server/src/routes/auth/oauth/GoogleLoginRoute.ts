@@ -2,7 +2,7 @@ import Route from "../../../Route";
 
 import express = require('express');
 import axios from 'axios';
-import GoogleService from "../../../services/GoogleService";
+import GoogleService from "../../../services/external/GoogleService";
 import UserController from "../../../controllers/UserController";
 import JWTService from "../../../services/JWTService";
 

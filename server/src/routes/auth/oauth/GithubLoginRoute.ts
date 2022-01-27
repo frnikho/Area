@@ -2,7 +2,7 @@ import Route from "../../../Route";
 
 import axios from 'axios';
 import express = require('express');
-import GithubService from "../../../services/GithubService";
+import GithubService from "../../../services/external/GithubService";
 import UserController from "../../../controllers/UserController";
 import JWTService from "../../../services/JWTService";
 
