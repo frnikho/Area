@@ -1,8 +1,7 @@
 import React from "react";
-import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
 
-class Controller extends React.Component {
+export default class Controller extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,5 +30,3 @@ class Controller extends React.Component {
     }
 
 }
-
-export default withCookies(Controller);

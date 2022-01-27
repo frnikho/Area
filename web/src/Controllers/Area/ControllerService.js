@@ -1,5 +1,5 @@
 import React from "react";
-import ServicePage from "../../Views/ServicePage.js"
+import ServicePage from "../../Views/Area/ServicePage"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";

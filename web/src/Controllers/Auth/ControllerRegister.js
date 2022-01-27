@@ -3,39 +3,27 @@ import RegisterPage from "../../Views/Auth/RegisterPage.js"
 import Google from "../../Models/Auth/Google.js"
 import Github from "../../Models/Auth/Github.js"
 import { AuthContext } from "../../Contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import Controller from "../Controller"
 
-
-export default class ControllerRegister extends React.Component {
+export default class ControllerRegister extends Controller {
 
     static contextType = AuthContext;
 
     constructor(props) {
         super(props);
-        this.state = {
-            redirectUrl: undefined,
-            notification: undefined,
-        }
 
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
         this.registerDb = this.registerDb.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.setNotification = this.setNotification.bind(this)
-        this.setRedirectUrl = this.setRedirectUrl.bind(this)
-    }
-
-    setRedirectUrl(url) {
-        this.setState({ redirectUrl: url })
     }
 
     componentDidMount() {
         this.auth = this.context;
-    }
-
-    setNotification(value) {
-        this.setState({ notification: value });
+        if (this.auth.getUser() !== undefined) {
+            this.setRedirectUrl('/area/dashboard')
+        }
     }
 
     onClickGoogleLogin(response) {
@@ -59,9 +47,7 @@ export default class ControllerRegister extends React.Component {
 
     registerDb(email, firstname, lastname, password) {
         this.auth.register({ firstname: firstname, lastname: lastname, email: email, password: password }, () => {
-            this.setState({
-                redirectUrl: '/auth/login',
-            });
+            this.setRedirectUrl('/auth/login')
             this.setNotification("Register !");
         }, (err) => {
             console.log(err);
@@ -90,7 +76,7 @@ export default class ControllerRegister extends React.Component {
         return (
             <>
                 <RegisterPage {...this} />
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+                {this.redirectUrl()}
             </>
         )
     }

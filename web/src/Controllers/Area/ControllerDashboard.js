@@ -2,41 +2,36 @@ import React from "react";
 import DashboardPage from "../../Views/Area/DashboardPage.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
-import { Navigate } from "react-router-dom";
+import Controller from "../Controller"
 
-
-class ControllerDashboard extends React.Component {
+class ControllerDashboard extends Controller {
 
     static contextType = AuthContext;
 
     constructor(props) {
         super(props);
         this.state = {
-            notification: undefined,
-            redirectUrl: undefined,
+            user: undefined,
         }
         this.cookies = props;
-        this.setRedirectUrl = this.setRedirectUrl.bind(this)
-        this.setNotification = this.setNotification.bind(this)
     }
 
     componentDidMount() {
         this.auth = this.context;
-    }
-
-    setRedirectUrl(url) {
-        this.setState({ redirectUrl: url })
-    }
-
-    setNotification(value) {
-        this.setState({ notification: value });
+        if (this.auth.getUser() === undefined) {
+            this.setRedirectUrl('/auth/login')
+        } else {
+            this.setState({
+                user: this.auth.getUser()
+            })
+        }
     }
 
     render() {
         return (
             <div>
                 <DashboardPage {...this} />
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+                {this.redirectUrl()}
             </div>
         );
     }
