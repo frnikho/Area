@@ -26,31 +26,35 @@ export default class LoginScreen extends Component {
       if (this.state.email === undefined || this.state.password === undefined ) {
         return;
       }
-
-      app.post(`/auth/login`, {
-        email: this.state.email,
-        password: this.state.password,
-      }).then(async(response: any) => {
-        if (response.status === 200) {
-          await AsyncStorage.setItem('@token', response.data.token);
-          Toast.show({
-            title: "You are successfully authenticated",
-            status: "success",
-            description: "You can now navigate in the dashboard.",
-            duration: 2000
-          });
-          setTimeout(() => {
-            this.props.navigation.navigate('home')
-          }, 1000);
-        }
-      }).catch((err: any) => {
+      app.get('/about.json').then(response => {
+        console.log(response);
+      }).catch((err) => {
         console.log(err);
-        Toast.show({
-          title: err.response.data.error,
-          status: "warning",
-          description: "Please try again !",
-        })
       })
+      // app.post(`/auth/login`, {
+      //   email: this.state.email,
+      //   password: this.state.password,
+      // }).then(async(response: any) => {
+      //   if (response.status === 200) {
+      //     await AsyncStorage.setItem('@token', response.data.token);
+      //     Toast.show({
+      //       title: "You are successfully authenticated",
+      //       status: "success",
+      //       description: "You can now navigate in the dashboard.",
+      //       duration: 2000
+      //     });
+      //     setTimeout(() => {
+      //       this.props.navigation.navigate('home')
+      //     }, 1000);
+      //   }
+      // }).catch((err: any) => {
+      //   console.log(err);
+      //   Toast.show({
+      //     title: err.response.data.error,
+      //     status: "warning",
+      //     description: "Please try again !",
+      //   })
+      // })
     }
 
     render() {
