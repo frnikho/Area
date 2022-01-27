@@ -4,10 +4,10 @@ import app from "../../Components/utils/Axios"
 export default class Google extends Model {
     constructor() {
         super();
-        this.Connect = this.Connect.bind(this)
+        this.connect = this.connect.bind(this)
     }
 
-    Connect(data) {
+    connect(data) {
         app.post(`/auth/Google/code`, {
             code: data['code']
         }).then((response) => {

@@ -58,24 +58,18 @@ class ControllerLogin extends React.Component {
             if (response.error !== "idpiframe_initialization_failed")
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
-            Google.connect();
+            Google.connect(response);
         }
     }
 
-    onClickGithubLogin() {
-
-        return (
-            <OAuth2Login
-                authorizationUrl="https://github.com/login/oauth/authorize"
-                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
-                responseType="code"
-                scope={"user:email"}
-                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                onSuccess={() => Github.connect()}
-                onFailure={(abc) => console.error(abc)}
-                buttonText={"Github"}
-            />
-        )
+    onClickGithubLogin(response) {
+        if (response.error) {
+            // temporay
+            if (response.error !== "idpiframe_initialization_failed")
+                this.setNotification({ message: "Error with google", show: true, type: "error" });
+        } else {
+            Github.connect(response);
+        }
     }
 
     loginDb(email, password) {

@@ -5,11 +5,10 @@ export default class Github extends Model {
     constructor() {
         super();
 
-        this.Connect = this.Connect.bind(this);
+        this.connect = this.connect.bind(this);
     }
 
-    Connect(data) {
-        console.log("call githbu")
+    connect(data) {
         app.post(`/auth/github/code`, {
             code: data['code']
         }).then((response) => {

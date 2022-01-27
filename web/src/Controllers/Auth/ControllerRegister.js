@@ -39,15 +39,21 @@ export default class ControllerRegister extends React.Component {
     }
 
     onClickGoogleLogin(response) {
-
         if (response.error) {
             // temporay
-            if (response.error !== "idpiframe_initialization_failed") {
+            if (response.error !== "idpiframe_initialization_failed")
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
-                console.log(response.error)
-            }
         } else {
-            Google.connect();
+            Google.connect(response);
+        }
+    }
+
+    onClickGithubLogin(response) {
+        if (response.error) {
+            this.setNotification({ message: "Error with Github", show: true, type: "error" });
+            console.log(response.error)
+        } else {
+            Github.connect()
         }
     }
 
@@ -78,15 +84,6 @@ export default class ControllerRegister extends React.Component {
         if (!data.has('confpassword') || data.get('confpassword') === "" || data.get('confpassword') !== data.get('password'))
             return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
         this.registerDb(data.get('email'), data.get('firstname'), data.get('lastname'), data.get('password'));
-    }
-
-    onClickGithubLogin(response) {
-        if (response.error) {
-            this.setNotification({ message: "Error with Github", show: true, type: "error" });
-            console.log(response.error)
-        } else {
-            Github.connect()
-        }
     }
 
     render() {

@@ -67,8 +67,15 @@ export default function LoginPage(props) {
                             Log in
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <GoogleLogin
+                            <OAuth2Login
+                                authorizationUrl="https://accounts.google.com/o/oauth2/v2/auth"
                                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                responseType="code"
+                                scope={"openid%20profile%20email&"}
+                                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+                                onSuccess={() => props.onClickGoogleLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Google"}
                                 render={renderProps => (
                                     <Button
                                         onClick={renderProps.onClick}
@@ -78,10 +85,6 @@ export default function LoginPage(props) {
                                         <FaGoogle />
                                     </Button>
                                 )}
-                                buttonText="Login"
-                                onSuccess={props.onClickGoogleLogin}
-                                onFailure={props.onClickGoogleLogin}
-                                cookiePolicy={'single_host_origin'}
                             />
                             <Box sx={{ padding: 1 }} />
                             <OAuth2Login

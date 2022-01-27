@@ -44,7 +44,7 @@ export default function RegisterPage(props) {
                             name="firstname"
                             label="Firstname"
                             type="firstname"
-                            id="firstname"/>
+                            id="firstname" />
                         <TextField
                             margin="normal"
                             required
@@ -52,7 +52,7 @@ export default function RegisterPage(props) {
                             name="lastname"
                             label="Lastname"
                             type="lastname"
-                            id="lastname"/>
+                            id="lastname" />
                         <TextField
                             margin="normal"
                             required
@@ -87,8 +87,15 @@ export default function RegisterPage(props) {
                             Sign In
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <GoogleLogin
+                            <OAuth2Login
+                                authorizationUrl="https://accounts.google.com/o/oauth2/v2/auth"
                                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                responseType="code"
+                                scope={"openid%20profile%20email&"}
+                                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+                                onSuccess={() => props.onClickGoogleLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Google"}
                                 render={renderProps => (
                                     <Button
                                         onClick={renderProps.onClick}
@@ -98,19 +105,27 @@ export default function RegisterPage(props) {
                                         <FaGoogle />
                                     </Button>
                                 )}
-                                buttonText="Login"
-                                onSuccess={props.onClickGoogleLogin}
-                                onFailure={props.onClickGoogleLogin}
-                                cookiePolicy={'single_host_origin'}
                             />
                             <Box sx={{ padding: 1 }} />
-                            <Button
-                                onClick={props.onClickGithubLogin}
-                                color={"secondary"}
-                                variant="contained"
-                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                <FaGithubSquare />
-                            </Button>
+                            <OAuth2Login
+                                authorizationUrl="https://github.com/login/oauth/authorize"
+                                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                                responseType="code"
+                                scope={"user:email"}
+                                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                                onSuccess={() => props.onClickGithubLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Github"}
+                                render={renderProps => (
+                                    <Button
+                                        onClick={renderProps.onClick}
+                                        color={"secondary"}
+                                        variant="contained"
+                                        sx={{ mt: 0, mb: 2, py: 1.5 }}>
+                                        <FaGithubSquare />
+                                    </Button>
+                                )}
+                            />
                         </Box>
                         <div style={{ textAlign: "center" }}>
                             <Link to="/auth/login">
