@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
+import axios from "axios";
 
 export default class LoginScreen extends Component {
     constructor(props: any) {
       super(props);
+    }
+
+    login = () => {
+        axios.get('https://nikho.dev:8080/about.json').then((response) => {
+            console.log(response.data);
+        })
     }
 
     render() {
@@ -42,7 +48,7 @@ export default class LoginScreen extends Component {
                 <FormControl.Label>Password</FormControl.Label>
                 <Input type="password" />
               </FormControl>
-              <Button mt="2" colorScheme="indigo">
+              <Button mt="2" colorScheme="indigo" onPress={() => this.login()}>
                 Sign in
               </Button>
               <HStack mt="6" justifyContent="center">
