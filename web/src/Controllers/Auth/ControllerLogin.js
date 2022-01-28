@@ -1,6 +1,6 @@
-import React from "react";
+// import React from "react";
 import LoginPage from "../../Views/Auth/LoginPage.js"
-// import Database from "../../Models/Auth/DataBase"
+import Database from "../../Models/Auth/DataBase"
 
 import Controller from "../Controller"
 import Github from "../../Models/Auth/Github.js"
@@ -51,24 +51,29 @@ class ControllerLogin extends Controller {
 
     onClickGithubLogin(response) {
         if (response.error) {
-            // temporay
-            if (response.error !== "idpiframe_initialization_failed")
-                this.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
             Github.connect(response);
         }
     }
 
     loginDb(email, password) {
-        const { cookies } = this.props;
-        this.authContext.loginFromWeb({ email: email, password: password }, (token) => {
-            console.log("Success !");
-            cookies.set('session', token, { path: '/' });
-            this.setRedirectUrl('/')
-        }, (err) => {
-            console.log(err);
-            console.log("Error !");
-        });
+        Database.connect(email, password, (data) => {
+            console.log(data)
+            if (data.success === true) {
+                this.authContext.loginFromCache((data.token), () => {
+                    const { cookies } = this.props;
+
+                    cookies.set('session', data.token, { path: '/' });
+                    this.setRedirectUrl('/')
+                })
+            } else {
+                this.setNotification({ message: "Error with Database", show: true, type: "error" });
+            }
+        }, (error) => {
+            this.setNotification({ message: error.data.error, show: true, type: "error" });
+        })
+
     }
 
     render() {

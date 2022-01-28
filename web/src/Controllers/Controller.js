@@ -11,15 +11,14 @@ export default class Controller extends React.Component {
         this.setRedirectUrl = this.setRedirectUrl.bind(this)
         this.setNotification = this.setNotification.bind(this)
         this.redirectUrl = this.redirectUrl.bind(this)
+        this.getUrl = this.getUrl.bind(this)
     }
 
-    setRedirectUrl(url) {
-        this.setState({ redirectUrl: url })
-    }
+    getUrl() { return this.url }
 
-    setNotification(value) {
-        this.setState({ notification: value });
-    }
+    setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
+
+    setNotification(value) { this.setState({ notification: value }) }
 
     redirectUrl() {
         return (

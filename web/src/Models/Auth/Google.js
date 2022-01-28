@@ -1,13 +1,9 @@
-import Model from "../Model.js"
 import app from "../../Components/utils/Axios"
+import React from "react";
 
-export default class Google extends Model {
-    constructor() {
-        super();
-        this.connect = this.connect.bind(this)
-    }
+export default class Gogle extends React.Component{
 
-    connect(data) {
+    static connect(data) {
         app.post(`/auth/Google/code`, {
             code: data['code']
         }).then((response) => {

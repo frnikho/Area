@@ -2,6 +2,7 @@ import React from "react";
 import RegisterPage from "../../Views/Auth/RegisterPage.js"
 import Google from "../../Models/Auth/Google.js"
 import Github from "../../Models/Auth/Github.js"
+import DataBase from "../../Models/Auth/DataBase.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Controller from "../Controller"
 
@@ -46,12 +47,15 @@ export default class ControllerRegister extends Controller {
     }
 
     registerDb(email, firstname, lastname, password) {
-        this.authContext.register({ firstname: firstname, lastname: lastname, email: email, password: password }, () => {
-            this.setRedirectUrl('/auth/login')
-            this.setNotification("Register !");
+        DataBase.register({ firstname: firstname, lastname: lastname, email: email, password: password }, (response) => {
+            if (response.data.success === true) {
+                this.setRedirectUrl('/auth/login')
+                this.setNotification({ message: "Register", show: true, type: "succes" });
+            } else {
+                this.setNotification({ message: "error with the Database", show: true, type: "error" });
+            }
         }, (err) => {
-            console.log(err);
-            this.setNotification(err.message);
+            this.setNotification({ message: err.data.error, show: true, type: "error" });
         });
     }
 
