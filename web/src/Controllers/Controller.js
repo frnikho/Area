@@ -7,6 +7,7 @@ export default class Controller extends React.Component {
         this.state = {
             redirectUrl: undefined,
             notification: undefined,
+            showNotif: undefined
         }
         this.setRedirectUrl = this.setRedirectUrl.bind(this)
         this.setNotification = this.setNotification.bind(this)
@@ -18,7 +19,12 @@ export default class Controller extends React.Component {
 
     setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
 
-    setNotification(value) { this.setState({ notification: value }) }
+    setNotification(value) {
+        this.setState({
+            notification: value
+        });
+        setTimeout(() => this.setState({ notification: undefined}), 5000)
+    }
 
     redirectUrl() {
         return (

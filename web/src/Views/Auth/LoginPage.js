@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import Stack from '@mui/material/Stack';
 
-import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
+import NotifComponent from "../../Components/utils/NotifComponent"
 import * as logo from "../../Resources/assets/login.json"
 import useStyles from "../../Components/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
@@ -116,7 +116,8 @@ export default function LoginPage(props) {
                         </div>
                     </Box>
                 </Box>
-                {NotifAuthComponent(props.state.notification)}
+                <Box sx={{ padding: 1 }} />
+                {NotifComponent(props.state.notification)}
             </Container>
         </ThemeProvider >
     );

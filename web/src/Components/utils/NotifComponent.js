@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Alert from '@mui/material/Alert';
 
-const NotifAuthComponent = (notif) => {
+const NotifComponent = (notif) => {
     var severity = "success";
 
     if (notif === undefined || notif.message === "" || notif.show === false)
@@ -15,4 +15,4 @@ const NotifAuthComponent = (notif) => {
     );
 };
 
-export default NotifAuthComponent;
+export default NotifComponent;

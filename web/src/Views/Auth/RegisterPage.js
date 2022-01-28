@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import OAuth2Login from 'react-simple-oauth2-login';
 import Stack from '@mui/material/Stack';
 
-import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
+import NotifComponent from "../../Components/utils/NotifComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import useStyles from "../../Components/Styles/styleAuth.js"
 
@@ -137,7 +137,8 @@ export default function RegisterPage(props) {
                         </div>
                     </Box>
                 </Box>
-                {NotifAuthComponent(props.state.notification)}
+                <Box sx={{ padding: 1 }} />
+                {NotifComponent(props.state.notification)}
             </Container>
         </ThemeProvider>
     );
