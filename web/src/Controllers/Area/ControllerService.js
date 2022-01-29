@@ -20,6 +20,8 @@ class ControllerService extends React.Component {
         this.setNotification = this.setNotification.bind(this)
         this.name = props.name
         this.color = props.color
+        this.description = props.description
+        this.icon = props.icon
     }
 
     componentDidMount() {

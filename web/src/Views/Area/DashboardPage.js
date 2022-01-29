@@ -1,5 +1,6 @@
 import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
+import { FaGithubSquare, FaSlack } from "react-icons/fa";
 
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -18,26 +19,31 @@ export default function DashboardPage(props) {
         {
             name: "GitHub",
             color: "blue",
+            icon: <FaGithubSquare size={70}/>,
             description: "Action github push"
         },
         {
             name: "GitHub",
             color: "green",
+            icon: <FaGithubSquare size={70}/>,
             description: "Action github pull"
         },
         {
             name: "GitHub",
             color: "yellow",
+            icon: <FaGithubSquare size={70}/>,
             description: "Action github merge"
         },
         {
             name: "Slack",
             color: "green",
+            icon: <FaSlack size={70}/>,
             description: "Receive private msg"
         },
         {
             name: "Slack",
             color: "red",
+            icon: <FaSlack size={70}/>,
             description: "Receive groupe msg"
         }
     ]
