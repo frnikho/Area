@@ -2,6 +2,8 @@ import {Express} from "express";
 
 const express = require('express');
 const dotenv = require('dotenv');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 import cors = require('cors');
 import fs = require("fs");
@@ -25,6 +27,8 @@ import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
+
+import {swaggerOptions} from "./documentation/Swagger"
 
 const DEFAULT_PORT = 8080;
 
@@ -97,6 +101,10 @@ export default class App {
         // ABOUT ROUTE
         new AboutRoute().register(this.app, '/about.json');
 
+        // DOCUMENTATION ROUTE
+        this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions), {
+            customSiteTitle: 'Dashboard API - Documentation',
+        }));
         // 404 ROUTE
         //this.app.use('*', RouteNotFoundMiddleware);
     }

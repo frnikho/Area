@@ -20,10 +20,30 @@ export default class TwitterServiceRoute extends Route {
     }
 
     /**
-     * Callback Route: allow us to have an access token thanks to the redirect uri
-     *
-     * @param req - code - given by redirect uri - code_verifier PKCE
-     * @param res
+     * @openapi
+     * /services/twitter/callback:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: Twitter Service OAuth
+     *     parameters:
+     *      - in: path
+     *        name: code
+     *        schema:
+     *          type: string
+     *        description: Code given by Twitter OAuth
+     *        required: true
+     *      - in: path
+     *        name: code_verifier
+     *        schema:
+     *          type: string
+     *        description: code_verifier is given after PKCE generation
+     *        required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
