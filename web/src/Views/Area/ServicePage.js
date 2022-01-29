@@ -13,8 +13,8 @@ export default function ServicePage(props) {
             display: "flex",
             textAlign: "center",
             borderRadius: "30px",
-            width: "500px",
-            height: "100px",
+            width: "100%",
+            // height: "0%",
         },
         font: {
             fontFamily: "Dongle",
@@ -36,6 +36,7 @@ export default function ServicePage(props) {
             <Box sx={{ padding: 1 }} />
             <div className={classe.description}>
                 {props.name}
+                {props.description}
             </div>
         </div>
     );
