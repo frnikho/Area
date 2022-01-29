@@ -18,17 +18,19 @@ export default function DescriptionPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.titleLeft}>
-                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+            <div className={classe.title}>
+                <div className={classe.titleLeft}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+                </div>
+                <div className={classe.menuRight}>
+                    <Stack direction="row" spacing={2}>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/")}>
+                            ←
+                        </Button>
+                    </Stack>
+                </div>
             </div>
-            <div className={classe.menuRight}>
-                <Stack direction="row" spacing={2}>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/")}>
-                        ←
-                    </Button>
-                </Stack>
-            </div>
-            <div className={classe.space} />
+            {/* <div className={classe.space} /> */}
             <div className={classe.container}>
                 <img style={{ width: '8%', height: '8%' }} src={DescriptionLogo} alt="loading..." />
                 <div className={classe.rect}>

@@ -21,15 +21,17 @@ export default function RegisterPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.titleLeft}>
-                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+            <div className={classe.title}>
+                <div className={classe.titleLeft}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+                </div>
+                <div className={classe.menuRight}>
+                    <Stack direction="row" spacing={2}>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                    </Stack>
+                </div>
             </div>
-            <div className={classe.menuRight}>
-                <Stack direction="row" spacing={2}>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
-                </Stack>
-            </div>
-            <div className={classe.space} />
+            {/* <div className={classe.space} /> */}
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />

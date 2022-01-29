@@ -19,31 +19,31 @@ export default function DashboardPage(props) {
         {
             name: "GitHub",
             color: "blue",
-            icon: <FaGithubSquare size={70}/>,
+            icon: <FaGithubSquare size={70} />,
             description: "Action github push"
         },
         {
             name: "GitHub",
             color: "green",
-            icon: <FaGithubSquare size={70}/>,
+            icon: <FaGithubSquare size={70} />,
             description: "Action github pull"
         },
         {
             name: "GitHub",
             color: "yellow",
-            icon: <FaGithubSquare size={70}/>,
+            icon: <FaGithubSquare size={70} />,
             description: "Action github merge"
         },
         {
             name: "Slack",
             color: "green",
-            icon: <FaSlack size={70}/>,
+            icon: <FaSlack size={70} />,
             description: "Receive private msg"
         },
         {
             name: "Slack",
             color: "red",
-            icon: <FaSlack size={70}/>,
+            icon: <FaSlack size={70} />,
             description: "Receive groupe msg"
         }
     ]
@@ -52,16 +52,18 @@ export default function DashboardPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.titleLeft}>
-                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+            <div className={classe.title}>
+                <div className={classe.titleLeft}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+                </div>
+                <div className={classe.menuRight}>
+                    <Stack direction="row" spacing={2}>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.logout()}>Logout</Button>
+                    </Stack>
+                </div>
             </div>
-            <div className={classe.menuRight}>
-                <Stack direction="row" spacing={2}>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.logout()}>Logout</Button>
-                </Stack>
-            </div>
-            <div className={classe.space} />
+            {/* <div className={classe.space} /> */}
             <div className={classe.container}>
                 My applets
             </div>
