@@ -72,7 +72,7 @@ export default class TwitterServiceRoute extends Route {
                 + "response_type=code&"
                 + "client_id=" + process.env.TWITTER_SERVICES_CLIENT_ID + "&"
                 + "redirect_uri=" + process.env.TWITTER_SERVICES_REDIRECT_URL + "&"
-                + "scope=tweet.write&"
+                + "scope=tweet.write tweet.read users.read offline.access&"
                 + "state=state&"
                 + "code_challenge=" + pkce["code_challenge"] + "&"
                 + "code_challenge_method=s256");
