@@ -27,6 +27,7 @@ import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 import PaypalServiceRoute from "./routes/services/PaypalServiceRoute";
 import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
+import {GooglePubSub} from "./clients/GooglePubSub";
 
 const DEFAULT_PORT = 8080;
 
@@ -74,6 +75,8 @@ export default class App {
         let discord = new DiscordBot();
         discord.login();
         let slack = new SlackBot();
+        let googleClient: GooglePubSub = new GooglePubSub();
+        googleClient.test();
     }
 
     private initRoutes(): void  {

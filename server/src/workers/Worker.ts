@@ -14,8 +14,10 @@ export default abstract class Worker {
 
     public getApplets(service: string, callback: (applets: Applet[]) => void): void {
         new AppletController().getAppletsByService(service, (response) => {
-            callback(response.map((applet) => applet as Applet));
-        }, () => callback(null));
+            if (response.length === 0)
+                return callback([]);
+            return callback(response.map((applet) => applet as Applet));
+        }, (err) => callback([]));
     }
 
     public abstract manageHook(applet: Applet);

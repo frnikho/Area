@@ -28,6 +28,7 @@
     "express-rawbody": "^1.0.2",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
+    "jssoup": "^0.0.15",
     "mariadb": "^2.5.5",
     "nodemailer": "^6.7.2",
     "prettier": "^2.5.1",

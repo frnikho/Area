@@ -40,22 +40,29 @@ export default class IntraWorker extends Worker {
 
     private intraNewNotifications(applet: Applet): void {
         let action: Action = applet.action;
-        let authLink: string = action.parameters.filter((params) => params !== null && params["name"] === "login_link")[0]['value'];
-        let existing = this.yebhooks.filter((hook) => hook.getAuthLink() === authLink);
-        if (existing.length === 0 ) {
-            let intra = new NotificationEpitechIntraYephook(authLink, authLink, (oldData, newData) => {
-                try {
-                    new AppletController().callReactions(applet, ingredientsHook(newData.history[0], ActionType.intra_new_notifications), (err) => {
-                        if (err)
-                            console.log(err);
-                    })
-                } catch (err) {
-                    console.log("ERROR !");
-                    console.log(err);
-                }
-            });
-            this.yebhooks.push(intra);
-            intra.startChecking();
+        try {
+            let authLink: string = action.parameters.filter((params) => params !== null && params["name"] === "login_link")[0]['value'];
+            if (this.yebhooks === undefined)
+                this.yebhooks = [];
+            let existing = this.yebhooks.filter((hook) => hook.getAuthLink() === authLink);
+            if (existing.length === 0 ) {
+                let intra = new NotificationEpitechIntraYephook(authLink, authLink, (oldData, newData) => {
+                    try {
+                        new AppletController().callReactions(applet, ingredientsHook(newData.history[0], ActionType.intra_new_notifications), (err) => {
+                            if (err)
+                                console.log(err);
+                        })
+                    } catch (err) {
+                        console.log("ERROR !");
+                        console.log(err);
+                    }
+                });
+                this.yebhooks.push(intra);
+                intra.startChecking();
+            }
+        } catch (ex) {
+            console.log(ex);
+            return;
         }
     }
 }

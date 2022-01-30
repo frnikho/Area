@@ -1,3 +1,21 @@
+export const GmailAppletActionsAbout = [
+    {
+        name: "New email received",
+        description: '',
+        type: 'google_gmail_email_received',
+        base_key: 'email',
+        parameters: [
+            {
+                name: "token_key",
+                type: 'string',
+                required: true,
+
+            }
+        ],
+        ingredients: [],
+    }
+]
+
 export const SpotifyAppletActionsAbout = [
     {
         name: "Song Changed",
@@ -27,6 +45,7 @@ export const IntraAppletActionsAbout = [
                 required: false,
             },
         ],
+        ingredients: ["notification_username", "notification_title"],
     },
     {
         name: "Credit updated",
@@ -61,7 +80,8 @@ export const DiscordAppletActionsAbout = [
                 type: 'string',
                 required: false,
             }
-        ]
+        ],
+        ingredients: [],
     },
     {
         name: "When receive a private message",
@@ -73,7 +93,8 @@ export const DiscordAppletActionsAbout = [
                 type: 'string',
                 required: true,
             }
-        ]
+        ],
+        ingredients: [],
     },
     {
         name: "When receive a guild message",
@@ -90,7 +111,8 @@ export const DiscordAppletActionsAbout = [
                 type: 'string',
                 required: false,
             }
-        ]
+        ],
+        ingredients: ["sender_id", "sender_username"]
     }
 ]
 
@@ -105,7 +127,8 @@ export const GithubAppletActionsAbout = [
                     type: 'string',
                     required: true
                 }
-            ]
+            ],
+            ingredients: ["sender_login", "sender_email", "repo_name"]
         },
         {
             name: 'New repository created',
@@ -117,7 +140,8 @@ export const GithubAppletActionsAbout = [
                     type: 'string',
                     required: true,
                 }
-            ]
+            ],
+            ingredients: []
         }
     ]
 
@@ -180,7 +204,6 @@ export const AppAbout = {
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
-
             name: "Slack",
             actions: [],
             reactions: SlackAppletReactionsAbout,
@@ -192,6 +215,10 @@ export const AppAbout = {
             name: "Spotify",
             actions: SpotifyAppletActionsAbout,
             reactions: [],
+        }, {
+            name: "Gmail",
+            actions: GmailAppletActionsAbout,
+            reactions: []
         }]
     }
 }
