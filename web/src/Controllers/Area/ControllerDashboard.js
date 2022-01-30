@@ -3,6 +3,7 @@ import DashboardPage from "../../Views/Area/DashboardPage.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import Controller from "../Controller"
+import app from "../../Components/utils/Axios";
 
 class ControllerDashboard extends Controller {
 
@@ -12,6 +13,7 @@ class ControllerDashboard extends Controller {
         super(props);
         this.state = {
             user: undefined,
+            services: undefined
         }
         this.cookies = props;
         this.logout = this.logout.bind(this)
@@ -26,6 +28,17 @@ class ControllerDashboard extends Controller {
                 user: this.authContext.getUser()
             })
         }
+
+        this.loadServices();
+
+    }
+
+    loadServices() {
+        app.get(`about.json`).then((response) => {
+            this.setState({
+                services: response.data.server.services
+            })
+        })
     }
 
     logout() {

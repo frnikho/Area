@@ -14,35 +14,17 @@ const theme = createTheme({
 
 export default function DashboardPage(props) {
 
-    const applets = [
-        {
-            name: "GitHub",
-            color: "blue",
-            description: "Action github push"
-        },
-        {
-            name: "GitHub",
-            color: "green",
-            description: "Action github pull"
-        },
-        {
-            name: "GitHub",
-            color: "yellow",
-            description: "Action github merge"
-        },
-        {
-            name: "Slack",
-            color: "green",
-            description: "Receive private msg"
-        },
-        {
-            name: "Slack",
-            color: "red",
-            description: "Receive groupe msg"
-        }
-    ]
-
     const classe = useStyles()
+
+    const showServices = () => {
+        if (props.state.services === undefined)
+            return;
+        return props.state.services.map((service, index) => (
+            <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
+                <ControllerService service={service}/>
+            </Grid>
+        ))
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -61,11 +43,7 @@ export default function DashboardPage(props) {
             </div>
             <Box sx={{ marginLeft: "2%", marginRight: "auto" }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {applets.map((it, index) => (
-                        <Grid item xs={2} sm={4} md={2.9} key={index}>
-                            <ControllerService {...it} />
-                        </Grid>
-                    ))}
+                    {showServices()}
                 </Grid>
             </Box>
         </ThemeProvider >
