@@ -47,7 +47,7 @@ export default class GithubWebhook {
     }
 
     public init(): void {
-        const webhookProxyUrl = process.env.WEBHOOK_PROXY_URL;
+        const webhookProxyUrl = process.env.GITHUB_WEBHOOK_URL;
 
         const source = new EventSource(webhookProxyUrl);
         source.onmessage = (event) => {
