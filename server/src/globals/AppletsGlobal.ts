@@ -136,7 +136,7 @@ export const GithubAppletActionsAbout = [
             description: '',
             parameters: [
                 {
-                    name: "application_id",
+                    name: "",
                     type: 'string',
                     required: true,
                 }
