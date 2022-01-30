@@ -107,6 +107,14 @@ export default class AppletController {
         } as Applet
     }
 
+    public deleteApplet(uuid: string, success: successBool): void {
+        DBService.query(`DELETE FROM applets WHERE uuid = '${uuid}'`, (response) => {
+            success(true);
+        }, (err) => {
+            success(false);
+        });
+    }
+
     public isAppletsEnableByUuid(uuid: string, success: successBool): void {
 
     }

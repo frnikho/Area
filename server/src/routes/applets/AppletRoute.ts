@@ -8,14 +8,14 @@ export default class AppletRoute extends Route {
 
     constructor() {
         super();
-        this.router.get('/:appletUuid', parseAppletParams ,authorization, this.get);
-        this.router.get('/all', authorization, this.getAll)
-        this.router.post('/toggle', parseAppletBody, authorization, this.toggle);
-        this.router.post('/enable', parseAppletBody, authorization, this.enable);
-        this.router.post('/disable', parseAppletBody, authorization, this.disable);
-        this.router.post('/', authorization, checkNewApplet, this.create);
-        this.router.delete('/', parseAppletBody, authorization, this.delete);
-        this.router.patch('/', parseAppletBody, authorization, this.update);
+        this.router.get('/:appletUuid', parseAppletParams, authorization, this.get); //GOOD
+        this.router.delete('/:appletUuid', parseAppletParams, authorization, this.delete); //GOOD
+        this.router.get('/all', authorization, this.getAll) //GOOD
+        this.router.post('/toggle', parseAppletBody, authorization, this.toggle); //GOOD
+        this.router.post('/enable', parseAppletBody, authorization, this.enable); //GOOD
+        this.router.post('/disable', parseAppletBody, authorization, this.disable); //GOOD
+        this.router.post('/', authorization, checkNewApplet, this.create); //GOOD
+        this.router.patch('/', parseAppletBody, authorization, this.update); //TODO
     }
 
     private getAll(req: express.Request, res: express.Response) {
@@ -25,7 +25,7 @@ export default class AppletRoute extends Route {
     }
 
     private get(req: express.Request, res: express.Response) {
-        console.log(req.params);
+        return res.status(200).json(req['applet']);
     }
 
     private create(req: express.Request, res: express.Response) {
@@ -37,7 +37,9 @@ export default class AppletRoute extends Route {
     }
 
     private delete(req: express.Request, res: express.Response) {
-
+        new AppletController().deleteApplet(req['applet']['uuid'], (success) => {
+            return res.status(200).json({success: success});
+        });
     }
 
     private update(req: express.Request, res: express.Response) {
@@ -45,15 +47,27 @@ export default class AppletRoute extends Route {
     }
 
     private enable(req: express.Request, res: express.Response) {
-
+        new AppletController().enableAppletByUuid(req['applet']['uuid'], (success) => {
+            return res.status(200).json({success: success});
+        });
     }
 
     private disable(req: express.Request, res: express.Response) {
-
+        new AppletController().disableAppletByUuid(req['applet']['uuid'], (success) => {
+            return res.status(200).json({success: success});
+        });
     }
 
     private toggle(req: express.Request, res: express.Response) {
-
+        if (req['applet']['enable'] === 1) {
+            new AppletController().disableAppletByUuid(req['applet']['uuid'], (success) => {
+                return res.status(200).json({success: success});
+            });
+        } else {
+            new AppletController().enableAppletByUuid(req['applet']['uuid'], (success) => {
+                return res.status(200).json({success: success});
+            });
+        }
     }
 
 }
