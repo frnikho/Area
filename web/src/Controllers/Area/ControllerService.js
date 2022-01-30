@@ -39,7 +39,7 @@ class ControllerService extends React.Component {
     render() {
         return (
             <div>
-                <ServicePage {...this} />
+                <ServicePage {...this} service={this.props.service}/>
                 {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
             </div>
         );

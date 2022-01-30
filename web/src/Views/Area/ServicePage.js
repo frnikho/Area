@@ -1,45 +1,36 @@
 import React from "react";
-import { Box } from "@mui/material";
-
-import { makeStyles } from "@material-ui/core/styles"
-
+import {FaDiscord, FaGithubSquare, FaSlack, FaMarker} from "react-icons/fa";
+import {Box, Paper, Typography} from "@mui/material";
 export default function ServicePage(props) {
 
-    const useStyles = makeStyles({
-        rect: {
-            // alignItems: "center",
-            // justifyContent: "center",
-            // textAlign: "center",
-            display: "flex",
-            borderRadius: "30px",
-            width: "100%",
-            // height: "0%",
-        },
-        font: {
-            fontFamily: "Dongle",
-        },
-        color: {
-            background: props.color,
-        },
-        description: {
-            color: "white",
-            fontSize: "50px",
-        }
-    });
+    const DEFAULT_ICON_SIZE = 50;
 
-    const classe = useStyles("green")
+    const showIcon = () => {
+        console.log(props.props.service);
+        if (props.props.service.name === 'Github') {
+            return <FaGithubSquare size={DEFAULT_ICON_SIZE} color={"white"} />
+        } else if (props.props.service.name === 'Slack') {
+            return <FaSlack size={DEFAULT_ICON_SIZE}  color={"white"}/>
+        } else if (props.props.service.name === 'Intra Epitech') {
+            return <FaMarker size={DEFAULT_ICON_SIZE}  color={"white"}/>
+        } else if (props.props.service.name === "Discord") {
+            return <FaDiscord size={DEFAULT_ICON_SIZE}  color={"white"}/>
+        }
+    }
 
     return (
-        <div className={`${classe.rect} ${classe.color} ${classe.font}`}>
-            <Box sx={{ marginTop: 2, marginLeft: 4 }} >
-                {props.icon}
-            </Box>
-            <Box sx={{ padding: 2 }} />
-            <div className={classe.description}>
-                {props.name}
-                <Box sx={{ paddingTop: 0 }} />
-                {props.description}
-            </div>
-        </div>
+        <Box sx={{mt: 2}}>
+            <Paper elevation={0} style={{backgroundColor: '#e74c3c'}}>
+                <Box sx={{py: 4}}>
+                    {showIcon()}
+                    <br/>
+                    <Box sx={{mt: 2}}>
+                        <Typography component={"h2"} variant={"h5"} color={"white"} fontWeight={"800"}>
+                            {props.props.service.name}
+                        </Typography>
+                    </Box>
+                </Box>
+            </Paper>
+        </Box>
     );
 }
