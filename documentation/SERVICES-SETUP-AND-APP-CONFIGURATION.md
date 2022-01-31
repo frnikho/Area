@@ -21,7 +21,7 @@ Now select these permissions:
 
 And click on 'Create'.
 
-Now create a '.env' or fill your own at root of server directory like example.env and add:
+Now create a `.env` or fill your own at root of server directory like example.env and add:
 
 ```
 GITHUB_SERVICES_CLIENT_ID=Iv1.9a***********
@@ -59,7 +59,7 @@ Now go to Bot tab, enable all authorization flow settings and privileged gateway
 
 ![img_1.png](assets/img_1.png)
 
-Now create a '.env' or fill your own at root of server directory like example.env and add:
+Now create a `.env` or fill your own at root of server directory like example.env and add:
 
 ```dotenv
 DISCORD_SERVICES_CLIENT_ID=9346*********
@@ -92,7 +92,7 @@ Go to `Manage distribution` :
 
 And activate Public Distribution
 
-Now create a '.env' or fill your own at root of server directory like example.env and add:
+Now create a `.env` or fill your own at root of server directory like example.env and add:
 
 
 ```
@@ -110,7 +110,7 @@ SLACK_SERVICES_CLIENT_SECRET=14b7fdaf0**********
 
 ![twitter-oauth-params.png](assets/twitter-oauth-params.png)
 
-Now create a '.env' or fill your own at root of server directory like example.env and add:
+Now create a `.env` or fill your own at root of server directory like example.env and add:
 
 ```
 TWITTER_SERVICES_CLIENT_ID=Mk1jNGl******************

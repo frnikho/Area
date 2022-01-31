@@ -6,7 +6,7 @@
 
 Go to server directory
 
-- Fill the 'example.env' in server directory and rename it in '.env'.
+- Fill the `example.env` in server directory and rename it in `.env`.
 - Generate ssl credentials :
 
     ```shell
@@ -26,7 +26,7 @@ $ npm run build
 $ npm run prod or dev
 ```
 
-With 'dev' option server is reloaded at any change.
+With `dev` option server is reloaded at any change.
 
 :warning: **Be careful the server run on** ```https://localhost:8080```
 
@@ -37,10 +37,10 @@ With 'dev' option server is reloaded at any change.
 
 #### Prerequisites
 
-- Fill the 'example.env' in mobile directory and rename it in '.env'.
+- Fill the `example.env` in mobile directory and rename it in `.env`.
 - Specify your JAVA SDK directory :
 1. Go to ./mobile/android/
-2. Create 'local.properties' file
+2. Create `local.properties` file
     ```shell
     $ touch local.properties
     ```
@@ -73,7 +73,7 @@ $ ./gradlew assembleRelease
 
 #### Prerequisites
 
-- Fill the 'example.env' in web directory and rename it in '.env'.
+- Fill the `example.env` in web directory and rename it in `.env`.
 
 #### Build and run
 
