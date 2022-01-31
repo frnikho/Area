@@ -14,7 +14,7 @@ export default class Home extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const auth = this.context;
         if (auth.getUser() === undefined) {
             this.setState({

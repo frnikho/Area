@@ -24,7 +24,7 @@ class ControllerService extends React.Component {
         this.icon = props.icon
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.authContext = this.context;
     }
 

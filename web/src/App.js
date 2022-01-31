@@ -1,12 +1,15 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
+import { AuthContext } from "./Contexts/AuthContext";
+import { withCookies } from "react-cookie";
+
+//Controllers
+import Home from "./Controllers/Home";
 import ControllerLogin from "./Controllers/Auth/ControllerLogin";
 import ControllerRegister from "./Controllers/Auth/ControllerRegister";
 import ControllerDescription from "./Controllers/ControllerDescription.js"
 import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
-import Home from "./Controllers/Home";
-import { AuthContext } from "./Contexts/AuthContext";
-import { withCookies } from "react-cookie";
+import ControllerProfile from "./Controllers/Area/ControllerProfile"
 
 class App extends React.Component {
 
@@ -19,7 +22,7 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const auth = this.context;
         const { cookies } = this.props;
         const token = cookies.get('session');
@@ -41,6 +44,7 @@ class App extends React.Component {
                 </Route>
                 <Route path="area">
                     <Route path={"dashboard"} element={<ControllerDashboard />} />
+                    <Route path={"profile"} element={<ControllerProfile />} />
                 </Route>
             </Routes>)
         })
@@ -58,6 +62,7 @@ class App extends React.Component {
                     </Route>
                     <Route path="area">
                         <Route path={"dashboard"} element={<ControllerDashboard />} />
+                        <Route path={"profile"} element={<ControllerProfile />} />
                     </Route>
                 </Routes> : null}
             </div>

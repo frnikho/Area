@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://localhost:8080/";
+// const baseURL = "https://localhost:8080/";
+const baseURL = "https://nikho.dev:8080/";
 
 const app = axios.create({
     baseURL: baseURL,

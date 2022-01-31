@@ -20,7 +20,7 @@ export default class ControllerRegister extends Controller {
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
             this.setRedirectUrl('/area/dashboard')

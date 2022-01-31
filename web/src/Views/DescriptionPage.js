@@ -32,7 +32,7 @@ export default function DescriptionPage(props) {
             </div>
             {/* <div className={classe.space} /> */}
             <div className={classe.container}>
-                <img style={{ width: '8%', height: '8%' }} src={DescriptionLogo} alt="loading..." />
+                <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />
                 <div className={classe.rect}>
                     <div className={classe.description}>
                         What is Area ?
