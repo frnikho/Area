@@ -33,6 +33,9 @@
     "randomstring": "^1.2.1",
     "slash-commands": "^1.5.0",
     "smee-client": "^1.2.2",
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
     "tweetnacl": "^1.0.3",
     "uuid": "^8.3.2"
   },

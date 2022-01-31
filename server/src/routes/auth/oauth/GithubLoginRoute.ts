@@ -14,6 +14,26 @@ export default class GithubLoginRoute extends Route {
         this.router.get('/', this.post);
     }
 
+    /**
+     * @openapi
+     * /auth/github/code:
+     *   get:
+     *     tags:
+     *       - Authentication
+     *     description: Github Login
+     *     parameters:
+     *       - in: path
+     *         name: code
+     *         schema:
+     *           type: string
+     *         description: Code given by Github Auth
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
+     */
     private code(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
 
