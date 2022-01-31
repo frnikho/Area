@@ -1,40 +1,31 @@
-import React from "react";
+// import React from "react";
 import LoginPage from "../../Views/Auth/LoginPage.js"
-// import Database from "../../Models/Auth/DataBase"
+import Database from "../../Models/Auth/DataBase"
 
-import OAuth2Login from 'react-simple-oauth2-login';
+import Controller from "../Controller"
 import Github from "../../Models/Auth/Github.js"
 import Google from "../../Models/Auth/Google.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
-import { Navigate } from "react-router-dom";
 
-
-class ControllerLogin extends React.Component {
+class ControllerLogin extends Controller {
 
     static contextType = AuthContext;
 
     constructor(props) {
         super(props);
-        this.state = {
-            notification: undefined,
-            redirectUrl: undefined,
-        }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.setNotification = this.setNotification.bind(this)
         this.loginDb = this.loginDb.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.setRedirectUrl = this.setRedirectUrl.bind(this)
-    }
-
-    setRedirectUrl(url) {
-        this.setState({ redirectUrl: url})
     }
 
     componentDidMount() {
-        this.auth = this.context;
+        this.authContext = this.context;
+        if (this.authContext.getUser() !== undefined) {
+            this.setRedirectUrl('/area/dashboard')
+        }
     }
 
     handleSubmit(event) {
@@ -48,55 +39,48 @@ class ControllerLogin extends React.Component {
         this.loginDb(data.get('email'), data.get('password'));
     }
 
-    setNotification(value) {
-        this.setState({ notification: value });
-    }
-
     onClickGoogleLogin(response) {
         if (response.error) {
             // temporay
             if (response.error !== "idpiframe_initialization_failed")
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
-            Google.connect();
+            Google.connect(response);
         }
     }
 
-    onClickGithubLogin() {
-
-        return (
-            <OAuth2Login
-                authorizationUrl="https://github.com/login/oauth/authorize"
-                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
-                responseType="code"
-                scope={"user:email"}
-                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                onSuccess={() => Github.connect()}
-                onFailure={(abc) => console.error(abc)}
-                buttonText={"Github"}
-            />
-        )
+    onClickGithubLogin(response) {
+        if (response.error) {
+            this.setNotification({ message: "Error with google", show: true, type: "error" });
+        } else {
+            Github.connect(response);
+        }
     }
 
     loginDb(email, password) {
-        const { cookies } = this.props;
-        this.auth.loginFromWeb({ email: email, password: password }, (token) => {
-            console.log("Success !");
-            cookies.set('session', token, { path: '/' });
-            this.setState({
-                redirectUrl: '/',
-            });
-        }, (err) => {
-            console.log(err);
-            console.log("Error !");
-        });
+        Database.connect(email, password, (data) => {
+            console.log(data)
+            if (data.success === true) {
+                this.authContext.loginFromCache((data.token), () => {
+                    const { cookies } = this.props;
+
+                    cookies.set('session', data.token, { path: '/' });
+                    this.setRedirectUrl('/')
+                })
+            } else {
+                this.setNotification({ message: "Error with Database", show: true, type: "error" });
+            }
+        }, (error) => {
+            this.setNotification({ message: error.data.error, show: true, type: "error" });
+        })
+
     }
 
     render() {
         return (
             <div>
                 <LoginPage {...this} />
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+                {this.redirectUrl()}
             </div>
         );
     }

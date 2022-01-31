@@ -1,6 +1,6 @@
 import React from "react";
-import ServicePage from "../Views/ServicePage.js"
-import { AuthContext } from "../Contexts/AuthContext";
+import ServicePage from "../../Views/Area/ServicePage"
+import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
 
@@ -20,10 +20,12 @@ class ControllerService extends React.Component {
         this.setNotification = this.setNotification.bind(this)
         this.name = props.name
         this.color = props.color
+        this.description = props.description
+        this.icon = props.icon
     }
 
     componentDidMount() {
-        this.auth = this.context;
+        this.authContext = this.context;
     }
 
     setRedirectUrl(url) {
@@ -37,7 +39,7 @@ class ControllerService extends React.Component {
     render() {
         return (
             <div>
-                <ServicePage {...this} />
+                <ServicePage {...this} service={this.props.service}/>
                 {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
             </div>
         );

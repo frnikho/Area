@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import { GoogleLogin } from 'react-google-login';
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import OAuth2Login from 'react-simple-oauth2-login';
+import Stack from '@mui/material/Stack';
 
-import NotifAuthComponent from "../../Components/utils/NotifAuthComponent"
+import NotifComponent from "../../Components/utils/NotifComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import useStyles from "../../Components/Styles/styleAuth.js"
 
@@ -21,13 +21,17 @@ export default function RegisterPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.titleLeft}>
-                Epitech 2022 Project
+            <div className={classe.title}>
+                <div className={classe.titleLeft}>
+                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+                </div>
+                <div className={classe.menuRight}>
+                    <Stack direction="row" spacing={2}>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                    </Stack>
+                </div>
             </div>
-            <button className={classe.buttonRight} onClick={() => props.setRedirectUrl("/description")}>
-                Area
-            </button>
-            <div className={classe.space} />
+            {/* <div className={classe.space} /> */}
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />
@@ -38,14 +42,22 @@ export default function RegisterPage(props) {
                     </Box>
                     <Box component="form" onSubmit={props.handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
+                            autoFocus
                             margin="normal"
                             required
                             fullWidth
-                            name="username"
-                            label="Username"
-                            type="username"
-                            id="username"
-                            autoComplete="current-password" />
+                            name="firstname"
+                            label="Firstname"
+                            type="firstname"
+                            id="firstname" />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="lastname"
+                            label="Lastname"
+                            type="lastname"
+                            id="lastname" />
                         <TextField
                             margin="normal"
                             required
@@ -53,7 +65,6 @@ export default function RegisterPage(props) {
                             id="email"
                             label="Email"
                             name="email"
-                            autoFocus
                         />
                         <TextField
                             margin="normal"
@@ -81,8 +92,15 @@ export default function RegisterPage(props) {
                             Sign In
                         </Button>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <GoogleLogin
+                            <OAuth2Login
+                                authorizationUrl="https://accounts.google.com/o/oauth2/v2/auth"
                                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                responseType="code"
+                                scope={"openid%20profile%20email&"}
+                                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+                                onSuccess={() => props.onClickGoogleLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Google"}
                                 render={renderProps => (
                                     <Button
                                         onClick={renderProps.onClick}
@@ -92,19 +110,27 @@ export default function RegisterPage(props) {
                                         <FaGoogle />
                                     </Button>
                                 )}
-                                buttonText="Login"
-                                onSuccess={props.onClickGoogleLogin}
-                                onFailure={props.onClickGoogleLogin}
-                                cookiePolicy={'single_host_origin'}
                             />
                             <Box sx={{ padding: 1 }} />
-                            <Button
-                                onClick={props.onClickGithubLogin}
-                                color={"secondary"}
-                                variant="contained"
-                                sx={{ mt: 0, mb: 2, py: 1.5 }}>
-                                <FaGithubSquare />
-                            </Button>
+                            <OAuth2Login
+                                authorizationUrl="https://github.com/login/oauth/authorize"
+                                clientId={process.env.REACT_APP_GITHUB_CLIENT_ID}
+                                responseType="code"
+                                scope={"user:email"}
+                                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                                onSuccess={() => props.onClickGithubLogin}
+                                onFailure={(abc) => console.error(abc)}
+                                buttonText={"Github"}
+                                render={renderProps => (
+                                    <Button
+                                        onClick={renderProps.onClick}
+                                        color={"secondary"}
+                                        variant="contained"
+                                        sx={{ mt: 0, mb: 2, py: 1.5 }}>
+                                        <FaGithubSquare />
+                                    </Button>
+                                )}
+                            />
                         </Box>
                         <div style={{ textAlign: "center" }}>
                             <Link to="/auth/login">
@@ -113,7 +139,8 @@ export default function RegisterPage(props) {
                         </div>
                     </Box>
                 </Box>
-                {NotifAuthComponent(props.state.notification)}
+                <Box sx={{ padding: 1 }} />
+                {NotifComponent(props.state.notification)}
             </Container>
         </ThemeProvider>
     );

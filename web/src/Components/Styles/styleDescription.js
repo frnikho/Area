@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import style from "../../Resources/CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -14,20 +15,6 @@ const useStyles = makeStyles({
         justifyContent: "center",
         textAlign: "center",
     },
-    buttonRight: {
-        fontFamily: "Dongle",
-        background: "black",
-        color: "white",
-        borderRadius: "30px",
-        fontSize: "60px",
-        position: "absolute",
-        top: "0",
-        right: "0",
-        textAlign: "center",
-        justifyContent: "center",
-        marginRight: "30px",
-        marginTop: "10px",
-    },
     description: {
         paddingRight: "20px",
         paddingLeft: "20px",
@@ -36,10 +23,8 @@ const useStyles = makeStyles({
     },
     rect: {
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
         margin: "auto auto",
-        alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
         borderRadius: "30px",
@@ -56,15 +41,34 @@ const useStyles = makeStyles({
         justifyContent: "center",
         marginRight: "30px",
     },
+    menuRight: {
+        paddingLeft: "12px",
+        paddingRight: "12px",
+        fontFamily: "Dongle",
+        color: "white",
+        borderRadius: "30px",
+        fontSize: "60px",
+        position: "relative",
+        textAlign: "right",
+        justifyContent: "right",
+        alignItems: "right",
+        display: "flex",
+        flex: "1",
+    },
     titleLeft: {
         fontFamily: "Dongle",
         fontSize: "60px",
-        position: "absolute",
-        top: "0",
-        left: "0",
-        textAlign: "center",
-        justifyContent: "center",
+        position: "relative",
+        textAlign: "left",
+        justifyContent: "left",
         marginLeft: "30px",
+        display: "flex",
+        flex: "2",
+    },
+    title: {
+        justifyContent: "justify",
+        alignItems: "justify",
+        display: "flex",
     },
     space: {
         margin: "200px",

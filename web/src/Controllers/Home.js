@@ -24,6 +24,9 @@ export default class Home extends React.Component {
             this.setState({
                 user: auth.getUser()
             })
+            this.setState({
+                redirectUrl: '/area/dashboard'
+            })
         }
     }
 

@@ -1,33 +1,36 @@
+import app from "../../Components/utils/Axios"
 import React from "react";
-import Model from "../Model.js"
 
-export default class DataBase extends Model {
-    constructor() {
-        super();
+export default class Database extends React.Component {
+
+    static connect(email, password, onSucess, onError) {
+        app.post(`/auth/login`, {
+            email: email,
+            password: password,
+        }).then((response) => {
+            onSucess(response.data)
+        }).catch((err) => {
+            if (err.response === undefined)
+                onError(err);
+            else
+                onError(err.response);
+        })
     }
 
-    Connect(email, password, props) {
-        const { cookies } = props.props;
-        this.auth.loginFromWeb({ email: email, password: password }, (token) => {
-            console.log("Success !");
-            cookies.set('session', token, { path: '/' });
-            props.setState({
-                redirectUrl: '/',
-            });
-        }, (err) => {
-            console.log(err);
-            console.log("Error !");
-        });
-    }
 
-    Register(email, password, props) {
-        this.auth.register({ email: email, password: password }, (token) => {
-            props.setState({
-                redirectUrl: '/auth/login',
-            });
-        }, (err) => {
-            console.log(err);
-            console.log("Error !");
-        });
+    static register({ email, firstname, lastname, password }, onSuccess, onError) {
+        app.post(`/auth/register`, {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+        }).then((response) => {
+            onSuccess(response);
+        }).catch((err) => {
+            if (err.response === undefined)
+                onError(err);
+            else
+                onError(err.response);
+        })
     }
 }

@@ -1,14 +1,9 @@
-import Model from "../Model.js"
 import app from "../../Components/utils/Axios"
+import React from "react";
 
-export default class Github extends Model {
-    constructor() {
-        super();
+export default class Github extends React.Component{
 
-        this.Connect = this.Connect.bind(this);
-    }
-
-    Connect(data) {
+    static connect(data) {
         app.post(`/auth/github/code`, {
             code: data['code']
         }).then((response) => {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import app, {config} from "../Components/utils/Axios";
+import app, { config } from "../Components/utils/Axios";
 
 class Auth extends React.Component {
 
@@ -8,7 +8,11 @@ class Auth extends React.Component {
         super(props);
         this.token = undefined;
         this.user = undefined;
-        this.loginFromWeb = this.loginFromWeb.bind(this);
+        this.setUser = this.setUser.bind(this);
+    }
+
+    setUser(user) {
+        this.user = user
     }
 
     getUser = () => {
@@ -26,51 +30,6 @@ class Auth extends React.Component {
             onSuccess(response.data);
         }).catch(onError)
     }
-
-    loginFromWeb = ({email, password}, onSuccess, onError) => {
-        app.post(`/auth/login`, {
-            email: email,
-            password: password,
-        }).then((response) => {
-            let data = response.data;
-            if (data.success === true) {
-                app.get(`/me`, config(data.token)).then((response) => {
-                    this.token = data.token;
-                    this.user = response.data;
-                    onSuccess(data.token);
-                }).catch(onError)
-            } else {
-                onError(data);
-            }
-        }).catch((err) => {
-            if (err.response === undefined)
-                onError(err);
-            else
-                onError(err.response);
-        })
-    }
-
-    register = ({email, password}, onSuccess, onError) => {
-        app.post(`/auth/register`, {
-            email: email,
-            password: password,
-        }).then((response) => {
-            let data = response.data;
-            if (data.success === true) {
-                onSuccess(data.token);
-            } else {
-                onError(data);
-            }
-        }).catch((err) => {
-            if (err.response === undefined)
-                onError(err);
-            else
-                onError(err.response);
-        })
-
-    }
-
-
 }
 
 export const AuthContext = React.createContext(new Auth());
