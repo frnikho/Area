@@ -16,10 +16,24 @@ export default class DiscordServiceRoute extends Route {
     }
 
     /**
-     * Callback Route: allow us to have an access token thanks to the redirect uri
-     *
-     * @param req - code - given by redirect uri
-     * @param res
+     * @openapi
+     * /services/discord/callback:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: Discord Service OAuth
+     *     parameters:
+     *       - in: path
+     *         name: code
+     *         schema:
+     *           type: string
+     *         description: Code given by Discord OAuth
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;

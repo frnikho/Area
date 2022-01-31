@@ -17,6 +17,14 @@ export default class RegisterRoute extends Route {
         this.router.post('/', this.checkBodyParameters, this.post);
     }
 
+    /**
+     * Verify body request
+     *
+     * @param req
+     * @param res
+     * @param next - If body is correct, program continue to this.post
+     * @returns
+     */
     private checkBodyParameters(req: express.Request, res: express.Response, next: express.NextFunction): void {
         let body: RegisterBody = req.body;
         Credentials.verifyEmail(body.email, () => {
@@ -31,6 +39,34 @@ export default class RegisterRoute extends Route {
         });
     }
 
+    /**
+     * @openapi
+     * /auth/register:
+     *   post:
+     *     tags:
+     *       - Authentication
+     *     description: Register
+     *     consumes:
+     *       - application/x-www-form-urlencoded
+     *     parameters:
+     *      - name: email
+     *        type: string
+     *        required: true
+     *      - name: password
+     *        type: string
+     *        required: true
+     *      - name: lastname
+     *        type: string
+     *        required: true
+     *      - name: firstname
+     *        type: string
+     *        required: true
+     *     responses:
+     *       200:
+     *         description: Successful registration
+     *       400:
+     *         description: Error while registering
+     */
     private post(req: express.Request, res: express.Response): void {
         let body: RegisterBody = req['registerBody'];
         new UserController().register(body, (user) => {
