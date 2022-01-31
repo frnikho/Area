@@ -14,12 +14,12 @@ The project allowing its users to create simple instruction strings called apple
 
 ## Table of contents
 
-1. [Services, Actions and Reactions used](SERVICES-ACTIONS-REACTIONS.md)
-1. [Languages and Tools used](LANGUAGES-AND-TOOLS.md)
-1. [Installation](INSTALLATION.md)
-1. [Build and Run](BUILD-AND-RUN.md)
-1. [Usages](USAGES.md)
-1. [Documentation](DOCUMENTATION.md)
+1. [Services, Actions and Reactions used](./documentation/SERVICES-ACTIONS-REACTIONS.md)
+1. [Languages and Tools used](./documentation/LANGUAGES-AND-TOOLS.md)
+1. [Installation](./documentation/INSTALLATION.md)
+1. [Build and Run](./documentation/BUILD-AND-RUN.md)
+1. [Usages](./documentation/USAGES.md)
+1. [Documentation](./documentation/DOCUMENTATION.md)
 
 ## Authors
 
