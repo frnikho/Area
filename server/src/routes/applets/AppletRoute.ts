@@ -8,9 +8,9 @@ export default class AppletRoute extends Route {
 
     constructor() {
         super();
+        this.router.get('/all', authorization, this.getAll) //GOOD
         this.router.get('/:appletUuid', parseAppletParams, authorization, this.get); //GOOD
         this.router.delete('/:appletUuid', parseAppletParams, authorization, this.delete); //GOOD
-        this.router.get('/all', authorization, this.getAll) //GOOD
         this.router.post('/toggle', parseAppletBody, authorization, this.toggle); //GOOD
         this.router.post('/enable', parseAppletBody, authorization, this.enable); //GOOD
         this.router.post('/disable', parseAppletBody, authorization, this.disable); //GOOD
