@@ -6,7 +6,7 @@ before using GitHub action reactions, you need to create a GitHub developer appl
 https://github.com/settings/apps/new
 
 write the name of your application and the home page url.
-provide a callback url for your application and check 
+provide a callback url for your application and check
 
 - 'Expire user authorization tokens'
 - 'Request user authorization (OAuth) during installation'
@@ -67,3 +67,50 @@ DISCORD_SERVICES_BOT_TOKEN=OTM0NjIxMDI1MjUyMDM2N******************
 ```
 
 That all ! try to go to your authorize and check if everything is working
+
+
+# Slack
+
+## Configuration
+
+Before using discord action reactions, you need to create a discord developer application here: https://api.slack.com/apps
+
+Go to `OAuth & Permissions` :
+
+- Add your redirect url in `Redirect URLs`
+- Add scopes
+
+![slack-app-scopes.png](assets/slack-app-scopes.png)
+
+- Install to workspace
+
+Go to `Manage distribution` :
+
+![slack-app-distribution.png](assets/slack-app-distribution.png)
+
+And activate Public Distribution
+
+Now create a '.env' or fill your own and add:
+
+```
+SLACK_BOT_TOKEN=xoxb-29650***********
+SLACK_SERVICES_CLIENT_ID=296505949*****************
+SLACK_SERVICES_CLIENT_SECRET=14b7fdaf0**********
+```
+
+# Twitter
+
+## Configuration
+
+- Create an app
+- Turned on OAuth 2.0
+
+![twitter-oauth-params.png](assets/twitter-oauth-params.png)
+
+Now create a '.env' or fill your own and add:
+
+```
+TWITTER_SERVICES_CLIENT_ID=Mk1jNGl******************
+TWITTER_SERVICES_CLIENT_SECRET=qrFejKycNfs_LOEA7*****
+TWITTER_SERVICES_REDIRECT_URL=https://localhost:8080/********
+```
