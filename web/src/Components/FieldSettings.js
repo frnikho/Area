@@ -1,20 +1,15 @@
-// import Stack from '@mui/material/Stack';
-// import Button from '@mui/material/Button';
-// import useStyles from "../Components/Styles/styleMenuDashboard"
+import {  Box, OutlinedInput, FormControl } from "@mui/material";
 
-export default function FieldSettings({ props, classse }) {
-
-    // const buttonMenu = {
-    //     fontFamily: 'Dongle', fontSize: '50px', textTransform: "none", color: "black"
-    // }
-
-    // const classe = useStyles()
+export default function FieldSettings(props) {
 
     return (
-        <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
-            <FormControl sx={{ width: '25ch' }}>
-                <OutlinedInput placeholder={props.getUser().firstname} />
-            </FormControl>
-        </Box>
+        <div className={props.classe.little}>
+            {props.fieldName}
+            <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
+                <FormControl sx={{ width: '50ch' }}>
+                    <OutlinedInput disabled placeholder={props.value} />
+                </FormControl>
+            </Box>
+        </div>
     )
 }

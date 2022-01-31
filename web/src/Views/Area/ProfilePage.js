@@ -1,11 +1,11 @@
 import React from "react";
-import { createTheme, ThemeProvider, Box, OutlinedInput, FormControl } from "@mui/material";
+import { createTheme, ThemeProvider, Box } from "@mui/material";
 import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 import Button from '@mui/material/Button';
 import useStyles from "../../Components/Styles/styleProfile"
 import MenuDashboard from "../../Components/MenuDashboard"
+import FieldSettings from "../../Components/FieldSettings"
 
 const theme = createTheme({
     palette: {
@@ -40,39 +40,18 @@ export default function ProfilePage(props) {
             </div>
             <div className={classe.accountContainer}>
                 Profile
-                <div className={classe.little}>
-                    First Name
-                    <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
-                        <FormControl sx={{ width: '50ch' }}>
-                            <OutlinedInput disabled placeholder={props.authContext.user.firstname} />
-                        </FormControl>
-                    </Box>
-                </div>
-                <div className={classe.little}>
-                    Last Name
-                    <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
-                        <FormControl sx={{ width: '50ch' }}>
-                            <OutlinedInput disabled placeholder={props.authContext.user.lastname} />
-                        </FormControl>
-                    </Box>
-                </div>
-                <div className={classe.little}>
-                    Email
-                    <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
-                        <FormControl sx={{ width: '50ch' }}>
-                            <OutlinedInput disabled placeholder={props.authContext.user.email} />
-                        </FormControl>
-                    </Box>
-                </div>
+                <FieldSettings {...{classe: classe, fieldName: "First Name", value: props.authContext.user.firstname}}/>
+                <FieldSettings {...{classe: classe, fieldName: "Last Name", value: props.authContext.user.lastname}}/>
+                <FieldSettings {...{classe: classe, fieldName: "Email", value: props.authContext.user.email}}/>
                 <div className={classe.little}>
                     Password
                     <div className={classe.little}>
                         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                             •••••••••
                             <Box sx={{ padding: 1 }} />
-                            <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
+                            {/* <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
                                 Change password ?
-                            </Link>
+                            </Link> */}
                         </Box>
                     </div>
                 </div>
