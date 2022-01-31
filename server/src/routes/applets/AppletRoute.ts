@@ -18,6 +18,19 @@ export default class AppletRoute extends Route {
         this.router.patch('/', parseAppletBody, authorization, this.update);
     }
 
+    /**
+     * @openapi
+     * /applets/all:
+     *   get:
+     *     tags:
+     *       - Applets
+     *     description: Get all user's applets
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
+     */
     private getAll(req: express.Request, res: express.Response) {
         new AppletController().getAppletsByUserUuid(req['user']['uuid'], (applets) => {
             return res.status(200).json({success: true, data: applets});

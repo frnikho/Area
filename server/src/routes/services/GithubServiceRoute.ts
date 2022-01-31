@@ -19,10 +19,17 @@ export default class GithubServiceRoute extends Route {
 
 
     /**
-     * List Route: List all repository of user
-     * @param req
-     * @param res
-     * @returns
+     * @openapi
+     * /services/github/list:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: List user's Github repositories
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
     private list(req: express.Request, res: express.Response) {
         new ServiceController().getTokensForService(req['user']['uuid'], 'github', () => {
@@ -30,11 +37,25 @@ export default class GithubServiceRoute extends Route {
         }, err => {});
     }
 
-     /**
-     * Callback Route: allow us to have an access token thanks to the redirect uri
-     *
-     * @param req - code - given by redirect uri
-     * @param res
+    /**
+     * @openapi
+     * /services/github/callback:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: Github Service OAuth
+     *     parameters:
+     *       - in: path
+     *         name: code
+     *         schema:
+     *           type: string
+     *         description: Code given by Github OAuth
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;

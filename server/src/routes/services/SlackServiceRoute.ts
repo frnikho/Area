@@ -15,15 +15,29 @@ export default class SlackServiceRoute extends Route {
     constructor() {
         super();
         this.router.get('/callback', authorization, this.callback);
-        this.router.get('/list', authorization, this.list);
+        this.router.get('/channels-list', authorization, this.channelsList);
         this.router.get('/', this.login);
     }
 
     /**
-     * Callback Route: allow us to have an access token thanks to the redirect uri
-     *
-     * @param req - code - given by redirect uri
-     * @param res
+     * @openapi
+     * /services/slack/callback:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: Slack Service OAuth
+     *     parameters:
+     *       - in: path
+     *         name: code
+     *         schema:
+     *           type: string
+     *         description: Code given by Slack OAuth
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
@@ -55,12 +69,26 @@ export default class SlackServiceRoute extends Route {
     }
 
     /**
-     * List Route: List all channels of team
-     * @param req - key -> key is associated to a service token
-     * @param res
-     * @returns
+     * @openapi
+     * /services/slack/channels-list:
+     *   get:
+     *     tags:
+     *       - Services
+     *     description: List all team channels of user's
+     *     parameters:
+     *       - in: path
+     *         name: key
+     *         schema:
+     *           type: string
+     *         description: Key of access_token
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
      */
-    private list(req: express.Request, res: express.Response) {
+    private channelsList(req: express.Request, res: express.Response) {
         const key: string = req.query['key'] as string;
 
         try {
