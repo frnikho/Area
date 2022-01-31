@@ -71,7 +71,6 @@ export default class TwitterService {
 
 
             this.post("https://api.twitter.com/2/oauth2/token", params, headers, (response) => {
-                console.log(response.data);
                     let token: TokenData = {
                         key: array[0].key,
                         created_at: array[0].created_at,
