@@ -2,6 +2,8 @@ import {Express} from "express";
 
 const express = require('express');
 const dotenv = require('dotenv');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 import cors = require('cors');
 import fs = require("fs");
@@ -21,9 +23,18 @@ const { createNodeMiddleware } = require("@octokit/webhooks");
 import SlackServiceRoute from "./routes/services/SlackServiceRoute";
 import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
-import {RouteNotFoundMiddleware} from "./middlewares/RouteNotFoundMiddleware";
 import AboutRoute from "./routes/AboutRoute";
+import WorkerManager from "./managers/WorkerManager";
+import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
+import PaypalServiceRoute from "./routes/services/PaypalServiceRoute";
+import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
+import {GooglePubSub} from "./clients/GooglePubSub";
+
+import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
+
+import {swaggerOptions} from "./documentation/Swagger"
 import SlackBot from "./bots/SlackBot";
+
 
 const DEFAULT_PORT = 8080;
 
@@ -34,6 +45,7 @@ export default class App {
     private readonly app: Express;
     private readonly privateKey: string;
     private readonly privateCertificate: string;
+    private workerManager: WorkerManager;
 
     constructor() {
         this.initConfig();
@@ -45,6 +57,8 @@ export default class App {
         this.initWebhooks();
         this.initRoutes();
         this.initBot();
+        this.workerManager = WorkerManager.get();
+        this.workerManager.startWorkers();
         this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false}, this.app);
     }
 
@@ -67,7 +81,8 @@ export default class App {
     private initBot(): void {
         let discord = new DiscordBot();
         discord.login();
-        let slack = new SlackBot();
+        let googleClient: GooglePubSub = new GooglePubSub();
+        googleClient.test();
     }
 
     private initRoutes(): void  {
@@ -82,9 +97,13 @@ export default class App {
         new MeRoute().register(this.app, '/me');
 
         // SERVICES ROUTES
-        new GithubServiceRoute().register(this.app, '/services/auth/github');
-        new SlackServiceRoute().register(this.app, '/services/auth/slack');
-        new DiscordServiceRoute().register(this.app, '/services/auth/discord');
+
+        new GithubServiceRoute().register(this.app, '/services/github');
+        new SlackServiceRoute().register(this.app, '/services/slack');
+        new DiscordServiceRoute().register(this.app, '/services/discord');
+        new TrelloServiceRoute().register(this.app, '/services/trello');
+        new TwitterServiceRoute().register(this.app, '/services/twitter');
+        new SpotifyServiceRoute().register(this.app, '/services/spotify');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
@@ -92,6 +111,10 @@ export default class App {
         // ABOUT ROUTE
         new AboutRoute().register(this.app, '/about.json');
 
+        // DOCUMENTATION ROUTE
+        this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions), {
+            customSiteTitle: 'Dashboard API - Documentation',
+        }));
         // 404 ROUTE
         //this.app.use('*', RouteNotFoundMiddleware);
     }

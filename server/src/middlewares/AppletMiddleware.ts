@@ -63,15 +63,19 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
     }
     AppAbout.server.services.forEach((service) => {
         service.actions.forEach((serviceAction) => {
-            if (ActionType[serviceAction.type] === type) {
+            if (serviceAction.type === ActionType[type]) {
                 serviceAction.parameters.forEach((params) => {
                     const {name, type, required}: {name: string, type: string, required: boolean} = params;
                     let p = action.parameters.filter((p) => p['name'] === name)[0];
 
-                    if (p === undefined)
-                        applets.action.missing.push(name);
-                    else
+                    if (p === undefined) {
+                        if (required)
+                            applets.action.missing.push(name);
+                        else
+                            applets.action.good.push(p);
+                    } else {
                         applets.action.good.push(p);
+                    }
                 });
             }
         })

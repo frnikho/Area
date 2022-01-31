@@ -35,7 +35,7 @@ export default class ReactionManager {
     public callReaction(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData, success: () => void, error: (msg) => void) {
         try {
             this.reactions.forEach((hook) => {
-                if (hook.type === <any>ReactionType[reaction.type])
+                if (hook.type === reaction.type)
                     hook.func(reaction, ingredients, tokenData);
             })
         } catch (ex) {

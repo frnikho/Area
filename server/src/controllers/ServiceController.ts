@@ -69,4 +69,24 @@ export default class ServiceController {
         }, error);
     }
 
+    public updateTokenByKeyAndService(userUuid: string, service: string, key: string, callback: (success: boolean, error: string) => void) {
+        if (service === undefined)
+            return callback(false, "Invalid reaction service type !");
+/*        this.getTokensForService(userUuid, service, (tokens) => {
+            let obj = JSON.parse(tokens[0][service]);
+            obj.map((token) => {
+                if (token.key === key) {
+
+                } else {
+                    return token;
+                }
+            })
+
+            let good = obj.filter((token) => token.key === key);
+            if (good.length === 0)
+                return success(undefined);
+            return success(good[0]);
+        }, error);*/
+    }
+
 }
