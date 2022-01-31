@@ -33,6 +33,7 @@ import {GooglePubSub} from "./clients/GooglePubSub";
 import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
 import {swaggerOptions} from "./documentation/Swagger"
+import SlackBot from "./bots/SlackBot";
 
 
 const DEFAULT_PORT = 8080;
@@ -80,7 +81,6 @@ export default class App {
     private initBot(): void {
         let discord = new DiscordBot();
         discord.login();
-        let slack = new SlackBot();
         let googleClient: GooglePubSub = new GooglePubSub();
         googleClient.test();
     }
