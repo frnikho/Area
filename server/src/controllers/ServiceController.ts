@@ -69,24 +69,33 @@ export default class ServiceController {
         }, error);
     }
 
-    public updateTokenByKeyAndService(userUuid: string, service: string, key: string, callback: (success: boolean, error: string) => void) {
-        if (service === undefined)
-            return callback(false, "Invalid reaction service type !");
-/*        this.getTokensForService(userUuid, service, (tokens) => {
-            let obj = JSON.parse(tokens[0][service]);
+    /**
+     * Update user's access/refresh tokens of a service by key
+     *
+     * @param newToken - TokenData - newToken contains old token data (key, type, created_at) and new access & refresh tokens
+     * @param userUuid
+     * @param callback - status = true = success - status = false = error
+     * @returns
+     */
+    public updateTokenByKeyAndService(newToken: TokenData, userUuid: string, callback: (status: boolean, response: string) => void) {
+        let serviceName = newToken.type;
+        if (serviceName === undefined)
+        return callback(false, "Invalid reaction service type !");
+        let key = newToken.key;
+        this.getTokensForService(userUuid, serviceName, (tokens) => {
+            let obj = JSON.parse(tokens[0][serviceName]);
             obj.map((token) => {
                 if (token.key === key) {
-
-                } else {
-                    return token;
+                    token.token["access_token"] = newToken.token["access_token"]
+                    token.token["refresh_token"] = newToken.token["refresh_token"]
                 }
-            })
-
-            let good = obj.filter((token) => token.key === key);
-            if (good.length === 0)
-                return success(undefined);
-            return success(good[0]);
-        }, error);*/
+            });
+            DBService.query(`UPDATE area.services query SET query.${serviceName} = '${JSON.stringify(obj)}' WHERE query.user_uuid = '${userUuid}'`, (result) => {
+                return callback(true, "Tokens for user : " + userUuid + " has been updated");
+            });
+        }, (error) => {
+            return callback(false, error);
+        })
     }
 
 }
