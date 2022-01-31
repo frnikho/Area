@@ -2,6 +2,7 @@ import {Webhooks} from "@octokit/webhooks";
 import AppletController from "../controllers/AppletController";
 import {ingredientsHook} from "../utils/Ingredients";
 import {ActionType} from "../models/Applet";
+import Logger from "../utils/Logger";
 
 const EventSource = require('eventsource');
 
@@ -13,7 +14,7 @@ export default class GithubWebhook {
         this.webhooks = new Webhooks({
             secret: process.env.GITHUB_WEBHOOK_SECRET
         })
-
+        Logger.i("GitHub", "Webhook event initialize");
         this.webhooks.on('push', this.onPush);
         this.webhooks.on('repository.created', this.onRepositoryCreated);
         this.webhooks.on('repository.deleted', this.onRepositoryDeleted);

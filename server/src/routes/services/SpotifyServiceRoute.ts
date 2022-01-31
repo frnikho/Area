@@ -2,10 +2,9 @@ import Route from "../../Route";
 
 import express = require('express');
 import * as querystring from "querystring";
-import axios from "axios";
-import ServiceRoute from "./ServiceRoute";
 import {Services} from "../../models/Services";
 import {authorization} from "../../middlewares/AuthMiddleware";
+import ServiceAuthRoute from "./ServiceAuthRoute";
 
 export default class SpotifyServiceRoute extends Route {
 
@@ -31,7 +30,7 @@ export default class SpotifyServiceRoute extends Route {
         params.append('grant_type', "authorization_code");
         params.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URL);
 
-        new ServiceRoute().postRequest("https://accounts.spotify.com/api/token", params, headers, req['user']['uuid'], Services.SPOTIFY.valueOf(), (token) => {
+        new ServiceAuthRoute().postRequest("https://accounts.spotify.com/api/token", params, headers, req['user']['uuid'], Services.SPOTIFY.valueOf(), (token) => {
             return res.status(200).json({success: true, token: token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});

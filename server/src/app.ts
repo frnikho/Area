@@ -26,14 +26,13 @@ import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
 import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
-import PaypalServiceRoute from "./routes/services/PaypalServiceRoute";
 import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
 import {GooglePubSub} from "./clients/GooglePubSub";
 
 import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
 import {swaggerOptions} from "./documentation/Swagger"
-import SlackBot from "./bots/SlackBot";
+import Logger from "./utils/Logger";
 
 
 const DEFAULT_PORT = 8080;
@@ -49,7 +48,7 @@ export default class App {
 
     constructor() {
         this.initConfig();
-        this.port = Number.parseInt(process.env.PORT) || DEFAULT_PORT;
+        this.port = Number.parseInt(process.env.PORT, 1) || DEFAULT_PORT;
         this.privateKey = fs.readFileSync("./sslCredentials/sslKey.key", "utf8");
         this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
         this.app = express();
@@ -73,15 +72,15 @@ export default class App {
     }
 
     private initWebhooks(): void {
-        let github = new GithubWebhook();
+        const github = new GithubWebhook();
         this.app.use(createNodeMiddleware(github.getWebhooks()));
         github.init();
     }
 
     private initBot(): void {
-        let discord = new DiscordBot();
+        const discord = new DiscordBot();
         discord.login();
-        let googleClient: GooglePubSub = new GooglePubSub();
+        const googleClient: GooglePubSub = new GooglePubSub();
         googleClient.test();
     }
 
@@ -116,12 +115,12 @@ export default class App {
             customSiteTitle: 'Dashboard API - Documentation',
         }));
         // 404 ROUTE
-        //this.app.use('*', RouteNotFoundMiddleware);
+        // this.app.use('*', RouteNotFoundMiddleware);
     }
 
     public start(): void {
         this.server.listen(this.port, () => {
-            console.log(`server is listening on https://localhost:${this.port}/`);
+            Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }
 

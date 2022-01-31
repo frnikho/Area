@@ -1,7 +1,10 @@
+import Logger from "../utils/Logger";
+
 const { WebClient } = require("@slack/web-api");
 
 export default class SlackBot {
-    private client: any;
+
+    private readonly client: any;
 
     /**
      * Constructor
@@ -10,7 +13,7 @@ export default class SlackBot {
      */
     public constructor(token: string) {
         this.client = new WebClient(token);
-        console.log("Slack Bot is created !");
+        Logger.i("Slack", "Slack bot is created")
     }
 
     /**

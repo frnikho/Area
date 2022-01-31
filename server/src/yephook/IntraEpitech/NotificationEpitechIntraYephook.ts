@@ -1,4 +1,5 @@
 import IntraYephook from "./IntraYephook";
+import Logger from "../../utils/Logger";
 
 const REFRESH_TIME : number = 5;
 
@@ -12,12 +13,11 @@ export default class NotificationEpitechIntraYephook extends IntraYephook {
     }
 
     onDataChanged(oldData, responseData): void {
-        console.log("data changed !")
+        Logger.i("Epitech notification YH", "New data available");
         this._onDataChanged(oldData, responseData);
     }
 
     onDataNotChanged(data) {
-        console.log("not news notification");
     }
 
 }

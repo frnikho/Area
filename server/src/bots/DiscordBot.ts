@@ -2,6 +2,7 @@ import express = require('express');
 import AppletController from "../controllers/AppletController";
 import {Action, ActionType} from "../models/Applet";
 import {ingredientsHook} from "../utils/Ingredients";
+import Logger from "../utils/Logger";
 
 const discord = require("discord.js");
 
@@ -12,14 +13,14 @@ export default class DiscordBot {
 
     public constructor() {
         if (DiscordBot.client !== undefined)
-            throw "You can only create a instance of this class !";
+            throw new Error('You can only create a instance of this class !');
         DiscordBot.client = new discord.Client({
             intents: ["GUILDS", "GUILD_MESSAGES", "GUILDS", "GUILD_INTEGRATIONS", "GUILD_MEMBERS", "GUILD_BANS", "DIRECT_MESSAGES"],
             partials: ["MESSAGE", "CHANNEL", "USER"],
         });
         DiscordBot.client.on("ready", () => {
             DiscordBot.client.user.setActivity("Generate some OP code :0", {type: "WATCHING"});
-            console.log("Discord Bot is online !");
+            Logger.i("Discord", "Discord Bot is online !");
         })
         DiscordBot.client.on("messageCreate", this.onMessageCreated.bind(this));
         DiscordBot.client.on("channelCreate", this.onChannelCreated.bind(this));
@@ -37,7 +38,7 @@ export default class DiscordBot {
     }
 
     private onMessage(data) {
-        console.log(data.channel.type);
+        Logger.d("Discord Bot", "On Message");
     }
 
     public onMessageCreated(data) {
@@ -47,12 +48,12 @@ export default class DiscordBot {
         if (data.channel.type === "DM")
             return this.onPrivateMessageReceived(data);
 
-        let controller: AppletController = new AppletController();
+        const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_message_received', actionKey, (applets) => {
             applets.map((applet) => {
-                let action: Action = applet.action;
-                let guildId = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
-                let userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
+                const action: Action = applet.action;
+                const guildId = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
+                const userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
                 if (authorId === userId['value'] && actionKey === guildId['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_received), () => {
                         console.log("Applets reactions called successfully");
@@ -60,17 +61,17 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            console.log(err);
+            Logger.e("Discord Bot", err);
         });
     }
 
     public onPrivateMessageReceived(data) {
         const authorId = data.author.id;
-        let controller: AppletController = new AppletController();
+        const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_private_message_received', authorId, (applets) => {
             applets.map((applet) => {
-                let action: Action = applet.action;
-                let userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
+                const action: Action = applet.action;
+                const userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
                 if (authorId === userId['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_private_message_received), () => {
                         console.log("Applets reactions called successfully");
@@ -78,7 +79,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            console.log(err);
+            Logger.e("Discord Bot", err);
         });
     }
 
@@ -86,21 +87,21 @@ export default class DiscordBot {
         const {user, guild} = data;
         const {guildId, name} = guild;
         const {username, id} = user;
-        console.log(data);
+        Logger.d("Discord Bot", "On Member Add");
     }
 
     public onMemberKick(data) {
-        console.log(data);
+        Logger.d("Discord Bot", "On member Kick");
     }
 
     public onChannelCreated(data) {
         const {type, guildId, name} = data;
-        let controller: AppletController = new AppletController();
+        const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_channel_created', guildId, (applets) => {
             applets.map((applet) => {
-                let action: Action = applet.action;
-                let channelType = action.parameters.filter((param) => param['name'] === 'channel_type')[0];
-                let guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
+                const action: Action = applet.action;
+                const channelType = action.parameters.filter((param) => param['name'] === 'channel_type')[0];
+                const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value'] && channelType['value'] === type) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_channel_created), () => {
                         console.log("Applets reactions called successfully");
@@ -108,15 +109,12 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            console.log(err);
+            Logger.e("Discord Bot", err);
         });
-
-
-        console.log(data);
     }
 
     public onChannelDeleted(data) {
-        console.log(data);
+        Logger.e("Discord Bot", "on Channel Deleted");
     }
 
 }
