@@ -16,6 +16,7 @@ const useStyles = makeStyles({
     },
     little: {
         fontSize: "40px",
+        marginLeft: "1px",
     },
     font: {
         fontFamily: "Dongle",
@@ -45,11 +46,6 @@ const useStyles = makeStyles({
         display: "flex",
         flex: "1",
     },
-    title: {
-        justifyContent: "justify",
-        alignItems: "justify",
-        display: "flex",
-    },
     titleRight: {
         fontFamily: "Dongle",
         fontSize: "60px",
@@ -63,15 +59,20 @@ const useStyles = makeStyles({
     titleLeft: {
         fontFamily: "Dongle",
         fontSize: "60px",
-        position: "absolute",
-        top: "0",
-        left: "0",
-        textAlign: "center",
-        justifyContent: "center",
+        position: "relative",
+        textAlign: "left",
+        justifyContent: "left",
         marginLeft: "30px",
+        display: "flex",
+        flex: "2",
+    },
+    title: {
+        justifyContent: "justify",
+        alignItems: "justify",
+        display: "flex",
     },
     space: {
-        margin: "150px",
+        margin: "75px",
     }
 });
 

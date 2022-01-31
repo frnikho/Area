@@ -10,7 +10,9 @@ class ControllerProfile extends Controller {
 
     constructor(props) {
         super(props);
-        this.user = undefined;
+        this.state = {
+            user: undefined,
+        }
         this.cookies = props;
         this.logout = this.logout.bind(this)
     }
@@ -20,7 +22,9 @@ class ControllerProfile extends Controller {
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
         } else {
-            this.user = this.authContext.getUser()
+            this.setState({
+                user: this.authContext.getUser()
+            })
         }
     }
 
@@ -32,12 +36,8 @@ class ControllerProfile extends Controller {
     }
 
     render() {
-        return (
-            <div>
-                <ProfilePage {...this} />
-                {this.redirectUrl()}
-            </div>
-        );
+        return (this.controllerRender(this, ProfilePage))
+
     }
 
 }

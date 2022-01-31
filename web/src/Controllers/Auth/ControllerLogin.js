@@ -59,7 +59,6 @@ class ControllerLogin extends Controller {
 
     loginDb(email, password) {
         Database.connect(email, password, (data) => {
-            console.log(data)
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.props;

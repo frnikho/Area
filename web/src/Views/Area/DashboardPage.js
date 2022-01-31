@@ -1,6 +1,6 @@
 import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
-import { FaGithubSquare, FaSlack } from "react-icons/fa";
+// import { FaGithubSquare, FaSlack } from "react-icons/fa";
 
 import Button from '@mui/material/Button';
 import ControllerService from "../../Controllers/Area/ControllerService"

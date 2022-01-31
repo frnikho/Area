@@ -13,9 +13,10 @@ export default class Controller extends React.Component {
         this.setNotification = this.setNotification.bind(this)
         this.redirectUrl = this.redirectUrl.bind(this)
         this.getUrl = this.getUrl.bind(this)
+        this.controllerRender = this.controllerRender.bind(this)
     }
 
-    getUrl() { return this.url }
+    getUrl() { return this.state.redirectUrl }
 
     setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
 
@@ -23,7 +24,7 @@ export default class Controller extends React.Component {
         this.setState({
             notification: value
         });
-        setTimeout(() => this.setState({ notification: undefined}), 5000)
+        setTimeout(() => this.setState({ notification: undefined }), 5000)
     }
 
     redirectUrl() {
@@ -33,5 +34,14 @@ export default class Controller extends React.Component {
             </>
         )
     }
+
+    controllerRender(props, Page) {
+        return (
+            <div>
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : <Page {...props} />}
+            </div>
+        );
+
+}
 
 }
