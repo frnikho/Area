@@ -1,3 +1,32 @@
+export const GmailAppletActionsAbout = [
+    {
+        name: "New email received",
+        description: '',
+        type: 'google_gmail_email_received',
+        base_key: 'email',
+        parameters: [
+            {
+                name: "token_key",
+                type: 'string',
+                required: true,
+
+            }
+        ],
+        ingredients: [],
+    }
+]
+
+export const SpotifyAppletActionsAbout = [
+    {
+        name: "Song Changed",
+        description: '',
+        type: 'spotify_song_changed',
+        base_key: 'token_key',
+        parameters: [
+        ]
+    }
+]
+
 export const IntraAppletActionsAbout = [
     {
         name: "New notifications",
@@ -16,6 +45,7 @@ export const IntraAppletActionsAbout = [
                 required: false,
             },
         ],
+        ingredients: ["notification_username", "notification_title"],
     },
     {
         name: "Credit updated",
@@ -37,6 +67,7 @@ export const DiscordAppletActionsAbout = [
     {
         name: "When a Discord chanel created",
         description: '',
+        base_key: 'guild_id',
         type: 'discord_channel_created',
         parameters: [
             {
@@ -45,11 +76,12 @@ export const DiscordAppletActionsAbout = [
                 required: true,
             },
             {
-                name: "user_id",
+                name: "channel_type",
                 type: 'string',
                 required: false,
             }
-        ]
+        ],
+        ingredients: [],
     },
     {
         name: "When receive a private message",
@@ -61,7 +93,8 @@ export const DiscordAppletActionsAbout = [
                 type: 'string',
                 required: true,
             }
-        ]
+        ],
+        ingredients: [],
     },
     {
         name: "When receive a guild message",
@@ -78,12 +111,12 @@ export const DiscordAppletActionsAbout = [
                 type: 'string',
                 required: false,
             }
-        ]
+        ],
+        ingredients: ["sender_id", "sender_username"]
     }
 ]
 
-export const GithubAppletActionsAbout =
-    [
+export const GithubAppletActionsAbout = [
         {
             name: "From new push in a repository",
             description: '',
@@ -94,7 +127,8 @@ export const GithubAppletActionsAbout =
                     type: 'string',
                     required: true
                 }
-            ]
+            ],
+            ingredients: ["sender_login", "sender_email", "repo_name"]
         },
         {
             name: 'New repository created',
@@ -102,16 +136,16 @@ export const GithubAppletActionsAbout =
             description: '',
             parameters: [
                 {
-                    name: "application_id",
+                    name: "",
                     type: 'string',
                     required: true,
                 }
-            ]
+            ],
+            ingredients: []
         }
     ]
 
-export const DiscordAppletReactionsAbout =
-    [
+export const DiscordAppletReactionsAbout = [
         {
             name: 'Send chanel message',
             description: '',
@@ -131,8 +165,7 @@ export const DiscordAppletReactionsAbout =
         }
     ]
 
-export const SlackAppletReactionsAbout =
-    [
+export const SlackAppletReactionsAbout = [
         {
             name: 'Send chanel message',
             description: '',
@@ -152,8 +185,7 @@ export const SlackAppletReactionsAbout =
         }
     ]
 
-export const GithubAppletReactionsAbout =
-    [
+export const GithubAppletReactionsAbout = [
 
     ]
 
@@ -172,7 +204,6 @@ export const AppAbout = {
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
-
             name: "Slack",
             actions: [],
             reactions: SlackAppletReactionsAbout,
@@ -180,6 +211,14 @@ export const AppAbout = {
             name: "Intra Epitech",
             actions: IntraAppletActionsAbout,
             reactions: [],
+        }, {
+            name: "Spotify",
+            actions: SpotifyAppletActionsAbout,
+            reactions: [],
+        }, {
+            name: "Gmail",
+            actions: GmailAppletActionsAbout,
+            reactions: []
         }]
     }
 }

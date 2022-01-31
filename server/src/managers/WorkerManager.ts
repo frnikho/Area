@@ -1,5 +1,6 @@
 import Worker from "../workers/Worker";
 import IntraWorker from "../workers/IntraWorker";
+import SpotifyWorker from "../workers/SpotifyWorker";
 
 export default class WorkerManager {
 
@@ -13,6 +14,7 @@ export default class WorkerManager {
 
     private register() {
         this.workers.push(new IntraWorker());
+        this.workers.push(new SpotifyWorker());
     }
 
     public startWorkers() {

@@ -23,6 +23,7 @@ export default class DiscordBot {
         })
         DiscordBot.client.on("messageCreate", this.onMessageCreated.bind(this));
         DiscordBot.client.on("channelCreate", this.onChannelCreated.bind(this));
+        DiscordBot.client.on("channelRemove", this.onChannelDeleted.bind(this));
         DiscordBot.client.on("guildMemberAdd", this.onMemberAdd.bind(this));
         DiscordBot.client.on("guildMemberRemove", this.onMemberKick.bind(this))
     }
@@ -64,7 +65,21 @@ export default class DiscordBot {
     }
 
     public onPrivateMessageReceived(data) {
-        console.log(data);
+        const authorId = data.author.id;
+        let controller: AppletController = new AppletController();
+        controller.getAppletsByTypeAndKey('discord_private_message_received', authorId, (applets) => {
+            applets.map((applet) => {
+                let action: Action = applet.action;
+                let userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
+                if (authorId === userId['value']) {
+                    controller.callReactions(applet, ingredientsHook(data, ActionType.discord_private_message_received), () => {
+                        console.log("Applets reactions called successfully");
+                    });
+                }
+            })
+        }, (err) => {
+            console.log(err);
+        });
     }
 
     public onMemberAdd(data) {
@@ -80,6 +95,27 @@ export default class DiscordBot {
 
     public onChannelCreated(data) {
         const {type, guildId, name} = data;
+        let controller: AppletController = new AppletController();
+        controller.getAppletsByTypeAndKey('discord_channel_created', guildId, (applets) => {
+            applets.map((applet) => {
+                let action: Action = applet.action;
+                let channelType = action.parameters.filter((param) => param['name'] === 'channel_type')[0];
+                let guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
+                if (guildId === guildIdP['value'] && channelType['value'] === type) {
+                    controller.callReactions(applet, ingredientsHook(data, ActionType.discord_channel_created), () => {
+                        console.log("Applets reactions called successfully");
+                    });
+                }
+            })
+        }, (err) => {
+            console.log(err);
+        });
+
+
+        console.log(data);
+    }
+
+    public onChannelDeleted(data) {
         console.log(data);
     }
 

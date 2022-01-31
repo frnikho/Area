@@ -3,4 +3,5 @@ export enum Services {
     SLACK = "slack",
     DISCORD = "discord",
     TWITTER = "twitter",
+    SPOTIFY = "spotify",
 }
