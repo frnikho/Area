@@ -3,6 +3,12 @@ import {Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Ce
 import app from '../axios_config';
 import { storeData } from '../async_storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+  } from '@react-native-google-signin/google-signin';
+  import { authorize } from 'react-native-app-auth';
 
 
 export default class LoginScreen extends Component {
@@ -19,6 +25,14 @@ export default class LoginScreen extends Component {
         password: undefined,
       };
       this.onLogin = this.onLogin.bind(this);
+    }
+
+    componentDidMount() {
+      GoogleSignin.configure({
+        scopes: ['email'],
+        webClientId:
+          '328309035753-j89c9qnnhmpahovmrljfmjm4lr82tku5.apps.googleusercontent.com',
+      });
     }
 
     onLogin() {
@@ -50,6 +64,23 @@ export default class LoginScreen extends Component {
           description: "Please try again !",
         })
       })
+    }
+
+    onLoginGoogle = async () => {
+      const config = {
+        issuer: 'https://accounts.google.com',
+        clientId: '328309035753-j89c9qnnhmpahovmrljfmjm4lr82tku5.apps.googleusercontent.com',
+        redirectUrl: 'https://localhost:8080/auth/google/code',
+        responseType: 'code',
+        scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+      };
+      // use the client to make the auth request and receive the authState
+      try {
+        const result = await authorize(config);
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     render() {
@@ -103,6 +134,7 @@ export default class LoginScreen extends Component {
                 <Button
                   w='46%'
                   colorScheme="indigo"
+                  onPress={this.onLoginGoogle}
                   leftIcon={<Icon name="logo-google" size={25} color="white" />}
                   style={{
                     backgroundColor: '#b03f47',
