@@ -93,7 +93,13 @@ $ serve -s build -p 8081
 
 ### Docker
 
+#### Prerequisites
+
+- Fill the `example.env` in mobile, server and web directories and rename them in `.env`.
+
+
 At the root of the repository
+
 
 ```shell
 $ sudo docker-compose build && sudo docker-compose up
