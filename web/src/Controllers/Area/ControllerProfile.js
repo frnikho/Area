@@ -1,4 +1,3 @@
-import React from "react";
 import ProfilePage from "../../Views/Area/ProfilePage.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
@@ -37,7 +36,6 @@ class ControllerProfile extends Controller {
 
     render() {
         return (this.controllerRender(this, ProfilePage))
-
     }
 
 }

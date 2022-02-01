@@ -1,6 +1,7 @@
 import React from "react";
 import {FaDiscord, FaGithubSquare, FaSlack, FaMarker} from "react-icons/fa";
 import {Box, Paper, Typography} from "@mui/material";
+
 export default function ServicePage(props) {
 
     const DEFAULT_ICON_SIZE = 50;

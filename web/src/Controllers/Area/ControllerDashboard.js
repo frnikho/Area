@@ -3,7 +3,7 @@ import DashboardPage from "../../Views/Area/DashboardPage.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 import Controller from "../Controller"
-import app from "../../Components/utils/Axios";
+import app, { config } from "../../Components/utils/Axios";
 
 class ControllerDashboard extends Controller {
 
@@ -16,7 +16,6 @@ class ControllerDashboard extends Controller {
             services: undefined
         }
         this.cookies = props;
-        this.logout = this.logout.bind(this)
     }
 
     componentWillMount() {
@@ -30,6 +29,7 @@ class ControllerDashboard extends Controller {
         }
 
         this.loadServices();
+        this.loadApplets()
 
     }
 
@@ -41,11 +41,15 @@ class ControllerDashboard extends Controller {
         })
     }
 
-    logout() {
-        const { cookies } = this.props;
-        cookies.remove('session', { path: '/' })
-        this.authContext.setUser(undefined)
-        this.setRedirectUrl("/")
+    loadApplets() {
+        console.log("wait applets")
+        // app.get(`/applets/all`, config(this.authContext.getToken(), this.auth
+        // )).then((response) => {
+        //     if (response.data.succes)
+        //         this.setState({ services: response.data.server.services })
+        // }).catch((error) => {
+        //     console.log(error)
+        // })
     }
 
     render() {
