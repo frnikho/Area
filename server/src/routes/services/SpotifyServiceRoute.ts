@@ -3,7 +3,7 @@ import Route from "../../Route";
 import express = require('express');
 import * as querystring from "querystring";
 import axios from "axios";
-import ServiceRoute from "./ServiceRoute";
+import ServiceRoute from "./ServiceAuthRoute";
 import {Services} from "../../models/Services";
 import {authorization} from "../../middlewares/AuthMiddleware";
 
