@@ -117,33 +117,104 @@ export const DiscordAppletActionsAbout = [
 ]
 
 export const GithubAppletActionsAbout = [
-        {
-            name: "From new push in a repository",
-            description: '',
-            type: 'github_repository_push',
-            parameters: [
-                {
-                    name: "repository_name",
-                    type: 'string',
-                    required: true
-                }
-            ],
-            ingredients: ["sender_login", "sender_email", "repo_name"]
-        },
-        {
-            name: 'New repository created',
-            type: 'github_repository_created',
-            description: '',
-            parameters: [
-                {
-                    name: "",
-                    type: 'string',
-                    required: true,
-                }
-            ],
-            ingredients: []
-        }
-    ]
+    {
+        name: "From new push in a repository",
+        description: '',
+        type: 'github_repository_push',
+        base_key: 'repository_name',
+        parameters: [
+            {
+                name: "repository_name",
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: ["sender_login", "sender_email", "repo_name"]
+    },
+    {
+        name: 'New repository created',
+        type: 'github_repository_created',
+        description: '',
+        base_key: 'owner_login',
+        parameters: [
+            {
+                name: "owner_login",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: ["repository_name", "repository_is_private", "repository_owner_login", "repository_url", "repository_git_url"]
+    },
+    {
+        name: 'Repository Deleted',
+        type: 'github_repository_deleted',
+        description: '',
+        base_key: 'owner_login',
+        parameters: [
+            {
+                name: 'owner_login',
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: []
+    },
+    {
+        name: 'Release created !',
+        type: 'github_release_created',
+        description: '',
+        base_key: 'repository_name',
+        parameters: [
+            {
+                name: 'repository_name',
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: [],
+    },
+    {
+        name: "New Issue open",
+        type: 'github_issue_opened',
+        description: '',
+        base_key: 'repository_name',
+        parameters: [
+            {
+                name: 'repository_name',
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: [],
+    },
+    {
+        name: "Issue closed",
+        type: 'github_issue_closed',
+        description: '',
+        base_key: 'repository_name',
+        parameters: [
+            {
+                name: 'repository_name',
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: [],
+    },
+    {
+        name: "Issue reopened",
+        type: 'github_issue_reopened',
+        description: '',
+        base_key: 'repository_name',
+        parameters: [
+            {
+                name: 'repository_name',
+                type: 'string',
+                required: true
+            }
+        ],
+        ingredients: [],
+    }]
 
 export const DiscordAppletReactionsAbout = [
         {

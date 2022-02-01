@@ -39,14 +39,13 @@ export default class ReactionManager {
                     hook.func(reaction, ingredients, tokenData);
             })
         } catch (ex) {
-            console.log(ex);
             return error("An error occurred (4001) !");
         }
         return success();
     }
 
     private discordSendChanelMessage(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {
-        let channelId: string = reaction.parameters.filter((param) => param['name'] === 'chanel_id')[0]['value'];
+        const channelId: string = reaction.parameters.filter((param) => param['name'] === 'chanel_id')[0]['value'];
         let message: string = reaction.parameters.filter((param) => param['name'] === 'text')[0]['value'];
 
         ingredients.forEach((ingredient) => {

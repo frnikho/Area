@@ -8,7 +8,7 @@ interface Changed {
 export default abstract class IntraYephook {
 
     private timer: NodeJS.Timer;
-    private authUrl: string;
+    private readonly authUrl: string;
     private pathUrl: string;
     private dataToCheck: string;
     private registry: Changed[] = [];
@@ -40,7 +40,7 @@ export default abstract class IntraYephook {
             if (first)
                 this.registry.push({
                     userEmail: this.userEmail,
-                    data: data
+                    data
                 })
             else
                 this.checkDataHasChanged(data, response.data);

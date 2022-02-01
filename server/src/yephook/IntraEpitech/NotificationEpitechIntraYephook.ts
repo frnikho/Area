@@ -1,7 +1,7 @@
 import IntraYephook from "./IntraYephook";
 import Logger from "../../utils/Logger";
 
-const REFRESH_TIME : number = 5;
+const REFRESH_TIME : number = 60;
 
 export default class NotificationEpitechIntraYephook extends IntraYephook {
 

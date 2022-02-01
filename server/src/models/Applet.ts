@@ -1,6 +1,11 @@
 export enum ActionType {
     github_repository_push,
     github_repository_created,
+    github_repository_deleted,
+    github_issue_opened,
+    github_issue_closed,
+    github_issue_reopened,
+    github_release_created,
 
     discord_channel_created,
     discord_private_message_received,

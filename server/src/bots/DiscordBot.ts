@@ -37,10 +37,6 @@ export default class DiscordBot {
         return DiscordBot.client;
     }
 
-    private onMessage(data) {
-        Logger.d("Discord Bot", "On Message");
-    }
-
     public onMessageCreated(data) {
         const actionKey = data.guildId;
         const authorId = data.author.id;
