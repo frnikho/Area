@@ -9,14 +9,16 @@ export default abstract class IntraYephook {
 
     private timer: NodeJS.Timer;
     private authUrl: string;
+    private pathUrl: string;
     private dataToCheck: string;
     private registry: Changed[] = [];
     private readonly checkTimeInSeconds;
     private readonly userEmail: string;
 
-    protected constructor(checkTimeInSeconds: number, userEmail: string, authUrl: string, dataToCheck: string) {
+    protected constructor(checkTimeInSeconds: number, userEmail: string, authUrl: string, pathUrl: string, dataToCheck: string) {
         this.checkTimeInSeconds = checkTimeInSeconds;
         this.userEmail = userEmail;
+        this.pathUrl = pathUrl;
         this.authUrl = authUrl;
         this.dataToCheck = dataToCheck;
     }
@@ -27,7 +29,7 @@ export default abstract class IntraYephook {
     }
 
     private check(first) {
-        axios.get(this.authUrl).then((response) => {
+        axios.get(`${this.authUrl}/${this.pathUrl}`).then((response) => {
             let data = response.data[this.dataToCheck.split('.')[0]];
 
             this.dataToCheck.split('.').forEach((key, index) => {
@@ -58,6 +60,14 @@ export default abstract class IntraYephook {
                 }
             }
         })
+    }
+
+    public getAuthLink() {
+        return this.authUrl;
+    }
+
+    public getEmail() {
+        return this.userEmail;
     }
 
     public abstract onDataChanged(oldData, responseData): void;

@@ -8,8 +8,7 @@ COPY public public
 COPY src src
 COPY .env .env
 
-# Install dependencies
-RUN npm install
+RUN npm install --force
 RUN npm install -g serve
 
 #Build

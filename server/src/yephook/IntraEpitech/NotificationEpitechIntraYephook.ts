@@ -1,15 +1,19 @@
 import IntraYephook from "./IntraYephook";
 
-const REFRESH_TIME : number= 30;
+const REFRESH_TIME : number = 5;
 
 export default class NotificationEpitechIntraYephook extends IntraYephook {
 
-    constructor(user: object) {
-        super(REFRESH_TIME, user['email'], `${process.env.EPITECH_AUTH_LINK}/?format=json`, "history.{key}.id");
+    private readonly _onDataChanged: any;
+
+    constructor(email: string, authLink: string, onDataChanged: any) {
+        super(REFRESH_TIME, email, `${authLink}`, "?format=json", "history.{key}.id");
+        this._onDataChanged = onDataChanged;
     }
 
     onDataChanged(oldData, responseData): void {
-        console.log("epitech new notification !");
+        console.log("data changed !")
+        this._onDataChanged(oldData, responseData);
     }
 
     onDataNotChanged(data) {

@@ -1,12 +1,19 @@
 export enum ActionType {
     github_repository_push,
     github_repository_created,
+
     discord_channel_created,
     discord_private_message_received,
     discord_guild_message_received,
-    GMAIL_RECEIVE_EMAIL,
-    DISCORD_GET_CHANNEL_MESSAGE
+
+    intra_new_notifications,
+    intra_gpa_updated,
+    intra_credits_updated,
+
+    spotify_song_changed,
 }
+
+export const getActionTypeByStr = (name: string): ActionType => ActionType[name];
 
 const githubPushData: hookFunc[] = [{type: ActionType.github_repository_push, serviceName: 'github'}]
 

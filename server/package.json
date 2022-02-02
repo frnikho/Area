@@ -11,6 +11,7 @@
   "author": "Nicolas SANS, Victor SAUVAGET",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/pubsub": "^2.18.5",
     "@octokit/webhooks": "^9.22.0",
     "@slack/web-api": "^6.5.1",
     "axios": "^0.24.0",
@@ -27,13 +28,19 @@
     "express-rawbody": "^1.0.2",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
+    "jssoup": "^0.0.15",
     "mariadb": "^2.5.5",
     "nodemailer": "^6.7.2",
+    "pkce-challenge": "^2.2.0",
     "prettier": "^2.5.1",
     "randomstring": "^1.2.1",
     "slash-commands": "^1.5.0",
     "smee-client": "^1.2.2",
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0",
     "tweetnacl": "^1.0.3",
+    "utf8": "^3.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

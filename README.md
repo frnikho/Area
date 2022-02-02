@@ -66,6 +66,7 @@ Go to server directory
     ```shell
     $ mkdir -p sslCredentials
     $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
+    $ sudo chown -c your-user-name sslCredentials/sslKey.key sslCredentials/sslCertificate.crt
     ```
 
 #### Build and run

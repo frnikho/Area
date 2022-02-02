@@ -14,6 +14,26 @@ export default class GoogleLoginRoute extends Route {
         this.router.get('/', this.get);
     }
 
+    /**
+     * @openapi
+     * /auth/google/code:
+     *   get:
+     *     tags:
+     *       - Authentication
+     *     description: Google Login
+     *     parameters:
+     *       - in: path
+     *         name: code
+     *         schema:
+     *           type: string
+     *         description: Code given by Google Auth
+     *         required: true
+     *     responses:
+     *       200:
+     *         description: Successful login
+     *       400:
+     *         description: Error while login
+     */
     private code(req: express.Request, res: express.Response) {
         const {code} = req.query;
 
