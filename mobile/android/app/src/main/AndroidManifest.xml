@@ -13,7 +13,7 @@
       android:allowBackup="false"
       android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
-      
+
       <activity
         android:name="net.openid.appauth.RedirectUriReceiverActivity"
         tools:node="replace">
@@ -24,7 +24,17 @@
             <data android:scheme="https"
                   android:host="localhost" android:port="8080" android:path="/auth/google/code"/>
         </intent-filter>
-    </activity>
+      </activity>
+      <!-- <activity
+        android:name="net.openid.appauth.RedirectUriReceiverActivity"
+        tools:node="replace">
+          <intent-filter>
+              <action android:name="android.intent.action.VIEW"/>
+              <category android:name="android.intent.category.DEFAULT"/>
+              <category android:name="android.intent.category.BROWSABLE"/>
+              <data android:scheme="com.mobile"/>
+          </intent-filter>
+      </activity> -->
 
       <activity
         android:name=".MainActivity"
