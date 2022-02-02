@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast, Icon} from 'native-base';
+import {Heading, Box, VStack, FormControl, Input, Link, Button, HStack, Text, Center, Toast} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 import app from '../axios_config';
 import { storeData } from '../async_storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,8 +9,8 @@ import {
   GoogleSigninButton,
   statusCodes,
   } from '@react-native-google-signin/google-signin';
-  import { authorize } from 'react-native-app-auth';
-
+import { authorize } from 'react-native-app-auth';
+import axios from "axios";
 
 export default class LoginScreen extends Component {
 
@@ -73,14 +74,17 @@ export default class LoginScreen extends Component {
         redirectUrl: 'https://localhost:8080/auth/google/code',
         responseType: 'code',
         scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+        dangerouslyAllowInsecureHttpRequests: true,
+        skipCodeExchange: true,
       };
       // use the client to make the auth request and receive the authState
-      try {
-        const result = await authorize(config);
-        console.log(result);
-      } catch (error) {
-        console.log(error);
-      }
+      authorize(config).then((result) => {
+        app.get(`/auth/google/code?state=state_parameter_passthrough_value&code=${result.authorizationCode}`).then((response) => {
+          console.log(response);
+        }).catch((err) => {
+          console.log(err.response.data);
+        });
+      });
     }
 
     render() {
