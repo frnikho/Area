@@ -12,30 +12,30 @@ export default class Logger {
         Logger.logger.info("Logger initialized");
     }
 
-    private static init(category?: string) {
+    private static init() {
         if (Logger.instance === undefined || Logger.instance === null)
             Logger.instance = new Logger();
-        if (category === undefined) {
-            Logger.logger = logs4js.getLogger("AREA");
-        } else {
-            Logger.logger = logs4js.getLogger(category);
-        }
+        Logger.logger = logs4js.getLogger("AREA");
         Logger.logger.level = 'debug';
     }
 
-    public static e(category?: string, ...msg: string[]): void {
-        this.init(category);
+    public static e(...msg: string[]): void {
+        this.init();
         msg.forEach((m) => Logger.logger.error(m));
     }
 
-    public static d(category?: string, ...msg: string[]): void {
-        this.init(category);
+    public static d(...msg: string[]): void {
+        this.init();
         msg.forEach((m) => Logger.logger.debug(m));
     }
 
-    public static i(category?: string, ...msg: string[]): void {
-        this.init(category);
+    public static i(...msg: string[]): void {
+        this.init();
         msg.forEach((m) => Logger.logger.info(m));
+    }
+
+    public static w(...msg: string[]): void {
+        msg.forEach((m) => Logger.logger.warn(m));
     }
 
 }

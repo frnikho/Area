@@ -2,6 +2,7 @@ import {Ingredient, Reaction, ReactionType} from "../models/Applet";
 import {TokenData} from "../controllers/ServiceController";
 import DiscordBot from "../bots/DiscordBot";
 import DiscordService from "../services/external/DiscordService";
+import Logger from "../utils/Logger";
 
 type reactionsFunc = (reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) => void;
 type reactionHook = {type: ReactionType, func: reactionsFunc};
@@ -23,7 +24,7 @@ export default class ReactionManager {
     private readonly reactions: reactionHook[] = [{type: ReactionType.discord_send_chanel_message, func: this.discordSendChanelMessage}]
 
     private constructor() {
-
+        Logger.i("AREA", "ReactionManager initialize");
     }
 
     public static get(): ReactionManager {

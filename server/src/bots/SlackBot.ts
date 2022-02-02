@@ -13,7 +13,7 @@ export default class SlackBot {
      */
     public constructor(token: string) {
         this.client = new WebClient(token);
-        Logger.i("Slack", "Slack bot is created")
+        Logger.i("Slack bot is created")
     }
 
     /**

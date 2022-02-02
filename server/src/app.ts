@@ -120,7 +120,7 @@ export default class App {
 
     public start(): void {
         this.server.listen(this.port, () => {
-            Logger.i('AREA', `server is listening on https://localhost:${this.port}/`)
+            Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }
 

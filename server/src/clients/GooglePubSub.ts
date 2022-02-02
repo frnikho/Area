@@ -10,7 +10,7 @@ export class GooglePubSub {
         this.client = new PubSub({
             projectId: process.env.GOOGLE_PROJECT_ID,
         });
-        Logger.i("Cloud Pub", "Google Client PubSub initialize");
+        Logger.i("Google Client PubSub initialize");
     }
 
     public test() {

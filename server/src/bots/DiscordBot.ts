@@ -22,7 +22,7 @@ export default class DiscordBot {
 
         DiscordBot.client.on("ready", () => {
             DiscordBot.client.user.setActivity("Generate some OP code :0", {type: "WATCHING"});
-            Logger.i("Discord", "Discord Bot is online !");
+            Logger.i("Discord Bot is online !");
         })
 
         if (process.env.NODE_ENV === 'DEV')
@@ -50,25 +50,25 @@ export default class DiscordBot {
 
     private enableDebug() {
         DiscordBot.client.on("debug", (info) => {
-            Logger.d("Discord", info);
+            Logger.d(info);
         });
 
         DiscordBot.client.on("disconnect", () => {
-            Logger.d("Discord", `The WebSocket has closed and will no longer attempt to reconnect`);
+            Logger.d(`The WebSocket has closed and will no longer attempt to reconnect`);
         });
 
-        DiscordBot.client.on("error", (error) => Logger.d("Discord", error));
+        DiscordBot.client.on("error", (error) => Logger.d(error));
 
         DiscordBot.client.on("reconnecting", () => {
-            Logger.d("Discord Reconnecting", `client tries to reconnect to the WebSocket`);
+            Logger.d(`client tries to reconnect to the WebSocket`);
         });
 
         DiscordBot.client.on("resume", () => {
-            Logger.d("Discord Resume", `whenever a WebSocket resumes`);
+            Logger.d(`whenever a WebSocket resumes`);
         });
 
         DiscordBot.client.on("warn", (data) => {
-            Logger.d("Discord warning", data);
+            Logger.d(data);
         })
     }
 
@@ -82,7 +82,7 @@ export default class DiscordBot {
 
     public onMessageDeleted(data) {
         const {guildId} = data;
-        Logger.d("Discord", "on Message Deleted", data);
+        Logger.d("on Message Deleted", data);
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_message_deleted', guildId, (applets) => {
             applets.map((applet) => {
@@ -95,13 +95,13 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onMessageUpdated(data) {
         const {guildId} = data;
-        Logger.d("Discord", "on Message Updated");
+        Logger.d("on Message Updated");
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_message_updated', guildId, (applets) => {
             applets.map((applet) => {
@@ -114,13 +114,13 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onMessageReactionAdded(data) {
         const messageId = data.message.id;
-        Logger.d("Discord", "on Message Reaction Added");
+        Logger.d("on Message Reaction Added");
 
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_message_reaction_add', messageId, (applets) => {
@@ -134,13 +134,13 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onMessageReactionRemoved(data) {
         const messageId = data.message.id;
-        Logger.d("Discord", "on Message Reaction Removed");
+        Logger.d("on Message Reaction Removed");
 
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_message_reaction_removed', messageId, (applets) => {
@@ -154,7 +154,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
@@ -178,7 +178,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
@@ -196,7 +196,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
@@ -215,14 +215,14 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onMemberGetUnbanned(data) {
         const guildId = data.guild.id;
 
-        Logger.i("Discord", "on Member get Unbanned called");
+        Logger.i("on Member get Unbanned called");
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_member_unbanned', guildId, (applets) => {
             applets.map((applet) => {
@@ -235,13 +235,13 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onMemberGetBanned(data) {
         const guildId = data.guild.id;
-        Logger.i("Discord", "on Member get banned called");
+        Logger.i("on Member get banned called");
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_guild_member_banned', guildId, (applets) => {
             applets.map((applet) => {
@@ -254,7 +254,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
@@ -262,15 +262,15 @@ export default class DiscordBot {
         const {user, guild} = data;
         const {guildId, name} = guild;
         const {username, id} = user;
-        Logger.d("Discord Bot", "On Member Add");
+        Logger.d("On Member Add");
     }
 
     public onMemberKick(data) {
-        Logger.d("Discord Bot", "On member Kick");
+        Logger.d("On member Kick");
     }
 
     public onChannelDeleted(data) {
-        Logger.e("Discord Bot", "on Channel Deleted");
+        Logger.e("on Channel Deleted");
         const {type, guildId, name} = data;
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_channel_deleted', guildId, (applets) => {
@@ -285,12 +285,12 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 
     public onChannelCreated(data) {
-        Logger.d("Discord", "on channel created !");
+        Logger.d("on channel created !");
         const {type, guildId, name} = data;
         const controller: AppletController = new AppletController();
         controller.getAppletsByTypeAndKey('discord_channel_created', guildId, (applets) => {
@@ -305,7 +305,7 @@ export default class DiscordBot {
                 }
             })
         }, (err) => {
-            Logger.e("Discord Bot", err);
+            Logger.e(err);
         });
     }
 }
