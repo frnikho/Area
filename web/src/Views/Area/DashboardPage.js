@@ -1,11 +1,8 @@
 import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
-import { FaGithubSquare, FaSlack } from "react-icons/fa";
-
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import ControllerService from "../../Controllers/Area/ControllerService"
 import useStyles from "../../Components/Styles/styleDashboard"
+import DashboardHeader from "../../Components/DashboardHeader";
 
 const theme = createTheme({
     palette: {
@@ -29,18 +26,7 @@ export default function DashboardPage(props) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.title}>
-                <div className={classe.titleLeft}>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                </div>
-                <div className={classe.menuRight}>
-                    <Stack direction="row" spacing={2}>
-                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
-                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.logout()}>Logout</Button>
-                    </Stack>
-                </div>
-            </div>
-            {/* <div className={classe.space} /> */}
+            <DashboardHeader/>
             <div className={classe.container}>
                 My applets
             </div>
@@ -49,6 +35,6 @@ export default function DashboardPage(props) {
                     {showServices()}
                 </Grid>
             </Box>
-        </ThemeProvider >
+        </ThemeProvider>
     );
 }
