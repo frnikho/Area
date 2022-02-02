@@ -65,7 +65,7 @@ export const IntraAppletActionsAbout = [
 
 export const DiscordAppletActionsAbout = [
     {
-        name: "When a Discord chanel created",
+        name: "When a Discord chanel is created",
         description: '',
         base_key: 'guild_id',
         type: 'discord_channel_created',
@@ -82,6 +82,25 @@ export const DiscordAppletActionsAbout = [
             }
         ],
         ingredients: [],
+    },
+    {
+        name: "When a Discord chanel is deleted",
+        description: '',
+        type: 'discord_channel_deleted',
+        base_key: 'guild_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            },
+            {
+                name: "channel_type",
+                type: 'string',
+                required: false,
+            }
+        ],
+        ingredients: []
     },
     {
         name: "When receive a private message",
@@ -113,6 +132,104 @@ export const DiscordAppletActionsAbout = [
             }
         ],
         ingredients: ["sender_id", "sender_username"]
+    },
+    {
+        name: "When a guild message is updated",
+        description: '',
+        type: 'discord_guild_message_updated',
+        base_key: 'guid_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            },
+        ],
+        ingredients: []
+    },
+    {
+        name: "When a guild message is deleted",
+        description: '',
+        type: 'discord_guild_message_deleted',
+        base_key: 'guild_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: [],
+    },
+    {
+        name: "Reaction added",
+        description: '',
+        type: 'discord_guild_message_reaction_add',
+        base_key: 'message_id',
+        parameters: [
+            {
+                name: "message_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: []
+    },
+    {
+        name: "Reaction removed",
+        description: '',
+        type: 'discord_guild_message_reaction_removed',
+        base_key: 'message_id',
+        parameters: [
+            {
+                name: "message_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: [],
+    },
+    {
+        name: "Member get banned",
+        description: '',
+        type: 'discord_guild_member_banned',
+        base_key: 'guild_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: []
+    },
+    {
+        name: "Member get unbanned",
+        description: '',
+        type: 'discord_guild_member_unbanned',
+        base_key: 'guild_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: []
+    },
+    {
+        name: "Server updated",
+        description: '',
+        type: 'discord_guild_update',
+        base_key: 'guild_id',
+        parameters: [
+            {
+                name: "guild_id",
+                type: 'string',
+                required: true,
+            }
+        ],
+        ingredients: []
     }
 ]
 
