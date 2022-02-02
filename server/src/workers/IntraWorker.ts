@@ -39,14 +39,14 @@ export default class IntraWorker extends Worker {
     }
 
     private intraNewNotifications(applet: Applet): void {
-        let action: Action = applet.action;
+        const action: Action = applet.action;
         try {
-            let authLink: string = action.parameters.filter((params) => params !== null && params["name"] === "login_link")[0]['value'];
+            const authLink: string = action.parameters.filter((params) => params !== null && params["name"] === "login_link")[0]['value'];
             if (this.yebhooks === undefined)
                 this.yebhooks = [];
-            let existing = this.yebhooks.filter((hook) => hook.getAuthLink() === authLink);
+            const existing = this.yebhooks.filter((hook) => hook.getAuthLink() === authLink);
             if (existing.length === 0 ) {
-                let intra = new NotificationEpitechIntraYephook(authLink, authLink, (oldData, newData) => {
+                const intra = new NotificationEpitechIntraYephook(authLink, authLink, (oldData, newData) => {
                     try {
                         new AppletController().callReactions(applet, ingredientsHook(newData.history[0], ActionType.intra_new_notifications), (err) => {
                             if (err)
@@ -57,8 +57,8 @@ export default class IntraWorker extends Worker {
                         console.log(err);
                     }
                 });
-                this.yebhooks.push(intra);
-                intra.startChecking();
+                // this.yebhooks.push(intra);
+                // intra.startChecking();
             }
         } catch (ex) {
             console.log(ex);
