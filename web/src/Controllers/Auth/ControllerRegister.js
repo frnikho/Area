@@ -1,8 +1,8 @@
 import React from "react";
 import RegisterPage from "../../Views/Auth/RegisterPage.js"
-import Google from "../../Models/Auth/Google.js"
-import Github from "../../Models/Auth/Github.js"
-import DataBase from "../../Models/Auth/DataBase.js"
+import ControllerGoogle from "../Api/ControllerGoogle.js"
+import ControllerGithub from "../Api/ControllerGithub.js"
+import DataBase from "../Api/ControllerDataBase.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Controller from "../Controller"
 
@@ -33,16 +33,16 @@ export default class ControllerRegister extends Controller {
             if (response.error !== "idpiframe_initialization_failed")
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
-            Google.connect(response);
+            ControllerGoogle.connect(response);
         }
     }
 
     onClickGithubLogin(response) {
         if (response.error) {
-            this.setNotification({ message: "Error with Github", show: true, type: "error" });
+            this.setNotification({ message: "Error with ControllerGithub", show: true, type: "error" });
             console.log(response.error)
         } else {
-            Github.connect()
+            ControllerGithub.connect()
         }
     }
 
@@ -52,7 +52,7 @@ export default class ControllerRegister extends Controller {
                 this.setRedirectUrl('/auth/login')
                 this.setNotification({ message: "Register", show: true, type: "succes" });
             } else {
-                this.setNotification({ message: "error with the Database", show: true, type: "error" });
+                this.setNotification({ message: "error with the ControllerDataBase", show: true, type: "error" });
             }
         }, (err) => {
             this.setNotification({ message: err.data.error, show: true, type: "error" });

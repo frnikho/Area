@@ -1,10 +1,10 @@
 // import React from "react";
 import LoginPage from "../../Views/Auth/LoginPage.js"
-import Database from "../../Models/Auth/DataBase"
+import ControllerDataBase from "../Api/ControllerDataBase"
 
 import Controller from "../Controller"
-import Github from "../../Models/Auth/Github.js"
-import Google from "../../Models/Auth/Google.js"
+import ControllerGithub from "../Api/ControllerGithub.js"
+import ControllerGoogle from "../Api/ControllerGoogle.js"
 import { AuthContext } from "../../Contexts/AuthContext";
 import { withCookies } from "react-cookie";
 
@@ -45,7 +45,7 @@ class ControllerLogin extends Controller {
             if (response.error !== "idpiframe_initialization_failed")
                 this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
-            Google.connect(response);
+            ControllerGoogle.connect(response);
         }
     }
 
@@ -53,12 +53,12 @@ class ControllerLogin extends Controller {
         if (response.error) {
             this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
-            Github.connect(response);
+            ControllerGithub.connect(response);
         }
     }
 
     loginDb(email, password) {
-        Database.connect(email, password, (data) => {
+        ControllerDataBase.connect(email, password, (data) => {
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.props;
@@ -67,7 +67,7 @@ class ControllerLogin extends Controller {
                     this.setRedirectUrl('/')
                 })
             } else {
-                this.setNotification({ message: "Error with Database", show: true, type: "error" });
+                this.setNotification({ message: "Error with ControllerDataBase", show: true, type: "error" });
             }
         }, (error) => {
             this.setNotification({ message: error.data.error, show: true, type: "error" });

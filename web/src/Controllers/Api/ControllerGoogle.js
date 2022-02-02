@@ -1,7 +1,7 @@
 import app from "../../Components/utils/Axios"
 import React from "react";
 
-export default class Gogle extends React.Component{
+export default class ControllerGoogle extends React.Component{
 
     static connect(data) {
         app.post(`/auth/Google/code`, {
