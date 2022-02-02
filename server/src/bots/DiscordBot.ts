@@ -90,7 +90,7 @@ export default class DiscordBot {
                 const guildIdParam = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdParam['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_deleted), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -109,7 +109,7 @@ export default class DiscordBot {
                 const guildIdParam = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdParam['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_updated), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -129,7 +129,7 @@ export default class DiscordBot {
                 const messageIdParam = action.parameters.filter((param) => param['name'] === 'message_id')[0];
                 if (messageId === messageIdParam['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_reaction_add), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -149,7 +149,7 @@ export default class DiscordBot {
                 const messageIdParam = action.parameters.filter((param) => param['name'] === 'message_id')[0];
                 if (messageId === messageIdParam['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_reaction_removed), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -173,7 +173,7 @@ export default class DiscordBot {
                 const userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
                 if (authorId === userId['value'] && actionKey === guildId['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_message_received), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -191,7 +191,7 @@ export default class DiscordBot {
                 const userId = action.parameters.filter((param) => param['name'] === 'user_id')[0];
                 if (authorId === userId['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_private_message_received), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -210,7 +210,7 @@ export default class DiscordBot {
                 const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_update), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -230,7 +230,7 @@ export default class DiscordBot {
                 const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_member_unbanned), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -249,7 +249,7 @@ export default class DiscordBot {
                 const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value']) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_guild_member_banned), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -280,7 +280,7 @@ export default class DiscordBot {
                 const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value'] && channelType['value'] === type) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_channel_deleted), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })
@@ -300,7 +300,7 @@ export default class DiscordBot {
                 const guildIdP = action.parameters.filter((param) => param['name'] === 'guild_id')[0];
                 if (guildId === guildIdP['value'] && channelType['value'] === type) {
                     controller.callReactions(applet, ingredientsHook(data, ActionType.discord_channel_created), () => {
-                        console.log("Applets reactions called successfully");
+                        Logger.d(`Applets action called successfully for user_id '${applet.user_uuid}'`);
                     });
                 }
             })

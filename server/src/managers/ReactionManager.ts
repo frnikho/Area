@@ -52,9 +52,7 @@ export default class ReactionManager {
         ingredients.forEach((ingredient) => {
             message = message.replace(ingredient.key, ingredient.value);
         });
-
         new DiscordService().sendDiscordBotChanelMessage(channelId, message);
-        console.log("discord send message ");
     }
 
 }

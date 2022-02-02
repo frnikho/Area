@@ -3,9 +3,7 @@ import {ActionType, Ingredient} from "../models/Applet";
 const JSSoup = require('jssoup').default;
 
 const githubPushData = (data) : Ingredient[] => [{key: "{{sender_login}}", value: `${data.sender.login}`}, {key: "{{sender_email}}", value: data.sender.email}, {key: "{{repo_name}}", value: data.repository.name}]
-
-const githubReleaseData = (data): Ingredient[] =>
-    [
+const githubReleaseData = (data): Ingredient[] => [
         {
             key: "{{release_url}}",
             value: `${data.release.url}`
@@ -23,7 +21,6 @@ const githubReleaseData = (data): Ingredient[] =>
             value: `${data.release.body}`
         }
     ].concat(githubRepositoryData(data))
-
 const githubIssueData = (data): Ingredient[] => [
         {
             key: "{{issue_title}}",
@@ -54,7 +51,6 @@ const githubIssueData = (data): Ingredient[] => [
             value: `${data.issue.user.url}`
         }
     ].concat(githubRepositoryData(data))
-
 const githubRepositoryData = (data) : Ingredient[] => [
     {
         key: "{{repository_name}}",
@@ -77,11 +73,23 @@ const githubRepositoryData = (data) : Ingredient[] => [
         value: `${data.repository.git_url}`
     }
 ];
-
 const discordChanelMessageReceived = (data): Ingredient[] => [{key: "{{sender_id}}", value: `${data.author.id}`}, {key: "{{sender_username}}", value: `${data.author.username}`}];
 const intraNewNotification = (data): Ingredient[] => [{key: "{{notification_username}}", value: data.user.title}, {key: "{{notification_title}}", value: cleanHtml(data.title)}]
 
-
+const discordChannelData = (data): Ingredient[] => [
+    {
+        key: "{{channel_type}}",
+        value: `${data.type}`
+    },
+    {
+        key: "{{channel_name}}",
+        value: `${data.name}`
+    },
+    {
+        key: "{{channel_id}}",
+        value: `${data.id}`
+    }
+];
 
 type dataFunc = (data) => Ingredient[];
 type hookFunc = {type: ActionType, func: dataFunc}
@@ -96,6 +104,8 @@ const hooksType: hookFunc[] = [
     {type: ActionType.github_issue_reopened, func: githubIssueData},
     {type: ActionType.discord_guild_message_received, func: discordChanelMessageReceived},
     {type: ActionType.intra_new_notifications, func: intraNewNotification},
+    {type: ActionType.discord_channel_created, func: discordChannelData},
+    {type: ActionType.discord_channel_deleted, func: discordChannelData}
 ]
 /**
  * Transform raw data to ingredients
