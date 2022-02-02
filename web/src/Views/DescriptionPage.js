@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
-import useStyles from "../Components/Styles/styleDescription.js"
+import useStyles from "../Resources/Styles/styleDescription.js"
 
 const theme = createTheme({
     palette: {

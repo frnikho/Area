@@ -41,9 +41,7 @@ class ControllerLogin extends Controller {
 
     onClickGoogleLogin(response) {
         if (response.error) {
-            // temporay
-            if (response.error !== "idpiframe_initialization_failed")
-                this.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {
             ControllerGoogle.connect(response);
         }

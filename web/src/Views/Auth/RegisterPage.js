@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 
 import NotifComponent from "../../Components/utils/NotifComponent"
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
-import useStyles from "../../Components/Styles/styleAuth.js"
+import useStyles from "../../Resources/Styles/styleAuth.js"
 
 const theme = createTheme({
     palette: {

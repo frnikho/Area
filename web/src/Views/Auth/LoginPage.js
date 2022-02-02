@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 
 import NotifComponent from "../../Components/utils/NotifComponent"
 import * as logo from "../../Resources/assets/login.json"
-import useStyles from "../../Components/Styles/styleAuth.js"
+import useStyles from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 
 const theme = createTheme({

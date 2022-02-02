@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider, Box } from "@mui/material";
 import { FaUser } from "react-icons/fa";
 
 import Button from '@mui/material/Button';
-import useStyles from "../../Components/Styles/styleProfile"
+import useStyles from "../../Resources/Styles/styleProfile"
 import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
 

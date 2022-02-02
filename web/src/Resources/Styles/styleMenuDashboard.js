@@ -1,8 +1,14 @@
 // eslint-disable-next-line
-import style from "../../Resources/CSS/Font.css";
+import style from "../CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
+    buttonMenu: {
+        fontFamily: 'Dongle',
+        fontSize: '60px',
+        textTransform: "none",
+        color: "black"
+    },
     font: {
         fontFamily: "Dongle",
     },
@@ -16,16 +22,6 @@ const useStyles = makeStyles({
         textAlign: "center",
         fontFamily: "Dongle",
         fontSize: "60px",
-    },
-    titleRight: {
-        fontFamily: "Dongle",
-        fontSize: "60px",
-        position: "absolute",
-        top: "0",
-        right: "0",
-        textAlign: "center",
-        justifyContent: "center",
-        marginRight: "30px",
     },
     menuRight: {
         paddingLeft: "12px",
@@ -41,22 +37,26 @@ const useStyles = makeStyles({
         display: "flex",
         flex: "1",
     },
+    titleRight: {
+        fontFamily: "Dongle",
+        fontSize: "60px",
+        position: "absolute",
+        top: "0",
+        right: "0",
+        textAlign: "center",
+        justifyContent: "center",
+        marginRight: "30px",
+    },
     titleLeft: {
         fontFamily: "Dongle",
         fontSize: "60px",
-        position: "relative",
-        textAlign: "left",
-        justifyContent: "left",
+        position: "absolute",
+        top: "0",
+        left: "0",
+        textAlign: "center",
+        justifyContent: "center",
         marginLeft: "30px",
-        display: "flex",
-        flex: "2",
     },
-    title: {
-        justifyContent: "justify",
-        alignItems: "justify",
-        display: "flex",
-    },
-
     space: {
         margin: "125px",
     }

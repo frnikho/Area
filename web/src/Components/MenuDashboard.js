@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import useStyles from "../Components/Styles/styleMenuDashboard"
+import useStyles from "../Resources/Styles/styleMenuDashboard"
 
 export default function MenuDashboard({ props }) {
 

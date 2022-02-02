@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
 
 import Button from '@mui/material/Button';
 import ControllerService from "../../Controllers/Area/ControllerService"
-import useStyles from "../../Components/Styles/styleDashboard"
+import useStyles from "../../Resources/Styles/styleDashboard"
 import MenuDashboard from "../../Components/MenuDashboard"
 
 const theme = createTheme({

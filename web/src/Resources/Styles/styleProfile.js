@@ -1,8 +1,23 @@
 // eslint-disable-next-line
-import style from "../../Resources/CSS/Font.css";
+import style from "../CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles({
+    buttonMenu: {
+        fontFamily: 'Dongle',
+        fontSize: '60px',
+        textTransform: "none",
+        color: "black"
+    },
+    accountContainer: {
+        marginLeft: "700px",
+        fontFamily: "Dongle",
+        fontSize: "85px",
+    },
+    little: {
+        fontSize: "40px",
+        marginLeft: "1px",
+    },
     font: {
         fontFamily: "Dongle",
     },
@@ -14,32 +29,8 @@ const useStyles = makeStyles({
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-    },
-    description: {
-        paddingRight: "20px",
-        paddingLeft: "20px",
-        fontSize: "30px",
-        fontFamily: "Mochiy Pop P One",
-    },
-    rect: {
-        display: "flex",
-        alignItems: "center",
-        margin: "auto auto",
-        justifyContent: "center",
-        textAlign: "center",
-        borderRadius: "30px",
-        width: "500px",
-        height: "500px",
-    },
-    titleRight: {
         fontFamily: "Dongle",
-        fontSize: "60px",
-        position: "absolute",
-        top: "0",
-        right: "0",
-        textAlign: "center",
-        justifyContent: "center",
-        marginRight: "30px",
+        fontSize: "125px",
     },
     menuRight: {
         paddingLeft: "12px",
@@ -54,6 +45,16 @@ const useStyles = makeStyles({
         alignItems: "right",
         display: "flex",
         flex: "1",
+    },
+    titleRight: {
+        fontFamily: "Dongle",
+        fontSize: "60px",
+        position: "absolute",
+        top: "0",
+        right: "0",
+        textAlign: "center",
+        justifyContent: "center",
+        marginRight: "30px",
     },
     titleLeft: {
         fontFamily: "Dongle",
@@ -71,10 +72,7 @@ const useStyles = makeStyles({
         display: "flex",
     },
     space: {
-        margin: "200px",
-    },
-    littleSpace: {
-        margin: "20px",
+        margin: "75px",
     }
 });
 
