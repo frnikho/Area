@@ -11,6 +11,7 @@ import {
   } from '@react-native-google-signin/google-signin';
 import { authorize } from 'react-native-app-auth';
 import axios from "axios";
+import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URL, GITHUB_CLIENT_ID, GITHUB_REDIRECT_URL, GITHUB_CLIENT_SECRET } from "@env";
 
 export default class LoginScreen extends Component {
 
@@ -70,8 +71,8 @@ export default class LoginScreen extends Component {
     onLoginGoogle = async () => {
       const config = {
         issuer: 'https://accounts.google.com',
-        clientId: '328309035753-j89c9qnnhmpahovmrljfmjm4lr82tku5.apps.googleusercontent.com',
-        redirectUrl: 'https://localhost:8080/auth/google/code',
+        clientId: GOOGLE_CLIENT_ID,
+        redirectUrl: GOOGLE_REDIRECT_URL,
         responseType: 'code',
         scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
         dangerouslyAllowInsecureHttpRequests: true,
@@ -79,7 +80,31 @@ export default class LoginScreen extends Component {
       };
       // use the client to make the auth request and receive the authState
       authorize(config).then((result) => {
-        app.get(`/auth/google/code?state=state_parameter_passthrough_value&code=${result.authorizationCode}`).then((response) => {
+        app.get(`/auth/google/code?code=${result.authorizationCode}`).then((response) => {
+          console.log(response);
+        }).catch((err) => {
+          console.log(err.response.data);
+        });
+      });
+    }
+
+    onLoginGithub = async () => {
+      const config = {
+        redirectUrl: GITHUB_REDIRECT_URL,
+        clientId: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
+        scopes: ['identity'],
+        additionalHeaders: { 'Accept': 'application/json' },
+        serviceConfiguration: {
+          authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+          tokenEndpoint: 'https://github.com/login/oauth/access_token',
+          revocationEndpoint:
+            'https://github.com/settings/connections/applications/<client-id>'
+        }
+      };
+      // use the client to make the auth request and receive the authState
+      authorize(config).then((result) => {
+        app.get(`/auth/github/code?code=${result.authorizationCode}`).then((response) => {
           console.log(response);
         }).catch((err) => {
           console.log(err.response.data);
@@ -128,6 +153,7 @@ export default class LoginScreen extends Component {
               <HStack justifyContent="center" alignItems='center' space={5}>
                 <Button
                   w='46%'
+                  onPress={this.onLoginGithub}
                   leftIcon={<Icon name="logo-github" size={25} color="white" />}
                   style={{
                     backgroundColor: '#111833',
