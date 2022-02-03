@@ -1,19 +1,10 @@
-import React from "react";
-import DescriptionPage from "../Views/DescriptionPage"
-import { withCookies } from "react-cookie";
-import Controller from "./Controller"
+// import React from "react";
+// import Controller from "../Controller"
 
-class ControllerDashboard extends Controller {
+export default class ControllerDashboard {
 
-    render() {
-        return (
-            <div>
-                <DescriptionPage {...this} />
-                {this.redirectUrl()}
-            </div>
-        );
+    constructor(cookies, page) {
+        this.cookies = cookies;
+        this.page = page;
     }
-
 }
-
-export default withCookies(ControllerDashboard);

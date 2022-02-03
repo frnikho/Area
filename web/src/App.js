@@ -7,7 +7,7 @@ import { withCookies } from "react-cookie";
 import Home from "./Controllers/Home";
 import LoginPage from "./Views/Auth/LoginPage";
 import RegisterPage from "./Views/Auth/RegisterPage";
-import ControllerDescription from "./Controllers/ControllerDescription.js"
+import DescriptionPage from "./Views/DescriptionPage"
 import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
 import ControllerProfile from "./Controllers/Area/ControllerProfile"
 
@@ -37,7 +37,7 @@ class App extends React.Component {
         this.setState({
             data: (<Routes>
                 <Route path='/' element={<Home />} />
-                <Route path={"description"} element={<ControllerDescription />} />
+                <Route path={"description"} element={<DescriptionPage />} />
                 <Route path="auth">
                     <Route path={"login"} element={<LoginPage />} />
                     <Route path={"register"} element={<RegisterPage />} />
@@ -57,7 +57,7 @@ class App extends React.Component {
             <div>
                 {this.state.data !== undefined ? <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path={"description"} element={<ControllerDescription />} />
+                    <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
                         <Route path={"login"} element={<LoginPage />} />
                         <Route path={"register"} element={<RegisterPage />} />

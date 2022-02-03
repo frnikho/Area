@@ -150,7 +150,7 @@ function RenderRegisterPage({ component }) {
 }
 
 
-export default withCookies(class PageLogin extends Page {
+export default withCookies(class RegisterPage extends Page {
 
     static contextType = AuthContext;
 

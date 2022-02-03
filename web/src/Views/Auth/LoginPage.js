@@ -127,7 +127,7 @@ function RenderLoginPage({ component }) {
 }
 
 
-export default withCookies(class PageLogin extends Page {
+export default withCookies(class LoginPage extends Page {
 
     static contextType = AuthContext;
 
