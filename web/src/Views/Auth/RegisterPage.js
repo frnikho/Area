@@ -7,7 +7,6 @@ import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typograp
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import Stack from '@mui/material/Stack';
-import NotifComponent from "../../Components/utils/NotifComponent"
 
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import useStyles from "../../Resources/Styles/styleAuth.js"
@@ -143,7 +142,7 @@ function RenderRegisterPage({ component }) {
                     </Box>
                 </Box>
                 <Box sx={{ padding: 1 }} />
-                {NotifComponent(component.state.notification)}
+                {component.notificationComponent()}
             </Container>
         </ThemeProvider>
     )

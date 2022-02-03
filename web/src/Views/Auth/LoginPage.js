@@ -1,14 +1,12 @@
-// import React from "react";
-import ControllerLogin from "../../Controllers/Auth/ControllerLogin"
-import Page from "../Page"
-import { AuthContext } from "../../Contexts/AuthContext";
-
 import Lottie from "lottie-react";
 import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import Stack from '@mui/material/Stack';
-import NotifComponent from "../../Components/utils/NotifComponent"
+
+import ControllerLogin from "../../Controllers/Auth/ControllerLogin"
+import Page from "../Page"
+import { AuthContext } from "../../Contexts/AuthContext";
 import * as logo from "../../Resources/assets/login.json"
 import useStyles from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
@@ -121,7 +119,7 @@ function RenderLoginPage({ component }) {
                     </Box>
                 </Box>
                 <Box sx={{ padding: 1 }} />
-                {NotifComponent(component.state.notification)}
+                {component.notificationComponent()}
             </Container>
         </ThemeProvider >
     )

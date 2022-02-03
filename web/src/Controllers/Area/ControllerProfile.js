@@ -29,7 +29,7 @@ class ControllerProfile extends Controller {
 
     logout() {
         const { cookies } = this.props;
-        cookies.remove('session', { path: '/' })
+        cookies.remove('session', { path: '/', SameSite: 'none', secure: true })
         this.authContext.setUser(undefined)
         this.setRedirectUrl("/")
     }
