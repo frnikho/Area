@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import style from "../CSS/Font.css";
-import { makeStyles } from "@material-ui/core/styles"
 
-const useStyles = makeStyles({
+const useStyles = {
     font: {
         fontFamily: "Dongle",
     },
@@ -76,6 +75,6 @@ const useStyles = makeStyles({
     littleSpace: {
         margin: "20px",
     }
-});
+};
 
 export default useStyles;
