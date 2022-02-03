@@ -8,7 +8,7 @@ import Home from "./Controllers/Home";
 import LoginPage from "./Views/Auth/LoginPage";
 import RegisterPage from "./Views/Auth/RegisterPage";
 import DescriptionPage from "./Views/DescriptionPage"
-import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
+import DashboardPage from "./Views/Area/DashboardPage"
 import ControllerProfile from "./Controllers/Area/ControllerProfile"
 
 class App extends React.Component {
@@ -43,7 +43,7 @@ class App extends React.Component {
                     <Route path={"register"} element={<RegisterPage />} />
                 </Route>
                 <Route path="area">
-                    <Route path={"dashboard"} element={<ControllerDashboard />} />
+                    <Route path={"dashboard"} element={<DashboardPage />} />
                     <Route path={"profile"} element={<ControllerProfile />} />
                 </Route>
             </Routes>)
@@ -63,7 +63,7 @@ class App extends React.Component {
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
-                        <Route path={"dashboard"} element={<ControllerDashboard />} />
+                        <Route path={"dashboard"} element={<DashboardPage />} />
                         <Route path={"profile"} element={<ControllerProfile />} />
                     </Route>
                 </Routes> : null}

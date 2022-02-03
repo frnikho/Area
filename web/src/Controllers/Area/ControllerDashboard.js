@@ -1,43 +1,19 @@
-import React from "react";
-import DashboardPage from "../../Views/Area/DashboardPage.js"
-import { AuthContext } from "../../Contexts/AuthContext";
-import { withCookies } from "react-cookie";
-import Controller from "../Controller"
+// import Controller from "../Controller"
 import app, { config } from "../../Components/utils/Axios";
 
-class ControllerDashboard extends Controller {
+export default class ControllerDashboard {
 
-    static contextType = AuthContext;
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: undefined,
-            services: undefined
-        }
-        this.cookies = props;
-    }
-
-    componentWillMount() {
-        this.authContext = this.context;
-        if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
-        } else {
-            this.setState({
-                user: this.authContext.getUser()
-            })
-        }
-
-        this.loadServices();
-        this.loadApplets()
-
+    constructor(authContext, cookies, page) {
+        this.authContext = authContext
+        this.cookies = cookies;
+        this.page = page;
+        this.loadApplets = this.loadApplets.bind(this)
+        this.loadServices = this.loadServices.bind(this)
     }
 
     loadServices() {
         app.get(`about.json`).then((response) => {
-            this.setState({
-                services: response.data.server.services
-            })
+            this.page.setState({services: response.data.server.services})
         })
     }
 
@@ -51,16 +27,4 @@ class ControllerDashboard extends Controller {
         //     console.log(error)
         // })
     }
-
-    render() {
-        return (
-            <div>
-                <DashboardPage {...this} />
-                {this.redirectUrl()}
-            </div>
-        );
-    }
-
 }
-
-export default withCookies(ControllerDashboard);
