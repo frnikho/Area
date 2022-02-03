@@ -15,7 +15,7 @@ import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
 
 
-function RenderLoginPage({component}) {
+function RenderLoginPage({ component }) {
     const theme = createTheme({
         palette: {
             type: "dark"
@@ -146,7 +146,7 @@ export default withCookies(class PageLogin extends Page {
         if (this.authContext.getUser() !== undefined) {
             this.setRedirectUrl('/area/dashboard')
         }
-        this.controller = new ControllerLogin(this.authContext, this.cookies, this);
+        this.controllerLogin = new ControllerLogin(this.authContext, this.cookies, this);
     }
 
     handleSubmit(event) {
@@ -171,8 +171,6 @@ export default withCookies(class PageLogin extends Page {
     render() {
         if (!this.authContext)
             this.componentDiMount()
-        return (
-            <RenderLoginPage component={this}/>
-        );
+        return (this.pageRender(this, RenderLoginPage));
     }
 })

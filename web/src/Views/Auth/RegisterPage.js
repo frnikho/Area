@@ -1,37 +1,40 @@
-import React from "react";
-import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
-import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import OAuth2Login from 'react-simple-oauth2-login';
-import Stack from '@mui/material/Stack';
+// import React from "react";
+import ControllerRegister from "../../Controllers/Auth/ControllerRegister"
+import Page from "../Page"
+import { AuthContext } from "../../Contexts/AuthContext";
 
+import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
+import { Link } from "react-router-dom";
+import { FaGoogle, FaGithubSquare } from "react-icons/fa";
+import Stack from '@mui/material/Stack';
 import NotifComponent from "../../Components/utils/NotifComponent"
+
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import useStyles from "../../Resources/Styles/styleAuth.js"
+import OAuth2Login from 'react-simple-oauth2-login';
+import { withCookies } from "react-cookie";
 
-const theme = createTheme({
-    palette: {
-        type: "dark"
-    }
-});
 
-export default function RegisterPage(props) {
-
-    const classe = useStyles()
+function RenderRegisterPage({ component }) {
+    const theme = createTheme({
+        palette: {
+            type: "dark"
+        }
+    });
+    const classes = useStyles()
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={classe.title}>
-                <div className={classe.titleLeft}>
+            <div className={classes.title}>
+                <div className={classes.titleLeft}>
                     <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                 </div>
-                <div className={classe.menuRight}>
+                <div className={classes.menuRight}>
                     <Stack direction="row" spacing={2}>
-                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
+                        <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/description")}>Area</Button>
                     </Stack>
                 </div>
             </div>
-            {/* <div className={classe.space} /> */}
             <Container component="main" maxWidth="xs">
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />
@@ -40,7 +43,7 @@ export default function RegisterPage(props) {
                             Register
                         </Typography>
                     </Box>
-                    <Box component="form" onSubmit={props.handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={component.handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             autoFocus
                             margin="normal"
@@ -98,7 +101,7 @@ export default function RegisterPage(props) {
                                 responseType="code"
                                 scope={"openid%20profile%20email&"}
                                 redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-                                onSuccess={() => props.onClickGoogleLogin}
+                                onSuccess={() => component.onClickGoogleLogin}
                                 onFailure={(abc) => console.error(abc)}
                                 buttonText={"Google"}
                                 render={renderProps => (
@@ -118,7 +121,7 @@ export default function RegisterPage(props) {
                                 responseType="code"
                                 scope={"user:email"}
                                 redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                                onSuccess={() => props.onClickGithubLogin}
+                                onSuccess={() => component.onClickGithubLogin}
                                 onFailure={(abc) => console.error(abc)}
                                 buttonText={"Github"}
                                 render={renderProps => (
@@ -140,8 +143,62 @@ export default function RegisterPage(props) {
                     </Box>
                 </Box>
                 <Box sx={{ padding: 1 }} />
-                {NotifComponent(props.state.notification)}
+                {NotifComponent(component.state.notification)}
             </Container>
         </ThemeProvider>
-    );
+    )
+
 }
+
+
+export default withCookies(class PageLogin extends Page {
+
+    static contextType = AuthContext;
+
+    constructor(props) {
+        super(props);
+        this.cookies = props;
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
+        this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
+    }
+
+    componentDiMount() {
+        this.authContext = this.context;
+        if (this.authContext.getUser() !== undefined) {
+            this.setRedirectUrl('/area/dashboard')
+        }
+        this.controllerRegister = new ControllerRegister(this.authContext, this.cookies, this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        if (!data.has('firstname') || data.get('firstname') === "")
+            return this.setNotification({ message: "Firstname cannot be empty !", show: true, type: "error" });
+        if (!data.has('lastname') || data.get('lastname') === "")
+            return this.setNotification({ message: "Lastname cannot be empty !", show: true, type: "error" });
+        if (!data.has('email') || data.get('email') === "")
+            return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
+        if (!data.has('password') || data.get('password') === "")
+            return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
+        if (!data.has('confpassword') || data.get('confpassword') === "" || data.get('confpassword') !== data.get('password'))
+            return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
+        this.controllerRegister.registerDb(data.get('email'), data.get('firstname'), data.get('lastname'), data.get('password'));
+    }
+
+    onClickGoogleLogin(response) {
+        this.controllerRegister.googleLogin(response);
+    }
+
+    onClickGithubLogin(response) {
+        this.controllerRegister.githubLogin(response);
+    }
+
+    render() {
+        if (!this.authContext)
+            this.componentDiMount()
+        return (this.pageRender(this, RenderRegisterPage));
+    }
+})

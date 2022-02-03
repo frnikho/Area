@@ -37,9 +37,9 @@ export default class ControllerLogin {
         ControllerDataBase.connect(email, password, (data) => {
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
-                    // const { cookies } = this.cookies;
+                    const { cookies } = this.cookies;
 
-                    this.cookies.set('session', data.token, { path: '/' });
+                    cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
                     this.page.setRedirectUrl('/')
                 })
             } else {

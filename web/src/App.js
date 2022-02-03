@@ -6,7 +6,7 @@ import { withCookies } from "react-cookie";
 //Controllers
 import Home from "./Controllers/Home";
 import LoginPage from "./Views/Auth/LoginPage";
-import ControllerRegister from "./Controllers/Auth/ControllerRegister";
+import RegisterPage from "./Views/Auth/RegisterPage";
 import ControllerDescription from "./Controllers/ControllerDescription.js"
 import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
 import ControllerProfile from "./Controllers/Area/ControllerProfile"
@@ -40,7 +40,7 @@ class App extends React.Component {
                 <Route path={"description"} element={<ControllerDescription />} />
                 <Route path="auth">
                     <Route path={"login"} element={<LoginPage />} />
-                    <Route path={"register"} element={<ControllerRegister />} />
+                    <Route path={"register"} element={<RegisterPage />} />
                 </Route>
                 <Route path="area">
                     <Route path={"dashboard"} element={<ControllerDashboard />} />
@@ -60,7 +60,7 @@ class App extends React.Component {
                     <Route path={"description"} element={<ControllerDescription />} />
                     <Route path="auth">
                         <Route path={"login"} element={<LoginPage />} />
-                        <Route path={"register"} element={<ControllerRegister />} />
+                        <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
                         <Route path={"dashboard"} element={<ControllerDashboard />} />
