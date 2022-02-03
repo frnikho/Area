@@ -5,7 +5,7 @@ import { withCookies } from "react-cookie";
 
 //Controllers
 import Home from "./Controllers/Home";
-import ControllerLogin from "./Controllers/Auth/ControllerLogin";
+import LoginPage from "./Views/Auth/LoginPage";
 import ControllerRegister from "./Controllers/Auth/ControllerRegister";
 import ControllerDescription from "./Controllers/ControllerDescription.js"
 import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
@@ -22,11 +22,11 @@ class App extends React.Component {
         }
     }
 
-    componentWillMount() {
-        const auth = this.context;
+    componentDiMount() {
+        this.auth = this.context;
         const { cookies } = this.props;
         const token = cookies.get('session');
-        auth.loginFromCache(token, (user) => {
+        this.auth.loginFromCache(token, (user) => {
             this.setAppRoutes();
         }, () => {
             this.setAppRoutes();
@@ -39,7 +39,7 @@ class App extends React.Component {
                 <Route path='/' element={<Home />} />
                 <Route path={"description"} element={<ControllerDescription />} />
                 <Route path="auth">
-                    <Route path={"login"} element={<ControllerLogin />} />
+                    <Route path={"login"} element={<LoginPage />} />
                     <Route path={"register"} element={<ControllerRegister />} />
                 </Route>
                 <Route path="area">
@@ -51,13 +51,15 @@ class App extends React.Component {
     }
 
     render() {
+        if (!this.auth)
+            this.componentDiMount()
         return (
             <div>
                 {this.state.data !== undefined ? <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path={"description"} element={<ControllerDescription />} />
                     <Route path="auth">
-                        <Route path={"login"} element={<ControllerLogin />} />
+                        <Route path={"login"} element={<LoginPage />} />
                         <Route path={"register"} element={<ControllerRegister />} />
                     </Route>
                     <Route path="area">
