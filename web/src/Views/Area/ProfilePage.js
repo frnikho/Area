@@ -1,66 +1,101 @@
+import { withCookies } from "react-cookie";
 import React from "react";
-import { createTheme, ThemeProvider, Box } from "@mui/material";
+import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
+import Button from '@mui/material/Button';
 import { FaUser } from "react-icons/fa";
 
-import Button from '@mui/material/Button';
-import useStyles from "../../Resources/Styles/styleProfile"
+import ControllerProfile from "../../Controllers/Area/ControllerProfile"
+import Page from "../Page"
+import { AuthContext } from "../../Contexts/AuthContext";
+import Style from "../../Resources/Styles/styleProfile"
+import ControllerService from "../../Controllers/Area/ControllerService"
 import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
 
-const theme = createTheme({
-    palette: {
-        type: "dark"
+export default withCookies(class ProfiledPage extends Page {
+
+    static contextType = AuthContext;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: undefined,
+        }
+        this.cookies = props;
     }
-});
 
-export default function ProfilePage(props) {
-
-    const buttonMenu = {
-        fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto"
+    componentWillMount() {
+        this.authContext = this.context;
+        if (this.authContext.getUser() === undefined) {
+            this.setRedirectUrl('/auth/login')
+        } else {
+            this.setState({
+                user: this.authContext.getUser()
+            })
+        }
+        this.controllerProfile = new ControllerProfile(this.authContext, this.cookies, this);
     }
 
-    const classe = useStyles()
+    showServices(component) {
+        if (component.state.services === undefined)
+            return;
+        return component.state.services.map((service, index) => (
+            <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
+                <ControllerService service={service} />
+            </Grid>
+        ))
+    }
 
-    return (
-        <ThemeProvider theme={theme}>
-            <div className={classe.title}>
-                <div className={classe.titleLeft}>
-                    <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                </div>
-                <MenuDashboard props={props} />
-            </div>
-            <div className={classe.container}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <div>
-                        <FaUser size={50} />
+    render() {
+        if (!this.authContext)
+            this.componentWillMount()
+        return (this.pageRender(this, function RenderProfilePage({ component }) {
+
+            const theme = createTheme({ palette: { type: "dark" } });
+            const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
+
+            return (
+                <ThemeProvider theme={theme}>
+                    <div style={Style.title}>
+                        <div style={Style.titleLeft}>
+                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+                        </div>
+                        <MenuDashboard props={component} />
                     </div>
-                    <Box sx={{ padding: 2 }} />
-                    Account settings
-                </Box>
-            </div>
-            <div className={classe.accountContainer}>
-                Profile
-                <FieldSettings {...{classe: classe, fieldName: "First Name", value: props.authContext.user.firstname}}/>
-                <FieldSettings {...{classe: classe, fieldName: "Last Name", value: props.authContext.user.lastname}}/>
-                <FieldSettings {...{classe: classe, fieldName: "Email", value: props.authContext.user.email}}/>
-                <div className={classe.little}>
-                    Password
-                    <div className={classe.little}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                            •••••••••
-                            <Box sx={{ padding: 1 }} />
-                            {/* <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
-                                Change password ?
-                            </Link> */}
+                    <div style={Style.container}>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <div>
+                                <FaUser size={50} />
+                            </div>
+                            <Box sx={{ padding: 2 }} />
+                            Account settings
                         </Box>
                     </div>
-                </div>
-            </div>
-            <div className={classe.space} />
-            <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
-                <Button variant="contained" color="error" style={buttonMenu} onClick={() => props.logout()}>Logout</Button>
-            </Box>
-            <div className={classe.space} />
-        </ThemeProvider >
-    );
-}
+                    <div style={Style.accountContainer}>
+                        Profile
+                        <FieldSettings {...{ style: Style, fieldName: "First Name", value: component.authContext.user.firstname }} />
+                        <FieldSettings {...{ style: Style, fieldName: "Last Name", value: component.authContext.user.lastname }} />
+                        <FieldSettings {...{ style: Style, fieldName: "Email", value: component.authContext.user.email }} />
+                        <div style={Style.little}>
+                            Password
+                            <div style={Style.little}>
+                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                    •••••••••
+                                    <Box sx={{ padding: 1 }} />
+                                    {/* <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
+                                        Change password ?
+                                    </Link> */}
+                                </Box>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={Style.space} />
+                    <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerProfile.logout()}>Logout</Button>
+                    </Box>
+                    <div style={Style.space} />
+                </ThemeProvider >
+            );
+        }));
+    }
+})

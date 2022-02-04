@@ -24,7 +24,7 @@ export default withCookies(class DashboardPage extends Page {
         this.showServices = this.showServices.bind(this)
     }
 
-    componentDiMount() {
+    componentWillMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
@@ -50,8 +50,8 @@ export default withCookies(class DashboardPage extends Page {
 
     render() {
         if (!this.authContext)
-            this.componentDiMount()
-        return (this.pageRender(this, function RenderLoginPage({ component }) {
+            this.componentWillMount()
+        return (this.pageRender(this, function RenderDashboardPage({ component }) {
             const theme = createTheme({
                 palette: {
                     type: "dark"

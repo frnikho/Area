@@ -1,43 +1,19 @@
-import ProfilePage from "../../Views/Area/ProfilePage.js"
-import { AuthContext } from "../../Contexts/AuthContext";
-import { withCookies } from "react-cookie";
-import Controller from "../Controller"
+// import Controller from "../Controller"
+// import app, { config } from "../../Components/utils/Axios";
 
-class ControllerProfile extends Controller {
+export default class ControllerDashboard {
 
-    static contextType = AuthContext;
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: undefined,
-        }
-        this.cookies = props;
+    constructor(authContext, cookies, page) {
+        this.authContext = authContext
+        this.cookies = cookies;
+        this.page = page;
         this.logout = this.logout.bind(this)
     }
 
-    componentWillMount() {
-        this.authContext = this.context;
-        if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
-        } else {
-            this.setState({
-                user: this.authContext.getUser()
-            })
-        }
-    }
-
     logout() {
-        const { cookies } = this.props;
+        const { cookies } = this.cookies;
         cookies.remove('session', { path: '/', SameSite: 'none', secure: true })
-        this.authContext.setUser(undefined)
-        this.setRedirectUrl("/")
+        this.page.authContext.setUser(undefined)
+        this.page.setRedirectUrl("/")
     }
-
-    render() {
-        return (this.controllerRender(this, ProfilePage))
-    }
-
 }
-
-export default withCookies(ControllerProfile);

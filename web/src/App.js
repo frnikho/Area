@@ -9,7 +9,7 @@ import LoginPage from "./Views/Auth/LoginPage";
 import RegisterPage from "./Views/Auth/RegisterPage";
 import DescriptionPage from "./Views/DescriptionPage"
 import DashboardPage from "./Views/Area/DashboardPage"
-import ControllerProfile from "./Controllers/Area/ControllerProfile"
+import ProfilePage from "./Views/Area/ProfilePage"
 
 class App extends React.Component {
 
@@ -44,7 +44,7 @@ class App extends React.Component {
                 </Route>
                 <Route path="area">
                     <Route path={"dashboard"} element={<DashboardPage />} />
-                    <Route path={"profile"} element={<ControllerProfile />} />
+                    <Route path={"profile"} element={<ProfilePage />} />
                 </Route>
             </Routes>)
         })
@@ -64,7 +64,7 @@ class App extends React.Component {
                     </Route>
                     <Route path="area">
                         <Route path={"dashboard"} element={<DashboardPage />} />
-                        <Route path={"profile"} element={<ControllerProfile />} />
+                        <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
                 </Routes> : null}
             </div>
