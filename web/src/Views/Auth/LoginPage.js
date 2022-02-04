@@ -14,6 +14,9 @@ import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
 
+
+import { inspect } from 'util';
+
 export default withCookies(class LoginPage extends Page {
 
     static contextType = AuthContext;
@@ -37,17 +40,18 @@ export default withCookies(class LoginPage extends Page {
 
     handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
 
-        if (!data.has('email') || data.get('email') === "")
-            return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
-        if (!data.has('password') || data.get('password') === "")
-            return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
         try {
-            const loginId = implement(LoginModel)({email: data.get('email'), password: data.get('password')})
+            const data = new FormData(event.currentTarget);
+            const loginId = implement(LoginModel)({ email: data.get('email'), password: data.get('password') })
+
+            if (LoginModel.email === "")
+                return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
+            if (LoginModel.password === "")
+                return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
             this.controllerLogin.loginDb(loginId);
         } catch (e) {
-            console.log(e)
+            return this.setNotification({ message: e.message.split('\'')[5] + " cannot be empty !", show: true, type: "error" });
         }
     }
 
