@@ -7,8 +7,8 @@ import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
-import ControllerService from "../../Controllers/Area/ControllerService"
 import MenuDashboard from "../../Components/MenuDashboard"
+import ServicePage from "../../Views/Area/ServicePage"
 
 export default withCookies(class DashboardPage extends Page {
 
@@ -43,7 +43,7 @@ export default withCookies(class DashboardPage extends Page {
             return;
         return component.state.services.map((service, index) => (
             <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
-                <ControllerService service={service} />
+                <ServicePage service={service} />
             </Grid>
         ))
     }

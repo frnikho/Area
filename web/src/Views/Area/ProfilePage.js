@@ -8,11 +8,10 @@ import ControllerProfile from "../../Controllers/Area/ControllerProfile"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleProfile"
-import ControllerService from "../../Controllers/Area/ControllerService"
 import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
 
-export default withCookies(class ProfiledPage extends Page {
+export default withCookies(class ProfilePage extends Page {
 
     static contextType = AuthContext;
 
@@ -34,16 +33,6 @@ export default withCookies(class ProfiledPage extends Page {
             })
         }
         this.controllerProfile = new ControllerProfile(this.authContext, this.cookies, this);
-    }
-
-    showServices(component) {
-        if (component.state.services === undefined)
-            return;
-        return component.state.services.map((service, index) => (
-            <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
-                <ControllerService service={service} />
-            </Grid>
-        ))
     }
 
     render() {
