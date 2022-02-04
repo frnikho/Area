@@ -2,7 +2,7 @@ import React from "react";
 import {AuthContext} from "../Contexts/AuthContext";
 import HomePage from "../Views/HomePage";
 
-export default class Home extends React.Component {
+export default class ControllerHome {
 
     static contextType = AuthContext;
 
