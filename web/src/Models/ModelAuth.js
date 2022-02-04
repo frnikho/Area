@@ -13,7 +13,7 @@ const RegisterModel = Interface('Register')({
     lastName: type('string'),
     email: type('string'),
     password: type('string'),
-    cPassword: type('string'),
+    confpassword: type('string'),
 }, {
     error: true,
     strict: true,

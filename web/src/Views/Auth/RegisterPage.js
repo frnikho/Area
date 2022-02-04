@@ -44,18 +44,12 @@ export default withCookies(class RegisterPage extends Page {
                 firstName: data.get('firstname'),
                 lastName: data.get('lastname'),
                 password: data.get('password'),
-                cPassword: data.get('confpassword')
+                confpassword: data.get('confpassword')
             })
 
-            if (registerId.firstName === "")
-                return this.setNotification({ message: "Firstname cannot be empty !", show: true, type: "error" });
-            if (registerId.lastName === "")
-                return this.setNotification({ message: "Lastname cannot be empty !", show: true, type: "error" });
-            if (registerId.email === "")
-                return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
-            if (registerId.password === "")
-                return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
-            if (registerId.confpassword === "" || registerId.confpassword !== registerId.password)
+            if ([registerId.firstName, registerId.lastName, registerId.email, registerId.password, registerId.confpassword].includes(""))
+                return this.setNotification({ message: ["First Name", "Last Name", "Email", "Password", "Confirm Password"][[registerId.firstName, registerId.lastName, registerId.email, registerId.password, registerId.confpassword].indexOf("")] + " cannot be empty !", show: true, type: "error" });
+            if (registerId.confpassword !== registerId.password)
                 return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
             this.controllerRegister.registerDb(registerId);
         } catch (e) {

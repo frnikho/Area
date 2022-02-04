@@ -45,10 +45,8 @@ export default withCookies(class LoginPage extends Page {
             const data = new FormData(event.currentTarget);
             const loginId = implement(LoginModel)({ email: data.get('email'), password: data.get('password') })
 
-            if (LoginModel.email === "")
-                return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
-            if (LoginModel.password === "")
-                return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
+            if ([loginId.email, loginId.password].includes(""))
+                return this.setNotification({ message: ["Email", "Password"][[loginId.email, loginId.password].indexOf("")] + " cannot be empty !", show: true, type: "error" });
             this.controllerLogin.loginDb(loginId);
         } catch (e) {
             return this.setNotification({ message: e.message.split('\'')[5] + " cannot be empty !", show: true, type: "error" });
