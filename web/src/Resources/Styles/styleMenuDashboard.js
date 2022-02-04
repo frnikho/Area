@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import style from "../CSS/Font.css";
-import { makeStyles } from "@material-ui/core/styles"
 
-const useStyles = makeStyles({
+const useStyles = {
     buttonMenu: {
         fontFamily: 'Dongle',
         fontSize: '60px',
@@ -57,9 +56,12 @@ const useStyles = makeStyles({
         justifyContent: "center",
         marginLeft: "30px",
     },
+    buttonMenu: {
+        fontFamily: 'Dongle', fontSize: '50px', textTransform: "none", color: "black"
+    },
     space: {
         margin: "125px",
     }
-});
+};
 
 export default useStyles;

@@ -49,7 +49,17 @@ export default withCookies(class ProfilePage extends Page {
                         <div style={Style.titleLeft}>
                             <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                         </div>
-                        <MenuDashboard props={component} />
+                        <MenuDashboard props={component} menu={[
+                                {
+                                    name: 'Area',
+                                    redirectUrl: "/description"
+                                },
+                                {
+                                    name: 'My applets',
+                                    redirectUrl: "/area/dashboard"
+                                },
+                            ]
+                        } />
                     </div>
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

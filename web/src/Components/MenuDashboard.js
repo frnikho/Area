@@ -1,22 +1,19 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import useStyles from "../Resources/Styles/styleMenuDashboard"
+import Style from "../Resources/Styles/styleMenuDashboard"
 
-export default function MenuDashboard({ props }) {
+export default function MenuDashboard({ props, menu }) {
 
-    const buttonMenu = {
-        fontFamily: 'Dongle', fontSize: '50px', textTransform: "none", color: "black"
+    function ButtonMenu({ buttonName, redirectUrl, key }) {
+        return (
+            <Button style={Style.buttonMenu} key={key} onClick={() => props.setRedirectUrl(redirectUrl)}>{buttonName}</Button>
+        )
     }
 
-    const classe = useStyles()
-
     return (
-        <div className={classe.menuRight}>
+        <div style={Style.menuRight}>
             <Stack direction="row" spacing={4}>
-                <Button style={buttonMenu} onClick={() => props.setRedirectUrl("/description")}>Area</Button>
-                <Button style={buttonMenu} onClick={() => props.setRedirectUrl("/area/dashboard")}>My board</Button>
-                <Button style={buttonMenu} onClick={() => props.setRedirectUrl("/area/profile")}>Profile</Button>
-                {/* <Button style={buttonMenu } onClick={() => props.logout()}>Logout</Button> */}
+                {menu.map((button, id) => ButtonMenu({ buttonName: button.name, redirectUrl: button.redirectUrl, key: id }) )}
             </Stack>
         </div>
     )

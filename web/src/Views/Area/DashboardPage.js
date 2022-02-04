@@ -62,7 +62,17 @@ export default withCookies(class DashboardPage extends Page {
                         <div style={Style.titleLeft}>
                             <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                         </div>
-                        <MenuDashboard props={component} />
+                        <MenuDashboard props={component} menu={[
+                                {
+                                    name: 'Area',
+                                    redirectUrl: "/description"
+                                },
+                                {
+                                    name: 'Profile',
+                                    redirectUrl: "/area/profile"
+                                },
+                            ]
+                        } />
                     </div>
                     <div style={Style.container}>
                         My applets
