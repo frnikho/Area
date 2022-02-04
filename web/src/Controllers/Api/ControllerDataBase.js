@@ -1,11 +1,12 @@
 import app from "../../Components/utils/Axios"
+import { LoginModel } from "../../Models/ModelAuth"
 
 export default class ControllerDataBase {
 
-    static connect(email, password, onSucess, onError) {
+    static connect(LoginModel, onSucess, onError) {
         app.post(`/auth/login`, {
-            email: email,
-            password: password,
+            email: LoginModel.email,
+            password: LoginModel.password,
         }).then((response) => {
             onSucess(response.data)
         }).catch((err) => {

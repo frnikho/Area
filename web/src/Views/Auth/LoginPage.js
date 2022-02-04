@@ -3,6 +3,9 @@ import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormContr
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import Stack from '@mui/material/Stack';
+import implement from 'implement-js'
+
+import { LoginModel } from "../../Models/ModelAuth"
 
 import ControllerLogin from "../../Controllers/Auth/ControllerLogin"
 import Page from "../Page"
@@ -41,7 +44,12 @@ export default withCookies(class LoginPage extends Page {
             return this.setNotification({ message: "Email cannot be empty !", show: true, type: "error" });
         if (!data.has('password') || data.get('password') === "")
             return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
-        this.controllerLogin.loginDb(data.get('email'), data.get('password'));
+        try {
+            const loginId = implement(LoginModel)({email: data.get('email'), password: data.get('password')})
+            this.controllerLogin.loginDb(loginId);
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     onClickGoogleLogin(response) {

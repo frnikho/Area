@@ -6,6 +6,8 @@ import ControllerDataBase from "../Api/ControllerDataBase"
 import ControllerGithub from "../Api/ControllerGithub.js"
 import ControllerGoogle from "../Api/ControllerGoogle.js"
 
+import { LoginModel } from "../../Models/ModelAuth"
+
 export default class ControllerLogin {
 
     constructor(authContext, cookies, page) {
@@ -33,8 +35,8 @@ export default class ControllerLogin {
         }
     }
 
-    loginDb(email, password) {
-        ControllerDataBase.connect(email, password, (data) => {
+    loginDb(LoginModel) {
+        ControllerDataBase.connect(LoginModel, (data) => {
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.cookies;

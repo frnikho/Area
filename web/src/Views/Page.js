@@ -24,9 +24,7 @@ export default class Page extends React.Component {
     setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
 
     setNotification(value) {
-        this.setState({
-            notification: value
-        });
+        this.setState({ notification: value });
         setTimeout(() => this.setState({ notification: undefined }), 5000)
     }
 
