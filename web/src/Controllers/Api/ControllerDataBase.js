@@ -1,7 +1,6 @@
 import app from "../../Components/utils/Axios"
-import React from "react";
 
-export default class ControllerDataBase extends React.Component {
+export default class ControllerDataBase {
 
     static connect(email, password, onSucess, onError) {
         app.post(`/auth/login`, {
