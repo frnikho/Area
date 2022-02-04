@@ -24,7 +24,7 @@ export default withCookies(class DashboardPage extends Page {
         this.showServices = this.showServices.bind(this)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
@@ -38,7 +38,7 @@ export default withCookies(class DashboardPage extends Page {
 
     showServices(component) {
         if (component.state.services === undefined)
-            return;
+            return (null);
         return component.state.services.map((service, index) => (
             <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
                 <ServicePage service={service} />
@@ -48,7 +48,7 @@ export default withCookies(class DashboardPage extends Page {
 
     render() {
         if (!this.authContext)
-            this.componentWillMount()
+            return (null);
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
             const theme = createTheme({
                 palette: {

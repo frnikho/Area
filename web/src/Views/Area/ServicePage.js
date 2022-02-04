@@ -20,7 +20,7 @@ export default withCookies(class ServicePage extends Page {
         this.cookies = props.cookies;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
@@ -47,7 +47,7 @@ export default withCookies(class ServicePage extends Page {
 
     render() {
         if (!this.authContext)
-            this.componentWillMount()
+        return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
 
             return (

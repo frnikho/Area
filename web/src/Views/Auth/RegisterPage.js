@@ -25,11 +25,12 @@ export default withCookies(class RegisterPage extends Page {
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
     }
 
-    componentDiMount() {
+    componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
             this.setRedirectUrl('/area/dashboard')
         }
+        this.forceUpdate()
         this.controllerRegister = new ControllerRegister(this.authContext, this.cookies, this);
     }
 
@@ -60,7 +61,7 @@ export default withCookies(class RegisterPage extends Page {
 
     render() {
         if (!this.authContext)
-            this.componentDiMount()
+            return (null);
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
             const theme = createTheme({
                 palette: {

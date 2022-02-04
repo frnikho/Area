@@ -22,7 +22,7 @@ class App extends React.Component {
         }
     }
 
-    componentDiMount() {
+    componentDidMount() {
         this.auth = this.context;
         const { cookies } = this.props;
         const token = cookies.get('session');
@@ -52,7 +52,7 @@ class App extends React.Component {
 
     render() {
         if (!this.auth)
-            this.componentDiMount()
+            this.componentDidMount()
         return (
             <div>
                 {this.state.data !== undefined ? <Routes>

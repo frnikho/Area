@@ -23,7 +23,7 @@ export default withCookies(class ProfilePage extends Page {
         this.cookies = props;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
@@ -37,7 +37,7 @@ export default withCookies(class ProfilePage extends Page {
 
     render() {
         if (!this.authContext)
-            this.componentWillMount()
+            return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
 
             const theme = createTheme({ palette: { type: "dark" } });

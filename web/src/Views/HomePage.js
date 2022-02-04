@@ -15,7 +15,7 @@ export default class HomePage extends Page {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.auth = this.context;
         if (this.auth.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
@@ -29,7 +29,7 @@ export default class HomePage extends Page {
     render() {
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
             if (component.state.user === undefined)
-                return;
+                return (null);
             return (
                 <div>
                     <h2>Welcome {component.state.user.email}</h2>
