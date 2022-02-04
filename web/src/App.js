@@ -7,6 +7,7 @@ import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
 import Home from "./Controllers/Home";
 import { AuthContext } from "./Contexts/AuthContext";
 import { withCookies } from "react-cookie";
+import AppletPage from "./Views/Area/AppletPage";
 
 class App extends React.Component {
 
@@ -15,7 +16,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: undefined
+            loading: true,
         }
     }
 
@@ -24,34 +25,23 @@ class App extends React.Component {
         const { cookies } = this.props;
         const token = cookies.get('session');
         auth.loginFromCache(token, (user) => {
-            this.setAppRoutes();
+            this.setState({
+                loading: false,
+            })
         }, () => {
-            this.setAppRoutes();
-        })
-    }
-
-    setAppRoutes() {
-        this.setState({
-            data: (<Routes>
-                <Route path='/' element={<Home />} />
-                <Route path={"description"} element={<ControllerDescription />} />
-                <Route path="auth">
-                    <Route path={"login"} element={<ControllerLogin />} />
-                    <Route path={"register"} element={<ControllerRegister />} />
-                </Route>
-                <Route path="area">
-                    <Route path={"dashboard"} element={<ControllerDashboard />} />
-                </Route>
-            </Routes>)
+            this.setState({
+                loading: false,
+            })
         })
     }
 
     render() {
         return (
-            <div>
-                {this.state.data !== undefined ? <Routes>
+            <div className={"App"}>
+                {this.state.loading === false ? <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path={"description"} element={<ControllerDescription />} />
+                    <Route path="applets" element={<AppletPage/>}/>
                     <Route path="auth">
                         <Route path={"login"} element={<ControllerLogin />} />
                         <Route path={"register"} element={<ControllerRegister />} />

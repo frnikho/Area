@@ -98,13 +98,13 @@ class DashboardHeader extends React.Component {
     render() {
         return (
             <Box style={styles.title}>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl}/> : null }
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl}/> : null}
                 <div style={styles.titleLeft}>
                     <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                 </div>
                 <div style={styles.menuRight}>
                     <Stack direction="row" spacing={2}>
-                        <Button>
+                        <Button onClick={() => this.redirect("/applets")}>
                             <Typography fontFamily={"Dongle"} color={"black"} fontSize={40} textTransform={"none"}>
                                 Create
                             </Typography>
