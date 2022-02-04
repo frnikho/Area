@@ -29,9 +29,7 @@ export default withCookies(class DashboardPage extends Page {
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
         } else {
-            this.setState({
-                user: this.authContext.getUser()
-            })
+            this.setState({ user: this.authContext.getUser() })
         }
         this.controllerDashboard = new ControllerDashboard(this.authContext, this.cookies, this);
         this.controllerDashboard.loadServices();

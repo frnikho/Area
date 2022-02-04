@@ -1,25 +1,41 @@
-import React from "react";
+// import React from "react";
+import ControllerHome from "../Controllers/ControllerHome"
+import Page from "./Page"
+import { AuthContext } from "../Contexts/AuthContext";
 
-import {Navigate} from "react-router-dom";
+export default class HomePage extends Page {
 
-export default function HomePage(props) {
+    static contextType = AuthContext;
 
-    const showWelcomeUser = () => {
-        if (props.state.user === undefined)
-            return;
-        return (
-            <div>
-                <h2>Welcome {props.state.user.email}</h2>
-            </div>
-        )
-
+    constructor(props) {
+        super(props);
+        this.cookies = props;
+        this.state = {
+            user: undefined,
+        }
     }
 
-    return (
-        <div>
-            {props.state.redirectUrl !== undefined ? <Navigate to={props.state.redirectUrl}/> : null}
-            {showWelcomeUser()}
-        </div>
-    );
-}
+    componentWillMount() {
+        this.auth = this.context;
+        if (this.auth.getUser() === undefined) {
+            this.setRedirectUrl('/auth/login')
+        } else {
+            this.setState({ user: this.auth.getUser() })
+            this.setRedirectUrl('/area/dashboard')
+        }
+        this.controllerHome = new ControllerHome(this.cookies, this);
+    }
 
+    render() {
+        return (this.pageRender(this, function RenderRegisterPage({ component }) {
+            if (component.state.user === undefined)
+                return;
+            return (
+                <div>
+                    <h2>Welcome {component.state.user.email}</h2>
+                </div>
+            )
+        }
+        ));
+    }
+}
