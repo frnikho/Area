@@ -1,13 +1,13 @@
-// import React from "react";
-import ControllerRegister from "../../Controllers/Auth/ControllerRegister"
-import Page from "../Page"
-import { AuthContext } from "../../Contexts/AuthContext";
-
 import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import Stack from '@mui/material/Stack';
+import implement from 'implement-js'
 
+import { RegisterModel } from "../../Models/ModelAuth"
+import ControllerRegister from "../../Controllers/Auth/ControllerRegister"
+import Page from "../Page"
+import { AuthContext } from "../../Contexts/AuthContext";
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
@@ -48,7 +48,18 @@ export default withCookies(class RegisterPage extends Page {
             return this.setNotification({ message: "Password cannot be empty !", show: true, type: "error" });
         if (!data.has('confpassword') || data.get('confpassword') === "" || data.get('confpassword') !== data.get('password'))
             return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
-        this.controllerRegister.registerDb(data.get('email'), data.get('firstname'), data.get('lastname'), data.get('password'));
+        try {
+            const registerId = implement(RegisterModel)({
+                email: data.get('email'),
+                firstName: data.get('firstname'),
+                lastName: data.get('lastname'),
+                password: data.get('password'),
+                cPassword: data.get('confpassword')
+            })
+            this.controllerRegister.registerDb(registerId);
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     onClickGoogleLogin(response) {

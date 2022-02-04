@@ -1,12 +1,6 @@
-// import React from "react";
-// import LoginPage from "../../Views/Auth/LoginPage.js"
 import ControllerDataBase from "../Api/ControllerDataBase"
-
-// import Controller from "../Controller"
 import ControllerGithub from "../Api/ControllerGithub.js"
 import ControllerGoogle from "../Api/ControllerGoogle.js"
-
-import { LoginModel } from "../../Models/ModelAuth"
 
 export default class ControllerLogin {
 
@@ -35,8 +29,8 @@ export default class ControllerLogin {
         }
     }
 
-    loginDb(LoginModel) {
-        ControllerDataBase.connect(LoginModel, (data) => {
+    loginDb(loginId) {
+        ControllerDataBase.connect(loginId, (data) => {
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.cookies;

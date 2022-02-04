@@ -1,8 +1,4 @@
-// import React from "react";
-// import LoginPage from "../../Views/Auth/LoginPage.js"
 import ControllerDataBase from "../Api/ControllerDataBase"
-
-// import Controller from "../Controller"
 import ControllerGithub from "../Api/ControllerGithub.js"
 import ControllerGoogle from "../Api/ControllerGoogle.js"
 
@@ -33,8 +29,8 @@ export default class ControllerRegister {
         }
     }
 
-    registerDb(email, firstname, lastname, password) {
-        ControllerDataBase.register({ firstname: firstname, lastname: lastname, email: email, password: password }, (response) => {
+    registerDb(registerId) {
+        ControllerDataBase.register(registerId, (response) => {
             if (response.data.success === true) {
                 this.page.setRedirectUrl('/auth/login')
                 this.page.setNotification({ message: "Register", show: true, type: "succes" });

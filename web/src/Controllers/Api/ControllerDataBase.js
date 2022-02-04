@@ -1,12 +1,11 @@
 import app from "../../Components/utils/Axios"
-import { LoginModel } from "../../Models/ModelAuth"
 
 export default class ControllerDataBase {
 
-    static connect(LoginModel, onSucess, onError) {
+    static connect(loginId, onSucess, onError) {
         app.post(`/auth/login`, {
-            email: LoginModel.email,
-            password: LoginModel.password,
+            email: loginId.email,
+            password: loginId.password,
         }).then((response) => {
             onSucess(response.data)
         }).catch((err) => {
@@ -18,15 +17,16 @@ export default class ControllerDataBase {
     }
 
 
-    static register({ email, firstname, lastname, password }, onSuccess, onError) {
+    static register(registerId, onSuccess, onError) {
         app.post(`/auth/register`, {
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            password: password,
+            firstname: registerId.firstName,
+            lastname: registerId.lastName,
+            email: registerId.email,
+            password: registerId.password,
         }).then((response) => {
             onSuccess(response);
         }).catch((err) => {
+            console.log(err)
             if (err.response === undefined)
                 onError(err);
             else

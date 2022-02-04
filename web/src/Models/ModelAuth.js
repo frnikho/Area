@@ -8,6 +8,18 @@ const LoginModel = Interface('Login')({
     strict: true,
 })
 
+const RegisterModel = Interface('Register')({
+    firstName: type('string'),
+    lastName: type('string'),
+    email: type('string'),
+    password: type('string'),
+    cPassword: type('string'),
+}, {
+    error: true,
+    strict: true,
+})
+
 export {
     LoginModel,
+    RegisterModel,
 }
