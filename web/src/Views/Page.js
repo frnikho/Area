@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import NotifComponent from "../Components/utils/NotifComponent"
+import NotifComponent, {TimeNotifComponent} from "../Components/utils/NotifComponent"
 
 export default class Page extends React.Component {
 
@@ -25,13 +25,16 @@ export default class Page extends React.Component {
 
     setNotification(value) {
         this.setState({ notification: value });
-        setTimeout(() => this.setState({ notification: undefined }), 5000)
     }
 
     notificationComponent() {
         if (this.state.notification === undefined || this.state.notification.message === "" || this.state.notification.show === false)
             return (null);
-        return (NotifComponent(this.state.notification))
+        return (
+            <>
+                <TimeNotifComponent {...this.state.notification} />
+            </>
+        )
     }
 
     redirectUrl() {
