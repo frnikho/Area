@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, IconButton, ThemeProvider, Typography} from "@mui/material";
+import {Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography} from "@mui/material";
 import {FaQuestion} from "react-icons/fa/index";
 import {styles} from "../../Styles/AppletPageStyles";
 import {theme} from "../../Styles/AppTheme";
@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
+import AddIcon from '@mui/icons-material/Add';
 
 class AppletPage extends React.Component {
 
@@ -21,14 +22,16 @@ class AppletPage extends React.Component {
         this.onActionSelected = this.onActionSelected.bind(this);
         this.onReactionSelected = this.onReactionSelected.bind(this);
         this.onCloseDialog = this.onCloseDialog.bind(this);
+        this.onClickAddReaction = this.onClickAddReaction.bind(this);
+        this.onClickAddAction = this.onClickAddAction.bind(this);
     }
 
-    onActionSelected() {
-
+    onActionSelected(action) {
+        console.log(action);
     }
 
-    onReactionSelected() {
-
+    onReactionSelected(reaction) {
+        console.log(reaction);
     }
 
     onClose() {
@@ -38,15 +41,21 @@ class AppletPage extends React.Component {
     }
 
     onClickHelp() {
-
+        this.setState({
+            currentDialog: "HELP_DIALOG"
+        })
     }
 
     onClickAddAction() {
-
+        this.setState({
+            currentDialog: "ACTION_DIALOG",
+        })
     }
 
     onClickAddReaction() {
-
+        this.setState({
+            currentDialog: "REACTION_DIALOG",
+        })
     }
 
     onCloseDialog() {
@@ -69,6 +78,15 @@ class AppletPage extends React.Component {
     showActionButton() {
         if (this.state.action === undefined) {
 
+            return (
+                <Paper sx={{backgroundColor: "#222222", mb:4, mt: 1, borderRadius: 8}}>
+                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
+                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40}/></Typography>
+                        </Box>
+                    </ButtonBase>
+                </Paper>
+            )
         } else {
 
         }
@@ -76,7 +94,13 @@ class AppletPage extends React.Component {
 
     showReactionButton() {
         if (this.state.reactions.length === 0) {
-
+            return (<Paper sx={{backgroundColor: "#999999", borderRadius: 8}}>
+                <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
+                    <Box sx={{width: 600, p: 3, borderRadius: 8}}>
+                        <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40}/></Typography>
+                    </Box>
+                </ButtonBase>
+                </Paper>)
         } else {
 
         }
@@ -101,7 +125,12 @@ class AppletPage extends React.Component {
                     </Box>
                 </Box>
                 <Box style={styles.content}>
-                    Hello
+                   <Container>
+                       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
+                           {this.showActionButton()}
+                           {this.showReactionButton()}
+                       </Box>
+                   </Container>
                 </Box>
             </ThemeProvider>
         );
