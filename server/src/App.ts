@@ -56,7 +56,7 @@ export default class App {
             this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
         } else {
             this.privateKey = fs.readFileSync("/etc/letsencrypt/live/nikho.dev/privkey.pem", "utf8");
-            this.privateCertificate = fs.readFileSync("cat /etc/letsencrypt/live/nikho.dev/cert.pem", "utf8");
+            this.privateCertificate = fs.readFileSync("/etc/letsencrypt/live/nikho.dev/cert.pem", "utf8");
         }
         this.app = express();
         this.initMiddlewares();
