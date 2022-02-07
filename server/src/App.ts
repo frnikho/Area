@@ -1,7 +1,7 @@
 import {Express} from "express";
 
-const express = require('express');
-const dotenv = require('dotenv');
+import express from 'express';
+import dotenv from 'dotenv';
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -34,12 +34,12 @@ import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 import {swaggerOptions} from "./documentation/Swagger"
 import Logger from "./utils/Logger";
 
-
 const DEFAULT_PORT = 8080;
 
 export default class App {
 
     private port: number;
+    private tcpSocket: https.Server;
     private readonly server: https.Server;
     private readonly app: Express;
     private readonly privateKey: string;
@@ -119,7 +119,7 @@ export default class App {
     }
 
     public start(): void {
-        this.server.listen(this.port, () => {
+        this.tcpSocket = this.server.listen(this.port, () => {
             Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }
@@ -132,7 +132,13 @@ export default class App {
         return this.port;
     }
 
+    private onClose(): void {
+        
+    }
+
     public stop(): void {
+        if (this.tcpSocket !== undefined)
+            this.tcpSocket.close(this.onClose);
     }
 }
 
