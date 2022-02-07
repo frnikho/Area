@@ -31,6 +31,7 @@
     "jssoup": "^0.0.15",
     "mariadb": "^2.5.5",
     "nodemailer": "^6.7.2",
+    "pkce-challenge": "^2.2.0",
     "prettier": "^2.5.1",
     "randomstring": "^1.2.1",
     "slash-commands": "^1.5.0",
@@ -39,6 +40,7 @@
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0",
     "tweetnacl": "^1.0.3",
+    "utf8": "^3.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
