@@ -8,22 +8,6 @@ import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
-import Header from "../../Components/Header"
-
-const menu = [
-    {
-        name: 'Area',
-        redirectUrl: "/description"
-    },
-    {
-        name: 'Profile',
-        redirectUrl: "/area/profile"
-    },
-    {
-        name: 'My applets',
-        redirectUrl: "/area/dashboard"
-    }
-]
 
 class AppletPage extends React.Component {
 
@@ -127,7 +111,6 @@ class AppletPage extends React.Component {
             <ThemeProvider theme={theme}>
                 {this.state.redirectUrl !== undefined ? <Navigate to={"/"} /> : null}
                 {this.showDialogs()}
-                <Header component={this} menu={menu} />
                 <Box sx={{ pb: 2, mx: 2 }} style={styles.topBar.main}>
                     <Box style={styles.topBar.leftMenu}>
                         <Button onClick={() => this.onClose()}>Close</Button>

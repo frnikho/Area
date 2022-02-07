@@ -47,13 +47,13 @@ class App extends React.Component {
             <div>
                 {this.state.loading !== true ? <Routes>
                     <Route path='/' element={<HomePage />} />
-                    <Route path="/applets" element={<AppletPage/>}/>
                     <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
                         <Route path={"login"} element={<LoginPage />} />
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
+                        <Route path="applets" element={<AppletPage />} />
                         <Route path={"dashboard"} element={<DashboardPage />} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
