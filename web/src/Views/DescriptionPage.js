@@ -7,6 +7,16 @@ import ControllerDescription from "../Controllers/ControllerDescription"
 import Page from "./Page"
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import Style from "../Resources/Styles/styleDescription.js"
+import Header from "../Components/Header"
+
+
+
+const menu = [
+    {
+        name: '←',
+        redirectUrl: "/"
+    },
+]
 
 
 export default withCookies(class DescriptionPage extends Page {
@@ -27,18 +37,7 @@ export default withCookies(class DescriptionPage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/")}>
-                                    ←
-                                </Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />
                         <div style={Style.rect}>

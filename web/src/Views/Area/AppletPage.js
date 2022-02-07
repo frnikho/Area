@@ -1,13 +1,29 @@
 import React from "react";
-import {Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography} from "@mui/material";
-import {FaQuestion} from "react-icons/fa/index";
-import {styles} from "../../Styles/AppletPageStyles";
-import {theme} from "../../Styles/AppTheme";
+import { Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography } from "@mui/material";
+import { FaQuestion } from "react-icons/fa/index";
+import { styles } from "../../Styles/AppletPageStyles";
+import { theme } from "../../Styles/AppTheme";
 import { Navigate } from "react-router-dom";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
+import Header from "../../Components/Header"
+
+const menu = [
+    {
+        name: 'Area',
+        redirectUrl: "/description"
+    },
+    {
+        name: 'Profile',
+        redirectUrl: "/area/profile"
+    },
+    {
+        name: 'My applets',
+        redirectUrl: "/area/dashboard"
+    }
+]
 
 class AppletPage extends React.Component {
 
@@ -68,21 +84,21 @@ class AppletPage extends React.Component {
         if (this.state.currentDialog === undefined)
             return;
         if (this.state.currentDialog === "ACTION_DIALOG")
-            return <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog}/>
+            return <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog} />
         if (this.state.currentDialog === "REACTION_DIALOG")
-            return <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog}/>
+            return <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />
         if (this.state.currentDialog === "HELP_DIALOG")
-            return <HelpDialog onClose={this.onCloseDialog}/>
+            return <HelpDialog onClose={this.onCloseDialog} />
     }
 
     showActionButton() {
         if (this.state.action === undefined) {
 
             return (
-                <Paper sx={{backgroundColor: "#222222", mb:4, mt: 1, borderRadius: 8}}>
-                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
-                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40}/></Typography>
+                <Paper sx={{ backgroundColor: "#222222", mb: 4, mt: 1, borderRadius: 8 }}>
+                    <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40} /></Typography>
                         </Box>
                     </ButtonBase>
                 </Paper>
@@ -94,13 +110,13 @@ class AppletPage extends React.Component {
 
     showReactionButton() {
         if (this.state.reactions.length === 0) {
-            return (<Paper sx={{backgroundColor: "#999999", borderRadius: 8}}>
-                <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
-                    <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                        <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40}/></Typography>
+            return (<Paper sx={{ backgroundColor: "#999999", borderRadius: 8 }}>
+                <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddReaction}>
+                    <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                        <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40} /></Typography>
                     </Box>
                 </ButtonBase>
-                </Paper>)
+            </Paper>)
         } else {
 
         }
@@ -109,28 +125,29 @@ class AppletPage extends React.Component {
     render() {
         return (
             <ThemeProvider theme={theme}>
-                {this.state.redirectUrl !== undefined ? <Navigate to={"/"}/> : null}
+                {this.state.redirectUrl !== undefined ? <Navigate to={"/"} /> : null}
                 {this.showDialogs()}
-                <Box sx={{pb: 2, mx: 2}} style={styles.topBar.main}>
+                <Header component={this} menu={menu} />
+                <Box sx={{ pb: 2, mx: 2 }} style={styles.topBar.main}>
                     <Box style={styles.topBar.leftMenu}>
                         <Button onClick={() => this.onClose()}>Close</Button>
                     </Box>
-                    <Box sx={{mt: 2}} style={styles.topBar.centerMenu}>
+                    <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
                         <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
                     </Box>
                     <Box style={styles.topBar.rightMenu}>
                         <IconButton onClick={() => this.onClickHelp()}>
-                            <FaQuestion size={40}/>
+                            <FaQuestion size={40} />
                         </IconButton>
                     </Box>
                 </Box>
                 <Box style={styles.content}>
-                   <Container>
-                       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
-                           {this.showActionButton()}
-                           {this.showReactionButton()}
-                       </Box>
-                   </Container>
+                    <Container>
+                        <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
+                            {this.showActionButton()}
+                            {this.showReactionButton()}
+                        </Box>
+                    </Container>
                 </Box>
             </ThemeProvider>
         );

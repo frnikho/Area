@@ -13,9 +13,16 @@ import * as logo from "../../Resources/assets/login.json"
 import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
+import Header from "../../Components/Header"
 
 
-import { inspect } from 'util';
+
+const menu = [
+    {
+        name: 'Area',
+        redirectUrl: "/description"
+    },
+]
 
 export default withCookies(class LoginPage extends Page {
 
@@ -73,16 +80,7 @@ export default withCookies(class LoginPage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/description")}>Area</Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <Header component={component} menu={menu}/>
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Lottie animationData={logo} style={{ height: 200 }} />

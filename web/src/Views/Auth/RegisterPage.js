@@ -12,6 +12,15 @@ import RegisterLogo from "../../Resources/assets/38435-register.gif";
 import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
+import Header from "../../Components/Header"
+
+
+const menu = [
+    {
+        name: 'Area',
+        redirectUrl: "/description"
+    },
+]
 
 export default withCookies(class RegisterPage extends Page {
 
@@ -77,16 +86,7 @@ export default withCookies(class RegisterPage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/description")}>Area</Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <Header component={component} menu={menu} />
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />

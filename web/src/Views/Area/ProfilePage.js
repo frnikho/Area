@@ -10,6 +10,7 @@ import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleProfile"
 import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
+import Header from "../../Components/Header"
 
 
 const menu = [
@@ -20,7 +21,11 @@ const menu = [
     {
         name: 'My applets',
         redirectUrl: "/area/dashboard"
-    }
+    },
+    {
+        name: 'Profile',
+        redirectUrl: undefined
+    },
 ]
 
 export default withCookies(class ProfilePage extends Page {
@@ -67,12 +72,7 @@ export default withCookies(class ProfilePage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <MenuDashboard props={component} menu={menu} />
-                    </div>
+                    <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <div>

@@ -1,20 +1,22 @@
 import { withCookies } from "react-cookie";
 import React from "react";
 import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
-import Button from '@mui/material/Button';
 
 import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
-import MenuDashboard from "../../Components/MenuDashboard"
 import ServicePage from "../../Views/Area/ServicePage"
-
+import Header from "../../Components/Header"
 
 const menu = [
     {
         name: 'Area',
         redirectUrl: "/description"
+    },
+    {
+        name: 'My applets',
+        redirectUrl: undefined
     },
     {
         name: 'Profile',
@@ -70,12 +72,7 @@ export default withCookies(class DashboardPage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <MenuDashboard props={component} menu={menu} />
-                    </div>
+                    <Header component={component} menu={menu}/>
                     <div style={Style.container}>
                         My applets
                     </div>
