@@ -1,7 +1,7 @@
 import {Express} from "express";
 
-import express from 'express';
-import dotenv from 'dotenv';
+import express = require('express');
+import dotenv = require('dotenv');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
