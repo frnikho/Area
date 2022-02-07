@@ -11,6 +11,18 @@ import Style from "../../Resources/Styles/styleProfile"
 import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
 
+
+const menu = [
+    {
+        name: 'Area',
+        redirectUrl: "/description"
+    },
+    {
+        name: 'My applets',
+        redirectUrl: "/area/dashboard"
+    }
+]
+
 export default withCookies(class ProfilePage extends Page {
 
     static contextType = AuthContext;
@@ -21,6 +33,7 @@ export default withCookies(class ProfilePage extends Page {
             user: undefined,
         }
         this.cookies = props;
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -33,6 +46,17 @@ export default withCookies(class ProfilePage extends Page {
             })
         }
         this.controllerProfile = new ControllerProfile(this.authContext, this.cookies, this);
+    }
+
+    handleSubmit(event, fieldName) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        if (data.get(fieldName) === "")
+            return this.setNotification({ message: fieldName + " cannot be empty !", show: true, type: "error" });
+        this.controllerProfile.updateProfile(data.get(fieldName), fieldName);
+
+
     }
 
     render() {
@@ -49,17 +73,7 @@ export default withCookies(class ProfilePage extends Page {
                         <div style={Style.titleLeft}>
                             <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                         </div>
-                        <MenuDashboard props={component} menu={[
-                                {
-                                    name: 'Area',
-                                    redirectUrl: "/description"
-                                },
-                                {
-                                    name: 'My applets',
-                                    redirectUrl: "/area/dashboard"
-                                },
-                            ]
-                        } />
+                        <MenuDashboard props={component} menu={menu} />
                     </div>
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -72,9 +86,9 @@ export default withCookies(class ProfilePage extends Page {
                     </div>
                     <div style={Style.accountContainer}>
                         Profile
-                        <FieldSettings {...{ style: Style, fieldName: "First Name", value: component.authContext.user.firstname }} />
-                        <FieldSettings {...{ style: Style, fieldName: "Last Name", value: component.authContext.user.lastname }} />
-                        <FieldSettings {...{ style: Style, fieldName: "Email", value: component.authContext.user.email }} />
+                        <FieldSettings props={component} style={Style} fieldName={"First Name"} value={component.authContext.user.firstname} active={false} />
+                        <FieldSettings props={component} style={Style} fieldName={"Last Name"} value={component.authContext.user.lastname} active={false} />
+                        <FieldSettings props={component} style={Style} fieldName={"Email"} value={component.authContext.user.email} active={false} />
                         <div style={Style.little}>
                             Password
                             <div style={Style.little}>

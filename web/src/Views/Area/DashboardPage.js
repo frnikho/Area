@@ -10,6 +10,18 @@ import Style from "../../Resources/Styles/styleDashboard"
 import MenuDashboard from "../../Components/MenuDashboard"
 import ServicePage from "../../Views/Area/ServicePage"
 
+
+const menu = [
+    {
+        name: 'Area',
+        redirectUrl: "/description"
+    },
+    {
+        name: 'Profile',
+        redirectUrl: "/area/profile"
+    },
+]
+
 export default withCookies(class DashboardPage extends Page {
 
     static contextType = AuthContext;
@@ -62,17 +74,7 @@ export default withCookies(class DashboardPage extends Page {
                         <div style={Style.titleLeft}>
                             <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
                         </div>
-                        <MenuDashboard props={component} menu={[
-                                {
-                                    name: 'Area',
-                                    redirectUrl: "/description"
-                                },
-                                {
-                                    name: 'Profile',
-                                    redirectUrl: "/area/profile"
-                                },
-                            ]
-                        } />
+                        <MenuDashboard props={component} menu={menu} />
                     </div>
                     <div style={Style.container}>
                         My applets

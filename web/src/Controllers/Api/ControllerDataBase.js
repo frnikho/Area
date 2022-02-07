@@ -33,4 +33,33 @@ export default class ControllerDataBase {
                 onError(err.response);
         })
     }
+
+    static updateProfile(field, onSuccess, onError) {
+        if (field.name === "firstname") {
+            app.patch(`/me`, {
+                firstname: field.value
+            }).then((response) => {
+                onSuccess(response);
+            }).catch((err) => {
+                console.log(err)
+                if (err.response === undefined)
+                    onError(err);
+                else
+                    onError(err.response);
+            })
+        }
+        if (field.name === "lastname") {
+            app.patch(`/me`, {
+                lastname: field.value
+            }).then((response) => {
+                onSuccess(response);
+            }).catch((err) => {
+                console.log(err)
+                if (err.response === undefined)
+                    onError(err);
+                else
+                    onError(err.response);
+            })
+        }
+    }
 }

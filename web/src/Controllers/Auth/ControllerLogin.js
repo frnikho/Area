@@ -44,7 +44,6 @@ export default class ControllerLogin {
         }, (error) => {
             this.page.setNotification({ message: error.data.error, show: true, type: "error" });
         })
-
     }
 
 }
