@@ -42,7 +42,13 @@ export default class LoginScreen extends Component {
         return;
       }
 
-      app.post(`/auth/login`, {
+      app.get('/about.json').then((response) => {
+        console.log(response.data);
+      }).catch((err) => {
+        console.log(err);
+      })
+
+      axios.post(`https://nikho.dev:8080/auth/login`, {
         email: this.state.email,
         password: this.state.password,
       }).then(async(response: any) => {

@@ -10,6 +10,7 @@ import RegisterPage from "./Views/Auth/RegisterPage";
 import DescriptionPage from "./Views/DescriptionPage"
 import DashboardPage from "./Views/Area/DashboardPage"
 import ProfilePage from "./Views/Area/ProfilePage"
+import AppletPage from "./Views/Area/AppletPage";
 
 class App extends React.Component {
 
@@ -46,6 +47,7 @@ class App extends React.Component {
             <div>
                 {this.state.loading !== true ? <Routes>
                     <Route path='/' element={<HomePage />} />
+                    <Route path="/applets" element={<AppletPage/>}/>
                     <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
                         <Route path={"login"} element={<LoginPage />} />
