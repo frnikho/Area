@@ -34,7 +34,12 @@ export default class ServiceController {
 
     public registerUserToken(userUuid: string, token: TokenData, success: success, error: error) {
         this.getUserTokens(userUuid, token.type, (tokens) => {
-            let tokensArray = JSON.parse(tokens);
+            let tokensArray;
+            try {
+                tokensArray = JSON.parse(tokens);
+            } catch (ex) {
+                tokensArray = [];
+            }
             if (tokensArray === undefined || tokensArray === null) {
                 console.log("empty tokens !");
                 tokensArray = [];

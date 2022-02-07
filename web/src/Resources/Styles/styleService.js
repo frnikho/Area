@@ -1,4 +1,4 @@
-import style from "../../Resources/CSS/Font.css";
+import style from "../CSS/Font.css";
 import { makeStyles } from "@material-ui/core/styles"
 
 export default function useStyles(color) {

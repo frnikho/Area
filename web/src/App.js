@@ -1,12 +1,15 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
-import ControllerLogin from "./Controllers/Auth/ControllerLogin";
-import ControllerRegister from "./Controllers/Auth/ControllerRegister";
-import ControllerDescription from "./Controllers/ControllerDescription.js"
-import ControllerDashboard from "./Controllers/Area/ControllerDashboard"
-import Home from "./Controllers/Home";
 import { AuthContext } from "./Contexts/AuthContext";
 import { withCookies } from "react-cookie";
+
+//Controllers
+import HomePage from "./Views/HomePage";
+import LoginPage from "./Views/Auth/LoginPage";
+import RegisterPage from "./Views/Auth/RegisterPage";
+import DescriptionPage from "./Views/DescriptionPage"
+import DashboardPage from "./Views/Area/DashboardPage"
+import ProfilePage from "./Views/Area/ProfilePage"
 
 class App extends React.Component {
 
@@ -20,10 +23,10 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const auth = this.context;
+        this.auth = this.context;
         const { cookies } = this.props;
         const token = cookies.get('session');
-        auth.loginFromCache(token, (user) => {
+        this.auth.loginFromCache(token, (user) => {
             this.setAppRoutes();
         }, () => {
             this.setAppRoutes();
@@ -33,31 +36,35 @@ class App extends React.Component {
     setAppRoutes() {
         this.setState({
             data: (<Routes>
-                <Route path='/' element={<Home />} />
-                <Route path={"description"} element={<ControllerDescription />} />
+                <Route path='/' element={<HomePage />} />
+                <Route path={"description"} element={<DescriptionPage />} />
                 <Route path="auth">
-                    <Route path={"login"} element={<ControllerLogin />} />
-                    <Route path={"register"} element={<ControllerRegister />} />
+                    <Route path={"login"} element={<LoginPage />} />
+                    <Route path={"register"} element={<RegisterPage />} />
                 </Route>
                 <Route path="area">
-                    <Route path={"dashboard"} element={<ControllerDashboard />} />
+                    <Route path={"dashboard"} element={<DashboardPage />} />
+                    <Route path={"profile"} element={<ProfilePage />} />
                 </Route>
             </Routes>)
         })
     }
 
     render() {
+        if (!this.auth)
+            this.componentDidMount()
         return (
             <div>
                 {this.state.data !== undefined ? <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path={"description"} element={<ControllerDescription />} />
+                    <Route path='/' element={<HomePage />} />
+                    <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
-                        <Route path={"login"} element={<ControllerLogin />} />
-                        <Route path={"register"} element={<ControllerRegister />} />
+                        <Route path={"login"} element={<LoginPage />} />
+                        <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
-                        <Route path={"dashboard"} element={<ControllerDashboard />} />
+                        <Route path={"dashboard"} element={<DashboardPage />} />
+                        <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
                 </Routes> : null}
             </div>
