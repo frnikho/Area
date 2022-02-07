@@ -1,5 +1,4 @@
 // import Controller from "../Controller"
-// import app, { config } from "../../Components/utils/Axios";
 import ControllerDataBase from "../Api/ControllerDataBase"
 
 export default class ControllerDashboard {
@@ -12,16 +11,19 @@ export default class ControllerDashboard {
         this.updateProfile = this.updateProfile.bind(this)
     }
 
-    updateProfile(field, fieldName) {
+    updateProfile(token, field, fieldName) {
         var fieldOpt = { value: field, name: undefined }
 
         if (fieldName === "First Name")
             fieldOpt.name = "firstname"
         if (fieldName === "Last Name")
             fieldOpt.name = "lastname"
-        ControllerDataBase.updateProfile(fieldOpt, (data) => {
+        ControllerDataBase.updateProfile(token, fieldOpt, (data) => {
             if (data.success === true) {
-                console.log(data)
+                this.page.authContext.loginFromCache(token, () => {
+                    this.page.forceUpdate()
+                    this.page.setNotification({ message: fieldName + " change !", show: true, type: "success" });
+                })
             } else {
                 this.page.setNotification({ message: "Error with database", show: true, type: "error" });
             }

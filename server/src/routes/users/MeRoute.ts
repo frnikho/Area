@@ -24,7 +24,7 @@ export default class MeRoute extends Route {
         if (firstname !== undefined)
             req['user'].firstname = firstname;
         if (lastname !== undefined)
-            req['user'].firstname = lastname;
+            req['user'].lastname = lastname;
         new UserController().update(req['user'], () => {
             return res.status(200).json({success: true});
         }, (err) => {

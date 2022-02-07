@@ -31,6 +31,7 @@ export default withCookies(class ProfilePage extends Page {
         super(props);
         this.state = {
             user: undefined,
+            token: undefined
         }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -41,9 +42,8 @@ export default withCookies(class ProfilePage extends Page {
         if (this.authContext.getUser() === undefined) {
             this.setRedirectUrl('/auth/login')
         } else {
-            this.setState({
-                user: this.authContext.getUser()
-            })
+            this.setState({ user: this.authContext.getUser() })
+            this.setState({ token: this.authContext.getToken() })
         }
         this.controllerProfile = new ControllerProfile(this.authContext, this.cookies, this);
     }
@@ -54,9 +54,7 @@ export default withCookies(class ProfilePage extends Page {
 
         if (data.get(fieldName) === "")
             return this.setNotification({ message: fieldName + " cannot be empty !", show: true, type: "error" });
-        this.controllerProfile.updateProfile(data.get(fieldName), fieldName);
-
-
+        this.controllerProfile.updateProfile(this.state.token, data.get(fieldName), fieldName);
     }
 
     render() {
@@ -86,8 +84,8 @@ export default withCookies(class ProfilePage extends Page {
                     </div>
                     <div style={Style.accountContainer}>
                         Profile
-                        <FieldSettings props={component} style={Style} fieldName={"First Name"} value={component.authContext.user.firstname} active={false} />
-                        <FieldSettings props={component} style={Style} fieldName={"Last Name"} value={component.authContext.user.lastname} active={false} />
+                        <FieldSettings props={component} style={Style} fieldName={"First Name"} value={component.authContext.user.firstname} active={true} />
+                        <FieldSettings props={component} style={Style} fieldName={"Last Name"} value={component.authContext.user.lastname} active={true} />
                         <FieldSettings props={component} style={Style} fieldName={"Email"} value={component.authContext.user.email} active={false} />
                         <div style={Style.little}>
                             Password
@@ -102,7 +100,9 @@ export default withCookies(class ProfilePage extends Page {
                             </div>
                         </div>
                     </div>
-                    <div style={Style.space} />
+                    <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+                        {component.notificationComponent()}
+                    </Box>
                     <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
                         <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerProfile.logout()}>Logout</Button>
                     </Box>
