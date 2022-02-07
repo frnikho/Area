@@ -18,7 +18,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: undefined
+            loading: true,
         }
     }
 
@@ -35,18 +35,7 @@ class App extends React.Component {
 
     setAppRoutes() {
         this.setState({
-            data: (<Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path={"description"} element={<DescriptionPage />} />
-                <Route path="auth">
-                    <Route path={"login"} element={<LoginPage />} />
-                    <Route path={"register"} element={<RegisterPage />} />
-                </Route>
-                <Route path="area">
-                    <Route path={"dashboard"} element={<DashboardPage />} />
-                    <Route path={"profile"} element={<ProfilePage />} />
-                </Route>
-            </Routes>)
+            loading: false
         })
     }
 
@@ -55,7 +44,7 @@ class App extends React.Component {
             this.componentDidMount()
         return (
             <div>
-                {this.state.data !== undefined ? <Routes>
+                {this.state.loading !== true ? <Routes>
                     <Route path='/' element={<HomePage />} />
                     <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
