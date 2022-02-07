@@ -50,7 +50,7 @@ export default class App {
 
     constructor() {
         this.initConfig();
-        this.port = Number.parseInt(process.env.PORT, 1) || DEFAULT_PORT;
+        this.port = Number.parseInt(process.env.PORT) || DEFAULT_PORT;
         if (process.env.NODE_ENV === "DEV") {
             this.privateKey = fs.readFileSync("./sslCredentials/sslKey.key", "utf8");
             this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
