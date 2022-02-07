@@ -31,7 +31,6 @@ export default withCookies(class RegisterPage extends Page {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.theme = theme
     }
 
     componentDidMount() {
@@ -79,7 +78,7 @@ export default withCookies(class RegisterPage extends Page {
             return (null);
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
             return (
-                <ThemeProvider theme={component.theme}>
+                <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

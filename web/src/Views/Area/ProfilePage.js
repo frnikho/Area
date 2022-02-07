@@ -40,7 +40,6 @@ export default withCookies(class ProfilePage extends Page {
         }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.theme = theme
     }
 
     componentDidMount() {
@@ -70,7 +69,7 @@ export default withCookies(class ProfilePage extends Page {
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
 
             return (
-                <ThemeProvider theme={component.theme}>
+                <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

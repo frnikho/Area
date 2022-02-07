@@ -53,7 +53,6 @@ export default withCookies(class DashboardPage extends Page {
         }
         this.cookies = props;
         this.showServices = this.showServices.bind(this)
-        this.theme = theme
     }
 
     componentDidMount() {
@@ -82,9 +81,8 @@ export default withCookies(class DashboardPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
-
             return (
-                <ThemeProvider theme={component.theme}>
+                <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         My applets

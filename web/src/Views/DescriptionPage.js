@@ -24,13 +24,12 @@ export default withCookies(class DescriptionPage extends Page {
         super(props);
         this.cookies = props;
         this.controllerDescription = new ControllerDescription(this.cookies, this);
-        this.theme = theme
     }
 
     render() {
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
             return (
-                <ThemeProvider theme={component.theme}>
+                <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />
