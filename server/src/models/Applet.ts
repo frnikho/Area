@@ -1,10 +1,23 @@
 export enum ActionType {
     github_repository_push,
     github_repository_created,
+    github_repository_deleted,
+    github_issue_opened,
+    github_issue_closed,
+    github_issue_reopened,
+    github_release_created,
 
     discord_channel_created,
+    discord_channel_deleted,
     discord_private_message_received,
     discord_guild_message_received,
+    discord_guild_message_updated,
+    discord_guild_message_deleted,
+    discord_guild_message_reaction_add,
+    discord_guild_message_reaction_removed,
+    discord_guild_member_banned,
+    discord_guild_member_unbanned,
+    discord_guild_update,
 
     intra_new_notifications,
     intra_gpa_updated,

@@ -24,7 +24,7 @@ export default abstract class Worker {
 
     public start() {
         if (this.getTime() <= 0)
-            throw "Invalid time for Worker ! (must be > 0)"
+            throw new Error("Invalid time for Worker ! (must be > 0)");
         this.timer = setInterval(() => this.run(), this.getTime() * 1000);
     }
 

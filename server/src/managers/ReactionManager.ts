@@ -2,6 +2,7 @@ import {Ingredient, Reaction, ReactionType} from "../models/Applet";
 import {TokenData} from "../controllers/ServiceController";
 import DiscordBot from "../bots/DiscordBot";
 import DiscordService from "../services/external/DiscordService";
+import Logger from "../utils/Logger";
 
 type reactionsFunc = (reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) => void;
 type reactionHook = {type: ReactionType, func: reactionsFunc};
@@ -23,7 +24,7 @@ export default class ReactionManager {
     private readonly reactions: reactionHook[] = [{type: ReactionType.discord_send_chanel_message, func: this.discordSendChanelMessage}]
 
     private constructor() {
-
+        Logger.i("AREA", "ReactionManager initialize");
     }
 
     public static get(): ReactionManager {
@@ -39,22 +40,19 @@ export default class ReactionManager {
                     hook.func(reaction, ingredients, tokenData);
             })
         } catch (ex) {
-            console.log(ex);
             return error("An error occurred (4001) !");
         }
         return success();
     }
 
     private discordSendChanelMessage(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {
-        let channelId: string = reaction.parameters.filter((param) => param['name'] === 'chanel_id')[0]['value'];
+        const channelId: string = reaction.parameters.filter((param) => param['name'] === 'chanel_id')[0]['value'];
         let message: string = reaction.parameters.filter((param) => param['name'] === 'text')[0]['value'];
 
         ingredients.forEach((ingredient) => {
             message = message.replace(ingredient.key, ingredient.value);
         });
-
         new DiscordService().sendDiscordBotChanelMessage(channelId, message);
-        console.log("discord send message ");
     }
 
 }

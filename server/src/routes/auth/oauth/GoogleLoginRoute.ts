@@ -37,8 +37,12 @@ export default class GoogleLoginRoute extends Route {
     private code(req: express.Request, res: express.Response) {
         const {code} = req.query;
 
+        console.log(code);
+
+
+
         axios.post(`https://oauth2.googleapis.com/token`, {
-            code: code,
+            code,
             client_id: process.env.GOOGLE_CLIENT_ID,
             client_secret: process.env.GOOGLE_CLIENT_SECRET,
             grant_type: 'authorization_code',
@@ -72,8 +76,8 @@ export default class GoogleLoginRoute extends Route {
     private get(req: express.Request, res: express.Response) {
         res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?`
             + `client_id=${process.env.GOOGLE_CLIENT_ID}&`
-            + `response_type=code&state=state_parameter_passthrough_value&`
-            + `scope=openid%20profile%20email&`
+            + `response_type=code&`
+            + `scope=https://www.googleapis.com/auth/userinfo.profile &`
             + `redirect_uri=${process.env.GOOGLE_REDIRECT_URL}&`
             + `prompt=consent&include_granted_scopes=true`)
     }

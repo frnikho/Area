@@ -74,6 +74,9 @@ export default class UserController {
     }
 
     private registerWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
+        console.log(user);
+        if (user.family_name === undefined)
+            user.family_name = "?";
         DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), user.given_name, user.family_name, 'google', '1'], (response) => {
              new ServiceController().createTableForUser((response[0] as User).uuid, () => {
                  success('register', response[0]);

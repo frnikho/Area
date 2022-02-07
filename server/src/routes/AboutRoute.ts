@@ -7,10 +7,10 @@ export default class AboutRoute extends Route {
 
     constructor() {
         super();
-        this.router.all('/', this.about);
+        this.router.all('/', AboutRoute.about);
     }
 
-    private about(req: express.Request, res: express.Response) {
+    private static about(req: express.Request, res: express.Response) {
         const currentTime: number = new Date().getTime();
         return res.status(200).json({
             client: {
