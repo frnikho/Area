@@ -1,8 +1,18 @@
-import {Button, Center, Toast, Text, ScrollView, VStack} from 'native-base';
+import {
+  Button,
+  Center,
+  Toast,
+  Text,
+  ScrollView,
+  VStack,
+  Fab,
+  Box,
+} from 'native-base';
 import React, {Component} from 'react';
 import Card from '../components/Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class HomeScreen extends Component {
   constructor(props: any) {
@@ -25,6 +35,18 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <ScrollView>
+        <Box position="relative" h={100} w="100%">
+          <Fab
+            position="absolute"
+            renderInPortal={false}
+            placement="bottom-left"
+            size="sm"
+            onPress={() => this.props.navigation.navigate('services')}
+            icon={
+              <Icon size={25} color="white" name="apps" />
+            }
+          />
+        </Box>
         <Center>
           <View style={styles.row}>
             <Card
@@ -98,15 +120,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 8,
-    backgroundColor: "aliceblue",
+    backgroundColor: 'aliceblue',
   },
   box: {
     width: 50,
     height: 50,
   },
   row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
-
