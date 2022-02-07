@@ -24,8 +24,7 @@ export default class ServiceController {
             if (result.length === 0)
                 return success(null);
             try {
-                console.log(result[0][service]);
-                return success(result[0][service]);
+                return success(result[0][service] as object);
             } catch (ex) {
                 console.log('abc', ex);
             }
@@ -35,7 +34,12 @@ export default class ServiceController {
 
     public registerUserToken(userUuid: string, token: TokenData, success: success, error: error) {
         this.getUserTokens(userUuid, token.type, (tokens) => {
-            let tokensArray = JSON.parse(tokens);
+            let tokensArray;
+            try {
+                tokensArray = JSON.parse(tokens);
+            } catch (ex) {
+                tokensArray = [];
+            }
             if (tokensArray === undefined || tokensArray === null) {
                 console.log("empty tokens !");
                 tokensArray = [];

@@ -2,7 +2,6 @@ import Route from "../../Route";
 
 import express = require('express');
 import * as querystring from "querystring";
-import axios from "axios";
 import {Services} from "../../models/Services";
 import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute";
@@ -32,7 +31,7 @@ export default class SpotifyServiceRoute extends Route {
         params.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URL);
 
         new ServiceAuthRoute().postRequest("https://accounts.spotify.com/api/token", params, headers, req['user']['uuid'], Services.SPOTIFY.valueOf(), (token) => {
-            return res.status(200).json({success: true, token: token});
+            return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
         });
@@ -43,15 +42,14 @@ export default class SpotifyServiceRoute extends Route {
     }
 
     public login(req: express.Request, res: express.Response) {
-        let scope: string = 'user-read-private user-read-email';
-        return res.redirect(`https://accounts.spotify.com/authorize?`
-        + querystring.stringify({
-                response_type: 'code',
-                client_id: process.env.SPOTIFY_CLIENT_ID,
-                scope: scope,
-                redirect_uri: process.env.SPOTIFY_REDIRECT_URL,
-                state: '',
-            }))
+        const scope: string = 'user-read-private user-read-email';
+        const data = new URLSearchParams();
+        data.set('response_type', 'code');
+        data.set('client_id', process.env.SPOTIFY_CLIENT_ID);
+        data.set('scope', scope);
+        data.set('redirect_uri', process.env.SPOTIFY_REDIRECT_URL);
+        data.set('state', '');
+        return res.redirect(`https://accounts.spotify.com/authorize?${data.toString()}`);
     }
 
 }

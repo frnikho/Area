@@ -1,5 +1,6 @@
 import {PubSub} from "@google-cloud/pubsub";
 import * as pub from "@google-cloud/pubsub";
+import Logger from "../utils/Logger";
 
 export class GooglePubSub {
 
@@ -9,6 +10,7 @@ export class GooglePubSub {
         this.client = new PubSub({
             projectId: process.env.GOOGLE_PROJECT_ID,
         });
+        Logger.i("Google Client PubSub initialize");
     }
 
     public test() {
@@ -17,8 +19,6 @@ export class GooglePubSub {
                 time: data.publishTime,
                 msg: data.data.toString(),
             });
-            let msg: object = JSON.parse(data.data.toString());
-
             data.ack();
         });
     }
