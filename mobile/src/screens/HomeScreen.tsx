@@ -1,8 +1,9 @@
-import {Button, Center, Toast, Text, ScrollView, VStack} from 'native-base';
-import React, {Component} from 'react';
+import { Button, Text, ScrollView } from 'native-base';
+import React, { Component } from 'react';
 import Card from '../components/Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
+import { Subheading } from 'react-native-paper';
 
 export default class HomeScreen extends Component {
   constructor(props: any) {
@@ -22,90 +23,57 @@ export default class HomeScreen extends Component {
   //   });
   // }
 
+  createAppletButtonRender() {
+    return (
+      <View id="createApplet" >
+          <Button mode="contained" style={styles.createAppletButton} onPress={() => this.props.navigation.navigate('applets')}>
+            <Text style={styles.createAppletText}>Create</Text>
+          </Button>
+      </View>
+    );
+  }
+
+  myAppletsRender() {
+    return (
+      <ScrollView contentContainerStyle={{padding: 20}}>
+          <Subheading>My applets</Subheading>
+          <View id="myApplets" style={styles.myApplets}>
+            <Card
+              title="Youtube"
+              description="blablabla description"
+              backgroundColor="#ff4545"
+              />
+          </View>
+        </ScrollView>
+    );
+  }
+
   render() {
     return (
-      <ScrollView>
-        <Center>
-          <View style={styles.row}>
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-          </View>
-        </Center>
-      </ScrollView>
+      <View style={{flex: 1}}>
+        {this.myAppletsRender()}
+        {this.createAppletButtonRender()}
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 8,
-    backgroundColor: "aliceblue",
+  safeAreaView: {
+    backgroundColor: "#DCDCDC",
   },
-  box: {
-    width: 50,
-    height: 50,
+  createAppletButton: {
+        bottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: 'center',
+        backgroundColor: "#222222",
   },
-  row: {
-    flexDirection: "row",
+  createAppletText: {
+    color: "#ffffff",
+  },
+  myApplets: {
+    flexDirection: "column",
     flexWrap: "wrap",
   },
 });
