@@ -3,16 +3,16 @@ import {
   Center,
   Toast,
   Text,
-  ScrollView,
   VStack,
   Fab,
   Box,
 } from 'native-base';
 import React, {Component} from 'react';
 import Card from '../components/Card';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, StyleSheet, View, ScrollView } from 'react-native';
+import { Subheading } from 'react-native-paper';
 
 export default class HomeScreen extends Component {
   constructor(props: any) {
@@ -32,86 +32,37 @@ export default class HomeScreen extends Component {
   //   });
   // }
 
+  createAppletButtonRender() {
+    return (
+      <View id="createApplet" >
+          <Button mode="contained" style={styles.createAppletButton} onPress={() => this.props.navigation.navigate('applets')}>
+            <Text style={styles.createAppletText}>Create</Text>
+          </Button>
+      </View>
+    );
+  }
+
+  myAppletsRender() {
+    return (
+      <ScrollView contentContainerStyle={{padding: 20}}>
+          <Subheading>My applets</Subheading>
+          <View id="myApplets" style={styles.myApplets}>
+            <Card
+              title="Youtube"
+              description="blablabla description"
+              backgroundColor="#ff4545"
+              />
+          </View>
+        </ScrollView>
+    );
+  }
+
   render() {
     return (
-      <ScrollView>
-        <Box position="relative" h={100} w="100%">
-          <Fab
-            position="absolute"
-            renderInPortal={false}
-            placement="bottom-left"
-            size="sm"
-            onPress={() => this.props.navigation.navigate('services')}
-            icon={
-              <Icon size={25} color="white" name="apps" />
-            }
-          />
-        </Box>
-        <Center>
-          <View style={styles.row}>
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-            />
-          </View>
-        </Center>
-      </ScrollView>
+      <View style={{flex: 1}}>
+        {this.myAppletsRender()}
+        {this.createAppletButtonRender()}
+      </View>
     );
   }
 }
@@ -122,12 +73,25 @@ const styles = StyleSheet.create({
     marginTop: 8,
     backgroundColor: 'aliceblue',
   },
-  box: {
-    width: 50,
-    height: 50,
+  safeAreaView: {
+    backgroundColor: "#DCDCDC",
+  },
+  createAppletButton: {
+        bottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: 'center',
+        backgroundColor: "#222222",
+  },
+  createAppletText: {
+    color: "#ffffff",
   },
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  myApplets: {
+    flexDirection: "column",
+    flexWrap: "wrap",
   },
 });
