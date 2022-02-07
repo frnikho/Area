@@ -8,13 +8,13 @@ import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
+import Page from "../Page"
 
-class AppletPage extends React.Component {
+class AppletPage extends Page {
 
     constructor(props) {
         super(props);
         this.state = {
-            redirectUrl: undefined,
             action: undefined,
             reactions: [],
             currentDialog: undefined,
@@ -35,9 +35,7 @@ class AppletPage extends React.Component {
     }
 
     onClose() {
-        this.setState({
-            redirectUrl: "/"
-        })
+        this.setRedirectUrl('/')
     }
 
     onClickHelp() {
@@ -107,33 +105,36 @@ class AppletPage extends React.Component {
     }
 
     render() {
-        return (
-            <ThemeProvider theme={theme}>
-                {this.state.redirectUrl !== undefined ? <Navigate to={"/"} /> : null}
-                {this.showDialogs()}
-                <Box sx={{ pb: 2, mx: 2 }} style={styles.topBar.main}>
-                    <Box style={styles.topBar.leftMenu}>
-                        <Button onClick={() => this.onClose()}>Close</Button>
-                    </Box>
-                    <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
-                        <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
-                    </Box>
-                    <Box style={styles.topBar.rightMenu}>
-                        <IconButton onClick={() => this.onClickHelp()}>
-                            <FaQuestion size={40} />
-                        </IconButton>
-                    </Box>
-                </Box>
-                <Box style={styles.content}>
-                    <Container>
-                        <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
-                            {this.showActionButton()}
-                            {this.showReactionButton()}
+
+        return (this.pageRender(this, function RenderAppletPage({ component }) {
+
+            return (
+                <ThemeProvider theme={theme}>
+                    {component.showDialogs()}
+                    <Box sx={{ pb: 2, mx: 2 }} style={styles.topBar.main}>
+                        <Box style={styles.topBar.leftMenu}>
+                            <Button onClick={() => component.onClose()}>Close</Button>
                         </Box>
-                    </Container>
-                </Box>
-            </ThemeProvider>
-        );
+                        <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
+                            <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
+                        </Box>
+                        <Box style={styles.topBar.rightMenu}>
+                            <IconButton onClick={() => component.onClickHelp()}>
+                                <FaQuestion size={40} />
+                            </IconButton>
+                        </Box>
+                    </Box>
+                    <Box style={styles.content}>
+                        <Container>
+                            <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
+                                {component.showActionButton()}
+                                {component.showReactionButton()}
+                            </Box>
+                        </Container>
+                    </Box>
+                </ThemeProvider>
+            )
+        }));
     }
 }
 
