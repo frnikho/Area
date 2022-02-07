@@ -7,7 +7,7 @@ COPY src src
 COPY public public
 COPY package.json package.json
 COPY .env .env
-COPY sslCredentials sslCredentials
+COPY area-**.json .
 
 EXPOSE 8080
 
