@@ -2,12 +2,6 @@
 import style from "../CSS/Font.css";
 
 const useStyles = {
-    buttonMenu: {
-        fontFamily: 'Dongle',
-        fontSize: '60px',
-        textTransform: "none",
-        color: "black"
-    },
     font: {
         fontFamily: "Dongle",
     },

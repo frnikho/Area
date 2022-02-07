@@ -1,8 +1,7 @@
 import Lottie from "lottie-react";
-import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
+import { Box, Button, Checkbox, Container, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import Stack from '@mui/material/Stack';
 import implement from 'implement-js'
 
 import { LoginModel } from "../../Models/ModelAuth"
@@ -10,10 +9,10 @@ import ControllerLogin from "../../Controllers/Auth/ControllerLogin"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import * as logo from "../../Resources/assets/login.json"
-import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
 import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 
 
@@ -34,6 +33,7 @@ export default withCookies(class LoginPage extends Page {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
+        this.theme = theme
     }
 
     componentDidMount() {
@@ -72,14 +72,9 @@ export default withCookies(class LoginPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderLoginPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
 
             return (
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={component.theme}>
                     <Header component={component} menu={menu}/>
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

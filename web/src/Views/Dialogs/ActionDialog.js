@@ -1,5 +1,5 @@
 import React from "react";
-import {CircularProgress, Dialog, Divider, List, ListItem, ListItemText} from "@mui/material";
+import {CircularProgress, Dialog, List, ListItem, ListItemText} from "@mui/material";
 import app from "../../Components/utils/Axios";
 
 export default class ActionDialog extends React.Component {

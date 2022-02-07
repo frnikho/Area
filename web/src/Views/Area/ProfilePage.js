@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { createTheme, ThemeProvider, Box } from "@mui/material";
+import { ThemeProvider, Box } from "@mui/material";
 import Button from '@mui/material/Button';
 import { FaUser } from "react-icons/fa";
 
@@ -8,9 +8,9 @@ import ControllerProfile from "../../Controllers/Area/ControllerProfile"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleProfile"
-import MenuDashboard from "../../Components/MenuDashboard"
 import FieldSettings from "../../Components/FieldSettings"
 import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 
 const menu = [
@@ -40,6 +40,7 @@ export default withCookies(class ProfilePage extends Page {
         }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.theme = theme
     }
 
     componentDidMount() {
@@ -66,12 +67,10 @@ export default withCookies(class ProfilePage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
-
-            const theme = createTheme({ palette: { type: "dark" } });
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
 
             return (
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={component.theme}>
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
+import { ThemeProvider, Grid, Box } from "@mui/material";
 
 import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
@@ -8,6 +8,7 @@ import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
 import ServicePage from "../../Views/Area/ServicePage"
 import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 const menu = [
     {
@@ -36,6 +37,7 @@ export default withCookies(class DashboardPage extends Page {
         }
         this.cookies = props;
         this.showServices = this.showServices.bind(this)
+        this.theme = theme
     }
 
     componentDidMount() {
@@ -64,14 +66,9 @@ export default withCookies(class DashboardPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
 
             return (
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={component.theme}>
                     <Header component={component} menu={menu}/>
                     <div style={Style.container}>
                         My applets

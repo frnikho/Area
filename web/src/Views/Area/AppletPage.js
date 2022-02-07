@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography } from "@mui/material";
 import { FaQuestion } from "react-icons/fa/index";
-import { styles } from "../../Styles/AppletPageStyles";
-import { theme } from "../../Styles/AppTheme";
+import { styles } from "../../Resources/Styles/AppletPageStyles";
+import { theme } from "../../Resources/Styles/AppTheme";
 import { Navigate } from "react-router-dom";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";

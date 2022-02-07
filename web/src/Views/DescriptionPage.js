@@ -1,6 +1,4 @@
-// import React from "react";
-import { Button, createTheme, ThemeProvider, } from "@mui/material";
-import Stack from '@mui/material/Stack';
+import { ThemeProvider, } from "@mui/material";
 import { withCookies } from "react-cookie";
 
 import ControllerDescription from "../Controllers/ControllerDescription"
@@ -8,6 +6,7 @@ import Page from "./Page"
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import Style from "../Resources/Styles/styleDescription.js"
 import Header from "../Components/Header"
+import {theme} from "../Resources/Styles/AppTheme"
 
 
 
@@ -25,18 +24,13 @@ export default withCookies(class DescriptionPage extends Page {
         super(props);
         this.cookies = props;
         this.controllerDescription = new ControllerDescription(this.cookies, this);
+        this.theme = theme
     }
 
     render() {
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
-
             return (
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={component.theme}>
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />
