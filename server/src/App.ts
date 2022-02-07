@@ -126,7 +126,7 @@ export default class App {
     }
 
     public start(port?: number): void {
-        this.tcpSocket = this.server.listen(port || this.port, () => {
+        this.tcpSocket = this.server.listen(() => {
             Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }
