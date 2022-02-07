@@ -1,8 +1,17 @@
-import { Button, Text, ScrollView } from 'native-base';
-import React, { Component } from 'react';
+import {
+  Button,
+  Center,
+  Toast,
+  Text,
+  VStack,
+  Fab,
+  Box,
+} from 'native-base';
+import React, {Component} from 'react';
 import Card from '../components/Card';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View, ScrollView } from 'react-native';
 import { Subheading } from 'react-native-paper';
 
 export default class HomeScreen extends Component {
@@ -59,6 +68,11 @@ export default class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 8,
+    backgroundColor: 'aliceblue',
+  },
   safeAreaView: {
     backgroundColor: "#DCDCDC",
   },
@@ -72,9 +86,12 @@ const styles = StyleSheet.create({
   createAppletText: {
     color: "#ffffff",
   },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   myApplets: {
     flexDirection: "column",
     flexWrap: "wrap",
   },
 });
-
