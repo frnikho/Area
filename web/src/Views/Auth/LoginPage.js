@@ -132,7 +132,7 @@ export default withCookies(class LoginPage extends Page {
                                         buttonText={"Google"}
                                         render={renderProps => (
                                             <Button
-                                                onClick={component.onClick}
+                                                onClick={renderProps.onClick}
                                                 color={"error"}
                                                 variant="contained"
                                                 sx={{ mt: 0, mb: 2, py: 1.5 }}>
@@ -152,7 +152,7 @@ export default withCookies(class LoginPage extends Page {
                                         buttonText={"Github"}
                                         render={renderProps => (
                                             <Button
-                                                onClick={component.onClick}
+                                                onClick={renderProps.onClick}
                                                 color={"secondary"}
                                                 variant="contained"
                                                 sx={{ mt: 0, mb: 2, py: 1.5 }}>
