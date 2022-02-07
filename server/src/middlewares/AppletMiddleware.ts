@@ -2,7 +2,7 @@ import express = require('express');
 import AppletController from "../controllers/AppletController";
 import {Action, ActionType, Applet, Reaction, ReactionType} from "../models/Applet";
 import {AppAbout, GithubAppletActionsAbout} from "../globals/AppletsGlobal";
-import App from "../app";
+import App from "../App";
 
 /**
  * Get applet with the uuid of applet in the request body {uuid: string}

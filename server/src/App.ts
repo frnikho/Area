@@ -45,6 +45,8 @@ export default class App {
     private readonly privateKey: string;
     private readonly privateCertificate: string;
     private workerManager: WorkerManager;
+    private discordBot: DiscordBot;
+    private googlePubSub: GooglePubSub;
 
     constructor() {
         this.initConfig();
@@ -78,10 +80,10 @@ export default class App {
     }
 
     private initBot(): void {
-        const discord = new DiscordBot();
-        discord.login();
-        const googleClient: GooglePubSub = new GooglePubSub();
-        googleClient.test();
+        this.discordBot = new DiscordBot();
+        this.discordBot.login();
+        this.googlePubSub = new GooglePubSub();
+        this.googlePubSub.test();
     }
 
     private initRoutes(): void  {
@@ -118,8 +120,8 @@ export default class App {
         // this.app.use('*', RouteNotFoundMiddleware);
     }
 
-    public start(): void {
-        this.tcpSocket = this.server.listen(this.port, () => {
+    public start(port?: number): void {
+        this.tcpSocket = this.server.listen(port || this.port, () => {
             Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }
@@ -133,14 +135,17 @@ export default class App {
     }
 
     private onClose(): void {
-        
+        console.log("Server closed !");
+        this.discordBot.logout();
+        process.exit(0);
+    }
+
+    public getExpressApp(): express.Application {
+        return this.app;
     }
 
     public stop(): void {
         if (this.tcpSocket !== undefined)
-            this.tcpSocket.close(this.onClose);
+            this.tcpSocket.close(this.onClose.bind(this));
     }
 }
-
-const app: App = new App();
-app.start();

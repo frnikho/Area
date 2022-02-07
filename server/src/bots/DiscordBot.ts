@@ -76,6 +76,11 @@ export default class DiscordBot {
         DiscordBot.client.login(process.env.DISCORD_SERVICES_BOT_TOKEN);
     }
 
+    public logout() {
+
+    }
+
+
     public static getClient() {
         return DiscordBot.client;
     }
