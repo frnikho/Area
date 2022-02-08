@@ -65,8 +65,8 @@ export const IntraAppletActionsAbout = [
 
 export const DiscordAppletActionsAbout = [
     {
-        name: "When a Discord chanel is created",
-        description: '',
+        name: "Discord chanel is created",
+        description: 'When a channel is created in a specific discord guild',
         base_key: 'guild_id',
         type: 'discord_channel_created',
         parameters: [
@@ -84,8 +84,8 @@ export const DiscordAppletActionsAbout = [
         ingredients: [],
     },
     {
-        name: "When a Discord chanel is deleted",
-        description: '',
+        name: "Discord chanel is deleted",
+        description: 'When a channel is deleted in a specific discord guild',
         type: 'discord_channel_deleted',
         base_key: 'guild_id',
         parameters: [
@@ -103,8 +103,8 @@ export const DiscordAppletActionsAbout = [
         ingredients: []
     },
     {
-        name: "When receive a private message",
-        description: '',
+        name: "Receive a private message",
+        description: 'When a specific user send a private message to the bot',
         type: 'discord_private_message_received',
         parameters: [
             {
@@ -116,8 +116,8 @@ export const DiscordAppletActionsAbout = [
         ingredients: [],
     },
     {
-        name: "When receive a guild message",
-        description: '',
+        name: "Receive a guild message",
+        description: 'When a specific user send a message into a discord guild',
         type: 'discord_guild_message_received',
         parameters: [
             {
@@ -134,8 +134,8 @@ export const DiscordAppletActionsAbout = [
         ingredients: ["sender_id", "sender_username"]
     },
     {
-        name: "When a guild message is updated",
-        description: '',
+        name: "Message is updated",
+        description: 'When a message guild is updated',
         type: 'discord_guild_message_updated',
         base_key: 'guid_id',
         parameters: [
@@ -148,8 +148,8 @@ export const DiscordAppletActionsAbout = [
         ingredients: []
     },
     {
-        name: "When a guild message is deleted",
-        description: '',
+        name: "Message is deleted",
+        description: 'When a guild message is deleted',
         type: 'discord_guild_message_deleted',
         base_key: 'guild_id',
         parameters: [
@@ -163,7 +163,7 @@ export const DiscordAppletActionsAbout = [
     },
     {
         name: "Reaction added",
-        description: '',
+        description: 'When a reaction is added to a specific guild message',
         type: 'discord_guild_message_reaction_add',
         base_key: 'message_id',
         parameters: [
@@ -177,7 +177,7 @@ export const DiscordAppletActionsAbout = [
     },
     {
         name: "Reaction removed",
-        description: '',
+        description: 'When a reaction is removed to a specific guild message',
         type: 'discord_guild_message_reaction_removed',
         base_key: 'message_id',
         parameters: [
@@ -191,7 +191,7 @@ export const DiscordAppletActionsAbout = [
     },
     {
         name: "Member get banned",
-        description: '',
+        description: 'When a member get banned from a discord guild',
         type: 'discord_guild_member_banned',
         base_key: 'guild_id',
         parameters: [
@@ -205,7 +205,7 @@ export const DiscordAppletActionsAbout = [
     },
     {
         name: "Member get unbanned",
-        description: '',
+        description: 'When a member get unbanned from a discord guild',
         type: 'discord_guild_member_unbanned',
         base_key: 'guild_id',
         parameters: [
@@ -219,7 +219,7 @@ export const DiscordAppletActionsAbout = [
     },
     {
         name: "Server updated",
-        description: '',
+        description: 'When a discord server is updated (title, grades, information....)',
         type: 'discord_guild_update',
         base_key: 'guild_id',
         parameters: [
@@ -235,8 +235,8 @@ export const DiscordAppletActionsAbout = [
 
 export const GithubAppletActionsAbout = [
     {
-        name: "From new push in a repository",
-        description: '',
+        name: "New push in a repository",
+        description: 'When a new content is push from a specific repository',
         type: 'github_repository_push',
         base_key: 'repository_name',
         parameters: [
@@ -251,7 +251,7 @@ export const GithubAppletActionsAbout = [
     {
         name: 'New repository created',
         type: 'github_repository_created',
-        description: '',
+        description: 'When a new repository is created',
         base_key: 'owner_login',
         parameters: [
             {
@@ -385,26 +385,38 @@ export const AppAbout = {
         current_time: 165161,
         services: [{
             name: "Github",
+            color: "#95A5A6",
+            icon: "icons/github.png",
             actions: GithubAppletActionsAbout,
             reactions: GithubAppletReactionsAbout
         }, {
             name: "Discord",
+            icon: "icons/discord.png",
+            color: "#34495E",
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
             name: "Slack",
+            icon: "icons/slack.png",
+            color: "#8E44AD",
             actions: [],
             reactions: SlackAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
+            color: "#2980B9",
+            icon: "icons/epitech.png",
             actions: IntraAppletActionsAbout,
             reactions: [],
         }, {
             name: "Spotify",
+            color: "#27AE60",
+            icon: "icons/spotify.png",
             actions: SpotifyAppletActionsAbout,
             reactions: [],
         }, {
             name: "Gmail",
+            icon: "icons/gmail.png",
+            color: "#C0392B",
             actions: GmailAppletActionsAbout,
             reactions: []
         }]
