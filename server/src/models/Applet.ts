@@ -51,7 +51,7 @@ export interface Action {
 }
 
 export interface Reaction {
-    type: ReactionType,
+    type: ReactionType | string,
     token_key: string,
     parameters: object[],
 }

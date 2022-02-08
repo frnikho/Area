@@ -67,6 +67,9 @@ export default class AppletController {
             success(result.map(app => {
                 const newApp = this.parseApplet(app)
                 newApp.action_type = ActionType[newApp.action_type];
+                newApp.reactions.forEach((reaction) => {
+                    reaction.type = ReactionType[reaction.type];
+                })
                 return newApp;
             }));
         }, errorCallback);
