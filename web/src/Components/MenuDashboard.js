@@ -2,8 +2,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Style from "../Resources/Styles/styleMenuDashboard"
 import { Box } from "@mui/material";
-
-
 export default function MenuDashboard({ props, menu }) {
 
     function ButtonMenu({ menu, key }) {

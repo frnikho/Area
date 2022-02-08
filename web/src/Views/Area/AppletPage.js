@@ -9,7 +9,11 @@ import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
 import Header from "../../Components/Header"
 
-class AppletPage extends Page {
+/**
+ * @class AppletPage
+ * Page for create an applets
+ */
+export default class AppletPage extends Page {
 
     constructor(props) {
         super(props);
@@ -38,38 +42,31 @@ class AppletPage extends Page {
     }
 
     onClickHelp() {
-        this.setState({
-            currentDialog: "HELP_DIALOG"
-        })
+        this.setState({ currentDialog: "HELP_DIALOG" })
     }
 
     onClickAddAction() {
-        this.setState({
-            currentDialog: "ACTION_DIALOG",
-        })
+        this.setState({ currentDialog: "ACTION_DIALOG", })
     }
 
     onClickAddReaction() {
-        this.setState({
-            currentDialog: "REACTION_DIALOG",
-        })
+        this.setState({ currentDialog: "REACTION_DIALOG", })
     }
 
     onCloseDialog() {
-        this.setState({
-            currentDialog: undefined,
-        })
+        this.setState({ currentDialog: undefined, })
     }
 
     showDialogs() {
-        if (this.state.currentDialog === undefined)
-            return;
-        if (this.state.currentDialog === "ACTION_DIALOG")
-            return <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog} />
-        if (this.state.currentDialog === "REACTION_DIALOG")
-            return <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />
-        if (this.state.currentDialog === "HELP_DIALOG")
-            return <HelpDialog onClose={this.onCloseDialog} />
+        const Dialogs = {
+            ACTION_DIALOG: <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog} />,
+            REACTION_DIALOG: <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />,
+            HELP_DIALOG: <HelpDialog onClose={this.onCloseDialog} />,
+            undefined: null
+        }
+        return (
+            Dialogs[this.state.currentDialog]
+        )
     }
 
     showActionButton() {
@@ -139,5 +136,3 @@ class AppletPage extends Page {
         }));
     }
 }
-
-export default AppletPage;
