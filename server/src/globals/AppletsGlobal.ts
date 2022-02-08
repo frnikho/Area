@@ -358,10 +358,10 @@ export const GithubAppletActionsAbout = [
 
 export const DiscordAppletReactionsAbout = [
         {
-            name: 'Send chanel message',
-            description: '',
+            name: 'Post chanel message',
+            description: 'Post a message in a server channel',
             type: 'discord_send_chanel_message',
-            then: "send in Discord channel a message",
+            then: "post in Discord channel a message",
             parameters: [
                 {
                     name: 'chanel_id',
@@ -379,10 +379,10 @@ export const DiscordAppletReactionsAbout = [
 
 export const SlackAppletReactionsAbout = [
         {
-            name: 'Send chanel message',
-            description: '',
+            name: 'Post chanel message',
+            description: 'Post a message in a channel',
             type: 'slack_send_chanel_message',
-            then: "send in Slack channel a message",
+            then: "post in Slack channel a message",
             parameters: [
                 {
                     name: 'chanel_id',
@@ -397,10 +397,10 @@ export const SlackAppletReactionsAbout = [
             ]
         },
         {
-            name: 'Send schedule chanel message',
-            description: '',
+            name: 'Post a schedule chanel message',
+            description: 'Post scheduled message in Slack channel',
             type: 'slack_send_schedule_chanel_message',
-            then: "send in Slack channel a scheduled message",
+            then: "post in Slack channel a scheduled message",
             parameters: [
                 {
                     name: 'chanel_id',
@@ -425,6 +425,23 @@ export const GithubAppletReactionsAbout = [
 
     ]
 
+
+export const TwitterAppletReactionsAbout = [
+    {
+        name: 'Tweet',
+        description: 'Post a Tweet',
+        type: 'twitter_post_tweet',
+        then: "post Tweet",
+        parameters: [
+            {
+                name: 'text',
+                type: 'string',
+                required: true,
+            }
+        ]
+    }
+]
+
 export const AppAbout = {
     client: {
         host: '10.blabla'
@@ -443,6 +460,10 @@ export const AppAbout = {
             name: "Slack",
             actions: [],
             reactions: SlackAppletReactionsAbout,
+        }, {
+            name: "Twitter",
+            actions: [],
+            reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
             actions: IntraAppletActionsAbout,
