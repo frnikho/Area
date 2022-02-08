@@ -4,6 +4,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ServicesScreen from './screens/ServicesScreen';
 import AppletsScreen from './screens/AppletsScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import React from 'react';
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ const Router = ({isLoggedIn}:boolean) => {
           <Stack.Screen name="home" component={HomeScreen} />
           <Stack.Screen name="services" component={ServicesScreen} />
           <Stack.Screen name="applets" component={AppletsScreen} />
+          <Stack.Screen name="profile" component={ProfileScreen} />
         </Stack.Navigator>
     );
 }

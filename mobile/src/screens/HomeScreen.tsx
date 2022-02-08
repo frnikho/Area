@@ -42,6 +42,16 @@ export default class HomeScreen extends Component {
     );
   }
 
+  createProfileButtonRender() {
+    return (
+      <View id="createProfile" >
+          <Button mode="contained" style={styles.createProfileButton} onPress={() => this.props.navigation.navigate('profile')}>
+            <Text style={styles.createProfileText}>Profile</Text>
+          </Button>
+      </View>
+    );
+  }
+
   myAppletsRender() {
     return (
       <ScrollView contentContainerStyle={{padding: 20}}>
@@ -60,6 +70,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
+        {this.createProfileButtonRender()}
         {this.myAppletsRender()}
         {this.createAppletButtonRender()}
       </View>
