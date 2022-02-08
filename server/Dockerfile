@@ -13,7 +13,7 @@ COPY sslCredentials sslCredentials
 EXPOSE 8082
 
 # Install dependencies
-RUN npm install
+RUN npm install --force
 
 # Build
 RUN npm run build
