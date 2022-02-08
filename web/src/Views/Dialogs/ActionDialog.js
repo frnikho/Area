@@ -47,7 +47,6 @@ export default class ActionDialog extends React.Component {
                     onClose={() => this.props.onClose()}>
                     {this.showActions()}
                 </Dialog>
-
             </div>
         );
     }

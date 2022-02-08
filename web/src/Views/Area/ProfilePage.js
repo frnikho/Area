@@ -51,7 +51,6 @@ export default withCookies(class ProfilePage extends Page {
             return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
 
-
             const menu = {
                 right: [
                     {
