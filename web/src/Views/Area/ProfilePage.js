@@ -13,36 +13,40 @@ import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
 
-const menu = [
-    {
-        name: 'Create',
-        style: {
-            paddingTop: "6px",
-            background: "black",
-            height: "50%",
-            borderRadius: '50px',
-            borderColor: 'white',
-            fontFamily: 'Dongle',
-            fontSize: '45px',
-            textTransform: "none",
-            color: "white"
+const menu = {
+    right: [
+        {
+            name: 'Create',
+            style: {
+                paddingTop: "6px",
+                background: "black",
+                height: "50%",
+                borderRadius: '50px',
+                borderColor: 'white',
+                fontFamily: 'Dongle',
+                fontSize: '45px',
+                textTransform: "none",
+                color: "white"
+            },
+            variant: "contained",
+            redirectUrl: "/area/applets"
         },
-        variant: "contained",
-        redirectUrl: "/area/applets"
-    },
-    {
-        name: 'Area',
-        redirectUrl: "/description"
-    },
-    {
-        name: 'My applets',
-        redirectUrl: "/area/dashboard"
-    },
-    {
-        name: 'Profile',
-        redirectUrl: undefined
-    },
-]
+        {
+            name: 'Area',
+            redirectUrl: "/description"
+        },
+        {
+            name: 'My applets',
+            redirectUrl: "/area/dashboard"
+        },
+        {
+            name: 'Profile',
+            redirectUrl: undefined
+        }
+    ],
+    left: {
+    }
+}
 
 export default withCookies(class ProfilePage extends Page {
 

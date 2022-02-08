@@ -14,14 +14,16 @@ import { withCookies } from "react-cookie";
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
-
-
-const menu = [
-    {
-        name: 'Area',
-        redirectUrl: "/description"
-    },
-]
+const menu = {
+    right: [
+        {
+            name: 'Area',
+            redirectUrl: "/description"
+        },
+    ],
+    left: {
+    }
+}
 
 export default withCookies(class LoginPage extends Page {
 

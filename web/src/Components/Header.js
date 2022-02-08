@@ -6,11 +6,18 @@ import { Box } from "@mui/material";
 export default function Header({ component, menu }) {
 
     return (
-        <Box style={Style.title}>
-            <Box style={Style.titleLeft}>
-                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
+        <Box sx={{ pb: 2, mx: 2 }} style={Style.bar}>
+            <Box style={Style.menuLeft}>
+                <Button
+                    onClick={menu.left.action}
+                    style={menu.right.style || { fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>
+                    {menu.left.name || "Epitech 2022 Project"}
+                </Button>
             </Box>
-            <MenuDashboard props={component} menu={menu} />
+            <Box sx={{ mt: 2 }} style={Style.centerMenu} />
+            <Box style={Style.menuRight}>
+                <MenuDashboard props={component} menu={menu.right} />
+            </Box>
         </Box>
     )
 }

@@ -6,17 +6,18 @@ import Page from "./Page"
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import Style from "../Resources/Styles/styleDescription.js"
 import Header from "../Components/Header"
-import {theme} from "../Resources/Styles/AppTheme"
+import { theme } from "../Resources/Styles/AppTheme"
 
-
-
-const menu = [
-    {
-        name: '←',
-        redirectUrl: "/"
-    },
-]
-
+const menu = {
+    right: [
+        {
+            name: '←',
+            redirectUrl: "/"
+        },
+    ],
+    left: {
+    }
+}
 
 export default withCookies(class DescriptionPage extends Page {
 
