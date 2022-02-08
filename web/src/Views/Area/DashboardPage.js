@@ -10,42 +10,6 @@ import ServicePage from "../../Views/Area/ServicePage"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
-const menu = {
-    right: [
-        {
-            name: 'Create',
-            style: {
-                paddingTop: "6px",
-                background: "black",
-                height: "50%",
-                borderRadius: '50px',
-                borderColor: 'white',
-                fontFamily: 'Dongle',
-                fontSize: '45px',
-                textTransform: "none",
-                color: "white"
-            },
-            variant: "contained",
-            redirectUrl: "/area/applets"
-        },
-        {
-            name: 'Area',
-            redirectUrl: "/description"
-        },
-        {
-            name: 'My applets',
-            redirectUrl: undefined
-        },
-        {
-            name: 'Profile',
-            redirectUrl: "/area/profile"
-        },
-    ],
-    left: {
-        action : () => console.log("hello world")
-    }
-}
-
 export default withCookies(class DashboardPage extends Page {
 
     static contextType = AuthContext;
@@ -86,6 +50,41 @@ export default withCookies(class DashboardPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
+
+            const menu = {
+                right: [
+                    {
+                        name: 'Create',
+                        style: {
+                            paddingTop: "6px",
+                            background: "black",
+                            height: "50%",
+                            borderRadius: '50px',
+                            borderColor: 'white',
+                            fontFamily: 'Dongle',
+                            fontSize: '45px',
+                            textTransform: "none",
+                            color: "white"
+                        },
+                        variant: "contained",
+                        action: () => component.setRedirectUrl("/area/applets")
+                    },
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl("/description")
+                    },
+                    {
+                        name: 'My applets',
+                    },
+                    {
+                        name: 'Profile',
+                        action: () => component.setRedirectUrl("/area/profile")
+                    },
+                ],
+                left: {
+                    action : () => console.log("hello world")
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />

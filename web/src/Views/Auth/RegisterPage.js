@@ -13,17 +13,6 @@ import { withCookies } from "react-cookie";
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
-const menu = {
-    right: [
-        {
-            name: 'Area',
-            redirectUrl: "/description"
-        },
-    ],
-    left: {
-    }
-}
-
 export default withCookies(class RegisterPage extends Page {
 
     static contextType = AuthContext;
@@ -80,6 +69,17 @@ export default withCookies(class RegisterPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
+
+            const menu = {
+                right: [
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl("/description")
+                    },
+                ],
+                left: {
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />

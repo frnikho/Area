@@ -8,17 +8,6 @@ import Style from "../Resources/Styles/styleDescription.js"
 import Header from "../Components/Header"
 import { theme } from "../Resources/Styles/AppTheme"
 
-const menu = {
-    right: [
-        {
-            name: '←',
-            redirectUrl: "/"
-        },
-    ],
-    left: {
-    }
-}
-
 export default withCookies(class DescriptionPage extends Page {
 
     constructor(props) {
@@ -29,6 +18,17 @@ export default withCookies(class DescriptionPage extends Page {
 
     render() {
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
+
+            const menu = {
+                right: [
+                    {
+                        name: '←',
+                        action: () => component.setRedirectUrl("/")
+                    },
+                ],
+                left: {
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
                     <Header component={component} menu={menu} />

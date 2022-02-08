@@ -9,7 +9,6 @@ import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
 import Header from "../../Components/Header"
 
-
 class AppletPage extends Page {
 
     constructor(props) {
@@ -107,17 +106,16 @@ class AppletPage extends Page {
 
         return (this.pageRender(this, function RenderAppletPage({ component }) {
 
-
             const menu = {
                 right: [
                     {
                         name: '?',
-                        action: () => console.log("help message")
+                        action: () => component.onClickHelp()
                     },
                 ],
                 left: {
                     name: "Cancel",
-                    redirectUrl: "/"
+                    action: () => component.setRedirectUrl("/"),
                 }
             }
 

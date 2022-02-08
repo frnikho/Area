@@ -12,42 +12,6 @@ import FieldSettings from "../../Components/FieldSettings"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
-
-const menu = {
-    right: [
-        {
-            name: 'Create',
-            style: {
-                paddingTop: "6px",
-                background: "black",
-                height: "50%",
-                borderRadius: '50px',
-                borderColor: 'white',
-                fontFamily: 'Dongle',
-                fontSize: '45px',
-                textTransform: "none",
-                color: "white"
-            },
-            variant: "contained",
-            redirectUrl: "/area/applets"
-        },
-        {
-            name: 'Area',
-            redirectUrl: "/description"
-        },
-        {
-            name: 'My applets',
-            redirectUrl: "/area/dashboard"
-        },
-        {
-            name: 'Profile',
-            redirectUrl: undefined
-        }
-    ],
-    left: {
-    }
-}
-
 export default withCookies(class ProfilePage extends Page {
 
     static contextType = AuthContext;
@@ -86,6 +50,42 @@ export default withCookies(class ProfilePage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
+
+
+            const menu = {
+                right: [
+                    {
+                        name: 'Create',
+                        style: {
+                            paddingTop: "6px",
+                            background: "black",
+                            height: "50%",
+                            borderRadius: '50px',
+                            borderColor: 'white',
+                            fontFamily: 'Dongle',
+                            fontSize: '45px',
+                            textTransform: "none",
+                            color: "white"
+                        },
+                        variant: "contained",
+                        action: () => component.setRedirectUrl("/area/applets")
+                    },
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl("/description")
+                    },
+                    {
+                        name: 'My applets',
+                        action: () => component.setRedirectUrl("/area/dashboard")
+                    },
+                    {
+                        name: 'Profile',
+                        redirectUrl: undefined
+                    }
+                ],
+                left: {
+                }
+            }
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
 
             return (
