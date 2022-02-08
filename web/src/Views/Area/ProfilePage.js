@@ -15,6 +15,22 @@ import { theme } from "../../Resources/Styles/AppTheme";
 
 const menu = [
     {
+        name: 'Create',
+        style: {
+            paddingTop: "6px",
+            background: "black",
+            height: "50%",
+            borderRadius: '50px',
+            borderColor: 'white',
+            fontFamily: 'Dongle',
+            fontSize: '45px',
+            textTransform: "none",
+            color: "white"
+        },
+        variant: "contained",
+        redirectUrl: "/area/applets"
+    },
+    {
         name: 'Area',
         redirectUrl: "/description"
     },

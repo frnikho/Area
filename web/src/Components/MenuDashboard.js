@@ -1,6 +1,8 @@
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Style from "../Resources/Styles/styleMenuDashboard"
+import { Box } from "@mui/material";
+
 
 export default function MenuDashboard({ props, menu }) {
 
@@ -17,10 +19,10 @@ export default function MenuDashboard({ props, menu }) {
     }
 
     return (
-        <div style={Style.menuRight}>
+        <Box style={Style.menuRight}>
             <Stack direction="row" spacing={4} display="flex" justifyContent="center" alignItems="center">
-                {menu.map((button, id) => ButtonMenu({ buttonName: button.name, redirectUrl: button.redirectUrl, key: id, style: button.style, variant: button.variant}))}
+                {menu.map((button, id) => ButtonMenu({ buttonName: button.name, redirectUrl: button.redirectUrl, key: id, style: button.style, variant: button.variant }))}
             </Stack>
-        </div>
+        </Box>
     )
 }
