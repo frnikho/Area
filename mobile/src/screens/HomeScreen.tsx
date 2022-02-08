@@ -97,6 +97,18 @@ const styles = StyleSheet.create({
   createAppletText: {
     color: "#ffffff",
   },
+  createProfileButton: {
+    bottom: -10,
+    marginLeft: 300,
+    marginRight: 10,
+    // height: 50,
+    width: 80,
+    justifyContent: 'center',
+    backgroundColor: "#554455",
+  },
+  createProfileText: {
+  color: "#ffffff",
+  },
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
