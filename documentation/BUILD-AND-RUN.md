@@ -7,13 +7,29 @@
 Go to server directory
 
 - Fill the `example.env` in server directory and rename it in `.env`.
-- Generate ssl credentials :
+- Generate ssl credentials for server:
 
     ```shell
     $ mkdir -p sslCredentials
-    $ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout sslCredentials/sslKey.key -out sslCredentials/sslCertificate.crt
-    $ sudo chown -c your-user-name sslCredentials/sslKey.key sslCredentials/sslCertificate.crt
+    $ cd sslCredentials
+    $ wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+    $ chmod +x mkcert-v1.4.3-linux-amd64
+    $ ./mkcert-v1.4.3-linux-amd64 -cert-file sslCertificate.crt -key-file sslKey.key localhost
+    $ rm -rf mkcert-v1.4.3-linux-amd64
     ```
+- Generate ssl credentials for nginx:
+    ```shell
+    $ cd nginx
+    $ mkdir -p certs
+    $ cd certs
+    $ wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+    $ chmod +x mkcert-v1.4.3-linux-amd64
+    $ ./mkcert-v1.4.3-linux-amd64 -cert-file sslCertificate.crt -key-file sslKey.key localhost
+    $ rm -rf mkcert-v1.4.3-linux-amd64
+    ```
+
+    Or copy paste certificate generated for server into ```./server/nginx/certs```.
+
 
 #### Build and run
 
@@ -28,7 +44,8 @@ $ npm run prod or dev
 
 With `dev` option server is reloaded at any change.
 
-:warning: **Be careful the server run on** ```https://localhost:8080```
+:warning: **Be careful the server run on** ```https://localhost```.
+
 
 <br />
 <br />
@@ -111,4 +128,6 @@ OR
 $ ./docker.sh
 ```
 
-:warning: **Be careful the server run on** ```https://localhost:8080```
+:warning: **Be careful the server run on** ```https://localhost```.
+
+**When you go on** ```http://localhost:8080/``` you will redirect on ```https://localhost```.

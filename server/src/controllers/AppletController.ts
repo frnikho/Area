@@ -64,7 +64,11 @@ export default class AppletController {
         DBService.query(`SELECT * FROM applets WHERE user_uuid = '${userUuid}'`, (result) => {
             if (result.length === 0)
                 return success([]);
-            success(result.map(app => this.parseApplet(app)));
+            success(result.map(app => {
+                const newApp = this.parseApplet(app)
+                newApp.action_type = ActionType[newApp.action_type];
+                return newApp;
+            }));
         }, errorCallback);
     }
 
