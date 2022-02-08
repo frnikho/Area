@@ -6,14 +6,14 @@ import { Box } from "@mui/material";
 
 export default function MenuDashboard({ props, menu }) {
 
-    function ButtonMenu({ buttonName, redirectUrl, key, style, variant }) {
+    function ButtonMenu({ menu, key }) {
         return (
             <Button
-                variant={variant || "text"}
-                style={style || Style.buttonMenu}
+                variant={menu.variant || "text"}
+                style={menu.style || Style.buttonMenu}
                 key={key}
-                onClick={() => props.setRedirectUrl(redirectUrl)}>
-                {buttonName}
+                onClick={() => (menu.action && menu.action()) || (menu.redirectUrl && props.setRedirectUrl(menu.redirectUrl))}>
+                {menu.name}
             </Button>
         )
     }
@@ -21,7 +21,7 @@ export default function MenuDashboard({ props, menu }) {
     return (
         <Box style={Style.menuRight}>
             <Stack direction="row" spacing={4} display="flex" justifyContent="center" alignItems="center">
-                {menu.map((button, id) => ButtonMenu({ buttonName: button.name, redirectUrl: button.redirectUrl, key: id, style: button.style, variant: button.variant }))}
+                {menu.map((menu, id) => ButtonMenu({ menu, key: id, }))}
             </Stack>
         </Box>
     )

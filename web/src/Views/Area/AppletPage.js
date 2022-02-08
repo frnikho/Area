@@ -1,14 +1,14 @@
 import React from "react";
-import { Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography } from "@mui/material";
-import { FaQuestion } from "react-icons/fa/index";
+import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography } from "@mui/material";
 import { styles } from "../../Resources/Styles/AppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
-import { Navigate } from "react-router-dom";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
+import Header from "../../Components/Header"
+
 
 class AppletPage extends Page {
 
@@ -75,7 +75,6 @@ class AppletPage extends Page {
 
     showActionButton() {
         if (this.state.action === undefined) {
-
             return (
                 <Paper sx={{ backgroundColor: "#222222", mb: 4, mt: 1, borderRadius: 8 }}>
                     <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
@@ -107,21 +106,27 @@ class AppletPage extends Page {
     render() {
 
         return (this.pageRender(this, function RenderAppletPage({ component }) {
+
+
+            const menu = {
+                right: [
+                    {
+                        name: '?',
+                        action: () => console.log("help message")
+                    },
+                ],
+                left: {
+                    name: "Cancel",
+                    redirectUrl: "/"
+                }
+            }
+
             return (
                 <ThemeProvider theme={theme}>
                     {component.showDialogs()}
-                    <Box sx={{ pb: 2, mx: 2 }} style={styles.topBar.main}>
-                        <Box style={styles.topBar.leftMenu}>
-                            <Button onClick={() => component.onClose()}>Close</Button>
-                        </Box>
-                        <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
-                            <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
-                        </Box>
-                        <Box style={styles.topBar.rightMenu}>
-                            <IconButton onClick={() => component.onClickHelp()}>
-                                <FaQuestion size={40} />
-                            </IconButton>
-                        </Box>
+                    <Header component={component} menu={menu} />
+                    <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
+                        <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
                     </Box>
                     <Box style={styles.content}>
                         <Container>
