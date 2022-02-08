@@ -20,7 +20,7 @@ const menu = [
             borderRadius: '50px',
             borderColor: 'white',
             fontFamily: 'Dongle',
-            fontSize: '50px',
+            fontSize: '45px',
             textTransform: "none",
             color: "white"
         },

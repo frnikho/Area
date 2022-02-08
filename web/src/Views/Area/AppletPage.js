@@ -107,7 +107,6 @@ class AppletPage extends Page {
     render() {
 
         return (this.pageRender(this, function RenderAppletPage({ component }) {
-
             return (
                 <ThemeProvider theme={theme}>
                     {component.showDialogs()}
