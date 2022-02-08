@@ -9,7 +9,7 @@ export default function Header({ component, menu }) {
         <Box sx={{ pb: 2, mx: 2 }} style={Style.bar}>
             <Box style={Style.menuLeft}>
                 <Button
-                    onClick={() => (menu.left.action && menu.left.action()) || (menu.left.redirectUrl && component.setRedirectUrl(menu.left.redirectUrl))}
+                    onClick={() => (menu.left.action && menu.left.action())}
                     style={menu.left.style || { fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>
                     {menu.left.name || "Epitech 2022 Project"}
                 </Button>

@@ -12,7 +12,7 @@ export default function MenuDashboard({ props, menu }) {
                 variant={menu.variant || "text"}
                 style={menu.style || Style.buttonMenu}
                 key={key}
-                onClick={() => (menu.action && menu.action()) || (menu.redirectUrl && props.setRedirectUrl(menu.redirectUrl))}>
+                onClick={() => (menu.action && menu.action())}>
                 {menu.name}
             </Button>
         )
