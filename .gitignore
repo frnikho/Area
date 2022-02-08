@@ -1,6 +1,7 @@
 .idea
 **/build
 **/node_modules
-server/.env
+**/.env
 **/package-lock.json
 .vscode
+temp
