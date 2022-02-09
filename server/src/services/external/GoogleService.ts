@@ -19,7 +19,7 @@ export default class GoogleService {
 
     public static sendWatchGmail(token: string, userEmail: string, topicName: string, callback: (successData: object | null, error: string | null) => void): void {
         axios.post(`https://gmail.googleapis.com/gmail/v1/users/${userEmail}/watch/`, {
-            topicName: topicName,
+            topicName,
             labelIds: ["SENT"]
         }, buildAuthorizationHeaders(token)).then((response) => {
             if (response.status === 200)
