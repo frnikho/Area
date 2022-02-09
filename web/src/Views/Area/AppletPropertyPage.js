@@ -8,7 +8,7 @@ import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleAppletProperty"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
-import { withParams } from "../../utils/NavigateTools"
+import { withParams } from "../../Utils/NavigateTools"
 
 export default withCookies(withParams(class AppletPropertyPage extends Page {
 

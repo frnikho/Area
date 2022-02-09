@@ -39,7 +39,7 @@ export default withCookies(class DescriptionPage extends Page {
                         <div style={Style.rect}>
                             <div style={Style.description}>
                                 What is Area ?
-                                <div style={Style.littleSpace} />
+                                <div style={Style.space} />
                                 Area is a web service that allows its users to create simple instruction strings called applets.
                                 An applet is triggered by changes in web services such as Gmail, Discord or slack.
                             </div>
