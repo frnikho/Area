@@ -26,7 +26,6 @@ export default class UserApplets extends Component {
     getUserApplets() {
         new AppletsController().getUsersApplets((status, response) => {
             if (status) {
-                console.log(response);
                 this.setState({ userApplets: response });
             }
         });
