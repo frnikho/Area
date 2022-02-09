@@ -6,7 +6,7 @@ COPY . /app
 
 # Install dependencies
 
-RUN npm install
+RUN npm install --force
 
 WORKDIR /app/android/
 

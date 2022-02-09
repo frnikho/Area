@@ -12,7 +12,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="action">
                 <Button mode="contained" style={styles.actionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>Action</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>If this</Text>
                 </Button>
             </View>
         );
@@ -22,7 +22,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="reaction">
                 <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions'})}>
-                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Reaction</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then that</Text>
                 </Button>
             </View>
         );
@@ -50,7 +50,6 @@ export default class AppletsScreen extends Component {
 
 const styles = StyleSheet.create({
     appletsMainView: {
-      backgroundColor: "#DCDCDC",
       flex: 1,
     },
     backArrow: {
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         justifyContent: 'center',
-        backgroundColor: "#222222",
+        backgroundColor: "#999999",
     },
     reactionText: {
         color: "#ffffff",
