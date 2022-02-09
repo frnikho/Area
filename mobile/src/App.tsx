@@ -73,7 +73,7 @@ export default class App extends Component {
 
   renderRouter() {
     if (this.state.isLoggedIn !== undefined) {
-      return <Router isLoggedIn={!this.state.isLoggedIn} />
+      return <Router isLoggedIn={this.state.isLoggedIn} />
     }
   }
 

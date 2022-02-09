@@ -12,7 +12,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="action">
                 <Button mode="contained" style={styles.actionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>If This</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>If this</Text>
                 </Button>
             </View>
         );
@@ -21,8 +21,8 @@ export default class AppletsScreen extends Component {
     reactionButtonRender() {
         return (
             <View id="reaction">
-                <Button mode="contained" style={styles.reactionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then That</Text>
+                <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions'})}>
+                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then that</Text>
                 </Button>
             </View>
         );

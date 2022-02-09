@@ -16,8 +16,8 @@ const Router = ({isLoggedIn}:boolean) => {
           <Stack.Screen name="login" component={LoginScreen} />
           <Stack.Screen name="register" component={RegisterScreen} />
           <Stack.Screen name="home" component={HomeScreen} />
-          <Stack.Screen name="services" component={ServicesScreen} />
           <Stack.Screen name="applets" component={AppletsScreen} />
+          <Stack.Screen name="services" component={ServicesScreen} />
         </Stack.Navigator>
     );
 }
