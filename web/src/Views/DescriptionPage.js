@@ -1,5 +1,6 @@
 import { ThemeProvider, } from "@mui/material";
 import { withCookies } from "react-cookie";
+import {CssBaseline} from "@mui/material"
 
 import ControllerDescription from "../Controllers/ControllerDescription"
 import Page from "./Page"
@@ -31,6 +32,7 @@ export default withCookies(class DescriptionPage extends Page {
             }
             return (
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />

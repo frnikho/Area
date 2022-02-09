@@ -1,4 +1,4 @@
-import { Box, Button, Container, ThemeProvider, TextField, Typography, } from "@mui/material";
+import { Box, Button, Container, ThemeProvider, TextField, Typography, CssBaseline} from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import implement from 'implement-js'
@@ -82,6 +82,7 @@ export default withCookies(class RegisterPage extends Page {
             }
             return (
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <Header component={component} menu={menu} />
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

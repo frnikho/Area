@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, Box } from "@mui/material";
+import { ThemeProvider, Box, CssBaseline } from "@mui/material";
 import Button from '@mui/material/Button';
 import { FaUser } from "react-icons/fa";
 
@@ -29,7 +29,7 @@ export default withCookies(class ProfilePage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl({url: '/auth/login'})
+            this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.authContext.getUser() })
             this.setState({ token: this.authContext.getToken() })
@@ -67,15 +67,15 @@ export default withCookies(class ProfilePage extends Page {
                             color: "white"
                         },
                         variant: "contained",
-                        action: () => component.setRedirectUrl({url: "/area/applets"})
+                        action: () => component.setRedirectUrl({ url: "/area/applets" })
                     },
                     {
                         name: 'Area',
-                        action: () => component.setRedirectUrl({url: "/description"})
+                        action: () => component.setRedirectUrl({ url: "/description" })
                     },
                     {
                         name: 'My applets',
-                        action: () => component.setRedirectUrl({url: "/area/dashboard"})
+                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                     },
                     {
                         name: 'Profile',
@@ -89,6 +89,7 @@ export default withCookies(class ProfilePage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

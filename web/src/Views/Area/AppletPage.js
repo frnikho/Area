@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography } from "@mui/material";
+import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography,CssBaseline } from "@mui/material";
 import { styles } from "../../Resources/Styles/AppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
@@ -118,6 +118,7 @@ export default class AppletPage extends Page {
 
             return (
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     {component.showDialogs()}
                     <Header component={component} menu={menu} />
                     <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>

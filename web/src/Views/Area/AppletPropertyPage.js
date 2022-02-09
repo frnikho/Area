@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, Grid, Box } from "@mui/material";
+import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"
@@ -74,12 +74,17 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     action: () => console.log("hello world")
                 }
             }
+
             return (
                 <ThemeProvider theme={theme}>
-                    <Header component={component} menu={menu} />
-                    <div style={Style.container}>
-                        My applets
-                    </div>
+                    <CssBaseline />
+                    <CssBaseline />
+                    <Box style={{ backgroundColor: "grey" }}>
+                        <Header component={component} menu={menu} />
+                        <div style={Style.container}>
+                            My applets
+                        </div>
+                    </Box>
                 </ThemeProvider >
             )
         }));

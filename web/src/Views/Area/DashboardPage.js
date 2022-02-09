@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, Grid, Box } from "@mui/material";
+import { ThemeProvider, Grid, Box,CssBaseline } from "@mui/material";
 
 import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
@@ -91,6 +91,7 @@ export default withCookies(class DashboardPage extends Page {
             }
             return (
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         My applets
