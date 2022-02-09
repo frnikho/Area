@@ -11,6 +11,7 @@ import {
 import app from "../../Components/utils/Axios";
 import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
 import GithubRepositoryDeletedDialog from "./actions/GithubRepositoryDeletedDialog";
+import GithubNewPushRepositoryDialog from "./actions/GithubNewPushRepositoryDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -51,13 +52,11 @@ export default class ActionDialog extends React.Component {
                 {this.state.services.map((service, indexS) => {
                     return (
                         <Box key={indexS}>
-                            <Box textAlign={"start"} sx={{m:4}}>
-                                <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{display: "flex", alignItems: "center", justifyContent: "start"}}>{service.name}
-
-                                    <img src={`https://localhost:8080/static/${service.icon}`} width={50}/>
-
-
+                            <Box textAlign={"start"} sx={{my: 2, display: "flex", alignItems: "center", justifyContent: "start"}}>
+                                <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{mx: 2}}>
+                                    {service.name}
                                 </Typography>
+                                <img src={`https://localhost:8080/static/${service.icon}`} width={58}/>
                             </Box>
                             <div>
                                 <Grid container spacing={2} direction="row" justifyContent="center">
@@ -89,6 +88,8 @@ export default class ActionDialog extends React.Component {
             return;
         if (this.state.dialog === "GITHUB_REPOSITORY_DELETED") {
             return <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} action={this.state.action} service={this.state.service}/>
+        } else if (this.state.dialog === "GITHUB_REPOSITORY_PUSH") {
+            return <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} action={this.state.action} service={this.state.service}/>
         }
     }
 

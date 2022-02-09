@@ -45,7 +45,7 @@ export class SystemDialog extends React.Component {
                     <Typography fontFamily={"Roboto"} fontSize={34} fontWeight={"700"}>
                         {this.props.action.name}
                     </Typography>
-                    <Typography fontFamily={"Roboto"} fontSize={20} color={"white"}>{this.props.action.description}</Typography>
+                    <Typography fontFamily={"Roboto"} fontSize={20}>{this.props.action.description}</Typography>
                 </Box>
                 <DialogContent>
                     {this.renderDialogContent()}
