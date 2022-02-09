@@ -117,7 +117,7 @@ export default class App {
 
         // DOCUMENTATION ROUTE
         this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions), {
-            customSiteTitle: 'Dashboard API - Documentation',
+            customSiteTitle: 'Area API - Documentation',
         }));
         // 404 ROUTE
         // this.app.use('*', RouteNotFoundMiddleware);

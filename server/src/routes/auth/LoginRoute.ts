@@ -4,6 +4,41 @@ import express = require('express');
 import UserController from "../../controllers/UserController";
 import JWTService from "../../services/JWTService";
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     description: Login user
+ *     consumes:
+ *       - application/json
+ *     requestBody:
+ *       description: Login Body Request
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginBody'
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *       400:
+ *         description: Error while login
+ * components:
+ *   schemas:
+ *     LoginBody:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           required: true
+ *         password:
+ *           type: string
+ *           required: true
+ *       required: true
+ */
+
 export default class LoginRoute extends Route {
 
     constructor() {
@@ -30,29 +65,6 @@ export default class LoginRoute extends Route {
         next();
     }
 
-    /**
-     * @openapi
-     * /auth/login:
-     *   post:
-     *     tags:
-     *       - Authentication
-     *     description: Login user
-     *     consumes:
-     *       - application/x-www-form-urlencoded
-     *     parameters:
-     *      - name: email
-     *        type: string
-     *        required: true
-     *      - name: password
-     *        type: string
-     *        required: true
-     *     required: true
-     *     responses:
-     *       200:
-     *         description: Successful login
-     *       400:
-     *         description: Error while login
-     */
     private post(req: express.Request, res: express.Response): void {
         new UserController().login(req['email'], req['password'], (user) => {
             return res.status(200).json({success: true, token: new JWTService({
