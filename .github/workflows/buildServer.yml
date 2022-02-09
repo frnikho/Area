@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install all dependencies
-        run: npm i
+        run: npm i --force
         working-directory: server
       - name: create .env file
         run: |
