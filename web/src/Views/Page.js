@@ -20,7 +20,13 @@ export default class Page extends React.Component {
 
     getUrl() { return this.state.redirectUrl }
 
-    setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
+    setRedirectUrl(url) {
+
+        if (url && url.params)
+            url.url += "/:" + url.params
+        console.log(url)
+        this.setState({ redirectUrl: url })
+    }
 
     setNotification(value) {
         this.setState({ notification: value });

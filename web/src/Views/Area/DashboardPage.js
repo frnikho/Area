@@ -67,7 +67,7 @@ export default withCookies(class DashboardPage extends Page {
                             color: "white"
                         },
                         variant: "contained",
-                        action: () => component.setRedirectUrl({url: "/area/applets"})
+                        action: () => component.setRedirectUrl({url: "/area/applets/add"})
                     },
                     {
                         name: 'Area',
@@ -79,6 +79,10 @@ export default withCookies(class DashboardPage extends Page {
                     {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({url: "/area/profile"})
+                    },
+                    {
+                        name: 'applets test',
+                        action: () => component.setRedirectUrl({url: "/area/applets/property", params: 1234})
                     },
                 ],
                 left: {

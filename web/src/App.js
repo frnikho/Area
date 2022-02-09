@@ -53,7 +53,10 @@ class App extends React.Component {
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
-                        <Route path="applets" element={<AppletPage />} />
+                        <Route path="applets">
+                            <Route path="add" element={<AppletPage />} />
+                            {/* <Route path="property/:id" element={<AppletPage />} /> */}
+                        </Route>
                         <Route path={"dashboard"} element={<DashboardPage />} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
