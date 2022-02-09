@@ -12,7 +12,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="action">
                 <Button mode="contained" style={styles.actionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>Action</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>Action</Text>
                 </Button>
             </View>
         );
@@ -21,7 +21,7 @@ export default class AppletsScreen extends Component {
     reactionButtonRender() {
         return (
             <View id="reaction">
-                <Button mode="contained" style={styles.reactionButton}>
+                <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions'})}>
                     <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Reaction</Text>
                 </Button>
             </View>
@@ -39,7 +39,7 @@ export default class AppletsScreen extends Component {
     render() {
         return (
             <View id="appletsMainView" style={styles.appletsMainView}>
-                <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.navigate('home')}/>
+                <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.goBack()}/>
                 {this.mainTextRender()}
                 {this.actionButtonRender()}
                 {this.reactionButtonRender()}
