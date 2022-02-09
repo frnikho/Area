@@ -16,6 +16,28 @@ const useStyles = {
         fontFamily: "Dongle",
         fontSize: "60px",
     },
+    roundButtonFull: {
+        paddingTop: "6px",
+        background: "black",
+        height: "50%",
+        borderRadius: '50px',
+        borderColor: 'white',
+        fontFamily: 'Dongle',
+        fontSize: '45px',
+        textTransform: "none",
+        color: "white"
+    },
+    roundButtonEmpty: {
+        paddingLeft: "30px",
+        paddingRight: "30px",
+        paddingTop: "6px",
+        background: "transparent",
+        borderRadius: '40px',
+        borderColor: "black",
+        fontFamily: 'Dongle',
+        fontSize: '25px',
+        color: "black",
+    },
     space: {
         margin: "125px",
     }

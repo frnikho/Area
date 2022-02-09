@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, Grid, Box,CssBaseline } from "@mui/material";
+import { ThemeProvider, Grid, Box, CssBaseline } from "@mui/material";
 
 import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
@@ -27,7 +27,7 @@ export default withCookies(class DashboardPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl({url: '/auth/login'})
+            this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.authContext.getUser() })
         }
@@ -55,38 +55,28 @@ export default withCookies(class DashboardPage extends Page {
                 right: [
                     {
                         name: 'Create',
-                        style: {
-                            paddingTop: "6px",
-                            background: "black",
-                            height: "50%",
-                            borderRadius: '50px',
-                            borderColor: 'white',
-                            fontFamily: 'Dongle',
-                            fontSize: '45px',
-                            textTransform: "none",
-                            color: "white"
-                        },
+                        style: Style.roundButtonFull,
                         variant: "contained",
-                        action: () => component.setRedirectUrl({url: "/area/applets/add"})
+                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
                     },
                     {
                         name: 'Area',
-                        action: () => component.setRedirectUrl({url: "/description"})
+                        action: () => component.setRedirectUrl({ url: "/description" })
                     },
                     {
                         name: 'My applets',
                     },
                     {
                         name: 'Profile',
-                        action: () => component.setRedirectUrl({url: "/area/profile"})
+                        action: () => component.setRedirectUrl({ url: "/area/profile" })
                     },
                     {
                         name: 'applets test',
-                        action: () => component.setRedirectUrl({url: "/area/applets/property", params: 1234})
+                        action: () => component.setRedirectUrl({ url: "/area/applets/property", params: 1234 })
                     },
                 ],
                 left: {
-                    action : () => console.log("hello world")
+                    action: () => console.log("hello world")
                 }
             }
             return (
