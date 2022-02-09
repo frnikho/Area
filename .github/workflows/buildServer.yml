@@ -20,6 +20,58 @@ jobs:
       - name: Install all dependencies
         run: npm i
         working-directory: server
+      - name: create .env file
+        run: |
+          touch .env
+          echo "DB_HOST =${{ secrets.DB_HOST }}" >> .env
+          echo "DB_USER =${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD =${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_DATABASE =${{ secrets.DB_DATABASE }}" >> .env
+
+          echo "PORT =${{ secrets.PORT }}" >> .env
+
+          echo "SWAGGER_SERVER_ENDPOINT =${{ secrets.SWAGGER_SERVER_ENDPOINT }}" >> .env
+
+          echo "EMAIL_SMTP_HOST =${{ secrets.EMAIL_SMTP_HOST }}" >> .env
+          echo "EMAIL_SMTP_USER =${{ secrets.EMAIL_SMTP_USER }}" >> .env
+
+          echo "JWT_SECRET =${{ secrets.JWT_SECRET }}" >> .env
+
+          echo "GITHUB_WEBHOOK_SECRET =${{ secrets.GITHUB_WEBHOOK_SECRET }}" >> .env
+
+          echo "GITHUB_CLIENT_ID =${{ secrets.GITHUB_CLIENT_ID }}" >> .env
+          echo "GITHUB_CLIENT_SECRET =${{ secrets.GITHUB_CLIENT_SECRET }}" >> .env
+          echo "GITHUB_REDIRECT_URL =${{ secrets.GITHUB_REDIRECT_URL }}" >> .env
+
+          echo "GOOGLE_APPLICATION_CREDENTIALS =${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" >> .env
+          echo "GOOGLE_PROJECT_ID =${{ secrets.GOOGLE_PROJECT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_ID =${{ secrets.GOOGLE_CLIENT_ID }} " >> .env
+          echo "GOOGLE_CLIENT_SECRET =${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "GOOGLE_REDIRECT_URL =${{ secrets.GOOGLE_REDIRECT_URL }}" >> .env
+
+          echo "GITHUB_SERVICES_CLIENT_ID =${{ secrets.GITHUB_SERVICES_CLIENT_ID }}" >> .env
+          echo "GITHUB_SERVICES_SECRET =${{ secrets.GITHUB_SERVICES_SECRET }}" >> .env
+          echo "GITHUB_SERVICES_REDIRECT_URL =${{ secrets.GITHUB_SERVICES_REDIRECT_URL }}" >> .env
+
+          echo "SLACK_BOT_TOKEN =${{ secrets.SLACK_BOT_TOKEN }}" >> .env
+          echo "SLACK_SERVICES_CLIENT_ID =${{ secrets.SLACK_SERVICES_CLIENT_ID }}" >> .env
+          echo "SLACK_SERVICES_CLIENT_SECRET =${{ secrets.SLACK_SERVICES_CLIENT_SECRET }}" >> .env
+
+          echo "DISCORD_SERVICES_CLIENT_ID =${{ secrets.DISCORD_SERVICES_CLIENT_ID }}" >> .env
+          echo "DISCORD_SERVICES_CLIENT_SECRET =${{ secrets.DISCORD_SERVICES_CLIENT_SECRET }}" >> .env
+          echo "DISCORD_SERVICES_BOT_TOKEN =${{ secrets.DISCORD_SERVICES_BOT_TOKEN }}" >> .env
+          echo "DISCORD_SERVICES_REDIRECT_URL =${{ secrets.DISCORD_SERVICES_REDIRECT_URL }}" >> .env
+
+          echo "TWITTER_SERVICES_CLIENT_ID =${{ secrets.TWITTER_SERVICES_CLIENT_ID }}" >> .env
+          echo "TWITTER_SERVICES_CLIENT_SECRET =${{ secrets.TWITTER_SERVICES_CLIENT_SECRET }}" >> .env
+          echo "TWITTER_SERVICES_REDIRECT_URL =${{ secrets.TWITTER_SERVICES_REDIRECT_URL }}" >> .env
+
+          echo "GITHUB_WEBHOOK_URL =${{ secrets.GITHUB_WEBHOOK_URL }}" >> .env
+
+          echo "NODE_ENV =${{ secrets.NODE_ENV }}" >> .env
+
+
+        working-directory: "server"
       - name: Create production build for server
         run: npm run build
         working-directory: server
