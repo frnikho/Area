@@ -1,5 +1,5 @@
 // import Controller from "../Controller"
-import app, { config } from "../../utils/Axios";
+import app, { config } from "../../Utils/Axios";
 
 export default class ControllerDashboard {
 

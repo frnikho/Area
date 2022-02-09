@@ -1,5 +1,5 @@
 // import Controller from "../Controller"
-// import app, { config } from "../../Components/utils/Axios";
+// import app, { config } from "../../Components/Utils/Axios";
 
 export default class ControllerService {
 
