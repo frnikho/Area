@@ -26,6 +26,7 @@ export default class UserApplets extends Component {
     getUserApplets() {
         new AppletsController().getUsersApplets((status, response) => {
             if (status) {
+                console.log(response);
                 this.setState({ userApplets: response });
             }
         });
@@ -54,7 +55,7 @@ export default class UserApplets extends Component {
      * Generate user's applets
      */
     myApplets() {
-        if (this.state.userApplets === undefined) {
+        if (this.state.userApplets === undefined || this.state.userApplets.length === 0) {
             return (
                 <Text bold style={styles.noAppletsText} fontFamily="body" fontWeight={400} fontSize="3xl">You havn't applets</Text>
             );
