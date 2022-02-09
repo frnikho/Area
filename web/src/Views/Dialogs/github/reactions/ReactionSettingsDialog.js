@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {MdClose} from "react-icons/md";
 
-export class SystemDialog extends React.Component {
+export class ReactionSettingsDialog extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,8 +25,8 @@ export class SystemDialog extends React.Component {
         this.props.onClose();
     }
 
-    onCreate () {
-
+    onCreate (data) {
+        console.log("data: ", data);
     }
 
     validate() {
@@ -43,15 +43,15 @@ export class SystemDialog extends React.Component {
                 </DialogActions>
                 <Box textAlign={"start"} sx={{mx: 4}}>
                     <Typography fontFamily={"Roboto"} fontSize={34} fontWeight={"700"}>
-                        {this.props.action.name}
+                        {this.props.reaction.name}
                     </Typography>
-                    <Typography fontFamily={"Roboto"} fontSize={20}>{this.props.action.description}</Typography>
+                    <Typography fontFamily={"Roboto"} fontSize={20}>{this.props.reaction.description}</Typography>
                 </Box>
                 <DialogContent>
                     {this.renderDialogContent()}
                 </DialogContent>
                 <DialogActions>
-                    <Button variant={"contained"} disabled={!this.state.valid} onClick={() => this.onCreate()}>Create</Button>
+                    {this.renderCreateButton()}
                 </DialogActions>
             </Dialog>
         );
@@ -61,11 +61,15 @@ export class SystemDialog extends React.Component {
         throw new Error("renderDialogContent must be override !");
     }
 
+    renderCreateButton() {
+
+    }
+
 
 }
 
-SystemDialog.propTypes = {
-    action: PropTypes.object.isRequired,
+ReactionSettingsDialog.propTypes = {
+    reaction: PropTypes.object.isRequired,
     service: PropTypes.object.isRequired,
     onClose: PropTypes.func
 }

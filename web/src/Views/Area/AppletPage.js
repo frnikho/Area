@@ -26,8 +26,15 @@ class AppletPage extends React.Component {
         this.onClickAddAction = this.onClickAddAction.bind(this);
     }
 
-    onActionSelected(action) {
-        console.log(action);
+    onActionSelected(action, actionAbout, serviceAbout) {
+        console.log(action, actionAbout, serviceAbout);
+        this.setState({
+            action: {
+                data: action,
+                about: actionAbout,
+                service: serviceAbout,
+            },
+        })
     }
 
     onReactionSelected(reaction) {
@@ -70,14 +77,13 @@ class AppletPage extends React.Component {
         if (this.state.currentDialog === "ACTION_DIALOG")
             return <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog}/>
         if (this.state.currentDialog === "REACTION_DIALOG")
-            return <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog}/>
+            return <ReactionDialog currentAction={this.state.action} onSelected={this.onReactionSelected} onClose={this.onCloseDialog}/>
         if (this.state.currentDialog === "HELP_DIALOG")
             return <HelpDialog onClose={this.onCloseDialog}/>
     }
 
     showActionButton() {
         if (this.state.action === undefined) {
-
             return (
                 <Paper sx={{backgroundColor: "#222222", mb:4, mt: 1, borderRadius: 8}}>
                     <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
@@ -88,14 +94,26 @@ class AppletPage extends React.Component {
                 </Paper>
             )
         } else {
-
+            return (
+                <Paper sx={{backgroundColor: `${this.state.action.service.color}`, mb:4, mt: 1, borderRadius: 8}}>
+                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
+  {/*                          <Box sx={{mb: 2}}>
+                                <MdEditNote color={"white"} size={24}/>
+                            </Box>*/}
+                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50}/>
+                            <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{this.state.action.about.name}</Typography>
+                        </Box>
+                    </ButtonBase>
+                </Paper>
+            )
         }
     }
 
     showReactionButton() {
         if (this.state.reactions.length === 0) {
             return (<Paper sx={{backgroundColor: "#999999", borderRadius: 8}}>
-                <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
+                <ButtonBase disabled={this.state.action === undefined} sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
                     <Box sx={{width: 600, p: 3, borderRadius: 8}}>
                         <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40}/></Typography>
                     </Box>

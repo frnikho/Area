@@ -10,8 +10,14 @@ import {
 } from "@mui/material";
 import app from "../../Components/utils/Axios";
 import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
-import GithubRepositoryDeletedDialog from "./actions/GithubRepositoryDeletedDialog";
-import GithubNewPushRepositoryDialog from "./actions/GithubNewPushRepositoryDialog";
+import GithubRepositoryDeletedDialog from "./github/actions/GithubRepositoryDeletedDialog";
+import GithubNewPushRepositoryDialog from "./github/actions/GithubNewPushRepositoryDialog";
+import PropTypes from "prop-types";
+import GithubReleaseCreatedDialog from "./github/actions/GithubReleaseCreatedDialog";
+import GithubIssueOpenedDialog from "./github/actions/GithubIssueOpenedDialog";
+import GithubIssueClosedDialog from "./github/actions/GithubIssueClosedDialog";
+import GithubIssueReopenedDialog from "./github/actions/GithubIssueReopenedDialog";
+import GithubRepositoryCreatedDialog from "./github/actions/GithubRepositoryCreatedDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -24,6 +30,7 @@ export default class ActionDialog extends React.Component {
             dialog: undefined,
         }
         this.onDialogsClosed = this.onDialogsClosed.bind(this);
+        this.onActionCreated = this.onActionCreated.bind(this);
     }
 
     componentDidMount() {
@@ -74,8 +81,8 @@ export default class ActionDialog extends React.Component {
             </List>)
     }
 
-    onDialogsClosed(intentional) {
-        if (intentional) {
+    onDialogsClosed(onlyDialog) {
+        if (onlyDialog) {
             this.setState({dialog: undefined});
         } else {
             this.setState({dialog: undefined});
@@ -83,14 +90,25 @@ export default class ActionDialog extends React.Component {
         }
     }
 
+    onActionCreated(data) {
+        this.onDialogsClosed(false);
+        this.props.onSelected(data, this.state.action, this.state.service);
+    }
+
     showDialogs() {
         if (this.state.dialog === undefined)
             return;
-        if (this.state.dialog === "GITHUB_REPOSITORY_DELETED") {
-            return <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} action={this.state.action} service={this.state.service}/>
-        } else if (this.state.dialog === "GITHUB_REPOSITORY_PUSH") {
-            return <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} action={this.state.action} service={this.state.service}/>
+
+        const data = {
+            GITHUB_REPOSITORY_DELETED: <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_REPOSITORY_PUSH: <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_RELEASE_CREATED: <GithubReleaseCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
         }
+        return data[this.state.dialog];
     }
 
     showMainDialog() {
@@ -124,4 +142,9 @@ export default class ActionDialog extends React.Component {
             </div>
         );
     }
+}
+
+ActionDialog.propTypes = {
+    onSelected: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 }
