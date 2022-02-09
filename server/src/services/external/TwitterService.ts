@@ -18,7 +18,7 @@ export default class TwitterService {
      */
     public SendTweet(userAccesToken: string, userUuid: string, message: string, callback: (status: boolean, response: string) => void) {
 
-        let body = {
+        const body = {
             text: message
         }
 
@@ -35,20 +35,20 @@ export default class TwitterService {
             }
             if (response.response.status !== undefined && response.response.status === 401) {
                 console.log("access_token of " + userUuid + " users has been expired");
-                this.refreshToken(userUuid, userAccesToken, (status, response) => {
-                    if (status) {
+                this.refreshToken(userUuid, userAccesToken, (refreshStatus, refreshResponse) => {
+                    if (refreshStatus) {
                         console.log("New access_token has been generated for user : " + userUuid);
                         this.post("https://api.twitter.com/2/tweets", body,
                         {
                             headers: {
                                 "Content-type": "application/json",
-                                "Authorization": "Bearer " + response.new_access_token
+                                "Authorization": "Bearer " + refreshResponse.new_access_token
                             }
-                        }, (status, response) => {
-                            return callback(status, response);
+                        }, (refreshStatusCb, refreshResponseCb) => {
+                            return callback(refreshStatusCb, refreshResponseCb);
                         });
                     } else {
-                        return callback(status, response);
+                        return callback(refreshStatus, refreshResponse);
                     }
                 });
             }
@@ -67,12 +67,12 @@ export default class TwitterService {
         new ServiceController().getTokenByAccessTokenAndService(userUuid, Services.TWITTER.valueOf(), accessToken, (status, response) => {
             if (status) {
                 // Refresh token
-                let string = utf8.encode(process.env.TWITTER_SERVICES_CLIENT_ID + ":" + process.env.TWITTER_SERVICES_CLIENT_SECRET);
+                const authStr = utf8.encode(process.env.TWITTER_SERVICES_CLIENT_ID + ":" + process.env.TWITTER_SERVICES_CLIENT_SECRET);
 
                 const headers = {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
-                        "Authorization": "Basic " + utf8.decode(Buffer.from(string).toString("base64"))
+                        "Authorization": "Basic " + utf8.decode(Buffer.from(authStr).toString("base64"))
                     }
                 };
 
@@ -81,9 +81,9 @@ export default class TwitterService {
                 params.append("grant_type", "refresh_token");
                 params.append("refresh_token", response.token["refresh_token"]);
 
-                this.post("https://api.twitter.com/2/oauth2/token", params, headers, (status, postReponse) => {
-                    if (status) {
-                        let token: TokenData = {
+                this.post("https://api.twitter.com/2/oauth2/token", params, headers, (statusPost, postReponse) => {
+                    if (statusPost) {
+                        const token: TokenData = {
                             key: response.key,
                             created_at: response.created_at,
                             type: response.type,
@@ -93,13 +93,13 @@ export default class TwitterService {
                             }
                         }
                         // Update token by key and service in DB
-                        new ServiceController().updateTokenByKeyAndService(token, userUuid, (status, response) => {
-                            if (status)
-                                return callback(status, {msg: response, new_access_token: postReponse.data.access_token});
-                            return callback(status, response);
+                        new ServiceController().updateTokenByKeyAndService(token, userUuid, (updateStatus, updateResponse) => {
+                            if (updateStatus)
+                                return callback(updateStatus, {msg: updateResponse, new_access_token: postReponse.data.access_token});
+                            return callback(updateStatus, updateResponse);
                         });
                     } else
-                        return callback(status, response)
+                        return callback(statusPost, response)
                 });
             } else
                 return callback(status, response);

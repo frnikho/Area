@@ -3,11 +3,11 @@ import {GithubUser} from "../../models/GithubUser";
 import {TokenData} from "../../controllers/ServiceController";
 
 type successRefresh = (data: object) => void;
-type error = (error: string) => void;
+type errorFnc = (error: string) => void;
 
 export default class GithubService {
 
-    public static refreshToken(token: TokenData, clientId: string, clientSecret: string, success: successRefresh, error: error) {
+    public static refreshToken(token: TokenData, clientId: string, clientSecret: string, success: successRefresh, error: errorFnc) {
         axios.post(`https://github.com/login/oauth/access_token`, {
             refresh_token: token.token['refresh_token'],
             grant_type: 'refresh_token',

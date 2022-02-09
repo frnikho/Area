@@ -1,7 +1,7 @@
 import {Express} from "express";
 
-import express from 'express';
-import dotenv from 'dotenv';
+import express = require('express');
+import dotenv = require('dotenv');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -25,7 +25,6 @@ import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
-import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
 import {GooglePubSub} from "./clients/GooglePubSub";
 
@@ -50,9 +49,14 @@ export default class App {
 
     constructor() {
         this.initConfig();
-        this.port = Number.parseInt(process.env.PORT, 1) || DEFAULT_PORT;
-        this.privateKey = fs.readFileSync("./sslCredentials/sslKey.key", "utf8");
-        this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
+        this.port = Number.parseInt(process.env.PORT) || DEFAULT_PORT;
+        if (process.env.NODE_ENV === "DEV") {
+            this.privateKey = fs.readFileSync("./sslCredentials/sslKey.key", "utf8");
+            this.privateCertificate = fs.readFileSync("./sslCredentials/sslCertificate.crt", "utf8");
+        } else {
+            this.privateKey = fs.readFileSync("/etc/letsencrypt/live/nikho.dev/privkey.pem", "utf8");
+            this.privateCertificate = fs.readFileSync("/etc/letsencrypt/live/nikho.dev/cert.pem", "utf8");
+        }
         this.app = express();
         this.initMiddlewares();
         this.initWebhooks();
@@ -102,7 +106,6 @@ export default class App {
         new GithubServiceRoute().register(this.app, '/services/github');
         new SlackServiceRoute().register(this.app, '/services/slack');
         new DiscordServiceRoute().register(this.app, '/services/discord');
-        new TrelloServiceRoute().register(this.app, '/services/trello');
         new TwitterServiceRoute().register(this.app, '/services/twitter');
         new SpotifyServiceRoute().register(this.app, '/services/spotify');
 
@@ -114,14 +117,14 @@ export default class App {
 
         // DOCUMENTATION ROUTE
         this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions), {
-            customSiteTitle: 'Dashboard API - Documentation',
+            customSiteTitle: 'Area API - Documentation',
         }));
         // 404 ROUTE
         // this.app.use('*', RouteNotFoundMiddleware);
     }
 
     public start(port?: number): void {
-        this.tcpSocket = this.server.listen(port || this.port, () => {
+        this.tcpSocket = this.server.listen(8080, () => {
             Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }

@@ -12,8 +12,8 @@ export default class EncryptService {
         bcrypt.genSalt(10, (err, salt) => {
             if (err)
                 return result(undefined);
-           bcrypt.hash(this.data, salt, (err, hash) => {
-               if (err)
+           bcrypt.hash(this.data, salt, (errCb, hash) => {
+               if (errCb)
                    return result(undefined);
                result(hash);
            })

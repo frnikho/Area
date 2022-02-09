@@ -48,7 +48,7 @@ export default class SlackServiceRoute extends Route {
         params.append('client_secret', process.env.SLACK_SERVICES_CLIENT_SECRET);
 
         new ServiceAuthRoute().getRequest("https://slack.com/api/oauth.v2.access", params, req['user']['uuid'], Services.SLACK.valueOf(), (token) => {
-            return res.status(200).json({success: true, token: token});
+            return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
         });
@@ -95,7 +95,7 @@ export default class SlackServiceRoute extends Route {
             new ServiceController().getTokenByKeyAndService(req['user']['uuid'],  Services.SLACK.valueOf(), key, (token) => {
                 if (token === undefined)
                     return res.status(400).json({success: false, error: "Error during query."});
-                new SlackService().ListChannelsOfTeam(new SlackBot((<TokenData>token).token["access_token"]), (allChannels) => {
+                new SlackService().ListChannelsOfTeam(new SlackBot((token as TokenData).token["access_token"]), (allChannels) => {
                     return res.status(200).json({success: true, channels: allChannels});
                 }, (err) => {
                     return res.status(400).json({success: false, error: err});

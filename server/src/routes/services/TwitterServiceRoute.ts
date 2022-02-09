@@ -8,7 +8,7 @@ const utf8 = require('utf8');
 
 export default class TwitterServiceRoute extends Route {
 
-    private static code_verifier: any;
+    private static codeVerifier: any;
 
     /**
      * Constructor
@@ -47,25 +47,25 @@ export default class TwitterServiceRoute extends Route {
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
-        const code_verifier: string = req.query['code_verifier'] as string;
+        const codeVerifier: string = req.query['code_verifier'] as string;
 
-        let string = utf8.encode(process.env.TWITTER_SERVICES_CLIENT_ID + ":" + process.env.TWITTER_SERVICES_CLIENT_SECRET);
+        const authStr = utf8.encode(process.env.TWITTER_SERVICES_CLIENT_ID + ":" + process.env.TWITTER_SERVICES_CLIENT_SECRET);
         const headers = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Basic " + utf8.decode(Buffer.from(string).toString("base64"))
+                "Authorization": "Basic " + utf8.decode(Buffer.from(authStr).toString("base64"))
             }
         };
 
         const params = new URLSearchParams();
         params.append('code', code);
         params.append('client_id', process.env.TWITTER_SERVICES_CLIENT_ID);
-        params.append("code_verifier", (code_verifier === undefined || code_verifier.length == 0 ? TwitterServiceRoute.code_verifier : code_verifier));
+        params.append("code_verifier", (codeVerifier === undefined || codeVerifier.length === 0 ? TwitterServiceRoute.codeVerifier : codeVerifier));
         params.append("grant_type", "authorization_code");
         params.append('redirect_uri', process.env.TWITTER_SERVICES_REDIRECT_URL);
 
         new ServiceAuthRoute().postRequest("https://api.twitter.com/2/oauth2/token", params, headers, req['user']['uuid'], Services.TWITTER.valueOf(), (token) => {
-            return res.status(200).json({success: true, token: token});
+            return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
         });
@@ -87,7 +87,7 @@ export default class TwitterServiceRoute extends Route {
      */
     private login(req: express.Request, res: express.Response) {
             const pkce = pkceChallenge();
-            TwitterServiceRoute.code_verifier = pkce["code_verifier"];
+            TwitterServiceRoute.codeVerifier = pkce["codeVerifier"];
             return res.redirect("https://twitter.com/i/oauth2/authorize?"
                 + "response_type=code&"
                 + "client_id=" + process.env.TWITTER_SERVICES_CLIENT_ID + "&"

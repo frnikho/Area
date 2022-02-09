@@ -11,7 +11,7 @@ import App from "../App";
  * @param next express.NextFunction
  */
 export const parseAppletBody = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    let {appletUuid} = req.body;
+    const {appletUuid} = req.body;
     parse(appletUuid, req, res, next);
 }
 
@@ -22,7 +22,7 @@ export const parseAppletBody = (req: express.Request, res: express.Response, nex
  * @param next express.NextFunction
  */
 export const parseAppletParams = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    let {appletUuid} = req.params;
+    const {appletUuid} = req.params;
     parse(appletUuid, req, res, next);
 }
 
@@ -39,7 +39,7 @@ const parse = (uuid: string, req: express.Request, res: express.Response, next: 
 }
 
 export const checkNewApplet = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    let {action_type, action, reactions, action_key}: {
+    const {action_type, action, reactions, action_key}: {
         action_type: string,
         action: Action,
         reactions: Reaction[],
@@ -53,7 +53,7 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         return res.status(400).json({success: false, error: "Invalid action type !"});
     if (reactions === undefined || reactions.length === undefined)
         return res.status(400).json({success: false, error: "Required reactions !"});
-    let applets = {
+    const applets = {
         action: {
             missing: [], good: []
         },
@@ -65,8 +65,8 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         service.actions.forEach((serviceAction) => {
             if (serviceAction.type === ActionType[type]) {
                 serviceAction.parameters.forEach((params) => {
-                    const {name, type, required}: {name: string, type: string, required: boolean} = params;
-                    let p = action.parameters.filter((p) => p['name'] === name)[0];
+                    const {name, required}: {name: string, type: string, required: boolean} = params;
+                    const p = action.parameters.filter((par) => par['name'] === name)[0];
 
                     if (p === undefined) {
                         if (required)
@@ -81,10 +81,10 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         })
         service.reactions.forEach((serviceReaction) => {
             reactions.filter((reaction) => ReactionType[reaction.type] === ReactionType[serviceReaction.type]).forEach((reaction) => {
-                let reactionData = {type: reaction.type, token_key: reaction.token_key, missing: [], good: []};
+                const reactionData = {type: reaction.type, token_key: reaction.token_key, missing: [], good: []};
                 serviceReaction.parameters.forEach((params) => {
-                    const {name, type, required}: {name: string, type: string, required: boolean} = params;
-                    let p = reaction.parameters.filter((p) => p['name'] === name)[0];
+                    const {name, required}: {name: string, type: string, required: boolean} = params;
+                    const p = reaction.parameters.filter((par) => par['name'] === name)[0];
                     if (p === undefined && required)
                         reactionData.missing.push(name);
                     else
@@ -100,12 +100,12 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
    if (applets.reactions.filter((reaction) => reaction['missing'].length > 0).length > 0)
        return res.status(400).json({success: false, error: `Missing parameters for reactions !`})
 
-    let applet: Applet = {
+    const applet: Applet = {
         action_type: type,
         action: {
             parameters: applets.action.good,
         },
-        action_key: action_key,
+        action_key,
         reactions: applets.reactions.map((reaction) => {
             return {
                 type: reaction['type'],

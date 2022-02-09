@@ -67,15 +67,15 @@ export default class GithubServiceRoute extends Route {
             }
         };
 
-        let body = {
-            code: code,
+        const body = {
+            code,
             client_id: process.env.GITHUB_SERVICES_CLIENT_ID,
             client_secret: process.env.GITHUB_SERVICES_SECRET,
             redirect_uri: process.env.GITHUB_SERVICES_REDIRECT_URL,
         }
 
         new ServiceAuthRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], Services.GITHUB.valueOf(), (token) => {
-            return res.status(200).json({success: true, token: token});
+            return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
         });
