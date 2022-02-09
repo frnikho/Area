@@ -11,8 +11,8 @@ export default class AppletsScreen extends Component {
     actionButtonRender() {
         return (
             <View id="action">
-                <Button mode="contained" style={styles.actionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>If this</Text>
+                <Button mode="contained" style={styles.actionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>
+                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>If this</Text>
                 </Button>
             </View>
         );
