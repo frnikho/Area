@@ -25,7 +25,6 @@ import DiscordServiceRoute from "./routes/services/DiscordServiceRoute";
 import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
-import TrelloServiceRoute from "./routes/services/TrelloServiceRoute";
 import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
 import {GooglePubSub} from "./clients/GooglePubSub";
 
@@ -107,7 +106,6 @@ export default class App {
         new GithubServiceRoute().register(this.app, '/services/github');
         new SlackServiceRoute().register(this.app, '/services/slack');
         new DiscordServiceRoute().register(this.app, '/services/discord');
-        new TrelloServiceRoute().register(this.app, '/services/trello');
         new TwitterServiceRoute().register(this.app, '/services/twitter');
         new SpotifyServiceRoute().register(this.app, '/services/spotify');
 
