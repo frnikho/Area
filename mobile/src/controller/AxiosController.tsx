@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const DEFAULT_BASE_URL = "https://area-backend.nikho.dev";
+
 export default class AxiosController {
 
     /**
@@ -8,7 +10,7 @@ export default class AxiosController {
      * @returns
      */
     public baseURL() {
-        return 'https://area-backend.nikho.dev';
+        return process.env.BASE_URL || DEFAULT_BASE_URL;
     }
 
     /**
