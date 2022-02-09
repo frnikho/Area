@@ -24,7 +24,6 @@ export default class Page extends React.Component {
 
         if (url && url.params)
             url.url += "/:" + url.params
-        console.log(url)
         this.setState({ redirectUrl: url })
     }
 
