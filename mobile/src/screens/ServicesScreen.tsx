@@ -77,50 +77,45 @@ export default class ServicesScreen extends Component {
     );
   }
 
-  renderActionsModal() {
-    if (this.state.currentService === undefined) return;
-    return (
-      <Center>
-        <Modal
-          isOpen={this.state.showModal}
-          onClose={() => this.setState({showModal: false})}
-          size="full">
-          <Modal.Content maxWidth="400px">
-            <Modal.CloseButton />
-            <Modal.Header>
-              Choose one of {this.state.currentService.name}
-            </Modal.Header>
-            <ScrollView>
-              <Modal.Body>
-                {this.state.currentService.actions.length <= 0 ? (
-                  <Text>
-                    No actions is available with{' '}
-                    {this.state.currentService.name}
-                  </Text>
-                ) : (
-                  this.state.currentService.actions.map((action, i) => {
-                    return <Button key={i}>{action.name}</Button>;
-                  })
-                )}
-              </Modal.Body>
-            </ScrollView>
-            <Modal.Footer>
-              <Button.Group space={2}>
-                <Button
-                  onPress={() => {
-                    this.setState({showModal: false});
-                  }}>
-                  Save
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
-          </Modal.Content>
-        </Modal>
-      </Center>
-    );
+  renderList() {
+    const {modalContext} = this.props.route.params;
+
+    if (modalContext == 'actions') {
+      return (
+        <>
+          {this.state.currentService.actions.length <= 0 ? (
+            <Text>
+              No actions is available with {this.state.currentService.name}
+            </Text>
+          ) : (
+            this.state.currentService.actions.map(
+              (action: object, i: number) => {
+                return <Button key={i}>{action.name}</Button>;
+              },
+            )
+          )}
+        </>
+      );
+    } else if (modalContext === 'reactions') {
+      return (
+        <>
+          {this.state.currentService.reactions.length <= 0 ? (
+            <Text>
+              No reactions is available with {this.state.currentService.name}
+            </Text>
+          ) : (
+            this.state.currentService.reactions.map(
+              (reaction: object, i: number) => {
+                return <Button key={i}>{reaction.name}</Button>;
+              },
+            )
+          )}
+        </>
+      );
+    }
   }
 
-  renderReactionsModal() {
+  renderModal() {
     if (this.state.currentService === undefined) return;
     return (
       <Center>
@@ -134,18 +129,7 @@ export default class ServicesScreen extends Component {
               Choose one of {this.state.currentService.name}
             </Modal.Header>
             <ScrollView>
-              <Modal.Body>
-                {this.state.currentService.reactions.length <= 0 ? (
-                  <Text>
-                    No actions is available with{' '}
-                    {this.state.currentService.name}
-                  </Text>
-                ) : (
-                  this.state.currentService.actions.map((action, i) => {
-                    return <Button key={i}>{action.name}</Button>;
-                  })
-                )}
-              </Modal.Body>
+              <Modal.Body>{this.renderList()}</Modal.Body>
             </ScrollView>
             <Modal.Footer>
               <Button.Group space={2}>
@@ -176,7 +160,7 @@ export default class ServicesScreen extends Component {
         {this.state.services === undefined
           ? this.renderLoading()
           : this.renderServicesCards()}
-        {this.props.context === "actions" ? this.renderActionsModal() : this.renderReactionsModal(  )}
+        {this.renderModal()}
       </>
     );
   }
