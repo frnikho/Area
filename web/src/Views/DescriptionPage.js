@@ -23,7 +23,7 @@ export default withCookies(class DescriptionPage extends Page {
                 right: [
                     {
                         name: '←',
-                        action: () => component.setRedirectUrl("/")
+                        action: () => component.setRedirectUrl({url: "/"})
                     },
                 ],
                 left: {

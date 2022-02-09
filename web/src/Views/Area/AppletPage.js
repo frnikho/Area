@@ -38,7 +38,7 @@ export default class AppletPage extends Page {
     }
 
     onClose() {
-        this.setRedirectUrl('/')
+        this.setRedirectUrl({url: '/'})
     }
 
     onClickHelp() {
@@ -112,7 +112,7 @@ export default class AppletPage extends Page {
                 ],
                 left: {
                     name: "Cancel",
-                    action: () => component.setRedirectUrl("/"),
+                    action: () => component.setRedirectUrl({url: "/"}),
                 }
             }
 

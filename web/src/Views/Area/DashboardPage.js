@@ -27,7 +27,7 @@ export default withCookies(class DashboardPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
+            this.setRedirectUrl({url: '/auth/login'})
         } else {
             this.setState({ user: this.authContext.getUser() })
         }
@@ -67,18 +67,18 @@ export default withCookies(class DashboardPage extends Page {
                             color: "white"
                         },
                         variant: "contained",
-                        action: () => component.setRedirectUrl("/area/applets")
+                        action: () => component.setRedirectUrl({url: "/area/applets"})
                     },
                     {
                         name: 'Area',
-                        action: () => component.setRedirectUrl("/description")
+                        action: () => component.setRedirectUrl({url: "/description"})
                     },
                     {
                         name: 'My applets',
                     },
                     {
                         name: 'Profile',
-                        action: () => component.setRedirectUrl("/area/profile")
+                        action: () => component.setRedirectUrl({url: "/area/profile"})
                     },
                 ],
                 left: {

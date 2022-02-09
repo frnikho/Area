@@ -32,7 +32,7 @@ export default class ControllerRegister {
     registerDb(registerId) {
         ControllerDataBase.register(registerId, (response) => {
             if (response.data.success === true) {
-                this.page.setRedirectUrl('/auth/login')
+                this.page.setRedirectUrl({url: '/auth/login'})
                 this.page.setNotification({ message: "Register", show: true, type: "succes" });
             } else {
                 this.setNotification({ message: "error with the ControllerDataBase", show: true, type: "error" });

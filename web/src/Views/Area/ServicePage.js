@@ -23,7 +23,7 @@ export default withCookies(class ServicePage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
+            this.setRedirectUrl({url: '/auth/login'})
         } else {
             this.setState({ user: this.authContext.getUser() })
         }

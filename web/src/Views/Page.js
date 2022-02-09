@@ -14,7 +14,6 @@ export default class Page extends React.Component {
         this.setRedirectUrl = this.setRedirectUrl.bind(this)
         this.setNotification = this.setNotification.bind(this)
         this.notificationComponent = this.notificationComponent.bind(this)
-        this.redirectUrl = this.redirectUrl.bind(this)
         this.getUrl = this.getUrl.bind(this)
         this.pageRender = this.pageRender.bind(this)
     }
@@ -37,18 +36,10 @@ export default class Page extends React.Component {
         )
     }
 
-    redirectUrl() {
-        return (
-            <>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
-            </>
-        )
-    }
-
     pageRender(component, Page) {
         return (
             <div>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : <Page component={component} />}
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : <Page component={component} />}
             </div>
         );
     }

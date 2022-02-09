@@ -29,7 +29,7 @@ export default withCookies(class LoginPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
-            this.setRedirectUrl('/area/dashboard')
+            this.setRedirectUrl({url: '/area/dashboard'})
         }
         this.forceUpdate()
         this.controllerLogin = new ControllerLogin(this.authContext, this.cookies, this);
@@ -67,7 +67,7 @@ export default withCookies(class LoginPage extends Page {
                 right: [
                     {
                         name: 'Area',
-                        action: () => component.setRedirectUrl("/description")
+                        action: () => component.setRedirectUrl({url: "/description"})
                     },
                 ],
                 left: {
