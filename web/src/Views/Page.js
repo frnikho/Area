@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import NotifComponent, {TimeNotifComponent} from "../Components/utils/NotifComponent"
+import NotifComponent from "../Components/NotifComponent"
 
 export default class Page extends React.Component {
 
@@ -32,7 +32,7 @@ export default class Page extends React.Component {
             return (null);
         return (
             <>
-                <TimeNotifComponent {...this.state.notification} />
+                <NotifComponent {...this.state.notification} />
             </>
         )
     }

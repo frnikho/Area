@@ -1,6 +1,6 @@
 import React from "react";
 
-import app, { config } from "../Components/utils/Axios";
+import app, { config } from "../utils/Axios";
 
 class Auth extends React.Component {
 

@@ -1,5 +1,5 @@
 // import Controller from "../Controller"
-import app, { config } from "../../Components/utils/Axios";
+import app, { config } from "../../utils/Axios";
 
 export default class ControllerDashboard {
 
@@ -18,6 +18,7 @@ export default class ControllerDashboard {
     }
 
     loadApplets() {
+        config()
         console.log("wait applets")
         // app.get(`/applets/all`, config(this.authContext.getToken(), this.auth
         // )).then((response) => {

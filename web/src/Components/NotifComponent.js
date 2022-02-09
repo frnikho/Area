@@ -17,22 +17,6 @@ export default class NotifComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.notification = props
-    }
-
-    render() {
-        return (
-            <>
-                {this.notification !== undefined ? <RenderNotifComponent notif={this.notification} /> : null}
-            </>
-        )
-    }
-}
-
-export class TimeNotifComponent extends React.Component {
-
-    constructor(props) {
-        super(props);
         this.state = {
             notification: props
         }
