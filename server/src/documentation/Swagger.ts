@@ -19,7 +19,7 @@ export const swaggerOptions = {
         },
         servers: [
             {
-                url: "https://127.0.0.1:8080",
+                url: `${process.env.SWAGGER_SERVER_ENDPOINT}`,
             }
         ],
     },
