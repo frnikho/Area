@@ -12,7 +12,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="action">
                 <Button mode="contained" style={styles.actionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>Action</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>If This</Text>
                 </Button>
             </View>
         );
@@ -22,7 +22,7 @@ export default class AppletsScreen extends Component {
         return (
             <View id="reaction">
                 <Button mode="contained" style={styles.reactionButton}>
-                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Reaction</Text>
+                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then That</Text>
                 </Button>
             </View>
         );
@@ -39,7 +39,7 @@ export default class AppletsScreen extends Component {
     render() {
         return (
             <View id="appletsMainView" style={styles.appletsMainView}>
-                <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.navigate('home')}/>
+                <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.goBack()}/>
                 {this.mainTextRender()}
                 {this.actionButtonRender()}
                 {this.reactionButtonRender()}
@@ -50,7 +50,6 @@ export default class AppletsScreen extends Component {
 
 const styles = StyleSheet.create({
     appletsMainView: {
-      backgroundColor: "#DCDCDC",
       flex: 1,
     },
     backArrow: {
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         justifyContent: 'center',
-        backgroundColor: "#222222",
+        backgroundColor: "#999999",
     },
     reactionText: {
         color: "#ffffff",
