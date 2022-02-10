@@ -61,7 +61,7 @@ export default class UserApplets extends Component {
         }
         return (this.state.userApplets.map((applet, i) => {
             return (
-                <Card key={i} style={styles.myAppletsCard}>
+                <Card key={i} style={{ marginTop: 20, width: '100%', justifyContent: 'center', borderRadius: 15, backgroundColor: applet.cardColor === undefined ? "#ffffff" : applet.cardColor}}>
                     <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
                     <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
                 </Card>
@@ -97,12 +97,6 @@ export default class UserApplets extends Component {
 const styles = StyleSheet.create({
     mainText: {
         marginTop: 10,
-    },
-    myAppletsCard: {
-        marginTop: 20,
-        width: '100%',
-        justifyContent: 'center',
-        borderRadius: 15,
     },
     myAppletsCardText: {
         marginTop: 10,

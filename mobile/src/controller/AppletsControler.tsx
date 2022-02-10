@@ -20,9 +20,11 @@ export default class AppletsController {
                             if (status) {
                                 return callback(true,
                                     userAppletsResponse.data.data.map((obj) => {
+                                        let info = this.getInfoByType(aboutResponse.data, obj.action_type, obj.reactions[0].type);
                                         return {
-                                            action: this.convertActionTypeToAction(aboutResponse.data, obj.action_type),
-                                            reaction: this.convertReactionTypeToReaction(aboutResponse.data, obj.reactions[0].type)
+                                            action: info.action,
+                                            reaction: info.reaction,
+                                            cardColor: info.color
                                         } as UserApplets
                                     })
                                 );
@@ -41,43 +43,33 @@ export default class AppletsController {
     }
 
     /**
-     * Convert action type according to action in about.json
+     * Get info in about.json according to type
      *
      * @param aboutJSON
-     * @param type
+     * @param actionType
+     * @param reactionType
      * @returns
      */
-    private convertActionTypeToAction(aboutJSON: object, type: string) {
+    private getInfoByType(aboutJSON: object, actionType: string, reactionType: string) {
         let action = undefined;
-        aboutJSON.server.services.map((service) => {
-            let obj = service.actions.filter((action) => {
-                if (action.type === type)
-                    return true
-            })
-            if (obj.length !== 0)
-                action = obj[0].if;
-        });
-        return action;
-    }
-
-    /**
-     * Convert reaction type according to reaction in about.json
-     *
-     * @param aboutJSON
-     * @param type
-     * @returns
-     */
-    private convertReactionTypeToReaction(aboutJSON: object, type: string) {
         let reaction = undefined;
+        let color = undefined;
         aboutJSON.server.services.map((service) => {
-            let obj = service.reactions.filter((reaction) => {
-                if (reaction.type === type)
+            let objAction = service.actions.filter((action) => {
+                if (action.type === actionType)
                     return true
             })
-            if (obj.length !== 0)
-                reaction = obj[0].then;
+            if (objAction.length !== 0)
+                action = objAction[0].if;
+            let objReaction = service.reactions.filter((reaction) => {
+                if (reaction.type === reactionType)
+                    return true
+            })
+            if (objReaction.length !== 0)
+                reaction = objReaction[0].then;
+            if (action !== undefined || reaction != undefined)
+                color = service.color
         });
-
-        return reaction;
+        return ({ action: action, reaction: reaction, color: color });
     }
 }
