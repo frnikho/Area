@@ -1,195 +1,134 @@
-import {
-  Button,
-  Center,
-  Toast,
-  Text,
-  VStack,
-  Fab,
-  Box,
-  FormControl,
-  Input,
-} from 'native-base';
-import React, {Component} from 'react';
+import { Button, Toast, ChevronLeftIcon, Text, VStack } from 'native-base';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, StyleSheet, View, ScrollView } from 'react-native';
-import { Subheading } from 'react-native-paper';
-import app from '../axios_config';
-import { is_logged_in } from '../auth';
-
-
-const Separator = () => (
-  <View style={styles.separator} />
-);
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import UserController from '../controller/UserController';
+import TokenController from '../controller/TokenController';
 
 export default class ProfileScreen extends Component {
-  state: {
-    firstName: String | undefined,
-    lastName: String | undefined,
-    email: String | undefined,
-    password: String | undefined,
-    newPassword: String | undefined,
-    reNewPassword: String | undefined
-  };
 
   constructor(props: any) {
     super(props);
     this.state = {
+      uuid: undefined,
       firstName: undefined,
       lastName: undefined,
       email: undefined,
-      password: undefined,
-      newPassword: undefined,
-      reNewPassword: undefined,
     };
-    // app.get(`/me`
-    // ).then((response: any) => {
-    //   if (response.status === 200) {
-    //     console.log(response.json())
-    //   } else {
-    //   }
-    // }).catch((err: any) => {
-    //   console.log(err);
-    //   Toast.show({
-    //     title: err.response.data.error,
-    //     status: "warning",
-    //     description: "Please try again !",
-    //   })
-    // })
-    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onDisconnect = this.onDisconnect.bind(this);
   }
 
-  onChangePassword() {
-    if (this.state.password === undefined || this.state.reNewPassword === undefined || this.state.newPassword === undefined) {
-      return;
-    }
-    // if (this.password !== app.get('/me')) VERIF PASSWORD TO CONTINUE
-    if (this.state.newPassword !== this.state.reNewPassword) {
+  componentDidMount() {
+    this.getUserInfo();
+  }
+
+  /**
+   * Disconnect user
+   */
+  onDisconnect() {
+    new TokenController().removeUserToken((tokenStatus, response) => {
+      let title = tokenStatus ? "You are successfully disconnected" : "Error during disconnection";
       Toast.show({
-        title: "Password does not match",
-        status: "warning",
-        description: "Please try again !",
-      })
-      return;
-    }
-    // POST a new password
-    // app.post(`/changePassword`, {
-    //   email: this.state.email,
-    //   password: this.state.password,
-    //   firstname: this.state.firstName,
-    //   lastname: this.state.lastName,
-    // }).then((response: any) => {
-    //   if (response.status === 200) {
-    //     Toast.show({
-    //       title: "Password succesfuly changed",
-    //       status: "success",
-    //       description: "You can now login with your new password to your account.",
-    //       duration: 3000
-    //     });
-    //     setTimeout(() => {
-    //       this.props.navigation.navigate('dashboard')
-    //     }, 1000);
-    //   } else {
-    //   }
-    // }).catch((err: any) => {
-    //   console.log(err);
-    //   Toast.show({
-    //     title: err.response.data.error,
-    //     status: "warning",
-    //     description: "Please try again !",
-    //   })
-    // })
+        title: title,
+        status: tokenStatus,
+        duration: 2000,
+      });
+      if (tokenStatus)
+        this.props.navigation.navigate('login');
+    })
   }
 
-  mainTextRender() {
+  /**
+   * Get user's info
+   */
+  getUserInfo() {
+    new UserController().getUserInfo((status, response) => {
+      if (status) {
+        this.setState({ uuid: response.uuid, firstName: response.firstname, lastName: response.lastname, email: response.email })
+      }
+    })
+  }
+
+  /**
+   * Title render
+   *
+   * @returns
+   */
+  titleRender() {
     return (
-        <VStack id="mainText" alignItems="center" style={styles.mainText}>
-            <Text fontFamily="body" fontWeight={500} fontSize ="3xl">Profile</Text>
-            <Separator/>
-        </VStack>
+      <VStack id="title" alignItems="center" style={styles.title}>
+        <Text fontFamily="body" fontWeight={400} fontSize="4xl">Profile</Text>
+      </VStack>
     );
   }
 
-  descriptionTextRender() {
+  /**
+   * User's info render
+   *
+   * @returns
+   */
+  userInfoRender() {
     return (
-        <VStack id="descriptionText" style={styles.mainText}>
-            <Separator/>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">First name</Text>
-            <Separator/>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">Last name</Text>
-            <Separator/>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">E-Mail</Text>
-            <Separator/>
-        </VStack>
+      <View id="userInfo">
+        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><IconFontAwesome name="user" size={25} color="black" /> First name: {this.state.firstName === undefined ? "unknown" : this.state.firstName} </Text>
+        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><IconFontAwesome name="user" size={25} color="black" /> Last name: {this.state.lastName === undefined ? "unknown" : this.state.lastName} </Text>
+        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><Icon name="mail" size={25} color="black" /> Email: {this.state.email === undefined ? "unknown" : this.state.email} </Text>
+      </View>
     );
   }
 
-  createPasswordButtonRender() {
+  /**
+   * Logout button render
+   *
+   * @returns
+   */
+  logoutButtonRender() {
     return (
-      <View id="changePassword" >
-          <FormControl>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">Actual Password</Text>
-            <Input type="password" onChangeText={(val) => this.setState({password: val})}/>
-          </FormControl>
-          <FormControl>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">New Password</Text>
-            <Input type="password" onChangeText={(val) => this.setState({newPassword: val})} />
-          </FormControl>
-          <FormControl>
-            <Text fontFamily="body" fontWeight={200} fontSize ="2xl">Retype New Password</Text>
-            <Input type="password" onChangeText={(val) => this.setState({reNewPassword: val})} />
-          </FormControl>
-          <Button mode="contained" style={styles.createPasswordButton} onPress={this.onChangePassword}>
-            <Text style={styles.createPasswordText}>Change Password</Text>
-          </Button>
+      <View id="logoutButton">
+        <Button mode="contained" style={styles.logoutButton} onPress={() => this.onDisconnect()}>
+          <Text fontFamily="body" fontWeight={600} fontSize="2xl" style={styles.logoutButtonText}>Logout</Text>
+        </Button>
       </View>
     );
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        {this.mainTextRender()}
-        {this.descriptionTextRender()}
-        {this.createPasswordButtonRender()}
+      <View id="profileMainViex" style={styles.mainView}>
+        <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.goBack()} />
+        {this.titleRender()}
+        {this.userInfoRender()}
+        {this.logoutButtonRender()}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainView: {
     flex: 1,
-    marginTop: 8,
-    backgroundColor: 'aliceblue',
   },
-  safeAreaView: {
-    backgroundColor: "#DCDCDC",
+  title: {
+    marginTop: 10,
   },
-  createPasswordButton: {
-        bottom: -10,
-        marginLeft: 10,
-        marginRight: 10,
-        justifyContent: 'center',
-        backgroundColor: "#222222",
+  backArrow: {
+    marginTop: 10,
+    marginBottom: 0,
   },
-  createPasswordText: {
+  userInfo: {
+    marginTop: 30,
+    marginLeft: 20,
+  },
+  logoutButton: {
+    marginTop: 50,
+    marginLeft: 10,
+    marginRight: 10,
+    justifyContent: 'center',
+    backgroundColor: "#222222",
+    borderRadius: 15,
+  },
+  logoutButtonText: {
     color: "#ffffff",
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  myApplets: {
-    flexDirection: "column",
-    flexWrap: "wrap",
-  },
-  mainText: {
-    marginTop:0,
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
