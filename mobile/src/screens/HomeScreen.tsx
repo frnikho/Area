@@ -1,20 +1,11 @@
-import {
-  Button,
-  Center,
-  Toast,
-  Text,
-  VStack,
-  Fab,
-  Box,
-} from 'native-base';
-import React, {Component} from 'react';
-import Card from '../components/Card';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, StyleSheet, View, ScrollView } from 'react-native';
-import { Subheading } from 'react-native-paper';
+
+import { Button, Text } from 'native-base';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import UserApplets from './UserAppletsScreen';
 
 export default class HomeScreen extends Component {
+
   constructor(props: any) {
     super(props);
     // this.onDisconnect = this.onDisconnect.bind(this);
@@ -32,46 +23,25 @@ export default class HomeScreen extends Component {
   //   });
   // }
 
+
+  /**
+   * Create Applet Button Render
+   *
+   */
   createAppletButtonRender() {
     return (
       <View id="createApplet" >
-          <Button mode="contained" style={styles.createAppletButton} onPress={() => this.props.navigation.navigate('applets')}>
-            <Text style={styles.createAppletText}>Create</Text>
-          </Button>
+        <Button mode="contained" style={styles.createAppletButton} onPress={() => this.props.navigation.navigate('applets')}>
+          <Text fontFamily="body" fontWeight={600} fontSize="2xl" style={styles.createAppletText}>Create</Text>
+        </Button>
       </View>
-    );
-  }
-
-  createProfileButtonRender() {
-    return (
-      <View id="createProfile" >
-          <Button mode="contained" style={styles.createProfileButton} onPress={() => this.props.navigation.navigate('profile')}>
-            <Text style={styles.createProfileText}>Profile</Text>
-          </Button>
-      </View>
-    );
-  }
-
-  myAppletsRender() {
-    return (
-      <ScrollView contentContainerStyle={{padding: 20}}>
-          <Subheading>My applets</Subheading>
-          <View id="myApplets" style={styles.myApplets}>
-            <Card
-              title="Youtube"
-              description="blablabla description"
-              backgroundColor="#ff4545"
-              />
-          </View>
-        </ScrollView>
     );
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        {this.createProfileButtonRender()}
-        {this.myAppletsRender()}
+      <View style={styles.mainView}>
+        <UserApplets />
         {this.createAppletButtonRender()}
       </View>
     );
@@ -79,42 +49,19 @@ export default class HomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainView: {
     flex: 1,
-    marginTop: 8,
-    backgroundColor: 'aliceblue',
-  },
-  safeAreaView: {
-    backgroundColor: "#DCDCDC",
   },
   createAppletButton: {
-        bottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        justifyContent: 'center',
-        backgroundColor: "#222222",
+    bottom: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    justifyContent: 'center',
+    backgroundColor: "#222222",
+    borderRadius: 15,
+
   },
   createAppletText: {
     color: "#ffffff",
-  },
-  createProfileButton: {
-    bottom: -10,
-    marginLeft: 300,
-    marginRight: 10,
-    // height: 50,
-    width: 80,
-    justifyContent: 'center',
-    backgroundColor: "#554455",
-  },
-  createProfileText: {
-  color: "#ffffff",
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  myApplets: {
-    flexDirection: "column",
-    flexWrap: "wrap",
   },
 });

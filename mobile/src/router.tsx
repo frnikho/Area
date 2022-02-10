@@ -13,12 +13,12 @@ const Router = ({isLoggedIn}:boolean) => {
     // console.log(isLoggedIn['isLoggedIn']);
     // console.log(isLoggedIn == true ? 'home' : 'login')
     return (
-        <Stack.Navigator initialRouteName={isLoggedIn == true ? 'home' : 'login'} screenOptions={{headerShown: false}} >
+        <Stack.Navigator initialRouteName={isLoggedIn == false ? 'login' : 'home'} screenOptions={{headerShown: false}} >
           <Stack.Screen name="login" component={LoginScreen} />
           <Stack.Screen name="register" component={RegisterScreen} />
           <Stack.Screen name="home" component={HomeScreen} />
-          <Stack.Screen name="services" component={ServicesScreen} />
           <Stack.Screen name="applets" component={AppletsScreen} />
+          <Stack.Screen name="services" component={ServicesScreen} />
           <Stack.Screen name="profile" component={ProfileScreen} />
         </Stack.Navigator>
     );
