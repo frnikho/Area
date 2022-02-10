@@ -13,8 +13,9 @@ const useStyles = {
         justifyContent: "center",
         textAlign: "center",
         display: "flex",
-        fontFamily: "Dongle",
-        fontSize: "60px",
+        fontFamily: "Anton",
+        color: "white",
+        fontSize: "40px",
     },
     roundButtonFull: {
         paddingTop: "6px",
@@ -36,6 +37,7 @@ const useStyles = {
         borderColor: "black",
         fontFamily: 'Dongle',
         fontSize: '25px',
+        textTransform: "none",
         color: "black",
     },
     space: {
