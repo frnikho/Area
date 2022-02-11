@@ -1,8 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
 import { ThemeProvider, CssBaseline, Box, Button } from "@mui/material";
-import { styled } from '@mui/system';
-import SwitchUnstyled, { switchUnstyledClasses } from '@mui/base/SwitchUnstyled';
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"
@@ -11,15 +9,8 @@ import Style from "../../Resources/Styles/styleAppletProperty"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 import { withParams } from "../../Utils/NavigateTools"
+import SwitchButton from "../../Components/SwitchButton"
 
-const blue = {
-    500: '#007FFF',
-};
-
-const grey = {
-    400: '#BFC7CF',
-    500: '#AAB4BE',
-};
 
 export default withCookies(withParams(class AppletPropertyPage extends Page {
 
@@ -29,9 +20,11 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            services: undefined
+            services: undefined,
+            isOn: props || false,
         }
         this.cookies = props;
+        this.handleSwitch = this.handleSwitch.bind(this)
         this.onClickBack = this.onClickBack.bind(this);
     }
 
@@ -44,6 +37,11 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         }
         this.controllerAppletProperty = new ControllerAppletProperty(this.authContext, this.cookies, this);
         this.controllerAppletProperty.loadApplet("<id exemple>");
+    }
+
+    handleSwitch() {
+        this.setState({ isOn: !this.state.isOn })
+        console.log("call server and desactiv the applet")
     }
 
     onClickBack() {
@@ -110,6 +108,10 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                             </Box>
                         </div>
                     </Box>
+                    <Box sx={{ pb: 2, mx: 2 }} />
+                    <div style={Style.container}>
+                        <SwitchButton isOn={component.state.isOn} onClick={() => component.handleSwitch()} />
+                    </div>
                 </ThemeProvider >
             )
         }));
