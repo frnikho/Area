@@ -3,7 +3,7 @@ import { Text, VStack } from 'native-base';
 import AppletsController from '../controller/AppletsControler';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
-
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class UserApplets extends Component {
 
@@ -26,7 +26,6 @@ export default class UserApplets extends Component {
     getUserApplets() {
         new AppletsController().getUsersApplets((status, response) => {
             if (status) {
-                console.log(response);
                 this.setState({ userApplets: response });
             }
         });
@@ -73,7 +72,7 @@ export default class UserApplets extends Component {
     mainTextRender() {
         return (
             <VStack id="mainText" alignItems="center" style={styles.mainText}>
-                <Text fontFamily="body" fontWeight={400} fontSize="4xl">My applets</Text>
+                <Text fontFamily="body" fontWeight={400} fontSize="4xl">My applets    <IconFontAwesome name="user" size={40} color="black" onPress={() => this.props.navigation.navigate('profile')} /></Text>
             </VStack>
         );
     }

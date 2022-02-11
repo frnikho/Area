@@ -1,3 +1,4 @@
+
 import { Button, Text } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,21 +8,7 @@ export default class HomeScreen extends Component {
 
   constructor(props: any) {
     super(props);
-    // this.onDisconnect = this.onDisconnect.bind(this);
   }
-
-  // onDisconnect() {
-  //   AsyncStorage.removeItem('@token').then(() => {
-  //     Toast.show({
-  //       title: 'You are successfully disconnected',
-  //       status: 'success',
-  //       description: 'You can now login.',
-  //       duration: 2000,
-  //     });
-  //     this.props.navigation.navigate('login');
-  //   });
-  // }
-
 
   /**
    * Create Applet Button Render
@@ -40,7 +27,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <UserApplets />
+        <UserApplets navigation={this.props.navigation} />
         {this.createAppletButtonRender()}
       </View>
     );
@@ -58,7 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: "#222222",
     borderRadius: 15,
-
   },
   createAppletText: {
     color: "#ffffff",
