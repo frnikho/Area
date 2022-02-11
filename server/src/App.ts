@@ -1,4 +1,4 @@
-import {Express} from "express";
+import { Express } from "express";
 
 import express = require('express');
 import dotenv = require('dotenv');
@@ -26,11 +26,11 @@ import DiscordBot from "./bots/DiscordBot";
 import AboutRoute from "./routes/AboutRoute";
 import WorkerManager from "./managers/WorkerManager";
 import SpotifyServiceRoute from "./routes/services/SpotifyServiceRoute";
-import {GooglePubSub} from "./clients/GooglePubSub";
+import { GooglePubSub } from "./clients/GooglePubSub";
 
 import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
-import {swaggerOptions} from "./documentation/Swagger"
+import { swaggerOptions } from "./documentation/Swagger"
 import Logger from "./utils/Logger";
 
 const DEFAULT_PORT = 8080;
@@ -64,7 +64,7 @@ export default class App {
         this.initBot();
         this.workerManager = WorkerManager.get();
         this.workerManager.startWorkers();
-        this.server = https.createServer({key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false}, this.app);
+        this.server = https.createServer({ key: this.privateKey, cert: this.privateCertificate, rejectUnauthorized: false }, this.app);
     }
 
     private initConfig(): void {
@@ -73,7 +73,7 @@ export default class App {
 
     private initMiddlewares(): void {
         this.app.use(cors())
-        this.app.use(bodyParser.urlencoded({extended: true}));
+        this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
     }
 
@@ -90,7 +90,11 @@ export default class App {
         this.googlePubSub.test();
     }
 
-    private initRoutes(): void  {
+    private initRoutes(): void {
+
+
+
+
         // AUTH ROUTES
         this.app.use('/static', express.static('public'));
         new RegisterRoute().register(this.app, '/auth/register');
@@ -120,6 +124,10 @@ export default class App {
         this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(swaggerOptions), {
             customSiteTitle: 'Area API - Documentation',
         }));
+
+        this.app.use('/', (req, res) => {
+            res.redirect('/docs');
+        })
         // 404 ROUTE
         // this.app.use('*', RouteNotFoundMiddleware);
     }
