@@ -51,7 +51,7 @@ export interface Action {
 }
 
 export interface Reaction {
-    type: ReactionType,
+    type: ReactionType | string,
     token_key: string,
     parameters: object[],
 }
@@ -61,7 +61,7 @@ export interface Applet {
     user_uuid: string,
     action: Action,
     action_key: string,
-    action_type: ActionType,
+    action_type: ActionType | string,
     reactions: Reaction[],
     created_at?: Date,
     updated_at?: Date,

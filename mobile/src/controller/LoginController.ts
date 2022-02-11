@@ -1,12 +1,6 @@
 import app from '../axios_config';
-import {
-  GOOGLE_CLIENT_ID,
-  GOOGLE_REDIRECT_URL,
-  GITHUB_CLIENT_ID,
-  GITHUB_REDIRECT_URL,
-  GITHUB_CLIENT_SECRET,
-} from '@env';
 import {authorize} from 'react-native-app-auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default class LoginController {
   public nativeLogin(
@@ -32,47 +26,39 @@ export default class LoginController {
       });
   }
 
-  public googleLogin(callback: (status: boolean, response: any) => void): void {
-    const config = {
-      issuer: 'https://accounts.google.com',
-      clientId: GOOGLE_CLIENT_ID,
-      redirectUrl: GOOGLE_REDIRECT_URL,
-      responseType: 'code',
-      scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
-      dangerouslyAllowInsecureHttpRequests: true,
-      skipCodeExchange: true,
-    };
+  public async googleLogin(callback: (status: boolean, response: any) => void) {
+    GoogleSignin.configure({
+      scopes: ['profile'],
+      webClientId: process.env.GOOGLE_CLIENT_ID,
+    });
 
-    authorize(config)
-      .then(result => {
-        app
-          .get(`/auth/google/code?code=${result.authorizationCode}`)
-          .then(response => {
-            callback(true, response);
-          })
-          .catch(err => {
-            callback(false, err);
-          });
-      })
-      .catch(err => {
+    GoogleSignin.hasPlayServices().then(() => {
+      GoogleSignin.signIn().then(res => {
+        callback(true, res);
+      }).catch(err => {
         callback(false, err);
       });
+    }).catch(err => {
+      callback(false, err);
+    });
   }
 
   public githubLogin(callback: (status: boolean, response: any) => void): void {
     const config = {
-      redirectUrl: GITHUB_REDIRECT_URL,
-      clientId: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
+      redirectUrl: process.env.GITHUB_REDIRECT_URL,
+      clientId: process.env.GITHUB_CLIENT_ID,
       scopes: ['identity'],
       additionalHeaders: {Accept: 'application/json'},
+      skipCodeExchange: true,
+      responseType: 'code',
       serviceConfiguration: {
         authorizationEndpoint: 'https://github.com/login/oauth/authorize',
         tokenEndpoint: 'https://github.com/login/oauth/access_token',
         revocationEndpoint:
-          'https://github.com/settings/connections/applications/<client-id>',
+          `https://github.com/settings/connections/applications/${process.env.GITHUB_CLIENT_ID}`,
       },
     };
+
     authorize(config)
       .then(result => {
         app

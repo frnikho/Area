@@ -1,13 +1,14 @@
 import axios from 'axios';
 import {GithubUser} from "../../models/GithubUser";
 import {TokenData} from "../../controllers/ServiceController";
+import {buildAuthorizationHeaders} from "../../utils/Axios";
 
 type successRefresh = (data: object) => void;
-type error = (error: string) => void;
+type errorFnc = (error: string) => void;
 
 export default class GithubService {
 
-    public static refreshToken(token: TokenData, clientId: string, clientSecret: string, success: successRefresh, error: error) {
+    public static refreshToken(token: TokenData, clientId: string, clientSecret: string, success: successRefresh, errorCb: errorFnc) {
         axios.post(`https://github.com/login/oauth/access_token`, {
             refresh_token: token.token['refresh_token'],
             grant_type: 'refresh_token',
@@ -18,8 +19,14 @@ export default class GithubService {
             success(response.data);
         }).catch((err) => {
             console.log(err);
-            error(err);
+            errorCb(err);
         })
+    }
+
+    public static listRepository(token: string, callback: (success?: string, error?: string) => void): void {
+        axios.get(`https://api.github.com/user/repos?per_page=100`, buildAuthorizationHeaders(token)).then((response) => {
+            callback(response.data, null)
+        }).catch((err) => callback(null, err));
     }
 
     public static listRepositoryWebhooks(token: string, repo: string, success: (data) => void) {
@@ -35,7 +42,7 @@ export default class GithubService {
         });
     }
 
-    public static getUser(token: string, success: (data: GithubUser) => void, error: (msg) => void) {
+    public static getUser(token: string, success: (data: GithubUser) => void, errorCb: (msg) => void) {
         axios.get(`https://api.github.com/user`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -44,7 +51,7 @@ export default class GithubService {
         }).then((response) => {
             success(response.data);
         }).catch((err) => {
-            error(err);
+            errorCb(err);
         })
     }
 

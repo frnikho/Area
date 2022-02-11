@@ -27,11 +27,26 @@ services:
     image: server
     container_name: server_area
     ports:
-      - "8080:8080"
+      - "8082:8082"
     networks:
       - area
     depends_on:
       - mariadb
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:8080"
+      - "443:443"
+    networks:
+      - area
+    volumes:
+      - ./server/nginx/conf:/etc/nginx/conf.d:ro
+      - ./server/nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - server
     restart: always
 
   mariadb:

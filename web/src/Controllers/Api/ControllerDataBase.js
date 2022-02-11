@@ -1,4 +1,4 @@
-import app from "../../Components/utils/Axios"
+import app, { config } from "../../Utils/Axios";
 
 export default class ControllerDataBase {
 
@@ -32,5 +32,34 @@ export default class ControllerDataBase {
             else
                 onError(err.response);
         })
+    }
+
+    static updateProfile(token, field, onSuccess, onError) {
+        if (field.name === "firstname") {
+            app.patch(`/me`, {
+                firstname: field.value
+            }, config(token)).then((response) => {
+                onSuccess(response.data);
+            }).catch((err) => {
+                console.log(err)
+                if (err.response === undefined)
+                    onError(err);
+                else
+                    onError(err.response);
+            })
+        }
+        if (field.name === "lastname") {
+            app.patch(`/me`, {
+                lastname: field.value
+            }, config(token)).then((response) => {
+                onSuccess(response.data);
+            }).catch((err) => {
+                console.log(err)
+                if (err.response === undefined)
+                    onError(err);
+                else
+                    onError(err.response);
+            })
+        }
     }
 }

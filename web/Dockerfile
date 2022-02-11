@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package.json package.json
 COPY public public
 COPY src src
-COPY ../server/.env .env
+COPY .env .env
 
 RUN npm install --force
 RUN npm install -g serve

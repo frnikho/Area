@@ -18,10 +18,10 @@ export default class HomePage extends Page {
     componentDidMount() {
         this.auth = this.context;
         if (this.auth.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
+            this.setRedirectUrl({url: '/auth/login'})
         } else {
             this.setState({ user: this.auth.getUser() })
-            this.setRedirectUrl('/area/dashboard')
+            this.setRedirectUrl({url: '/area/dashboard'})
         }
         this.controllerHome = new ControllerHome(this.cookies, this);
     }

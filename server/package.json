@@ -5,8 +5,8 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon --watch \"src/**/*\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/Main.ts\"",
-    "prod": "node build/app.js",
-    "build": "tsc src/App.ts --outDir ./build",
+    "prod": "node build/Main.js",
+    "build": "tsc src/Main.ts --outDir ./build",
     "test": "mocha -r ts-node/register 'tests/**/*.ts'"
   },
   "author": "Nicolas SANS, Victor SAUVAGET",
@@ -59,7 +59,6 @@
     "@types/randomstring": "^1.1.8",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^8.3.4",
-    "jest": "^27.4.7",
     "mocha": "^9.2.0",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.2",

@@ -26,7 +26,7 @@ export default class RegisterRoute extends Route {
      * @returns
      */
     private checkBodyParameters(req: express.Request, res: express.Response, next: express.NextFunction): void {
-        let body: RegisterBody = req.body;
+        const body: RegisterBody = req.body;
         Credentials.verifyEmail(body.email, () => {
             Credentials.verifyPasswordStrength(body.password, () => {
                 req['registerBody'] = body;
@@ -68,7 +68,7 @@ export default class RegisterRoute extends Route {
      *         description: Error while registering
      */
     private post(req: express.Request, res: express.Response): void {
-        let body: RegisterBody = req['registerBody'];
+        const body: RegisterBody = req['registerBody'];
         new UserController().register(body, (user) => {
             res.status(200).json({success: true, user});
         }, (msg) => {

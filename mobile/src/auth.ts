@@ -1,5 +1,4 @@
 import app, {config} from "./axios_config";
-import {getData, removeData} from "./async_storage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const is_logged_in = (callback: (valid: boolean) => void):void => {

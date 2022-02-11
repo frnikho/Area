@@ -1,4 +1,4 @@
-import app from "../../Components/utils/Axios"
+import app from "../../Utils/Axios"
 
 export default class ControllerGithub {
 

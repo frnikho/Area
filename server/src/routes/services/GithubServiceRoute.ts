@@ -4,6 +4,7 @@ import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute";
 import ServiceController from "../../controllers/ServiceController";
 import {Services} from "../../models/Services"
+import GithubService from "../../services/external/GithubService";
 
 export default class GithubServiceRoute extends Route {
 
@@ -13,7 +14,7 @@ export default class GithubServiceRoute extends Route {
     constructor() {
         super();
         this.router.get('/callback', authorization, this.callback);
-        this.router.get('/list', authorization, this.list);
+        this.router.post('/list', authorization, this.list);
         this.router.get('/', this.login);
     }
 
@@ -21,7 +22,7 @@ export default class GithubServiceRoute extends Route {
     /**
      * @openapi
      * /services/github/list:
-     *   get:
+     *   post:
      *     tags:
      *       - Services
      *     description: List user's Github repositories
@@ -32,9 +33,14 @@ export default class GithubServiceRoute extends Route {
      *         description: Error while login
      */
     private list(req: express.Request, res: express.Response) {
-        new ServiceController().getTokensForService(req['user']['uuid'], 'github', () => {
-
-        }, err => {});
+        const {tokenKey} = req.body;
+        new ServiceController().getTokenByKeyAndService(req['user']['uuid'], 'github', tokenKey,(tokenData) => {
+            GithubService.listRepository(tokenData.token['access_token'], (data, err) => {
+                if (err)
+                    console.log(err);
+                res.status(200).json(data);
+            });
+        }, err => {console.log(err)});
     }
 
     /**
@@ -67,15 +73,15 @@ export default class GithubServiceRoute extends Route {
             }
         };
 
-        let body = {
-            code: code,
+        const body = {
+            code,
             client_id: process.env.GITHUB_SERVICES_CLIENT_ID,
             client_secret: process.env.GITHUB_SERVICES_SECRET,
             redirect_uri: process.env.GITHUB_SERVICES_REDIRECT_URL,
         }
 
         new ServiceAuthRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], Services.GITHUB.valueOf(), (token) => {
-            return res.status(200).json({success: true, token: token});
+            return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
         });

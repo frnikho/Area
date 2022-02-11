@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BACKEND_URL } from "@env";
 
 export const baseURL = 'https://area-backend.nikho.dev';
+
 
 const app = axios.create({
     baseURL: 'https://area-backend.nikho.dev',
