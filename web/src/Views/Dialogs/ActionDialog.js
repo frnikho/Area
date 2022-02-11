@@ -8,7 +8,6 @@ import {
     List,
     Typography
 } from "@mui/material";
-import app from "../../Components/utils/Axios";
 import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
 import GithubRepositoryDeletedDialog from "./github/actions/GithubRepositoryDeletedDialog";
 import GithubNewPushRepositoryDialog from "./github/actions/GithubNewPushRepositoryDialog";
@@ -18,6 +17,7 @@ import GithubIssueOpenedDialog from "./github/actions/GithubIssueOpenedDialog";
 import GithubIssueClosedDialog from "./github/actions/GithubIssueClosedDialog";
 import GithubIssueReopenedDialog from "./github/actions/GithubIssueReopenedDialog";
 import GithubRepositoryCreatedDialog from "./github/actions/GithubRepositoryCreatedDialog";
+import app from "../../Utils/Axios";
 
 export default class ActionDialog extends React.Component {
 

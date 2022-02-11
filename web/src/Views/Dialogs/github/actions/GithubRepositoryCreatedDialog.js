@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import GithubListingRepoDialog from "../GithubListingRepoDialog";
 import React from "react";
 import axios from "axios";
-import {config} from "../../../../Components/utils/Axios";
+import {config} from "../../../../Utils/Axios";
 
 export default class GithubRepositoryCreatedDialog extends GithubListingRepoDialog {
 

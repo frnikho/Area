@@ -1,10 +1,9 @@
 import {AuthContext} from "../../../../Contexts/AuthContext";
-import {Box, Button} from "@mui/material";
-import {FaGithub} from "react-icons/fa";
+import {Button} from "@mui/material";
 import GithubListingRepoDialog from "../GithubListingRepoDialog";
 import React from "react";
 import axios from "axios";
-import {config} from "../../../../Components/utils/Axios";
+import {config} from "../../../../Utils/Axios";
 
 export default class GithubRepositoryDeletedDialog extends GithubListingRepoDialog {
 

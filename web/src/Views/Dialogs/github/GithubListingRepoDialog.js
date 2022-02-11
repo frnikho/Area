@@ -1,10 +1,10 @@
 import {ActionSettingsDialog} from "./actions/ActionSettingsDialog";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import app, {config} from "../../../Components/utils/Axios";
 import {Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
 import {FaGithub, FaLock} from "react-icons/fa";
 import GithubServiceOauth from "../../../Components/oauth/GithubServiceOauth";
 import React from "react";
+import app, {config} from "../../../Utils/Axios";
 
 export default class GithubListingRepoDialog extends ActionSettingsDialog {
 

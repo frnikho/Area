@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import OAuth2Login from "react-simple-oauth2-login";
 import {Button} from "@mui/material";
-import app, {config} from "../utils/Axios";
 import {AuthContext} from "../../Contexts/AuthContext";
+import app, {config} from "../../Utils/Axios";
 
 export default class GithubServiceOauth extends React.Component {
 
