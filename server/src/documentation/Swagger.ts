@@ -20,6 +20,9 @@ export const swaggerOptions = {
         servers: [
             {
                 url: `https://area-backend.nikho.dev/`,
+            },
+            {
+                url: `https://localhost`,
             }
         ],
     },
