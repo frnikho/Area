@@ -55,17 +55,7 @@ export default withCookies(class ProfilePage extends Page {
                 right: [
                     {
                         name: 'Create',
-                        style: {
-                            paddingTop: "6px",
-                            background: "black",
-                            height: "50%",
-                            borderRadius: '50px',
-                            borderColor: 'white',
-                            fontFamily: 'Dongle',
-                            fontSize: '45px',
-                            textTransform: "none",
-                            color: "white"
-                        },
+                        style: Style.roundButtonFull,
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets" })
                     },
