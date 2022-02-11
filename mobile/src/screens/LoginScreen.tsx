@@ -66,6 +66,7 @@ export default class LoginScreen extends Component {
   }
 
   onLoginGoogle() {
+    console.log('test');
     new LoginController().googleLogin((status, res) => {
       if (status) {
         console.log(res);
