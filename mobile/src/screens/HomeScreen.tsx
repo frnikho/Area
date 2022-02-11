@@ -1,8 +1,9 @@
 
-import { Button, Text } from 'native-base';
+import { Button, IconButton, Text } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import UserApplets from './UserAppletsScreen';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class HomeScreen extends Component {
 
@@ -27,7 +28,8 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <UserApplets navigation={this.props.navigation} />
+        <IconButton style={styles.profileButton} icon={<IconFontAwesome name="user" size={40} color="black" onPress={() => this.props.navigation.navigate('profile')} />} />
+        <UserApplets />
         {this.createAppletButtonRender()}
       </View>
     );
@@ -45,6 +47,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: "#222222",
     borderRadius: 15,
+  },
+  profileButton: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    marginTop: 10,
+    marginRight: 10,
   },
   createAppletText: {
     color: "#ffffff",
