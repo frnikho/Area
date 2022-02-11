@@ -10,11 +10,13 @@ import {
   Modal,
   FormControl,
   Input,
+  Stack,
 } from 'native-base';
 import React, {Component} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
 import ServiceCard from '../components/ServiceCard';
 import app from '../axios_config';
+import ServiceChoicesModal from '../components/ServiceChoicesModal';
 
 export default class ServicesScreen extends Component {
   constructor(props: any) {
@@ -23,7 +25,6 @@ export default class ServicesScreen extends Component {
       services: undefined,
       showModal: false,
       currentService: undefined,
-      currentChoice: undefined,
     };
   }
 
@@ -77,8 +78,9 @@ export default class ServicesScreen extends Component {
     );
   }
 
-  renderActionsModal() {
-    if (this.state.currentService === undefined) return;
+  renderModal() {
+    const {modalContext} = this.props.route.params;
+    if (this.state.currentService === undefined || modalContext === undefined) return;
     return (
       <Center>
         <Modal
@@ -92,59 +94,7 @@ export default class ServicesScreen extends Component {
             </Modal.Header>
             <ScrollView>
               <Modal.Body>
-                {this.state.currentService.actions.length <= 0 ? (
-                  <Text>
-                    No actions is available with{' '}
-                    {this.state.currentService.name}
-                  </Text>
-                ) : (
-                  this.state.currentService.actions.map((action, i) => {
-                    return <Button key={i}>{action.name}</Button>;
-                  })
-                )}
-              </Modal.Body>
-            </ScrollView>
-            <Modal.Footer>
-              <Button.Group space={2}>
-                <Button
-                  onPress={() => {
-                    this.setState({showModal: false});
-                  }}>
-                  Save
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
-          </Modal.Content>
-        </Modal>
-      </Center>
-    );
-  }
-
-  renderReactionsModal() {
-    if (this.state.currentService === undefined) return;
-    return (
-      <Center>
-        <Modal
-          isOpen={this.state.showModal}
-          onClose={() => this.setState({showModal: false})}
-          size="full">
-          <Modal.Content maxWidth="400px">
-            <Modal.CloseButton />
-            <Modal.Header>
-              Choose one of {this.state.currentService.name}
-            </Modal.Header>
-            <ScrollView>
-              <Modal.Body>
-                {this.state.currentService.reactions.length <= 0 ? (
-                  <Text>
-                    No actions is available with{' '}
-                    {this.state.currentService.name}
-                  </Text>
-                ) : (
-                  this.state.currentService.actions.map((action, i) => {
-                    return <Button key={i}>{action.name}</Button>;
-                  })
-                )}
+                <ServiceChoicesModal service={this.state.currentService} modalContext={modalContext} />
               </Modal.Body>
             </ScrollView>
             <Modal.Footer>
@@ -176,7 +126,7 @@ export default class ServicesScreen extends Component {
         {this.state.services === undefined
           ? this.renderLoading()
           : this.renderServicesCards()}
-        {this.props.context === "actions" ? this.renderActionsModal() : this.renderReactionsModal(  )}
+        {this.renderModal()}
       </>
     );
   }
