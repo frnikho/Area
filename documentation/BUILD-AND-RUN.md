@@ -30,6 +30,8 @@ Go to server directory
 
     Or copy paste certificate generated for server into ```./server/nginx/certs```.
 
+    Maybe we this method you have to `chown` the certificate. ```sudo chown -c user-name ssl*```
+
 
 #### Build and run
 
@@ -112,7 +114,8 @@ $ serve -s build -p 8081
 
 #### Prerequisites
 
-- Fill the `example.env` in mobile, server and web directories and rename them in `.env`.
+- Fill the `example.env` in mobile, server and web directories and rename them in `.env`,
+- In server .env add properties ```PORT=8082```.
 
 
 At the root of the repository
