@@ -16,23 +16,21 @@
   padding: 10px;
   display: flex;
   cursor: pointer;
-  content: "helo";
 }
 
 .switch.on {
   background-color: #22cc88;
   justify-content: flex-end;
-  content: "on";
 }
 
 .switch.on:before {
-  margin-top: 2px;
+  margin-top: 6px;
   margin-right: 40px;
   content: "Connected";
 }
 
 .switch.off:after {
-  margin-top: 2px;
+  margin-top: 6px;
   margin-left: 30px;
   content: "Disconnected";
 }
@@ -47,5 +45,5 @@
   height: 80px;
   background-color: #ffffff;
   border-radius: 200px;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: 1px 6px 3px rgba(0, 0, 0, 0.02);
 }

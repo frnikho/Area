@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "../Resources/Styles/SwitchButton.css"
+import "../Resources/CSS/SwitchButton.css"
 
 export default function SwitchButton({ isOn, ...props }) {
     const className = `switch ${isOn ? "on" : "off"}`;
