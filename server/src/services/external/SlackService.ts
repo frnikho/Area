@@ -55,7 +55,7 @@ export default class SlackService {
      */
     public async ListChannelsOfTeam(bot: SlackBot, successFunc: success, errorFunc: error) {
         try {
-            let result = await bot.getClient().conversations.list();
+            const result = await bot.getClient().conversations.list();
             return successFunc(
                 result.channels.map(channels => {
                     return {

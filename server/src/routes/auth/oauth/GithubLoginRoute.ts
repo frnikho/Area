@@ -40,14 +40,14 @@ export default class GithubLoginRoute extends Route {
         axios.post(`https://github.com/login/oauth/access_token`, {
             client_id: process.env.GITHUB_CLIENT_ID,
             client_secret: process.env.GITHUB_CLIENT_SECRET,
-            code: code,
+            code,
             redirect_uri: process.env.GITHUB_REDIRECT_URL,
         }, {
             headers: {
                 "Accept": "application/json"
             }
         }).then((response) => {
-            let {error, error_description} = response.data;
+            const {error, error_description} = response.data;
             if (error)
                 return res.status(400).json({success: false, error: error_description});
 

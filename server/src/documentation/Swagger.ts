@@ -19,7 +19,7 @@ export const swaggerOptions = {
         },
         servers: [
             {
-                url: "https://nikho.dev/",
+                url: `https://area-backend.nikho.dev/`,
             }
         ],
     },
@@ -38,5 +38,11 @@ export const swaggerOptions = {
 
         // APPLETS
         "./src/routes/applets/AppletRoute.ts",
+
+        // USERS
+        "./src/routes/users/MeRoute.ts",
+
+        // ABOUT
+        "./src/routes/AboutRoute.ts"
     ],
 }

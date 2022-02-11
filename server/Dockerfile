@@ -7,12 +7,13 @@ COPY src src
 COPY public public
 COPY package.json package.json
 COPY .env .env
+COPY area-**.json .
 COPY sslCredentials sslCredentials
 
-EXPOSE 8080
+EXPOSE 8082
 
 # Install dependencies
-RUN npm install
+RUN npm install --force
 
 # Build
 RUN npm run build

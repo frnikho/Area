@@ -1,5 +1,4 @@
-import logs4js from 'log4js';
-
+import logs4js = require('log4js');
 
 export default class Logger {
 

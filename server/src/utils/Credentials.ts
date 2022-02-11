@@ -39,7 +39,7 @@ export default class Credentials {
      * @param error
      */
     public static verifyEmailAvailability(email: string, success: () => void, error: (msg: string) => void): void {
-        //TODO finish the function
+        // TODO finish the function
         DBService.query(`SELECT email FROM users WHERE email = '${email}'`, (result) => {
            if (result.length >= 1) {
                error('user already exist with this email address !');
