@@ -3,6 +3,7 @@ import { Text, VStack } from 'native-base';
 import AppletsController from '../controller/AppletsControler';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
+import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 export default class UserApplets extends Component {
 
@@ -59,12 +60,12 @@ export default class UserApplets extends Component {
             );
         }
         return (this.state.userApplets.map((applet, i) => {
+            let cardColor = applet.cardColor === undefined ? "#ffffff" : applet.cardColor;
+            let textColor = applet.cardColor === undefined ? "#222222" : "#ffffff";
             return (
-                <Card key={i} style={{ marginTop: 20, width: '100%', justifyContent: 'center', borderRadius: 15, backgroundColor: applet.cardColor === undefined ? "#ffffff" : applet.cardColor}}>
-                    <View color={applet.cardColor === undefined ? '#222222' : applet.cardColor}>
-                        <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
-                        <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
-                    </View>
+                <Card key={i} style={{ marginTop: 20, width: '100%', justifyContent: 'center', borderRadius: 15, backgroundColor: cardColor }}>
+                    <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
+                    <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
                 </Card>
             );
         }));
