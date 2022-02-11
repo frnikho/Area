@@ -5,12 +5,6 @@ const useStyles = {
     font: {
         fontFamily: "Dongle",
     },
-    container: {
-        margin: "0 auto",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-    },
     description: {
         paddingRight: "20px",
         paddingLeft: "20px",
@@ -24,10 +18,27 @@ const useStyles = {
         justifyContent: "center",
         textAlign: "center",
         borderRadius: "30px",
-        width: "500px",
-        height: "500px",
+        width: "800px",
+        height: "800px",
+    },
+    title: {
+        justifyContent: "justify",
+        alignItems: "justify",
+        display: "flex",
+    },
+    accountContainer: {
+        marginLeft: "700px",
+        fontFamily: "Dongle",
+        fontSize: "85px",
+    },
+    little: {
+        fontSize: "40px",
+        marginLeft: "1px",
     },
     space: {
+        margin: "200px",
+    },
+    littleSpace: {
         margin: "20px",
     }
 };

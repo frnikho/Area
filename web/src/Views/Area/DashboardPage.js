@@ -1,26 +1,14 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { createTheme, ThemeProvider, Grid, Box } from "@mui/material";
-import Button from '@mui/material/Button';
+import { ThemeProvider, Grid, Box,CssBaseline } from "@mui/material";
 
 import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
-import MenuDashboard from "../../Components/MenuDashboard"
 import ServicePage from "../../Views/Area/ServicePage"
-
-
-const menu = [
-    {
-        name: 'Area',
-        redirectUrl: "/description"
-    },
-    {
-        name: 'Profile',
-        redirectUrl: "/area/profile"
-    },
-]
+import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 export default withCookies(class DashboardPage extends Page {
 
@@ -39,7 +27,7 @@ export default withCookies(class DashboardPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl('/auth/login')
+            this.setRedirectUrl({url: '/auth/login'})
         } else {
             this.setState({ user: this.authContext.getUser() })
         }
@@ -62,20 +50,49 @@ export default withCookies(class DashboardPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
 
+            const menu = {
+                right: [
+                    {
+                        name: 'Create',
+                        style: {
+                            paddingTop: "6px",
+                            background: "black",
+                            height: "50%",
+                            borderRadius: '50px',
+                            borderColor: 'white',
+                            fontFamily: 'Dongle',
+                            fontSize: '45px',
+                            textTransform: "none",
+                            color: "white"
+                        },
+                        variant: "contained",
+                        action: () => component.setRedirectUrl({url: "/area/applets/add"})
+                    },
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl({url: "/description"})
+                    },
+                    {
+                        name: 'My applets',
+                    },
+                    {
+                        name: 'Profile',
+                        action: () => component.setRedirectUrl({url: "/area/profile"})
+                    },
+                    {
+                        name: 'applets test',
+                        action: () => component.setRedirectUrl({url: "/area/applets/property", params: 1234})
+                    },
+                ],
+                left: {
+                    action : () => console.log("hello world")
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <MenuDashboard props={component} menu={menu} />
-                    </div>
+                    <CssBaseline />
+                    <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         My applets
                     </div>

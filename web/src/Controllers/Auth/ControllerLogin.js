@@ -36,7 +36,7 @@ export default class ControllerLogin {
                     const { cookies } = this.cookies;
 
                     cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
-                    this.page.setRedirectUrl('/')
+                    this.page.setRedirectUrl({url: '/'})
                 })
             } else {
                 this.page.setNotification({ message: "Error with ControllerDataBase", show: true, type: "error" });

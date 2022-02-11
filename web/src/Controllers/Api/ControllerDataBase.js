@@ -1,4 +1,4 @@
-import app, { config } from "../../Components/utils/Axios";
+import app, { config } from "../../Utils/Axios";
 
 export default class ControllerDataBase {
 

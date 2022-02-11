@@ -2,28 +2,22 @@
 import style from "../CSS/Font.css";
 
 const useStyles = {
-    accountContainer: {
-        marginLeft: "700px",
-        fontFamily: "Dongle",
-        fontSize: "85px",
-    },
-    little: {
-        fontSize: "40px",
-        marginLeft: "1px",
-    },
     font: {
         fontFamily: "Dongle",
     },
+    background: {
+        backgroundColor: "#8c8c8c",
+    },
     container: {
-        margin: "0 auto",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
+        display: "flex",
         fontFamily: "Dongle",
-        fontSize: "125px",
+        fontSize: "60px",
     },
     space: {
-        margin: "75px",
+        margin: "125px",
     }
 };
 

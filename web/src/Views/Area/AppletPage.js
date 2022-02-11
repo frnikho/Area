@@ -1,20 +1,23 @@
 import React from "react";
-import {Box, Button, ButtonBase, Container, IconButton, Paper, ThemeProvider, Typography} from "@mui/material";
-import {FaQuestion} from "react-icons/fa/index";
-import {styles} from "../../Styles/AppletPageStyles";
-import {theme} from "../../Styles/AppTheme";
-import { Navigate } from "react-router-dom";
+import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography,CssBaseline } from "@mui/material";
+import { styles } from "../../Resources/Styles/AppletPageStyles";
+import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
+import Page from "../Page"
+import Header from "../../Components/Header"
 
-class AppletPage extends React.Component {
+/**
+ * @class AppletPage
+ * Page for create an applets
+ */
+export default class AppletPage extends Page {
 
     constructor(props) {
         super(props);
         this.state = {
-            redirectUrl: undefined,
             action: undefined,
             reactions: [],
             currentDialog: undefined,
@@ -42,9 +45,7 @@ class AppletPage extends React.Component {
     }
 
     onClose() {
-        this.setState({
-            redirectUrl: "/"
-        })
+        this.setRedirectUrl({url: '/'})
     }
 
     onClickHelp() {
@@ -72,14 +73,15 @@ class AppletPage extends React.Component {
     }
 
     showDialogs() {
-        if (this.state.currentDialog === undefined)
-            return;
-        if (this.state.currentDialog === "ACTION_DIALOG")
-            return <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog}/>
-        if (this.state.currentDialog === "REACTION_DIALOG")
-            return <ReactionDialog currentAction={this.state.action} onSelected={this.onReactionSelected} onClose={this.onCloseDialog}/>
-        if (this.state.currentDialog === "HELP_DIALOG")
-            return <HelpDialog onClose={this.onCloseDialog}/>
+        const Dialogs = {
+            ACTION_DIALOG: <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog} />,
+            REACTION_DIALOG: <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />,
+            HELP_DIALOG: <HelpDialog onClose={this.onCloseDialog} />,
+            undefined: null
+        }
+        return (
+            Dialogs[this.state.currentDialog]
+        )
     }
 
     showActionButton() {
@@ -118,41 +120,47 @@ class AppletPage extends React.Component {
                         <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40}/></Typography>
                     </Box>
                 </ButtonBase>
-                </Paper>)
+            </Paper>)
         } else {
 
         }
     }
 
     render() {
-        return (
-            <ThemeProvider theme={theme}>
-                {this.state.redirectUrl !== undefined ? <Navigate to={"/"}/> : null}
-                {this.showDialogs()}
-                <Box sx={{pb: 2, mx: 2}} style={styles.topBar.main}>
-                    <Box style={styles.topBar.leftMenu}>
-                        <Button onClick={() => this.onClose()}>Close</Button>
-                    </Box>
-                    <Box sx={{mt: 2}} style={styles.topBar.centerMenu}>
+
+        return (this.pageRender(this, function RenderAppletPage({ component }) {
+
+            const menu = {
+                right: [
+                    {
+                        name: '?',
+                        action: () => component.onClickHelp()
+                    },
+                ],
+                left: {
+                    name: "Cancel",
+                    action: () => component.setRedirectUrl({url: "/"}),
+                }
+            }
+
+            return (
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    {component.showDialogs()}
+                    <Header component={component} menu={menu} />
+                    <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
                         <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
                     </Box>
-                    <Box style={styles.topBar.rightMenu}>
-                        <IconButton onClick={() => this.onClickHelp()}>
-                            <FaQuestion size={40}/>
-                        </IconButton>
+                    <Box style={styles.content}>
+                        <Container>
+                            <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
+                                {component.showActionButton()}
+                                {component.showReactionButton()}
+                            </Box>
+                        </Container>
                     </Box>
-                </Box>
-                <Box style={styles.content}>
-                   <Container>
-                       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
-                           {this.showActionButton()}
-                           {this.showReactionButton()}
-                       </Box>
-                   </Container>
-                </Box>
-            </ThemeProvider>
-        );
+                </ThemeProvider>
+            )
+        }));
     }
 }
-
-export default AppletPage;

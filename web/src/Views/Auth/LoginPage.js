@@ -1,8 +1,7 @@
 import Lottie from "lottie-react";
-import { Box, Button, Checkbox, Container, createTheme, ThemeProvider, FormControlLabel, TextField, Typography, } from "@mui/material";
+import { Box, Button, Checkbox, Container, ThemeProvider, FormControlLabel, TextField, Typography, CssBaseline } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import Stack from '@mui/material/Stack';
 import implement from 'implement-js'
 
 import { LoginModel } from "../../Models/ModelAuth"
@@ -10,12 +9,10 @@ import ControllerLogin from "../../Controllers/Auth/ControllerLogin"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import * as logo from "../../Resources/assets/login.json"
-import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
-
-
-import { inspect } from 'util';
+import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 export default withCookies(class LoginPage extends Page {
 
@@ -32,7 +29,7 @@ export default withCookies(class LoginPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
-            this.setRedirectUrl('/area/dashboard')
+            this.setRedirectUrl({ url: '/area/dashboard' })
         }
         this.forceUpdate()
         this.controllerLogin = new ControllerLogin(this.authContext, this.cookies, this);
@@ -65,24 +62,22 @@ export default withCookies(class LoginPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderLoginPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
+
+            const menu = {
+                right: [
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl({ url: "/description" })
+                    },
+                ],
+                left: {
                 }
-            });
+            }
 
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/description")}>Area</Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <CssBaseline />
+                    <Header component={component} menu={menu} />
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Lottie animationData={logo} style={{ height: 200 }} />

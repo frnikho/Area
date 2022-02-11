@@ -1,7 +1,6 @@
-import { Box, Button, Container, createTheme, ThemeProvider, TextField, Typography, } from "@mui/material";
+import { Box, Button, Container, ThemeProvider, TextField, Typography, CssBaseline} from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
-import Stack from '@mui/material/Stack';
 import implement from 'implement-js'
 
 import { RegisterModel } from "../../Models/ModelAuth"
@@ -9,9 +8,10 @@ import ControllerRegister from "../../Controllers/Auth/ControllerRegister"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import RegisterLogo from "../../Resources/assets/38435-register.gif";
-import Style from "../../Resources/Styles/styleAuth.js"
 import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
+import Header from "../../Components/Header"
+import { theme } from "../../Resources/Styles/AppTheme";
 
 export default withCookies(class RegisterPage extends Page {
 
@@ -28,7 +28,7 @@ export default withCookies(class RegisterPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
-            this.setRedirectUrl('/area/dashboard')
+            this.setRedirectUrl({url: '/area/dashboard'})
         }
         this.forceUpdate()
         this.controllerRegister = new ControllerRegister(this.authContext, this.cookies, this);
@@ -69,24 +69,21 @@ export default withCookies(class RegisterPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
 
+            const menu = {
+                right: [
+                    {
+                        name: 'Area',
+                        action: () => component.setRedirectUrl({url: "/description"})
+                    },
+                ],
+                left: {
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/description")}>Area</Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <CssBaseline />
+                    <Header component={component} menu={menu} />
                     <Container component="main" maxWidth="xs">
                         <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <img style={{ borderRadius: 50, width: '50%', height: '50%' }} src={RegisterLogo} alt="loading..." />

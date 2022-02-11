@@ -3,16 +3,14 @@ import {
     Box,
     CircularProgress,
     Dialog, DialogContent,
-    DialogTitle,
-    Divider, Grid,
+    Grid,
     List,
-    ListItem,
-    ListItemText,
     Typography
 } from "@mui/material";
-import app from "../../Components/utils/Axios";
 import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
 import PropTypes from "prop-types";
+import {CircularProgress, Dialog, List, Typography} from "@mui/material";
+import app from "../../Utils/Axios";
 
 export default class ReactionDialog extends React.Component {
 
