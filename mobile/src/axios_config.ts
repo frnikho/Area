@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BACKEND_URL } from "@env";
 
-const baseURL = `https://nikho.dev:8080`;
+export const baseURL = 'https://area-backend.nikho.dev';
 
 
 const app = axios.create({
-    baseURL: 'https://nikho.dev:8080',
+    baseURL: 'https://area-backend.nikho.dev',
 })
 
 export const config = (token: string) => {
