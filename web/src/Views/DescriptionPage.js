@@ -1,13 +1,13 @@
-// import React from "react";
-import { Button, createTheme, ThemeProvider, } from "@mui/material";
-import Stack from '@mui/material/Stack';
+import { ThemeProvider, } from "@mui/material";
 import { withCookies } from "react-cookie";
+import {CssBaseline} from "@mui/material"
 
 import ControllerDescription from "../Controllers/ControllerDescription"
 import Page from "./Page"
 import DescriptionLogo from "../Resources/assets/87795-loading-success.gif";
 import Style from "../Resources/Styles/styleDescription.js"
-
+import Header from "../Components/Header"
+import { theme } from "../Resources/Styles/AppTheme"
 
 export default withCookies(class DescriptionPage extends Page {
 
@@ -19,32 +19,27 @@ export default withCookies(class DescriptionPage extends Page {
 
     render() {
         return (this.pageRender(this, function RenderRegisterPage({ component }) {
-            const theme = createTheme({
-                palette: {
-                    type: "dark"
-                }
-            });
 
+            const menu = {
+                right: [
+                    {
+                        name: '←',
+                        action: () => component.setRedirectUrl({url: "/"})
+                    },
+                ],
+                left: {
+                }
+            }
             return (
                 <ThemeProvider theme={theme}>
-                    <div style={Style.title}>
-                        <div style={Style.titleLeft}>
-                            <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }}>Epitech 2022 Project</Button>
-                        </div>
-                        <div style={Style.menuRight}>
-                            <Stack direction="row" spacing={2}>
-                                <Button style={{ fontFamily: 'Dongle', fontSize: '60px', textTransform: "none", color: "black" }} onClick={() => component.setRedirectUrl("/")}>
-                                    ←
-                                </Button>
-                            </Stack>
-                        </div>
-                    </div>
+                    <CssBaseline />
+                    <Header component={component} menu={menu} />
                     <div style={Style.container}>
                         <img style={{ width: '10%', height: '10%' }} src={DescriptionLogo} alt="loading..." />
                         <div style={Style.rect}>
                             <div style={Style.description}>
                                 What is Area ?
-                                <div style={Style.littleSpace} />
+                                <div style={Style.space} />
                                 Area is a web service that allows its users to create simple instruction strings called applets.
                                 An applet is triggered by changes in web services such as Gmail, Discord or slack.
                             </div>

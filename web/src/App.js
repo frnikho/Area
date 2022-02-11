@@ -10,6 +10,8 @@ import RegisterPage from "./Views/Auth/RegisterPage";
 import DescriptionPage from "./Views/DescriptionPage"
 import DashboardPage from "./Views/Area/DashboardPage"
 import ProfilePage from "./Views/Area/ProfilePage"
+import AppletPage from "./Views/Area/AppletPage";
+import AppletPropertyPage from "./Views/Area/AppletPropertyPage";
 
 class App extends React.Component {
 
@@ -18,7 +20,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: undefined
+            loading: true,
         }
     }
 
@@ -35,18 +37,7 @@ class App extends React.Component {
 
     setAppRoutes() {
         this.setState({
-            data: (<Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path={"description"} element={<DescriptionPage />} />
-                <Route path="auth">
-                    <Route path={"login"} element={<LoginPage />} />
-                    <Route path={"register"} element={<RegisterPage />} />
-                </Route>
-                <Route path="area">
-                    <Route path={"dashboard"} element={<DashboardPage />} />
-                    <Route path={"profile"} element={<ProfilePage />} />
-                </Route>
-            </Routes>)
+            loading: false
         })
     }
 
@@ -55,7 +46,7 @@ class App extends React.Component {
             this.componentDidMount()
         return (
             <div>
-                {this.state.data !== undefined ? <Routes>
+                {this.state.loading !== true ? <Routes>
                     <Route path='/' element={<HomePage />} />
                     <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
@@ -63,6 +54,10 @@ class App extends React.Component {
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>
                     <Route path="area">
+                        <Route path="applets">
+                            <Route path="add" element={<AppletPage />} />
+                            <Route path="property/:id" element={<AppletPropertyPage />} />
+                        </Route>
                         <Route path={"dashboard"} element={<DashboardPage />} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>

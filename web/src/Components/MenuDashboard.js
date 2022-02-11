@@ -4,17 +4,21 @@ import Style from "../Resources/Styles/styleMenuDashboard"
 
 export default function MenuDashboard({ props, menu }) {
 
-    function ButtonMenu({ buttonName, redirectUrl, key }) {
+    function ButtonMenu({ menu, key }) {
         return (
-            <Button style={Style.buttonMenu} key={key} onClick={() => props.setRedirectUrl(redirectUrl)}>{buttonName}</Button>
+            <Button
+                variant={menu.variant || "text"}
+                style={menu.style || Style.buttonMenu}
+                key={key}
+                onClick={() => (menu.action && menu.action())}>
+                {menu.name}
+            </Button>
         )
     }
 
     return (
-        <div style={Style.menuRight}>
-            <Stack direction="row" spacing={4}>
-                {menu.map((button, id) => ButtonMenu({ buttonName: button.name, redirectUrl: button.redirectUrl, key: id }) )}
-            </Stack>
-        </div>
+        <Stack direction="row" spacing={4} display="flex" justifyContent="center" alignItems="center">
+            {menu.map((menu, id) => ButtonMenu({ menu, key: id, }))}
+        </Stack>
     )
 }

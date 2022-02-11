@@ -1,13 +1,20 @@
-import {  Box, OutlinedInput, FormControl } from "@mui/material";
+import { Box, OutlinedInput, FormControl } from "@mui/material";
 
-export default function FieldSettings(props) {
+export default function FieldSettings({ props, style, fieldName, value, active }) {
+
+    const Input = () => {
+        if (active)
+            return <OutlinedInput name={fieldName} placeholder={value} />
+        else
+            return <OutlinedInput disabled placeholder={value} />
+    }
 
     return (
-        <div style={props.style.little}>
-            {props.fieldName}
-            <Box component="form" noValidate autoComplete="off" sx={{ height: 80 }}>
+        <div style={style.little}>
+            {fieldName}
+            <Box component="form" onSubmit={(e) => props.handleSubmit(e, fieldName)} noValidate sx={{ mt: 1 }}>
                 <FormControl sx={{ width: '50ch' }}>
-                    <OutlinedInput disabled placeholder={props.value} />
+                    <Input />
                 </FormControl>
             </Box>
         </div>

@@ -88,6 +88,7 @@ export default class App {
 
     private initRoutes(): void  {
         // AUTH ROUTES
+        this.app.use('/static', express.static('public'));
         new RegisterRoute().register(this.app, '/auth/register');
         new LoginRoute().register(this.app, '/auth/login');
         new VerifyEmailRoute().register(this.app, '/auth/verify');

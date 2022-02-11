@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import NotifComponent, {TimeNotifComponent} from "../Components/utils/NotifComponent"
+import NotifComponent from "../Components/NotifComponent"
 
 export default class Page extends React.Component {
 
@@ -14,14 +14,18 @@ export default class Page extends React.Component {
         this.setRedirectUrl = this.setRedirectUrl.bind(this)
         this.setNotification = this.setNotification.bind(this)
         this.notificationComponent = this.notificationComponent.bind(this)
-        this.redirectUrl = this.redirectUrl.bind(this)
         this.getUrl = this.getUrl.bind(this)
         this.pageRender = this.pageRender.bind(this)
     }
 
     getUrl() { return this.state.redirectUrl }
 
-    setRedirectUrl(url) { this.setState({ redirectUrl: url }) }
+    setRedirectUrl(url) {
+
+        if (url && url.params)
+            url.url += "/:" + url.params
+        this.setState({ redirectUrl: url })
+    }
 
     setNotification(value) {
         this.setState({ notification: value });
@@ -32,15 +36,7 @@ export default class Page extends React.Component {
             return (null);
         return (
             <>
-                <TimeNotifComponent {...this.state.notification} />
-            </>
-        )
-    }
-
-    redirectUrl() {
-        return (
-            <>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : null}
+                <NotifComponent {...this.state.notification} />
             </>
         )
     }
@@ -48,7 +44,7 @@ export default class Page extends React.Component {
     pageRender(component, Page) {
         return (
             <div>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl} /> : <Page component={component} />}
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : <Page component={component} />}
             </div>
         );
     }
