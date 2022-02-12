@@ -1,6 +1,7 @@
 import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../components/ChoiceCard';
+import GithubActionModal from '../components/github/GithubActionModal';
 import ServicesController from '../controller/ServicesController';
 import ServicesScreen from './ServicesScreen';
 
@@ -10,6 +11,12 @@ export default class ReactionsScreen extends React.Component {
     this.state = {
       reaction: undefined,
     };
+  }
+
+  renderModals() {
+    return (
+        <GithubActionModal action={this.state.reaction} />
+    );
   }
 
   renderReactionsList() {
@@ -42,11 +49,11 @@ export default class ReactionsScreen extends React.Component {
             <Modal.CloseButton />
             <Modal.Header>Choose one of {this.props.service.name}</Modal.Header>
             <ScrollView>
-              <Modal.Body>{this.renderReactionsList()}</Modal.Body>
+              <Modal.Body>{this.state.reaction === undefined ? this.renderReactionsList() : this.renderModals()}</Modal.Body>
             </ScrollView>
             <Modal.Footer>
               <Button.Group space={2}>
-                <Button onPress={this.props.onSave}>Save</Button>
+                <Button onPress={() => {this.props.onSave(this.state.reaction)}} isDisabled={this.state.reaction ? false : true} >Save</Button>
               </Button.Group>
             </Modal.Footer>
           </Modal.Content>

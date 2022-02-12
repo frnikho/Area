@@ -33,8 +33,10 @@ export default class ServicesScreen extends Component {
     this.onClose = this.onClose.bind(this);
   }
 
-  onSave() {
-    console.log("a")
+  onSave(action: object) {
+    const {onSelected} = this.props.route.params;
+    this.setState({onShowModal: false})
+    onSelected(action);
   }
 
   onClose() {

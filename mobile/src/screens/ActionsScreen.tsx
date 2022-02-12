@@ -2,7 +2,7 @@ import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../components/ChoiceCard';
 import ServicesController from '../controller/ServicesController';
-import ServicesScreen from './ServicesScreen';
+import GithubActionModal from '../components/github/GithubActionModal';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -11,11 +11,12 @@ export default class ActionsScreen extends React.Component {
       action: undefined,
       dialog: undefined,
     };
+
   }
 
   renderModals() {
     return (
-        <Text>Saluttttttttttttttttt</Text>
+        <GithubActionModal action={this.state.action} />
     );
   }
 
@@ -30,9 +31,7 @@ export default class ActionsScreen extends React.Component {
               return (
                 <ChoiceCard
                   name={action.name}
-                  onPress={() =>
-                    this.setState({action: action, dialog: 'gfdkfdhgjkgh'})
-                  }
+                  onPress={() => {this.setState({action: action, dialog: action.type.toUpperCase()})}}
                   key={i}
                 />
               );
@@ -55,7 +54,7 @@ export default class ActionsScreen extends React.Component {
             </ScrollView>
             <Modal.Footer>
               <Button.Group space={2}>
-                <Button onPress={this.props.onSave}>Save</Button>
+                <Button onPress={() => {this.props.onSave(this.state.action)}} isDisabled={this.state.dialog ? false : true} >Save</Button>
               </Button.Group>
             </Modal.Footer>
           </Modal.Content>

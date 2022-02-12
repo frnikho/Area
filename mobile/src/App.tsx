@@ -23,6 +23,11 @@ import { NativeBaseProvider, Box } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import {is_logged_in} from './auth'
 import Router from './router'
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+ 'Non-serializable values were found in the navigation state',
+]);
 
 export default class App extends Component {
 
