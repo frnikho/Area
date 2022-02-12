@@ -17,26 +17,38 @@ import {ScrollView, View, StyleSheet} from 'react-native';
 import ServiceCard from '../components/ServiceCard';
 import app from '../axios_config';
 import ServiceChoicesModal from '../components/ServiceChoicesModal';
+import ServicesController from '../controller/ServicesController';
+import ActionsScreen from './ActionsScreen';
+import ReactionsScreen from './ReactionsScreen';
 
 export default class ServicesScreen extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
       services: undefined,
-      showModal: false,
       currentService: undefined,
+      onShowModal: false,
     };
+    this.onSave = this.onSave.bind(this);
+    this.onClose = this.onClose.bind(this);
+  }
+
+  onSave() {
+    console.log("a")
+  }
+
+  onClose() {
+    this.setState({onShowModal: false});
   }
 
   componentDidMount() {
-    app
-      .get('/about.json')
-      .then((response: any) => {
+    new ServicesController().getAboutPointJSON((status, response) => {
+      if (status) {
         this.setState({services: response.data.server.services});
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+      } else {
+        console.error(response);
+      }
+    });
   }
 
   renderLoading() {
@@ -67,7 +79,7 @@ export default class ServicesScreen extends Component {
                   backgroundColor="#4287f5"
                   name={service.name}
                   onPress={() =>
-                    this.setState({showModal: true, currentService: service})
+                    this.setState({onShowModal: true, currentService: service})
                   }
                 />
               </View>
@@ -80,36 +92,13 @@ export default class ServicesScreen extends Component {
 
   renderModal() {
     const {modalContext} = this.props.route.params;
-    if (this.state.currentService === undefined || modalContext === undefined) return;
+    if (this.state.currentService === undefined || this.state.onShowModal === false) {
+      return;
+    }
     return (
-      <Center>
-        <Modal
-          isOpen={this.state.showModal}
-          onClose={() => this.setState({showModal: false})}
-          size="full">
-          <Modal.Content maxWidth="400px">
-            <Modal.CloseButton />
-            <Modal.Header>
-              Choose one of {this.state.currentService.name}
-            </Modal.Header>
-            <ScrollView>
-              <Modal.Body>
-                <ServiceChoicesModal service={this.state.currentService} modalContext={modalContext} />
-              </Modal.Body>
-            </ScrollView>
-            <Modal.Footer>
-              <Button.Group space={2}>
-                <Button
-                  onPress={() => {
-                    this.setState({showModal: false});
-                  }}>
-                  Save
-                </Button>
-              </Button.Group>
-            </Modal.Footer>
-          </Modal.Content>
-        </Modal>
-      </Center>
+      <>
+        {modalContext === 'actions' ? <ActionsScreen service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} /> : <ReactionsScreen service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} />}
+      </>
     );
   }
 
