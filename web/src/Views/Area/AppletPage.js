@@ -103,7 +103,7 @@ export default class AppletPage extends Page {
   {/*                          <Box sx={{mb: 2}}>
                                 <MdEditNote color={"white"} size={24}/>
                             </Box>*/}
-                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50}/>
+                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loarding . . ."/>
                             <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{this.state.action.about.name}</Typography>
                         </Box>
                     </ButtonBase>

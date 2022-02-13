@@ -4,7 +4,7 @@ import { Dialog, } from "@mui/material";
 import Style from "../../Resources/Styles/styleHelpDialog"
 
 export default class HelpDialog extends React.Component {
-
+    // eslint-disable-next-line
     constructor(props) {
         super(props);
     }
