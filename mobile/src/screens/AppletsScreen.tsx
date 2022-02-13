@@ -6,26 +6,64 @@ export default class AppletsScreen extends Component {
 
     constructor(props: any) {
         super(props);
+        this.state = {
+            action: undefined,
+            reaction: undefined,
+        }
+        this.onActionSelected = this.onActionSelected.bind(this)
+        this.onReactionSelected = this.onReactionSelected.bind(this)
+    }
+
+    onActionSelected(action: object) {
+        this.setState({ action: action });
+        console.log(action)
+        this.props.navigation.goBack();
+    }
+
+    onReactionSelected(reaction: object) {
+        this.setState({ reaction: reaction });
+        console.log(reaction)
+        this.props.navigation.goBack();
     }
 
     actionButtonRender() {
-        return (
-            <View id="action">
-                <Button mode="contained" style={styles.actionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions'})}>
-                    <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>If this</Text>
-                </Button>
-            </View>
-        );
+        if (this.state.action === undefined) {
+            return (
+                <View id="action">
+                    <Button mode="contained" style={styles.actionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions', onSelected: this.onActionSelected})}>
+                        <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>If this</Text>
+                    </Button>
+                </View>
+            );
+        } else {
+            return (
+                <View id="action">
+                    <Button mode="contained" style={styles.actionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'actions', onSelected: this.onActionSelected})}>
+                        <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.actionText}>{this.state.action.name}</Text>
+                    </Button>
+                </View>
+            );
+        }
     }
 
     reactionButtonRender() {
-        return (
-            <View id="reaction">
-                <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions'})}>
-                    <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then that</Text>
-                </Button>
-            </View>
-        );
+        if (this.state.reaction === undefined) {
+            return (
+                <View id="reaction">
+                    <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions', onSelected: this.onReactionSelected})}>
+                        <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.reactionText}>Then that</Text>
+                    </Button>
+                </View>
+            );
+        } else {
+            return (
+                <View id="reaction">
+                    <Button mode="contained" style={styles.reactionButton} onPress={() => this.props.navigation.navigate('services', {modalContext: 'reactions', onSelected: this.onReactionSelected})}>
+                        <Text fontFamily="body" fontWeight={600} fontSize ="4xl" style={styles.reactionText}>{this.state.reaction.name}</Text>
+                    </Button>
+                </View>
+            );
+        }
     }
 
     mainTextRender() {
