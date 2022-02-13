@@ -2,8 +2,6 @@ import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../components/ChoiceCard';
 import GithubActionModal from '../components/github/GithubActionModal';
-import ServicesController from '../controller/ServicesController';
-import ServicesScreen from './ServicesScreen';
 
 export default class ReactionsScreen extends React.Component {
   constructor(props: any) {

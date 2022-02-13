@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ChevronLeftIcon, Text, VStack, Flex} from 'native-base';
+import { Button, ChevronLeftIcon, Text, VStack } from 'native-base';
 import { StyleSheet, View } from 'react-native';
 
 export default class AppletsScreen extends Component {
