@@ -16,13 +16,11 @@ export default class AppletsScreen extends Component {
 
     onActionSelected(action: object) {
         this.setState({ action: action });
-        console.log(action)
         this.props.navigation.goBack();
     }
 
     onReactionSelected(reaction: object) {
         this.setState({ reaction: reaction });
-        console.log(reaction)
         this.props.navigation.goBack();
     }
 

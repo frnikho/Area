@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginTop: 10,
   },
   card: {
     paddingHorizontal: 8,
