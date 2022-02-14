@@ -57,6 +57,8 @@ export default class ActionDialog extends React.Component {
         return (
             <List>
                 {this.state.services.map((service, indexS) => {
+                    if (service.actions.length === 0)
+                        return;
                     return (
                         <Box key={indexS}>
                             <Box textAlign={"start"} sx={{my: 2, display: "flex", alignItems: "center", justifyContent: "start"}}>
