@@ -78,7 +78,7 @@ export default class ServicesScreen extends Component {
             return (
               <View style={styles.card} key={i}>
                 <ServiceCard
-                  backgroundColor="#4287f5"
+                  backgroundColor={service.color}
                   name={service.name}
                   onPress={() =>
                     this.setState({onShowModal: true, currentService: service})

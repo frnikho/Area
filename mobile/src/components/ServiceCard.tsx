@@ -34,7 +34,7 @@ class ServiceCard extends Component {
               backgroundColor: this.props.backgroundColor ?? '#4287f5',
             }}
             _light={{
-              backgroundColor: '#4287f5',
+              backgroundColor: this.props.backgroundColor ?? '#4287f5',
             }}>
             <Stack p="4" space={3}>
               <Stack space={2}>
