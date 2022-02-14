@@ -16,6 +16,7 @@ export default class ServicesScreen extends Component {
     };
     this.onSave = this.onSave.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.renderServicesCards = this.renderServicesCards.bind(this);
   }
 
   onSave(action: object) {
@@ -66,6 +67,7 @@ export default class ServicesScreen extends Component {
                 <View style={styles.card} key={i}>
                   <ServiceCard
                     backgroundColor={service.color}
+                    logo={'https://area-backend.nikho.dev/static/' + service.icon}
                     name={service.name}
                     onPress={() =>
                       this.setState({ onShowModal: true, currentService: service })
@@ -78,6 +80,7 @@ export default class ServicesScreen extends Component {
                 <View style={styles.card} key={i}>
                   <ServiceCard
                     backgroundColor={service.color}
+                    logo={'https://area-backend.nikho.dev/static/' + service.icon}
                     name={service.name}
                     onPress={() =>
                       this.setState({ onShowModal: true, currentService: service })
