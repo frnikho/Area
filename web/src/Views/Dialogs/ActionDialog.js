@@ -53,24 +53,24 @@ export default class ActionDialog extends React.Component {
 
     showActions() {
         if (this.state.services === undefined)
-            return (<Box m={10} alignContent={"center"} textAlign={"center"}><CircularProgress/></Box>);
+            return (<Box m={10} alignContent={"center"} textAlign={"center"}><CircularProgress /></Box>);
         return (
             <List>
                 {this.state.services.map((service, indexS) => {
                     return (
                         <Box key={indexS}>
-                            <Box textAlign={"start"} sx={{my: 2, display: "flex", alignItems: "center", justifyContent: "start"}}>
-                                <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{mx: 2}}>
+                            <Box textAlign={"start"} sx={{ my: 2, display: "flex", alignItems: "center", justifyContent: "start" }}>
+                                <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{ mx: 2 }}>
                                     {service.name}
                                 </Typography>
-                                <img src={`https://localhost:8080/static/${service.icon}`} width={58}/>
+                                <img src={`https://localhost:8080/static/${service.icon}`} width={58} alt="Loarding . . ." />
                             </Box>
                             <div>
                                 <Grid container spacing={2} direction="row" justifyContent="center">
                                     {service.actions.map((action, indexA) => {
                                         return (
                                             <Grid item key={indexA}>
-                                                <ServiceChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)}/>
+                                                <ServiceChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)} />
                                             </Grid>)
                                     })}
                                 </Grid>
@@ -83,9 +83,9 @@ export default class ActionDialog extends React.Component {
 
     onDialogsClosed(onlyDialog) {
         if (onlyDialog) {
-            this.setState({dialog: undefined});
+            this.setState({ dialog: undefined });
         } else {
-            this.setState({dialog: undefined});
+            this.setState({ dialog: undefined });
             this.props.onClose();
         }
     }
@@ -100,13 +100,13 @@ export default class ActionDialog extends React.Component {
             return;
 
         const data = {
-            GITHUB_REPOSITORY_DELETED: <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_REPOSITORY_PUSH: <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_RELEASE_CREATED: <GithubReleaseCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_REPOSITORY_DELETED: <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_REPOSITORY_PUSH: <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_RELEASE_CREATED: <GithubReleaseCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
         }
         return data[this.state.dialog];
     }
