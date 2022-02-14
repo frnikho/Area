@@ -15,7 +15,6 @@ class ChoiceCard extends React.Component {
           <Box alignItems="center">
             <Box
               width="100%"
-              height="100"
               rounded="xl"
               overflow="hidden"
               borderColor="coolGray.200"

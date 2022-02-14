@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ChevronLeftIcon, Text, VStack, Flex} from 'native-base';
+import { Button, ChevronLeftIcon, Text, VStack } from 'native-base';
 import { StyleSheet, View } from 'react-native';
 
 export default class AppletsScreen extends Component {
@@ -16,13 +16,11 @@ export default class AppletsScreen extends Component {
 
     onActionSelected(action: object) {
         this.setState({ action: action });
-        console.log(action)
         this.props.navigation.goBack();
     }
 
     onReactionSelected(reaction: object) {
         this.setState({ reaction: reaction });
-        console.log(reaction)
         this.props.navigation.goBack();
     }
 
