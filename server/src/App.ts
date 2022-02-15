@@ -129,7 +129,7 @@ export default class App {
     }
 
     public start(port?: number): void {
-        this.tcpSocket = this.server.listen(8080, () => {
+        this.tcpSocket = this.server.listen(this.port, () => {
             Logger.i(`server is listening on https://localhost:${this.port}/`)
         });
     }

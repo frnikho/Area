@@ -4,6 +4,7 @@ import {ButtonBase, Paper, Typography} from "@mui/material";
 
 export default class ServiceChildItemCard extends React.Component {
 
+    // eslint-disable-next-line
     constructor(props) {
         super(props);
     }
