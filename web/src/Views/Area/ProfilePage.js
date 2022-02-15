@@ -64,6 +64,10 @@ export default withCookies(class ProfilePage extends Page {
                     //     action: () => component.setRedirectUrl({ url: "/description" })
                     // },
                     {
+                        name: 'Services',
+                        action: () => component.setRedirectUrl({ url: "/area/services" })
+                    },
+                    {
                         name: 'Profile',
                         redirectUrl: undefined
                     }

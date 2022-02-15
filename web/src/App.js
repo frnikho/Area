@@ -59,6 +59,7 @@ class App extends React.Component {
                             <Route path="property/:id" element={<AppletPropertyPage />} />
                         </Route>
                         <Route path={"dashboard"} element={<DashboardPage />} />
+                        <Route path={"services"} element={console.log("services")} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
                 </Routes> : null}

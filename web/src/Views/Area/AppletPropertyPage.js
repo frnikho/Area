@@ -67,6 +67,10 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     //     action: () => component.setRedirectUrl({ url: "/description" })
                     // },
                     {
+                        name: 'Services',
+                        action: () => component.setRedirectUrl({ url: "/area/services" })
+                    },
+                    {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({ url: "/area/profile" })
                     },
