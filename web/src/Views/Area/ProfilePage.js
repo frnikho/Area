@@ -59,13 +59,13 @@ export default withCookies(class ProfilePage extends Page {
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets" })
                     },
+                    // {
+                    //     name: 'Area',
+                    //     action: () => component.setRedirectUrl({ url: "/description" })
+                    // },
                     {
-                        name: 'Area',
-                        action: () => component.setRedirectUrl({ url: "/description" })
-                    },
-                    {
-                        name: 'My applets',
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+                        name: 'Services',
+                        action: () => component.setRedirectUrl({ url: "/area/services" })
                     },
                     {
                         name: 'Profile',
@@ -73,6 +73,7 @@ export default withCookies(class ProfilePage extends Page {
                     }
                 ],
                 left: {
+                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }

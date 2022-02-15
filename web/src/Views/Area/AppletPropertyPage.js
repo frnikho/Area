@@ -1,8 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
 import { ThemeProvider, CssBaseline, Box, Button } from "@mui/material";
-// import { styled } from '@mui/system';
-// import SwitchUnstyled, { switchUnstyledClasses } from '@mui/base/SwitchUnstyled';
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"
@@ -11,15 +9,8 @@ import Style from "../../Resources/Styles/styleAppletProperty"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 import { withParams } from "../../Utils/NavigateTools"
+import SwitchButton from "../../Components/SwitchButton"
 
-// const blue = {
-//     500: '#007FFF',
-// };
-
-// const grey = {
-//     400: '#BFC7CF',
-//     500: '#AAB4BE',
-// };
 
 export default withCookies(withParams(class AppletPropertyPage extends Page {
 
@@ -29,9 +20,11 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            services: undefined
+            services: undefined,
+            isOn: false,
         }
         this.cookies = props;
+        this.handleSwitch = this.handleSwitch.bind(this)
         this.onClickBack = this.onClickBack.bind(this);
     }
 
@@ -46,6 +39,11 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         this.controllerAppletProperty.loadApplet("<id exemple>");
     }
 
+    handleSwitch() {
+        this.setState({ isOn: !this.state.isOn })
+        !this.state.isOn ? this.controllerAppletProperty.enableApplet() : this.controllerAppletProperty.disableApplet()
+    }
+
     onClickBack() {
         this.setRedirectUrl({ url: "/area/dashboard" })
     }
@@ -55,6 +53,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
             return (null);
         return (this.pageRender(this, function RenderAppletPropertyPage({ component }) {
 
+            const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
             const menu = {
                 right: [
                     {
@@ -63,13 +62,13 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets/add" })
                     },
+                    // {
+                    //     name: 'Area',
+                    //     action: () => component.setRedirectUrl({ url: "/description" })
+                    // },
                     {
-                        name: 'Area',
-                        action: () => component.setRedirectUrl({ url: "/description" })
-                    },
-                    {
-                        name: 'My applets',
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+                        name: 'Services',
+                        action: () => component.setRedirectUrl({ url: "/area/services" })
                     },
                     {
                         name: 'Profile',
@@ -77,7 +76,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     },
                 ],
                 left: {
-                    action: () => console.log("hello world")
+                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
 
@@ -109,6 +108,14 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                                 </Box>
                             </Box>
                         </div>
+                    </Box>
+                    <Box sx={{ pb: 2, mx: 2 }} />
+                    <div style={Style.container}>
+                        <SwitchButton isOn={component.state.isOn} onClick={() => component.handleSwitch()} />
+                    </div>
+                    <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}/>
+                    <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerAppletProperty.deleteApplet()}>Delete</Button>
                     </Box>
                 </ThemeProvider >
             )

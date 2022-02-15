@@ -13,19 +13,19 @@ export default class ControllerDashboard {
 
     loadServices() {
         app.get(`about.json`).then((response) => {
-            this.page.setState({services: response.data.server.services})
+            this.page.setState({ services: response.data.server.services })
         })
     }
 
     loadApplets() {
-        config()
-        console.log("wait applets")
-        // app.get(`/applets/all`, config(this.authContext.getToken(), this.auth
-        // )).then((response) => {
-        //     if (response.data.succes)
-        //         this.setState({ services: response.data.server.services })
-        // }).catch((error) => {
-        //     console.log(error)
-        // })
+        app.get(`/applets/all`, config(this.authContext.getToken(), this.auth
+        )).then((response) => {
+            if (response.data.success) {
+                console.log(response.data.data)
+                // this.page.setState({ services: response.data })
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 }
