@@ -1,9 +1,15 @@
 import React from "react";
-import {AuthContext} from "../../Contexts/AuthContext";
-import app, {config} from "../../Utils/Axios";
-import {Box, Grid, IconButton} from "@mui/material";
+import { ThemeProvider, Box, CssBaseline, Grid, IconButton } from "@mui/material";
 
-export default class ContextPage extends React.Component {
+import { AuthContext } from "../../Contexts/AuthContext";
+import app, { config } from "../../Utils/Axios";
+
+import Page from "../Page"
+import Header from "../../Components/Header"
+import Style from "../../Resources/Styles/styleContext"
+import { theme } from "../../Resources/Styles/AppTheme";
+
+export default class ContextPage extends Page {
 
     static contextType = AuthContext;
 
@@ -18,18 +24,18 @@ export default class ContextPage extends React.Component {
     }
 
     componentDidMount() {
-        const auth = this.context;
+        this.authContext = this.context;
         app.get('/about.json').then((response) => {
-           this.setState({
-               services: response.data.server.services
-           })
+            this.setState({
+                services: response.data.server.services
+            })
         });
 
-        app.get('/context/all', config(auth.getToken())).then((response) => {
+        app.get('/context/all', config(this.authContext.getToken())).then((response) => {
             console.log(response.data);
-           this.setState({
-               contexts: response.data,
-           })
+            this.setState({
+                contexts: response.data,
+            })
         });
 
     }
@@ -45,14 +51,16 @@ export default class ContextPage extends React.Component {
         if (this.state.services === undefined)
             return;
         return <Grid container textAlign={"center"} alignItems={"center"}>
-            {this.state.services.map((service) => {
-                return <Grid item>
-                    <Box sx={{mx: 2}}>
-                        <IconButton onClick={() => this.onClickSelectServiceIcon(service.type)}>
-                            <img src={`https://localhost:8080/static/${service.icon}`} width={80} alt="Loarding . . ."/>
-                        </IconButton>
-                    </Box>
-                </Grid>
+            {this.state.services.map((service, key) => {
+                return (
+                    <Grid item key={key}>
+                        <Box sx={{ mx: 2 }}>
+                            <IconButton onClick={() => this.onClickSelectServiceIcon(service.type)}>
+                                <img src={`https://localhost:8080/static/${service.icon}`} width={80} alt="Loarding . . ." />
+                            </IconButton>
+                        </Box>
+                    </Grid>
+                )
             })}
         </Grid>
     }
@@ -66,13 +74,42 @@ export default class ContextPage extends React.Component {
     }
 
     render() {
-        return (
-            <Box>
-                <h1>Hello</h1>
-                {this.showServicesSelectIcon()}
-                {this.showContextWithFilter()}
-            </Box>
-        );
-    }
+        if (!this.authContext)
+            return (null);
+        return (this.pageRender(this, function RenderContextPropertyPage({ component }) {
+            const menu = {
+                right: [
+                    {
+                        name: 'Create',
+                        style: Style.roundButtonFull,
+                        variant: "contained",
+                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
+                    },
+                    {
+                        name: 'Services',
+                        // action: () => component.setRedirectUrl({ url: "/area/context" })
+                    },
+                    {
+                        name: 'Profile',
+                        action: () => component.setRedirectUrl({ url: "/area/profile" })
+                    },
+                ],
+                left: {
+                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+                }
+            }
 
+            return (
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Header component={component} menu={menu} />
+                    <div style={Style.container}>
+                        Services
+                    </div>
+                    {component.showServicesSelectIcon()}
+                    {component.showContextWithFilter()}
+                </ThemeProvider>
+            )
+        }))
+    }
 }
