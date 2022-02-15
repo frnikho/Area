@@ -4,18 +4,24 @@ export default function FieldSettings({ props, style, fieldName, value, active }
 
     const Input = () => {
         if (active)
-            return <OutlinedInput name={fieldName} placeholder={value} />
+            return (
+                <FormControl sx={{ width: '50ch' }}>
+                    <OutlinedInput name={fieldName} placeholder={value} />
+                </FormControl>
+            )
         else
-            return <OutlinedInput disabled placeholder={value} />
+            return <>
+                <FormControl sx={{ width: '50ch' , fontSize: '30px', fontStyle: ''}}>
+                    {value}
+                </FormControl>
+            </>
     }
 
     return (
         <div style={style.little}>
             {fieldName}
             <Box component="form" onSubmit={(e) => props.handleSubmit(e, fieldName)} noValidate sx={{ mt: 1 }}>
-                <FormControl sx={{ width: '50ch' }}>
-                    <Input />
-                </FormControl>
+                <Input />
             </Box>
         </div>
     )
