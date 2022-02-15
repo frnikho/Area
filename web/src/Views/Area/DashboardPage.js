@@ -59,10 +59,10 @@ export default withCookies(class DashboardPage extends Page {
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets/add" })
                     },
-                    {
-                        name: 'Area',
-                        action: () => component.setRedirectUrl({ url: "/description" })
-                    },
+                    // {
+                    //     name: 'Area',
+                    //     action: () => component.setRedirectUrl({ url: "/description" })
+                    // },
                     {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({ url: "/area/profile" })

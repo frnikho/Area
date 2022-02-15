@@ -59,10 +59,10 @@ export default withCookies(class ProfilePage extends Page {
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets" })
                     },
-                    {
-                        name: 'Area',
-                        action: () => component.setRedirectUrl({ url: "/description" })
-                    },
+                    // {
+                    //     name: 'Area',
+                    //     action: () => component.setRedirectUrl({ url: "/description" })
+                    // },
                     {
                         name: 'Profile',
                         redirectUrl: undefined
