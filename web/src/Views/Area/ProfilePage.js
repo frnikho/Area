@@ -64,15 +64,12 @@ export default withCookies(class ProfilePage extends Page {
                         action: () => component.setRedirectUrl({ url: "/description" })
                     },
                     {
-                        name: 'My applets',
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
-                    },
-                    {
                         name: 'Profile',
                         redirectUrl: undefined
                     }
                 ],
                 left: {
+                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }

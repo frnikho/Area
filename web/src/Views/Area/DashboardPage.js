@@ -64,9 +64,6 @@ export default withCookies(class DashboardPage extends Page {
                         action: () => component.setRedirectUrl({ url: "/description" })
                     },
                     {
-                        name: 'My applets',
-                    },
-                    {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({ url: "/area/profile" })
                     },

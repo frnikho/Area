@@ -67,16 +67,12 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                         action: () => component.setRedirectUrl({ url: "/description" })
                     },
                     {
-                        name: 'My applets',
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
-                    },
-                    {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({ url: "/area/profile" })
                     },
                 ],
                 left: {
-                    action: () => console.log("hello world")
+                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
 
