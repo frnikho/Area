@@ -73,16 +73,11 @@ export default class ServiceAuthRoute {
         const token: TokenData = {
             key: randomstring.generate(),
             created_at: new Date(),
-            type: tokenType,
             token: {
                 access_token: accessToken,
                 refresh_token: refreshToken,
             }
         }
-        new ServiceController().registerUserToken(userUUID, token, () => {
-            return success(token);
-        }, (err) => {
-            return errorFunc(err);
-        });
+        return success(token);
     }
 }
