@@ -49,7 +49,7 @@ export default class ContextPage extends React.Component {
                 return <Grid item>
                     <Box sx={{mx: 2}}>
                         <IconButton onClick={() => this.onClickSelectServiceIcon(service.type)}>
-                            <img src={`https://localhost:8080/static/${service.icon}`} width={80}/>
+                            <img src={`https://localhost:8080/static/${service.icon}`} width={80} alt="Loarding . . ."/>
                         </IconButton>
                     </Box>
                 </Grid>

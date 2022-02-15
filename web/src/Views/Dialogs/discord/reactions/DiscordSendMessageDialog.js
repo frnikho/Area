@@ -93,7 +93,7 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
                 <MenuItem value={''}>Select a Channel</MenuItem>
                 {this.state.channels.map((channel, index) => {
                     if (channel.type !== 0)
-                        return;
+                        return null;
                     return (
                         <MenuItem key={index} value={channel.id}>
                             <Typography fontFamily={"Roboto"}>
