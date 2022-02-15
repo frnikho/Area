@@ -41,8 +41,6 @@ export const checkContextRead = (req: express.Request, res: express.Response, ne
 
 export const checkContextReadAll = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const {service} = req.query;
-    if (service === undefined)
-        return sendError(res, "Required 'service' query parameters !");
     req['service'] = service;
     next();
 }

@@ -450,41 +450,48 @@ export const AppAbout = {
         current_time: 165161,
         services: [{
             name: "Github",
+            type: 'github',
             color: "#95A5A6",
             icon: "icons/github.png",
             actions: GithubAppletActionsAbout,
             reactions: GithubAppletReactionsAbout
         }, {
             name: "Discord",
+            type: 'discord',
             icon: "icons/discord.png",
             color: "#34495E",
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
             name: "Slack",
+            type: 'slack',
             icon: "icons/slack.png",
             color: "#8E44AD",
             actions: [],
             reactions: SlackAppletReactionsAbout,
         }, {
             name: "Twitter",
+            type: 'twitter',
             actions: [],
             icon: "icons/twitter.png",
             reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
+            type: 'epitech_intra',
             color: "#2980B9",
             icon: "icons/epitech.png",
             actions: IntraAppletActionsAbout,
             reactions: [],
         }, {
             name: "Spotify",
+            type: 'spotify',
             color: "#27AE60",
             icon: "icons/spotify.png",
             actions: SpotifyAppletActionsAbout,
             reactions: [],
         }, {
             name: "Gmail",
+            type: 'google',
             icon: "icons/gmail.png",
             color: "#C0392B",
             actions: GmailAppletActionsAbout,
