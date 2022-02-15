@@ -53,6 +53,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
             return (null);
         return (this.pageRender(this, function RenderAppletPropertyPage({ component }) {
 
+            const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
             const menu = {
                 right: [
                     {
@@ -112,6 +113,10 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     <div style={Style.container}>
                         <SwitchButton isOn={component.state.isOn} onClick={() => component.handleSwitch()} />
                     </div>
+                    <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}/>
+                    <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => console.log("hello world")}>Delete</Button>
+                    </Box>
                 </ThemeProvider >
             )
         }));
