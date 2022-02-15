@@ -61,7 +61,6 @@ class App extends React.Component {
                         </Route>
                         <Route path={"context"} element={<ContextPage/>}/>
                         <Route path={"dashboard"} element={<DashboardPage />} />
-                        <Route path={"services"} element={console.log("services")} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>
                 </Routes> : null}

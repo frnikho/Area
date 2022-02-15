@@ -57,7 +57,7 @@ export default withCookies(class ProfilePage extends Page {
                         name: 'Create',
                         style: Style.roundButtonFull,
                         variant: "contained",
-                        action: () => component.setRedirectUrl({ url: "/area/applets" })
+                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
                     },
                     // {
                     //     name: 'Area',
@@ -65,7 +65,7 @@ export default withCookies(class ProfilePage extends Page {
                     // },
                     {
                         name: 'Services',
-                        action: () => component.setRedirectUrl({ url: "/area/services" })
+                        action: () => component.setRedirectUrl({ url: "/area/context" })
                     },
                     {
                         name: 'Profile',
