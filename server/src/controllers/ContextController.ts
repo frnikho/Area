@@ -6,7 +6,7 @@ export default class ContextController {
 
     public getContextsByService(userUuid: string, service: Services, callback: (context: Context[], error: string) => void) {
         if (service === undefined)
-            return callback(null, `Unknown service '${service}'`);
+            return callback(undefined, `Unknown service '${service}'`);
         DBService.query(`SELECT ${service.valueOf()} FROM area.services WHERE user_uuid = '${userUuid}'`, (result) => {
             const jsonData = result[0][service.valueOf()];
             callback(JSON.parse(jsonData), null);
@@ -51,15 +51,20 @@ export default class ContextController {
 
     public getContextByUuid(userUuid: string, service: Services, uuid: string, callback: (context: Context, error: string) => void): void {
         this.getContextsByService(userUuid, service, (contexts, error) => {
+            console.log(contexts);
             if (error)
                 return callback(null, error);
-            callback(contexts.filter((context) => context.uuid === uuid)[0], null);
+            callback(contexts.find((context) => context.uuid === uuid), null);
         });
     }
 
     public deleteContextByUuid(userUuid: string, service: Services, uuid: string, callback: (error) => void): void {
         this.getContextsByService(userUuid, service, (contexts, error) => {
+            if (error === undefined)
+                return callback(error);
             const index: number = contexts.findIndex((context) => context.uuid === uuid);
+            if (index === -1)
+                return callback(`Context with uuid '${uuid}' not found !`);
             contexts.splice(index, 1);
             DBService.query(`UPDATE area.services t SET t.${service.valueOf()} = '${JSON.stringify(contexts)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
                 if (result === undefined)

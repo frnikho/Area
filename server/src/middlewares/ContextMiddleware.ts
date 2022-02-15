@@ -33,7 +33,9 @@ export const checkContextRead = (req: express.Request, res: express.Response, ne
     if (key === undefined || service === undefined)
         return sendError(res, "Required 'key' and 'service' query parameters !");
 
-    new ContextController().getContextByUuid(user.uuid, Services[(service as string).toUpperCase()], key as string, (context) => {
+    new ContextController().getContextByUuid(user.uuid, Services[(service as string).toUpperCase()], key as string, (context, error) => {
+        if (error)
+            return sendError(res, error);
         req['context'] = context;
         next();
     })
@@ -47,8 +49,10 @@ export const checkContextReadAll = (req: express.Request, res: express.Response,
 
 export const checkContextDelete = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const {key, service} = req.query;
+    if (service === undefined || key === undefined)
+        return sendError(res, "Required 'key' and 'service' query parameters !");
     req['contextUuid'] = key;
-    req['service'] = Services[service as string];
+    req['service'] = Services[(service as string).toUpperCase()];
     next();
 }
 
