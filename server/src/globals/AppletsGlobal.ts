@@ -469,6 +469,7 @@ export const AppAbout = {
         }, {
             name: "Twitter",
             actions: [],
+            icon: "icons/twitter.png",
             reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",

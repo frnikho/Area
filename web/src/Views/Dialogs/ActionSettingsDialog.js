@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
     Box,
-    Button,
     Dialog,
     DialogActions,
     DialogContent,
-    Divider,
     IconButton,
     Typography
 } from "@mui/material";
@@ -64,8 +62,6 @@ export class ActionSettingsDialog extends React.Component {
     renderCreateButton() {
 
     }
-
-
 }
 
 ActionSettingsDialog.propTypes = {
