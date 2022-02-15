@@ -1,4 +1,4 @@
-import app, { config } from "../../Utils/Axios";
+// import app, { config } from "../../Utils/Axios";
 
 export default class ControllerAppletProperty {
 
@@ -7,39 +7,43 @@ export default class ControllerAppletProperty {
         this.cookies = cookies;
         this.page = page;
         this.id = id;
+        this.token = this.authContext.getToken();
         this.loadApplet = this.loadApplet.bind(this)
         this.disableApplet = this.disableApplet.bind(this)
     }
 
     deleteApplet() {
-        const appletId = this.id;
+        console.log("delete the applet with the id: " + this.id)
+        // const appletId = this.id;
 
-        app.delete(`/applets/` + {appletId}, {
-        }, config(token)).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
-        })
+        // app.delete(`/applets/` + {appletId}, {
+        // }, config(this.token)).then((response) => {
+        //     console.log(response);
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
     }
 
     disableApplet() {
-        app.post(`/applets/disable`, {
-            appletUuid: this.id
-        }, config(token)).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
-        })
+        console.log("disable the applet with the id: " + this.id)
+        // app.post(`/applets/disable`, {
+        //     appletUuid: this.id
+        // }, config(this.token)).then((response) => {
+        //     console.log(response);
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
     }
 
     enableApplet() {
-        app.post(`/applets/enable`, {
-            appletUuid: this.id
-        }, config(token)).then((response) => {
-            console.log(response);
-        }).catch((error) => {
-            console.log(error);
-        })
+        console.log("enable the applet with the id: " + this.id)
+        // app.post(`/applets/enable`, {
+        //     appletUuid: this.id
+        // }, config(this.token)).then((response) => {
+        //     console.log(response);
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
     }
 
     loadApplet() {

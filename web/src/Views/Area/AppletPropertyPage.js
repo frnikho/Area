@@ -21,7 +21,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         this.state = {
             user: undefined,
             services: undefined,
-            isOn: props || false,
+            isOn: false,
         }
         this.cookies = props;
         this.handleSwitch = this.handleSwitch.bind(this)
@@ -41,7 +41,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
 
     handleSwitch() {
         this.setState({ isOn: !this.state.isOn })
-        console.log("call server and desactiv the applet")
+        !this.state.isOn ? this.controllerAppletProperty.enableApplet() : this.controllerAppletProperty.disableApplet()
     }
 
     onClickBack() {
@@ -115,7 +115,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     </div>
                     <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}/>
                     <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
-                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => console.log("hello world")}>Delete</Button>
+                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerAppletProperty.deleteApplet()}>Delete</Button>
                     </Box>
                 </ThemeProvider >
             )
