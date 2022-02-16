@@ -3,7 +3,6 @@ import { Text, VStack } from 'native-base';
 import AppletsController from '../controller/AppletsControler';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
-import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 export default class UserApplets extends Component {
 
@@ -56,7 +55,7 @@ export default class UserApplets extends Component {
     myApplets() {
         if (this.state.userApplets === undefined || this.state.userApplets.length === 0) {
             return (
-                <Text bold style={styles.noAppletsText} fontFamily="body" fontWeight={400} fontSize="3xl">You havn't applets</Text>
+                <Text bold style={styles.noAppletsText} fontFamily="body" fontWeight={400} fontSize="3xl">You have no applets</Text>
             );
         }
         return (this.state.userApplets.map((applet, i) => {
@@ -98,7 +97,7 @@ export default class UserApplets extends Component {
 
 const styles = StyleSheet.create({
     mainText: {
-        marginTop: 20,
+        marginTop: 5,
     },
     myAppletsCardText: {
         marginTop: 10,

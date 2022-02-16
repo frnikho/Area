@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     backArrow: {
-        marginTop: 10,
+        marginTop: 5,
         marginBottom: 0,
     },
     mainText: {
