@@ -1,12 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ServicesScreen from './screens/ServicesScreen';
-import AppletsScreen from './screens/AppletsScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import ProfileScreen from './screens/UserProfile/ProfileScreen';
-import ServicesAuthentificationScreen from './screens/UserProfile/ServicesAuthentificationScreen';
+import LoginScreen from './screens/Auth/LoginScreen';
+import RegisterScreen from './screens/Auth/RegisterScreen';
+import ServicesScreen from './screens/Applets/ServicesAppletsScreen';
+import AppletsScreen from './screens/Applets/AppletsScreen';
+import SettingsScreen from './screens/Settings/SettingsScreen';
+import ProfileScreen from './screens/Settings/ProfileScreen';
+import ServicesAuthentificationScreen from './screens/Settings/ServicesAuthentificationScreen';
 import React from 'react';
 
 const Stack = createNativeStackNavigator();

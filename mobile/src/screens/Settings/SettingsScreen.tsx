@@ -2,7 +2,7 @@ import { Button, Toast, ChevronLeftIcon, Text, VStack } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import TokenController from '../controller/TokenController';
+import TokenController from '../../controller/TokenController';
 
 export default class SettingsScreen extends Component {
 

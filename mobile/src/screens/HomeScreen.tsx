@@ -2,7 +2,7 @@
 import { Button, Text } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import UserApplets from './UserAppletsScreen';
+import UserApplets from './Applets/UserAppletsScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class HomeScreen extends Component {

@@ -1,12 +1,12 @@
 import { Center, HStack, Spinner, Text, ChevronLeftIcon } from 'native-base';
 import React, { Component } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import ServiceCard from '../components/ServiceCard';
-import ServicesController from '../controller/ServicesController';
+import ServiceCard from '../../components/ServiceCard';
+import ServicesController from '../../controller/ServicesController';
 import ActionsScreen from './ActionsScreen';
 import ReactionsScreen from './ReactionsScreen';
 
-export default class ServicesScreen extends Component {
+export default class ServicesAppletsScreen extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
