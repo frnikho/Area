@@ -8,6 +8,7 @@ import SettingsScreen from './screens/Settings/SettingsScreen';
 import ProfileScreen from './screens/Settings/ProfileScreen';
 import ServicesAuthentificationScreen from './screens/Settings/ServicesAuthentificationScreen';
 import ServicesSettingsScreen from './screens/Settings/ServicesSettingsScreen';
+import CreateServiceAuthentification from './screens/Settings/CreateServiceAuthentificationScreen';
 import React from 'react';
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ const Router = ({isLoggedIn}:boolean) => {
           <Stack.Screen name="profile" component={ProfileScreen} />
           <Stack.Screen name="servicesAuthentification" component={ServicesAuthentificationScreen} />
           <Stack.Screen name="settingsServices" component={ServicesSettingsScreen} />
+          <Stack.Screen name="createServiceAuthentification" component={CreateServiceAuthentification} />
         </Stack.Navigator>
     );
 }

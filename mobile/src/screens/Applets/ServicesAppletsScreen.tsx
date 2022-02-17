@@ -1,10 +1,11 @@
-import { Center, HStack, Spinner, Text, ChevronLeftIcon } from 'native-base';
+import { Button, Center, HStack, Spinner, Text, ChevronLeftIcon } from 'native-base';
 import React, { Component } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import ServiceCard from '../../components/ServiceCard';
 import ServicesController from '../../controller/ServicesController';
 import ActionsScreen from './ActionsScreen';
 import ReactionsScreen from './ReactionsScreen';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class ServicesAppletsScreen extends Component {
   constructor(props: any) {
@@ -59,7 +60,11 @@ export default class ServicesAppletsScreen extends Component {
       <ScrollView style={{ padding: 20, flex: 1 }}>
         <Text fontFamily="body" fontWeight={600} fontSize="4xl">
           Services
-        </Text>
+          </Text>
+        <Button
+          onPress={() => this.props.navigation.navigate('servicesAuthentification')}
+          leftIcon={<Icon name="settings" size={40} color="black" />}
+          style={styles.settingsButton} />
         <View style={styles.row}>
           {this.state.services.map((service, i) => {
             if (modalContext === 'actions' && service.actions.length !== 0) {
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 10,
+    marginTop: 20,
   },
   card: {
     paddingHorizontal: 8,
@@ -145,5 +150,10 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     minWidth: '48%',
     textAlign: 'center',
+  },
+  settingsButton: {
+    backgroundColor: 'transparent',
+    alignSelf: 'flex-end',
+    marginTop: -52,
   },
 });

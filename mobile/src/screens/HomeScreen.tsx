@@ -58,13 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#222222",
     borderRadius: 15,
   },
-  profileButton: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
-    marginTop: 10,
-    marginRight: 10,
-  },
   createAppletText: {
     color: "#ffffff",
   },

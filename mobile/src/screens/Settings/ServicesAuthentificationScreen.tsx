@@ -82,7 +82,7 @@ export default class ServicesAuthentificationScreen extends Component {
     createServicesAuthButtonRender() {
         return (
             <View id="createServicesAuthButton" >
-                <Button mode="contained" style={styles.createServicesAuthButton} onPress={() => this.props.navigation.navigate('settingsServices')}>
+                <Button mode="contained" style={styles.createServicesAuthButton} onPress={() => this.props.navigation.navigate('createServiceAuthentification')}>
                     <Text fontFamily="body" fontWeight={600} fontSize="2xl" style={styles.createServicesAuthText}>Create Authentification</Text>
                 </Button>
             </View>
