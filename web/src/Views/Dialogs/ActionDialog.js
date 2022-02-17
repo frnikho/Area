@@ -8,7 +8,7 @@ import {
     List,
     Typography
 } from "@mui/material";
-import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
+import AppletChildItemCard from "../../Components/AppletChildItemCard";
 import GithubRepositoryDeletedDialog from "./github/actions/GithubRepositoryDeletedDialog";
 import GithubNewPushRepositoryDialog from "./github/actions/GithubNewPushRepositoryDialog";
 import PropTypes from "prop-types";
@@ -72,7 +72,7 @@ export default class ActionDialog extends React.Component {
                                     {service.actions.map((action, indexA) => {
                                         return (
                                             <Grid item key={indexA}>
-                                                <ServiceChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)} />
+                                                <AppletChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)} />
                                             </Grid>)
                                     })}
                                 </Grid>

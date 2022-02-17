@@ -21,8 +21,7 @@ export default class ControllerDashboard {
         app.get(`/applets/all`, config(this.authContext.getToken(), this.auth
         )).then((response) => {
             if (response.data.success) {
-                console.log(response.data.data)
-                // this.page.setState({ services: response.data })
+                this.page.setState({ applets: response.data.data })
             }
         }).catch((error) => {
             console.log(error)

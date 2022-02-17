@@ -6,7 +6,7 @@ import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
-import ServicePage from "../../Views/Area/ServicePage"
+import AppletsPage from "./AppletsPage"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
 
@@ -18,10 +18,11 @@ export default withCookies(class DashboardPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            services: undefined
+            services: undefined,
+            applets: undefined,
         }
         this.cookies = props;
-        this.showServices = this.showServices.bind(this)
+        this.showApplets = this.showApplets.bind(this)
     }
 
     componentDidMount() {
@@ -36,14 +37,20 @@ export default withCookies(class DashboardPage extends Page {
         this.controllerDashboard.loadApplets()
     }
 
-    showServices(component) {
-        if (component.state.services === undefined)
-            return (null);
-        return component.state.services.map((service, index) => (
-            <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
-                <ServicePage service={service} />
-            </Grid>
-        ))
+    showApplets(component) {
+        if (component.state.applets === undefined || component.state.applets.length === 0 || component.state.applets.length === undefined)
+            return (
+                <div style={{ ...Style.container, fontSize: 30 }}>
+                    <div style={{ margin: "75px" }} />
+                    No applets found
+                </div>
+            );
+        else
+            return component.state.applets.map((applets, index) => (
+                <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
+                    <AppletsPage {...{...applets, ...{onClick: () => console.log("onclick")}}} />
+                </Grid>
+            ))
     }
 
     render() {
@@ -77,9 +84,11 @@ export default withCookies(class DashboardPage extends Page {
                     },
                 ],
                 left: {
-                    action: () => console.log("hello world")
+                    // action: () => console.log("hello world")
                 }
             }
+
+
             return (
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
@@ -89,7 +98,7 @@ export default withCookies(class DashboardPage extends Page {
                     </div>
                     <Box sx={{ marginLeft: "2%", marginRight: "auto" }}>
                         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                            {component.showServices(component)}
+                            {component.showApplets(component)}
                         </Grid>
                     </Box>
                 </ThemeProvider >

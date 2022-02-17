@@ -7,7 +7,7 @@ import {
     List,
     Typography
 } from "@mui/material";
-import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
+import AppletChildItemCard from "../../Components/AppletChildItemCard";
 import app from "../../Utils/Axios";
 import DiscordSendMessageDialog from "./discord/reactions/DiscordSendMessageDialog";
 
@@ -87,7 +87,7 @@ export default class ReactionDialog extends React.Component {
                                     {service.reactions.map((reaction, indexA) => {
                                         return (
                                             <Grid item key={indexA}>
-                                                <ServiceChildItemCard title={reaction.name} description={reaction.description} color={service.color} onClick={() => this.onClickReaction(reaction, service)}/>
+                                                <AppletChildItemCard title={reaction.name} description={reaction.description} color={service.color} onClick={() => this.onClickReaction(reaction, service)}/>
                                             </Grid>)
                                     })}
                                 </Grid>

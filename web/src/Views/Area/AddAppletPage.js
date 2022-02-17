@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography,CssBaseline } from "@mui/material";
-import { styles } from "../../Resources/Styles/AppletPageStyles";
+import { styles } from "../../Resources/Styles/AddAppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
 import ReactionDialog from "../Dialogs/ReactionDialog";
@@ -10,10 +10,10 @@ import Page from "../Page"
 import Header from "../../Components/Header"
 
 /**
- * @class AppletPage
+ * @class AddAppletPage
  * Page for create an applets
  */
-export default class AppletPage extends Page {
+export default class AddAppletPage extends Page {
 
     constructor(props) {
         super(props);
@@ -128,7 +128,7 @@ export default class AppletPage extends Page {
 
     render() {
 
-        return (this.pageRender(this, function RenderAppletPage({ component }) {
+        return (this.pageRender(this, function RenderAddAppletPage({ component }) {
 
             const menu = {
                 right: [
