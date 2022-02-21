@@ -1,7 +1,7 @@
 import { Button, Center, Modal, ScrollView, Stack, Text } from 'native-base';
 import React from 'react';
-import ChoiceCard from '../components/ChoiceCard';
-import TwitterModalReaction from '../components/twitter/TwitterModalReaction';
+import ChoiceCard from '../../components/ChoiceCard';
+import TwitterModalReaction from '../../components/twitter/TwitterModalReaction';
 import GithubActionModal from '../../components/github/GithubActionModal';
 
 export default class ReactionsScreen extends React.Component {

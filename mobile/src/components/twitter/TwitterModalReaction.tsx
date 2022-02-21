@@ -5,7 +5,7 @@ import ReactionModal from '../ReactionModal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import app from '../../axios_config';
 import {authorize} from 'react-native-app-auth';
-const pkceChallenge = require('pkce-challenge');
+// const pkceChallenge = require('pkce-challenge');
 
 
 export default class TwitterModalReaction extends ReactionModal {
@@ -14,23 +14,23 @@ export default class TwitterModalReaction extends ReactionModal {
   }
 
   onLoginTwitter() {
-    const pkce = pkceChallenge();
-    const config = {
-        issuer: "https://twitter.com/i/oauth2/authorize",
-        redirect_uri: "com.area://callback",
-        client_id: process.env.TWITTER_SERVICES_CLIENT_ID,
-        response_type: "code",
-        scope: ["tweet.write", "tweet.read", "users.read", "offline.access"],
-        state: "state",
-        code_challenge: pkce["code_challenge"],
-        code_challenge_method: "s256",
-    }
+    // const pkce = pkceChallenge();
+    // const config = {
+    //     issuer: "https://twitter.com/i/oauth2/authorize",
+    //     redirect_uri: "com.area://callback",
+    //     client_id: process.env.TWITTER_SERVICES_CLIENT_ID,
+    //     response_type: "code",
+    //     scope: ["tweet.write", "tweet.read", "users.read", "offline.access"],
+    //     state: "state",
+    //     code_challenge: pkce["code_challenge"],
+    //     code_challenge_method: "s256",
+    // }
 
-    authorize(config).then(res => {
-        console.log(res);
-    }).catch(err => {
-        console.log(err);
-    })
+    // authorize(config).then(res => {
+    //     console.log(res);
+    // }).catch(err => {
+    //     console.log(err);
+    // })
   }
 
   renderTwitterLogin() {
