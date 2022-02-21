@@ -28,6 +28,12 @@ export default class GithubLoginRoute extends Route {
      *           type: string
      *         description: Code given by Github Auth
      *         required: true
+     *       - in: path
+     *         name: type
+     *         schema:
+     *           type: string
+     *         description: Context if request come from mobile or web ('web' or 'mobile')
+     *         required: true
      *     responses:
      *       200:
      *         description: Successful login
@@ -36,12 +42,13 @@ export default class GithubLoginRoute extends Route {
      */
     private code(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
+        const type: string = req.query['type'] as string;
 
         axios.post(`https://github.com/login/oauth/access_token`, {
-            client_id: process.env.GITHUB_CLIENT_ID,
-            client_secret: process.env.GITHUB_CLIENT_SECRET,
+            client_id: type === 'web' ? process.env.GITHUB_CLIENT_ID : process.env.GITHUB_CLIENT_ID_MOBILE,
+            client_secret: type === 'web' ? process.env.GITHUB_CLIENT_ID : process.env.GITHUB_CLIENT_SECRET_MOBILE,
             code,
-            redirect_uri: process.env.GITHUB_REDIRECT_URL,
+            redirect_uri: type === 'web' ? process.env.GITHUB_CLIENT_ID : process.env.GITHUB_REDIRECT_URL_MOBILE,
         }, {
             headers: {
                 "Accept": "application/json"

@@ -82,6 +82,12 @@ export default class GithubServiceRoute extends Route {
      *           type: string
      *         description: Code given by Github OAuth
      *         required: true
+     *       - in: path
+     *         name: type
+     *         schema:
+     *           type: string
+     *         description: Context if request come from mobile or web ('web' or 'mobile')
+     *         required: true
      *     responses:
      *       200:
      *         description: Successful login
@@ -90,6 +96,7 @@ export default class GithubServiceRoute extends Route {
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
+        const type: string = req.query['type'] as string;
 
         const headers = {
             headers: {
@@ -97,12 +104,22 @@ export default class GithubServiceRoute extends Route {
                 "Content-Type": "application/json",
             }
         };
+        let body: object = {};
 
-        const body = {
-            code,
-            client_id: process.env.GITHUB_SERVICES_CLIENT_ID,
-            client_secret: process.env.GITHUB_SERVICES_SECRET,
-            redirect_uri: process.env.GITHUB_SERVICES_REDIRECT_URL,
+        if (type === 'mobile') {
+            body = {
+                code,
+                client_id: process.env.GITHUB_CLIENT_ID_MOBILE,
+                client_secret: process.env.GITHUB_CLIENT_SECRET_MOBILE,
+                redirect_uri: process.env.GITHUB_CLIENT_ID_MOBILE,
+            }
+        } else {
+            body = {
+                code,
+                client_id: process.env.GITHUB_SERVICES_CLIENT_ID,
+                client_secret: process.env.GITHUB_SERVICES_SECRET,
+                redirect_uri: process.env.GITHUB_SERVICES_REDIRECT_URL,
+            }
         }
 
         new ServiceAuthRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], Services.GITHUB.valueOf(), (token) => {
