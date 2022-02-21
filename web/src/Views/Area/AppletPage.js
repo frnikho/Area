@@ -1,5 +1,15 @@
 import React from "react";
-import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography,CssBaseline } from "@mui/material";
+import {
+    Box,
+    ButtonBase,
+    Container,
+    Paper,
+    ThemeProvider,
+    Typography,
+    CssBaseline,
+    TextField,
+    Button
+} from "@mui/material";
 import { styles } from "../../Resources/Styles/AppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
@@ -7,7 +17,9 @@ import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
-import Header from "../../Components/Header"
+import {FaPlus} from "react-icons/fa";
+import app, {config} from "../../Utils/Axios";
+import {AuthContext} from "../../Contexts/AuthContext";
 
 /**
  * @class AppletPage
@@ -15,9 +27,12 @@ import Header from "../../Components/Header"
  */
 export default class AppletPage extends Page {
 
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
         this.state = {
+            appletTitle: 'New applet',
             action: undefined,
             reactions: [],
             currentDialog: undefined,
@@ -27,6 +42,8 @@ export default class AppletPage extends Page {
         this.onCloseDialog = this.onCloseDialog.bind(this);
         this.onClickAddReaction = this.onClickAddReaction.bind(this);
         this.onClickAddAction = this.onClickAddAction.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onClickCreate = this.onClickCreate.bind(this);
     }
 
     onActionSelected(action, actionAbout, serviceAbout) {
@@ -40,8 +57,14 @@ export default class AppletPage extends Page {
         })
     }
 
-    onReactionSelected(reaction) {
-        console.log(reaction);
+    onReactionSelected(reaction, about, service) {
+        const reactions = this.state.reactions;
+        reactions.push({
+            reaction,
+            about,
+            service,
+        });
+        this.setState({reactions});
     }
 
     onClose() {
@@ -75,7 +98,7 @@ export default class AppletPage extends Page {
     showDialogs() {
         const Dialogs = {
             ACTION_DIALOG: <ActionDialog onSelected={this.onActionSelected} onClose={this.onCloseDialog} />,
-            REACTION_DIALOG: <ReactionDialog onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />,
+            REACTION_DIALOG: <ReactionDialog action={this.state.action} onSelected={this.onReactionSelected} onClose={this.onCloseDialog} />,
             HELP_DIALOG: <HelpDialog onClose={this.onCloseDialog} />,
             undefined: null
         }
@@ -122,45 +145,84 @@ export default class AppletPage extends Page {
                 </ButtonBase>
             </Paper>)
         } else {
-
+            return (
+                <Box>
+                    {this.state.reactions.map((reaction, index) => {
+                        return (
+                            <Box key={index} sx={{m: 2}}>
+                                <Paper sx={{backgroundColor: reaction.service.color, borderRadius: 8}}>
+                                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
+                                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
+                                            <Typography fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{reaction.about.name}</Typography>
+                                            <img src={`https://localhost:8080/static/` + reaction.service.icon} width={50} alt="Loarding . . ."/>
+                                        </Box>
+                                    </ButtonBase>
+                                </Paper>
+                            </Box>
+                        )
+                    })}
+                    <ButtonBase>
+                        <FaPlus onClick={this.onClickAddReaction}/>
+                    </ButtonBase>
+                </Box>
+            )
         }
     }
 
+    showCreateButton() {
+        return (<Box sx={{my: 2}}>
+            <Button variant={"contained"} disabled={this.state.action === undefined || this.state.reactions.length === 0} sx={{width: 300, p: 2}} onClick={this.onClickCreate}>Create</Button>
+        </Box>);
+    }
+
+    onClickCreate() {
+        console.log(this.state.action);
+
+        const body = {
+            action_key: this.state.action.data.base_key,
+            action_type: this.state.action.data.action_type,
+            action: {
+                parameters: this.state.action.data.action.parameters,
+            },
+            reactions: this.state.reactions.map((reaction) => reaction.reaction),
+        }
+
+        app.post('/applets', body, config(this.context.getToken())).then((response) => {
+            console.log(response.data);
+
+        }).catch((err) => {
+            console.log(err.response.data);
+        })
+    }
+
+    onChangeTitle(event) {
+        this.setState({appletTitle: event.target.value})
+    }
+
+    showTitle() {
+        return (
+            <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
+                <TextField variant="standard" value={this.state.appletTitle} onChange={this.onChangeTitle}/>
+            </Box>
+        )
+    }
+
     render() {
-
-        return (this.pageRender(this, function RenderAppletPage({ component }) {
-
-            const menu = {
-                right: [
-                    {
-                        name: '?',
-                        action: () => component.onClickHelp()
-                    },
-                ],
-                left: {
-                    name: "Cancel",
-                    action: () => component.setRedirectUrl({url: "/"}),
-                }
-            }
-
-            return (
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    {component.showDialogs()}
-                    <Header component={component} menu={menu} />
-                    <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
-                        <Typography fontFamily={"Dongle"} color={"black"} fontSize={50}>New Applet</Typography>
-                    </Box>
-                    <Box style={styles.content}>
-                        <Container>
-                            <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
-                                {component.showActionButton()}
-                                {component.showReactionButton()}
-                            </Box>
-                        </Container>
-                    </Box>
-                </ThemeProvider>
-            )
-        }));
+        return (
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                {this.showDialogs()}
+                {this.showTitle()}
+                <Box style={styles.content}>
+                    <Container>
+                        <Box sx={{mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center"}}>
+                            {this.showActionButton()}
+                            {this.showReactionButton()}
+                            {this.showCreateButton()}
+                        </Box>
+                    </Container>
+                </Box>
+            </ThemeProvider>
+        );
     }
 }

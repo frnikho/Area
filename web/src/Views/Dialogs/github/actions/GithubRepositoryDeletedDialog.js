@@ -2,8 +2,7 @@ import {AuthContext} from "../../../../Contexts/AuthContext";
 import {Button} from "@mui/material";
 import GithubListingRepoDialog from "../GithubListingRepoDialog";
 import React from "react";
-import axios from "axios";
-import {config} from "../../../../Utils/Axios";
+import app, {config} from "../../../../Utils/Axios";
 
 export default class GithubRepositoryDeletedDialog extends GithubListingRepoDialog {
 
@@ -12,22 +11,27 @@ export default class GithubRepositoryDeletedDialog extends GithubListingRepoDial
     constructor() {
         super();
         this.state = {
-            valid: false,
             user: undefined,
         }
-        this.onGithubLogged = this.onGithubLogged.bind(this);
+        this.getUser = this.getUser.bind(this);
         this.onCreate = this.onCreate.bind(this);
     }
 
-    onLoggedWithGithub(data) {
-        axios.get(`https://api.github.com/user`, config(data.token.access_token)).then((response) => {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.selectedContextUuid !== prevState.selectedContextUuid) {
+            this.getUser();
+        }
+    }
+
+    getUser() {
+        if (this.state.selectedContextUuid === undefined)
+            return;
+        app.get(`/services/github/user?context=${this.state.selectedContextUuid}`, config(this.context.getToken())).then((response) => {
             console.log(response.data);
             this.setState({
-                user: response.data,
-                valid: true
+                user: response.data
             })
-        });
-        return false;
+        }).catch(err => console.log(err));
     }
 
     onCreate() {
@@ -46,13 +50,8 @@ export default class GithubRepositoryDeletedDialog extends GithubListingRepoDial
         this.props.onActionCreated(action);
     }
 
-    loginToGithub() {
-
-    }
-
     renderCreateButton() {
-        return (<Button variant={"contained"} disabled={!this.state.valid} onClick={this.onCreate}>Create</Button>)
-
+        return (<Button variant={"contained"} disabled={this.state.user === undefined} onClick={this.onCreate}>Create</Button>)
     }
 
     showRepositoryList() {

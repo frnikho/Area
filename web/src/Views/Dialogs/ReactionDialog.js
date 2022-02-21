@@ -10,6 +10,7 @@ import {
 import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
 import app from "../../Utils/Axios";
 import DiscordSendMessageDialog from "./discord/reactions/DiscordSendMessageDialog";
+import PropTypes from "prop-types";
 
 export default class ReactionDialog extends React.Component {
 
@@ -23,6 +24,7 @@ export default class ReactionDialog extends React.Component {
         }
         this.onClickReaction = this.onClickReaction.bind(this);
         this.onDialogsClosed = this.onDialogsClosed.bind(this);
+        this.onReactionCreated = this.onReactionCreated.bind(this);
     }
 
     componentDidMount() {
@@ -61,7 +63,7 @@ export default class ReactionDialog extends React.Component {
         if (this.state.dialog === undefined)
             return;
         const hooks = {
-            discord_send_chanel_message: <DiscordSendMessageDialog onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
+            discord_send_chanel_message: <DiscordSendMessageDialog action={this.props.action} onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
         }
         return hooks[this.state.dialog];
     }
@@ -127,4 +129,10 @@ export default class ReactionDialog extends React.Component {
 
         );
     }
+}
+
+ReactionDialog.propTypes = {
+    action: PropTypes.object.isRequired,
+    onSelected: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 }

@@ -65,7 +65,7 @@ export default class ActionDialog extends React.Component {
                                 <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{ mx: 2 }}>
                                     {service.name}
                                 </Typography>
-                                <img src={`https://localhost:8080/static/${service.icon}`} width={58} alt="Loarding . . ." />
+                                <img src={`https://localhost:8080/static/${service.icon}`} width={58} alt="Loading . . ." />
                             </Box>
                             <div>
                                 <Grid container spacing={2} direction="row" justifyContent="center">

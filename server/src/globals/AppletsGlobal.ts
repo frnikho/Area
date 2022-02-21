@@ -472,6 +472,7 @@ export const AppAbout = {
         }, {
             name: "Twitter",
             type: 'twitter',
+            color: "#1DA1F2",
             actions: [],
             icon: "icons/twitter.png",
             reactions: TwitterAppletReactionsAbout,

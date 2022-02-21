@@ -1,7 +1,6 @@
 import React from "react";
-import OAuth2Login from "react-simple-oauth2-login";
 import {ReactionSettingsDialog} from "../../ReactionSettingsDialog";
-import {Box, Button, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
+import {Box, Button, Chip, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {FaDiscord, FaLock} from "react-icons/fa";
 import app, {config} from "../../../../Utils/Axios";
 import {AuthContext} from "../../../../Contexts/AuthContext";
@@ -13,66 +12,49 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
     constructor(props) {
         super(props);
         this.state = {
-            code: undefined,
-            token: undefined,
-            guildId: undefined,
             channels: undefined,
+            text: '',
             selectedChannel: '',
         }
-        this.onCloseOauth = this.onCloseOauth.bind(this);
-        this.onSuccessOauth = this.onSuccessOauth.bind(this);
         this.onChannelSelected = this.onChannelSelected.bind(this);
     }
 
-    onCloseOauth() {
-        console.log("close discord oauth popup");
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.selectedContextUuid !== prevState.selectedContextUuid) {
+            this.loadChannels();
+        }
     }
 
-    onSuccessOauth(data) {
-
+    loadChannels() {
         const auth = this.context;
-
-        this.setState({
-            guildId: data.guild_id
-        })
-        app.get(`services/discord/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
-            this.setState({
-                token: response.data.token.token
-            })
-            this.loadChannels(data.guild_id);
-        })
-    }
-
-    loadChannels(guildId) {
-        const auth = this.context;
-        console.log("load channels for guild: " + guildId);
-        app.get(`services/discord/list?guild_id=${guildId}`, config(auth.getToken())).then((response) => {
+        app.get(`services/discord/list?context=${this.state.selectedContextUuid}&service=discord`, config(auth.getToken())).then((response) => {
+            console.log(response.data);
             this.setState({
                 channels: response.data
             })
-        }).catch(err => console.log(err));
-    }
-
-    showDiscordOauth() {
-        return (
-            <OAuth2Login
-                authorizationUrl={"https://discord.com/api/oauth2/authorize"}
-                clientId={process.env.REACT_APP_DISCORD_CLIENT_ID}
-                scope={"bot"}
-                responseType={"code"}
-                redirectUri={process.env.REACT_APP_DISCORD_REDIRECT_URL}
-                extraParams={{ permissions: '8'}}
-                onSuccess={this.onSuccessOauth}
-                onFailure={this.onCloseOauth}
-                render={(props) => {
-                    return <Button disabled={this.state.token !== undefined} variant={"contained"} onClick={props.onClick} endIcon={<FaDiscord/>}>{this.state.token === undefined ? "Login Discord" : "Logged !"}</Button>
-                }}
-            />
-        )
+        }).catch(err => console.log(err.response.data));
     }
 
     onChannelSelected(channel) {
         console.log(channel);
+    }
+
+    onCreate() {
+        const reaction = {
+            type: "discord_send_chanel_message",
+            base_key: this.state.selectedChannel,
+            parameters: [
+                {
+                    name: "chanel_id",
+                    value: this.state.selectedChannel,
+                },
+                {
+                    name: "text",
+                    value: this.state.text,
+                }
+            ]
+        }
+        this.props.onReactionCreated(reaction, this.props.reaction, this.props.service);
     }
 
     showSelect() {
@@ -108,17 +90,43 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
         </FormControl>
     }
 
+    showTextField() {
+        if (this.state.channels === undefined)
+            return;
+
+        return (
+            <Box sx={{my: 2}}>
+                <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={24}>Text</Typography>
+                <Box sx={{my: 2}}>
+                    <Typography fontFamily={"Roboto"}>
+                        {this.props.action.about.name} <b>ingredients:</b>
+                    </Typography>
+                    {this.props.action.about.ingredients.map((ingredient, index) => {
+                        return (<Chip sx={{mx: 1}} key={index} label={ingredient} onClick={() => console.log(ingredient)} />)
+                    })}
+                </Box>
+                <Box>
+                    <TextField id="outlined-basic" label="Text" variant="outlined" value={this.state.text} onChange={(event) => {
+                        this.setState({
+                            text: event.target.value
+                        })
+                    }}/>
+                </Box>
+            </Box>
+        )
+    }
+
     renderCreateButton() {
-        return (<Button variant={"contained"} onClick={() => this.props.onReactionCreated(this.state.selectedChannel, this.state.guildId)} disabled={this.state.selectedChannel === ''}>
+        return (<Button variant={"contained"} onClick={() => this.onCreate()} disabled={this.state.selectedChannel === ''}>
             Create
         </Button>)
     }
 
     renderDialogContent() {
         return (<Box>
-            {this.showDiscordOauth()}
             <Box sx={{mt: 4}}>
                 {this.showSelect()}
+                {this.showTextField()}
             </Box>
         </Box>)
     }

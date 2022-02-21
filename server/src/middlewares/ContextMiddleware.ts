@@ -62,3 +62,18 @@ export const checkContextUpdate = (req: express.Request, res: express.Response, 
     if (key === undefined || service === undefined)
         return sendError(res, "Required 'key' and 'service' query parameters !");
 }
+
+export const checkContext = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const {context, service} = req.query;
+    const user: User = req['user'];
+    if (context === undefined || service === undefined)
+        return res.status(400).json({success: false, message: "No context provided !"});
+
+    new ContextController().getContextByUuid(user.uuid, Services[(service as string).toUpperCase()], context as string, (contextFound, error) => {
+        if (error)
+            return sendError(res, error);
+        req['context'] = contextFound;
+        req['service'] = service;
+        next();
+    })
+}

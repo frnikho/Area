@@ -4,7 +4,10 @@ import ServiceAuthRoute from "./ServiceAuthRoute"
 import {authorization} from "../../middlewares/AuthMiddleware";
 import {Services} from "../../models/Services"
 import axios from "axios";
-import {buildAuthorizationHeaders} from "../../utils/Axios";
+import {User} from "../../models/User";
+import {checkContext} from "../../middlewares/ContextMiddleware";
+import {Context} from "../../models/Context";
+import DiscordService from "../../services/external/DiscordService";
 
 export default class DiscordServiceRoute extends Route {
 
@@ -15,7 +18,7 @@ export default class DiscordServiceRoute extends Route {
         super();
         this.router.get('/callback', authorization, this.callback);
         this.router.get('/', this.login);
-        this.router.get('/list', authorization, this.list);
+        this.router.get('/list', authorization, checkContext, this.list);
     }
 
     /**
@@ -83,18 +86,13 @@ export default class DiscordServiceRoute extends Route {
      *         description: Error while login
      */
     private list(req: express.Request, res: express.Response) {
-        const {guild_id} = req.query;
-        if (guild_id === undefined)
-            return res.status(400).json({success: false});
-        axios.get(`https://discord.com/api/guilds/${guild_id}/channels`, {
-            headers: {
-                Authorization: `Bot ${process.env.DISCORD_SERVICES_BOT_TOKEN}`,
-            }
-        }).then((response) => {
-            console.log(response.data);
-            return res.status(200).json(response.data);
-        }).catch((err) => {
-            console.log(err.response.data);
+        const user: User = req['user'];
+        const context: Context = req['context'];
+
+        new DiscordService().listChannels(user, context, (success, error) => {
+            if (error)
+                return res.status(400).json({success: false, message: error});
+            return res.status(200).json(success);
         });
     }
 
