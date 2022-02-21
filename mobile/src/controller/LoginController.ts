@@ -1,6 +1,7 @@
-import app from '../axios_config';
+import app, {config} from '../axios_config';
 import {authorize} from 'react-native-app-auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import TokenController from './TokenController';
 // const pkceChallenge = require("pkce-challenge");
 export default class LoginController {
   public nativeLogin(
@@ -77,8 +78,65 @@ export default class LoginController {
       });
   }
 
+  public spotifyLogin(
+    callback: (status: boolean, response: any) => void,
+  ): void {}
+
   public twitterLogin(callback: (status: boolean, response: any) => void) {
     // const pkce = pkceChallenge();
+  }
 
+  public discordLogin(
+    callback: (status: boolean, response: any) => void,
+  ): void {
+    const conf = {
+      clientId: process.env.DISCORD_SERVICES_CLIENT_ID,
+      // clientSecret: 'YOUR_CLIENT_SECRET',
+      redirectUrl: 'com.area://callback',
+      scopes: [
+        'email',
+        'identify',
+        'guilds',
+        'connections',
+        'bot',
+        'messages.read',
+      ],
+      // usePKCE: false,
+      skipCodeExchange: true,
+      responseType: 'code',
+      serviceConfiguration: {
+        authorizationEndpoint: 'https://discordapp.com/api/oauth2/authorize',
+        tokenEndpoint: 'https://discordapp.com/api/oauth2/token',
+        revocationEndpoint: 'https://discordapp.com/api/oauth2/token/revoke',
+      },
+      useNonce: false,
+      // usePKCE: false,
+      additionalParameters: {
+        permissions: '8',
+      }
+    };
+
+    authorize(conf)
+      .then(result => {
+        console.log(result);
+        new TokenController().getUserToken((status, res) => {
+          if (status === true) {
+            app
+              .get(
+                `/services/discord/callback?code=${result.authorizationCode}`,
+                config(res)
+              )
+              .then(res => {
+                callback(true, res);
+              })
+              .catch(err => {
+                callback(false, err);
+              });
+          }
+        });
+      })
+      .catch(err => {
+        callback(false, err);
+      });
   }
 }

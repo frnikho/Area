@@ -18,6 +18,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class CreateServiceAuthentificationScreen extends Component {
   constructor(props: any) {
     super(props);
+    this.state = {
+        service: undefined,
+    }
+    this.onServiceSelected = this.onServiceSelected.bind(this)
+  }
+
+  onServiceSelected(service: object): void {
+      this.setState({service: service});
+      this.props.navigation.goBack();
   }
 
   render() {
@@ -51,6 +60,9 @@ export default class CreateServiceAuthentificationScreen extends Component {
                 <FormControl.Label>Description</FormControl.Label>
                 <Input onChangeText={val => this.setState({password: val})} />
               </FormControl>
+              <Button mt="2" style={{backgroundColor: this.state.service ? this.state.service.color : "#616161"}} onPress={() => this.props.navigation.navigate('settingsServices', {onSelected: this.onServiceSelected})}>
+                {this.state.service ? this.state.service.name : "Choose service"}
+              </Button>
               <Button mt="2" colorScheme="indigo" /*onPress={this.onLogin}*/>
                 Create
               </Button>

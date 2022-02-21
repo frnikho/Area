@@ -3,6 +3,7 @@ import { ScrollView, View, StyleSheet } from 'react-native';
 import { Center, HStack, Spinner, Text, ChevronLeftIcon } from 'native-base';
 import ServicesController from '../../controller/ServicesController';
 import ServiceCard from '../../components/ServiceCard';
+import LoginController from "../../controller/LoginController";
 
 export default class ServicesSettingsScreen extends Component {
 
@@ -17,7 +18,7 @@ export default class ServicesSettingsScreen extends Component {
         new ServicesController().getAboutPointJSON((status, response) => {
             if (status) {
                 this.setState({ services: response.data.server.services });
-                console.log(response.data.server.services)
+                // console.log(response.data.server.services)
             } else {
                 console.error(response);
             }
@@ -38,6 +39,47 @@ export default class ServicesSettingsScreen extends Component {
         );
     }
 
+    async onGithubLogin() {
+        await new LoginController().githubLogin((status, res) => {
+            if (status === true) {
+                console.log(res);
+            } else {
+                console.log(res);
+            }
+        })
+    }
+
+    async onGoogleLogin() {
+        await new LoginController().googleLogin((status, res) => {
+            if (status === true) {
+                console.log(res);
+            } else {
+                console.log(res);
+            }
+        })
+    }
+
+    async onDiscordLogin() {
+        await new LoginController().discordLogin((status, res) => {
+            if (status === true) {
+                console.log(res);
+            } else {
+                console.log(res);
+            }
+        })
+    }
+
+    async onPressService(service: object) {
+        const { onSelected } = this.props.route.params;
+        const servicesLogins = {
+            Github: this.onGithubLogin,
+            Gmail: this.onGoogleLogin,
+            Discord: this.onDiscordLogin
+        };
+        await servicesLogins[service.name]();
+        onSelected(service);
+    }
+
     renderServicesCards() {
         return (
             <ScrollView style={{ padding: 20, flex: 1 }}>
@@ -52,9 +94,7 @@ export default class ServicesSettingsScreen extends Component {
                                     backgroundColor={service.color}
                                     logo={'https://area-backend.nikho.dev/static/' + service.icon}
                                     name={service.name}
-                                    onPress={() =>
-                                        this.setState({ onShowModal: true, currentService: service })
-                                    }
+                                    onPress={async () => await this.onPressService(service)}
                                 />
                             </View>
                         );
