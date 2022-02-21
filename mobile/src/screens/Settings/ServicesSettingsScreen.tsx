@@ -12,6 +12,8 @@ export default class ServicesSettingsScreen extends Component {
         this.state = {
             services: undefined,
         };
+
+        this.onGithubLogin = this.onGithubLogin.bind(this)
     }
 
     componentDidMount() {
@@ -39,17 +41,17 @@ export default class ServicesSettingsScreen extends Component {
         );
     }
 
-    async onGithubLogin() {
+    async onGithubLogin(callback: (token_data: object) => void) {
         await new LoginController().githubLoginService((status, res) => {
             if (status === true) {
-                console.log(res);
+                callback(res.data.token)
             } else {
                 console.log(res);
             }
         })
     }
 
-    async onGoogleLogin() {
+    async onGoogleLogin(callback: (token_data: object) => void) {
         await new LoginController().googleLogin((status, res) => {
             if (status === true) {
                 console.log(res);
@@ -59,7 +61,7 @@ export default class ServicesSettingsScreen extends Component {
         })
     }
 
-    async onDiscordLogin() {
+    async onDiscordLogin(callback: (token_data: object) => void) {
         await new LoginController().discordLogin((status, res) => {
             if (status === true) {
                 console.log(res);
@@ -72,12 +74,13 @@ export default class ServicesSettingsScreen extends Component {
     async onPressService(service: object) {
         const { onSelected } = this.props.route.params;
         const servicesLogins = {
-            Github: this.onGithubLogin,
-            Gmail: this.onGoogleLogin,
-            Discord: this.onDiscordLogin
+            github: this.onGithubLogin,
+            gmail: this.onGoogleLogin,
+            discord: this.onDiscordLogin
         };
-        await servicesLogins[service.name]();
-        onSelected(service);
+        await servicesLogins[service.type]((token_data: object) => {
+            onSelected(service, token_data);
+        });
     }
 
     renderServicesCards() {
