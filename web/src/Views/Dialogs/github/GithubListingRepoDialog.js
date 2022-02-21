@@ -2,7 +2,6 @@ import {ActionSettingsDialog} from "../ActionSettingsDialog";
 import {AuthContext} from "../../../Contexts/AuthContext";
 import {Box, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
 import {FaGithub, FaLock} from "react-icons/fa";
-import GithubServiceOauth from "../../../Components/oauth/GithubServiceOauth";
 import React from "react";
 import app, {config} from "../../../Utils/Axios";
 
@@ -17,59 +16,61 @@ export default class GithubListingRepoDialog extends ActionSettingsDialog {
             repositories: undefined,
             selectedRepository: '',
         }
-        this.onGithubLogged = this.onGithubLogged.bind(this);
     }
 
-    onGithubLogged(data) {
-        this.setState({token: data});
-        if (this.onLoggedWithGithub(data) === true) {
-            app.post('services/github/list', {
-                tokenKey: data.key
-            }, config(this.context.getToken())).then((response) => {
-                this.setState({
-                    repositories: response.data,
-                    selectedRepository: '',
-                })
-            }).catch(err => console.log(err));
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.selectedContextUuid !== prevState.selectedContextUuid) {
+            console.log(this.state.selectedContextUuid)
+            this.listRepositories();
         }
     }
 
-    onLoggedWithGithub(data) {
-        return true;
+    listRepositories() {
+        app.get(`services/github/listRepositories?context=${this.state.selectedContextUuid}`, config(this.context.getToken())).then((response) => {
+            console.log(response.data);
+            this.setState({
+                repositories: response.data,
+                selectedRepository: '',
+            })
+        }).catch(err => console.log(err));
     }
 
+
     showRepositoryList() {
-        if (this.state.repositories === undefined || this.state.token === undefined)
+        if (this.state.repositories === undefined)
             return (<Select disabled={true} label={"Repository"} placeholder={"Repository"} value="Repository" sx={{width: 300}}>
                 <MenuItem value={"Repository"}>Repository</MenuItem>
             </Select>)
         return (
-            <FormControl>
-                <InputLabel id="repository-select-label">Repository</InputLabel>
-                <Select
-                    sx={{width: 300}}
-                    labelId="repository-select-label"
-                    id="repository-select"
-                    value={this.state.selectedRepository}
-                    label="Repository"
-                    onChange={(event) => {
-                        this.setState({selectedRepository: event.target.value});
-                        this.onRepositorySelected(event.target.value);
-                    }}>
-                    <MenuItem value={''}>Choose a repository</MenuItem>
-                    {this.state.repositories.map((repo, index) => {
-                        return (
-                            <MenuItem key={index} value={repo.full_name}>
-                                <Typography fontFamily={"Roboto"}>
-                                    {repo.full_name}
-                                </Typography>
-                                <Box sx={{mx: 1}}>
-                                    {repo.private === true ? <FaLock color={"grey"}/> : null}
-                                </Box>
-                            </MenuItem>)
-                    })}
-                </Select>
-            </FormControl>
+            <Box>
+                <Typography fontSize={20} fontFamily={"Roboto"}>Repository</Typography>
+                <FormControl>
+                    <InputLabel id="repository-select-label">Repository</InputLabel>
+                    <Select
+                        sx={{width: 300}}
+                        labelId="repository-select-label"
+                        id="repository-select"
+                        value={this.state.selectedRepository}
+                        label="Repository"
+                        onChange={(event) => {
+                            this.setState({selectedRepository: event.target.value});
+                            this.onRepositorySelected(event.target.value);
+                        }}>
+                        <MenuItem value={''}>Choose a repository</MenuItem>
+                        {this.state.repositories.map((repo, index) => {
+                            return (
+                                <MenuItem key={index} value={repo.full_name}>
+                                    <Typography fontFamily={"Roboto"}>
+                                        {repo.full_name}
+                                    </Typography>
+                                    <Box sx={{mx: 1}}>
+                                        {repo.private === true ? <FaLock color={"grey"}/> : null}
+                                    </Box>
+                                </MenuItem>)
+                        })}
+                    </Select>
+                </FormControl>
+            </Box>
         )
     }
 
@@ -84,18 +85,6 @@ export default class GithubListingRepoDialog extends ActionSettingsDialog {
     renderDialogContent() {
         return (
             <Box sx={{my: 2}}>
-                <Box sx={{m: 2}}>
-                    <Typography fontFamily={"Roboto"}>Before using applets you need to install the yep github application:
-                        <b>https://github.com/apps/yep-service/installations/new</b>
-                    </Typography>
-                </Box>
-                <Box sx={{my: 2}}>
-                    <GithubServiceOauth
-                        icon={<FaGithub/>}
-                        onSuccess={this.onGithubLogged}
-                        valid={this.state.token !== undefined}
-                        tokenUrl={`${process.env.REACT_APP_BACKEND_URL}/services/github/callback`}/>
-                </Box>
                 <Box sx={{my: 2}}>
                     {this.showRepositoryList()}
                 </Box>
