@@ -10,7 +10,6 @@ import {
     TextField,
     Button
 } from "@mui/material";
-import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography, CssBaseline, Button } from "@mui/material";
 import { styles } from "../../Resources/Styles/AddAppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
