@@ -19,6 +19,10 @@ export default class ServicesAuthentificationScreen extends Component {
         this.getUserServicesAuth();
     }
 
+    componentDidUpdate() {
+        this.getUserServicesAuth();
+    }
+
     /**
      * Get user's services auth
      *
