@@ -40,7 +40,7 @@ export default class ServicesSettingsScreen extends Component {
     }
 
     async onGithubLogin() {
-        await new LoginController().githubLogin((status, res) => {
+        await new LoginController().githubLoginService((status, res) => {
             if (status === true) {
                 console.log(res);
             } else {
