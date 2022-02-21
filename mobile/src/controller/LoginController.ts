@@ -1,7 +1,7 @@
 import app from '../axios_config';
 import {authorize} from 'react-native-app-auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+// const pkceChallenge = require("pkce-challenge");
 export default class LoginController {
   public nativeLogin(
     email: string | undefined,
@@ -32,15 +32,19 @@ export default class LoginController {
       webClientId: process.env.GOOGLE_CLIENT_ID,
     });
 
-    GoogleSignin.hasPlayServices().then(() => {
-      GoogleSignin.signIn().then(res => {
-        callback(true, res);
-      }).catch(err => {
+    GoogleSignin.hasPlayServices()
+      .then(() => {
+        GoogleSignin.signIn()
+          .then(res => {
+            callback(true, res);
+          })
+          .catch(err => {
+            callback(false, err);
+          });
+      })
+      .catch(err => {
         callback(false, err);
       });
-    }).catch(err => {
-      callback(false, err);
-    });
   }
 
   public githubLogin(callback: (status: boolean, response: any) => void): void {
@@ -54,11 +58,9 @@ export default class LoginController {
       serviceConfiguration: {
         authorizationEndpoint: 'https://github.com/login/oauth/authorize',
         tokenEndpoint: 'https://github.com/login/oauth/access_token',
-        revocationEndpoint:
-          `https://github.com/settings/connections/applications/${process.env.GITHUB_CLIENT_ID}`,
+        revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.GITHUB_CLIENT_ID}`,
       },
     };
-
     authorize(config)
       .then(result => {
         app
@@ -73,5 +75,10 @@ export default class LoginController {
       .catch(err => {
         callback(false, err);
       });
+  }
+
+  public twitterLogin(callback: (status: boolean, response: any) => void) {
+    // const pkce = pkceChallenge();
+
   }
 }

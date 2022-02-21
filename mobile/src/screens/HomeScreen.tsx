@@ -1,7 +1,7 @@
 
 import { Button, IconButton, Text } from 'native-base';
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import UserApplets from './UserAppletsScreen';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -28,7 +28,9 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <IconButton style={styles.profileButton} icon={<IconFontAwesome name="user" size={40} color="black" onPress={() => this.props.navigation.navigate('profile')} />} />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('profile')}>
+          <IconFontAwesome name="user" size={40} color="black" />
+        </TouchableOpacity>
         <UserApplets />
         {this.createAppletButtonRender()}
       </View>
