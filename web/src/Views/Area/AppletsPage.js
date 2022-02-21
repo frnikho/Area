@@ -1,7 +1,5 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import {FaDiscord, FaGithubSquare, FaSlack, FaMarker} from "react-icons/fa";
-import {Box, Paper, Typography} from "@mui/material";
 
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";

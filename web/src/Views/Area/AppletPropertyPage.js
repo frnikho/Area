@@ -110,6 +110,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                         </div>
                     </Box>
                     <Box sx={{ pb: 2, mx: 2 }} />
+                    <Box sx={{ pb: 2, mx: 2 }} />
                     <div style={Style.container}>
                         <SwitchButton isOn={component.state.isOn} onClick={() => component.handleSwitch()} />
                     </div>
