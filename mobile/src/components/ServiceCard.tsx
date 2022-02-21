@@ -10,7 +10,7 @@ import {
 } from 'native-base';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class ServiceCard extends Component {
@@ -34,7 +34,7 @@ class ServiceCard extends Component {
               backgroundColor: this.props.backgroundColor ?? '#4287f5',
             }}
             _light={{
-              backgroundColor: '#4287f5',
+              backgroundColor: this.props.backgroundColor ?? '#4287f5',
             }}>
             <Stack p="4" space={3}>
               <Stack space={2}>
@@ -58,7 +58,7 @@ class ServiceCard extends Component {
                 justifyContent="space-between">
                 <HStack alignItems="center">
                   <Center>
-                    <Icon name="logo-google" size={25} color="white" />
+                    <Image source={{uri: this.props.logo}} style={{width: 50, height: 50}} />
                   </Center>
                 </HStack>
               </Stack>

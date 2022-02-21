@@ -1,27 +1,18 @@
 import { Button, Toast, ChevronLeftIcon, Text, VStack } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import UserController from '../controller/UserController';
-import TokenController from '../controller/TokenController';
+import TokenController from '../../controller/TokenController';
 
-export default class ProfileScreen extends Component {
+export default class SettingsScreen extends Component {
 
   constructor(props: any) {
     super(props);
-    this.state = {
-      uuid: undefined,
-      firstName: undefined,
-      lastName: undefined,
-      email: undefined,
-    };
+
     this.onDisconnect = this.onDisconnect.bind(this);
   }
 
-  componentDidMount() {
-    this.getUserInfo();
-  }
+
 
   /**
    * Disconnect user
@@ -40,17 +31,6 @@ export default class ProfileScreen extends Component {
   }
 
   /**
-   * Get user's info
-   */
-  getUserInfo() {
-    new UserController().getUserInfo((status, response) => {
-      if (status) {
-        this.setState({ uuid: response.uuid, firstName: response.firstname, lastName: response.lastname, email: response.email })
-      }
-    })
-  }
-
-  /**
    * Title render
    *
    * @returns
@@ -58,22 +38,37 @@ export default class ProfileScreen extends Component {
   titleRender() {
     return (
       <VStack id="title" alignItems="center" style={styles.title}>
-        <Text fontFamily="body" fontWeight={400} fontSize="4xl">Profile</Text>
+        <Text fontFamily="body" fontWeight={400} fontSize="4xl">Settings</Text>
       </VStack>
     );
   }
 
   /**
-   * User's info render
+   * User's infor button
    *
    * @returns
    */
-  userInfoRender() {
+  userInfoButton() {
     return (
-      <View id="userInfo">
-        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><IconFontAwesome name="user" size={25} color="black" /> First name: {this.state.firstName === undefined ? "unknown" : this.state.firstName} </Text>
-        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><IconFontAwesome name="user" size={25} color="black" /> Last name: {this.state.lastName === undefined ? "unknown" : this.state.lastName} </Text>
-        <Text style={styles.userInfo} fontFamily="body" fontWeight={400} fontSize="xl"><Icon name="mail" size={25} color="black" /> Email: {this.state.email === undefined ? "unknown" : this.state.email} </Text>
+      <View id="userInfoButton">
+        <Button style={styles.userInfoButton} onPress={() => { this.props.navigation.navigate('profile') }}>
+          <Text fontFamily="body" fontWeight={600} fontSize="xl"><IconFontAwesome name="user" size={27} color="black" />   My informations</Text>
+        </Button>
+      </View>
+    );
+  }
+
+  /**
+   * User's services authentification button
+   *
+   * @returns
+   */
+  userServicesAuthentificationButton() {
+    return (
+      <View id="userServicesAuthentificationButton">
+        <Button style={styles.userServicesAuthentificationButton} onPress={() => { this.props.navigation.navigate('servicesAuthentification') }}>
+          <Text fontFamily="body" fontWeight={600} fontSize="xl"><IconFontAwesome name="shield" size={27} color="black" />   Services Authentification</Text>
+        </Button>
       </View>
     );
   }
@@ -95,10 +90,11 @@ export default class ProfileScreen extends Component {
 
   render() {
     return (
-      <View id="profileMainViex" style={styles.mainView}>
+      <View id="profileMainView" style={styles.mainView}>
         <ChevronLeftIcon id="back" size="10" mt="0.5" style={styles.backArrow} onPress={() => this.props.navigation.goBack()} />
         {this.titleRender()}
-        {this.userInfoRender()}
+        {this.userInfoButton()}
+        {this.userServicesAuthentificationButton()}
         {this.logoutButtonRender()}
       </View>
     );
@@ -130,5 +126,17 @@ const styles = StyleSheet.create({
   },
   logoutButtonText: {
     color: "#ffffff",
+  },
+  userInfoButton: {
+    backgroundColor: 'transparent',
+    width: '53%',
+    marginTop: 30,
+    marginLeft: 10,
+  },
+  userServicesAuthentificationButton: {
+    backgroundColor: 'transparent',
+    width: '73%',
+    marginTop: 30,
+    marginLeft: 10,
   },
 });

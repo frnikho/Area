@@ -2,7 +2,8 @@
 import { Button, Text } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import UserApplets from './UserAppletsScreen';
+import UserApplets from './Applets/UserAppletsScreen';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class HomeScreen extends Component {
 
@@ -27,7 +28,11 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <UserApplets navigation={this.props.navigation} />
+        <Button
+          onPress={() => this.props.navigation.navigate('settings')}
+          leftIcon={<Icon name="settings" size={40} color="black" />}
+          style={styles.settingsButton} />
+        <UserApplets />
         {this.createAppletButtonRender()}
       </View>
     );
@@ -37,6 +42,13 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
+  },
+  settingsButton: {
+    backgroundColor: 'transparent',
+    marginTop: 10,
+    marginRight: 10,
+    marginBottom: -20,
+    alignSelf: 'flex-end',
   },
   createAppletButton: {
     bottom: 10,
