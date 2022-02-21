@@ -32,7 +32,7 @@ export default class DiscordServiceRoute extends Route {
      *           type: string
      *         description: Code given by Discord OAuth
      *         required: true
-     *      - in: path
+     *       - in: path
      *         name: type
      *         schema:
      *           type: string
