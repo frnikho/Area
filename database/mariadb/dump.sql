@@ -79,7 +79,7 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `applets` (
   `uuid` varchar(255) NOT NULL DEFAULT uuid(),
-  `user_uuid` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT '',
   `action` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{}',
   `action_key` varchar(255) DEFAULT NULL,
   `action_type` varchar(255) NOT NULL,
@@ -87,6 +87,7 @@ CREATE TABLE `applets` (
   `updated_at` datetime DEFAULT current_timestamp(),
   `enable` tinyint(1) DEFAULT 1,
   `reactions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{}',
+  `user_uuid` varchar(255) NOT NULL,
   PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

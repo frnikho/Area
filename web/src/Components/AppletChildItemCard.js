@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {ButtonBase, Paper, Typography} from "@mui/material";
 
-export default class ServiceChildItemCard extends React.Component {
+export default class AppletChildItemCard extends React.Component {
 
     // eslint-disable-next-line
     constructor(props) {
@@ -23,7 +23,7 @@ export default class ServiceChildItemCard extends React.Component {
     }
 }
 
-ServiceChildItemCard.propTypes = {
+AppletChildItemCard.propTypes = {
     title: PropTypes.string,
     color: PropTypes.string,
     description: PropTypes.string,

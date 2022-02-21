@@ -28,7 +28,18 @@ export const styles = {
             flex: "1",
             position: "relative",
             textAlign: "left",
-        }
+        },
+    },
+    roundButtonFull: {
+        paddingTop: "6px",
+        background: "black",
+        height: "50%",
+        borderRadius: '50px',
+        borderColor: 'white',
+        fontFamily: 'Dongle',
+        fontSize: '45px',
+        textTransform: "none",
+        color: "white"
     },
     content: {
 

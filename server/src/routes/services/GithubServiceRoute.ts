@@ -1,10 +1,11 @@
 import Route from "../../Route";
-import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute";
-import ServiceController from "../../controllers/ServiceController";
 import {Services} from "../../models/Services"
 import GithubService from "../../services/external/GithubService";
+import ContextController from "../../controllers/ContextController";
+import {User} from "../../models/User";
+import express = require('express');
 
 export default class GithubServiceRoute extends Route {
 
@@ -14,14 +15,15 @@ export default class GithubServiceRoute extends Route {
     constructor() {
         super();
         this.router.get('/callback', authorization, this.callback);
-        this.router.post('/list', authorization, this.list);
+        this.router.get('/listRepositories', authorization, this.list);
+        this.router.get('/user', authorization, this.getUser);
         this.router.get('/', this.login);
     }
 
 
     /**
      * @openapi
-     * /services/github/list:
+     * /services/github/listRepositories:
      *   post:
      *     tags:
      *       - Services
@@ -33,14 +35,37 @@ export default class GithubServiceRoute extends Route {
      *         description: Error while login
      */
     private list(req: express.Request, res: express.Response) {
-        const {tokenKey} = req.body;
-        new ServiceController().getTokenByKeyAndService(req['user']['uuid'], 'github', tokenKey,(tokenData) => {
-            GithubService.listRepository(tokenData.token['access_token'], (data, err) => {
+        const {context} = req.query;
+        const user: User = req['user'];
+        if (context === undefined)
+            return res.status(400).json({success: false, message: "No context provided !"});
+
+        new ContextController().getContextByUuid(user.uuid, Services.GITHUB, context as string, (contextFound, error) => {
+            if (error)
+                return res.status(400).json({success: false, message: error});
+            GithubService.listRepository(user, contextFound, (data, err) => {
                 if (err)
                     console.log(err);
                 res.status(200).json(data);
             });
-        }, err => {console.log(err)});
+
+        })
+    }
+
+    private getUser(req: express.Request, res: express.Response) {
+        const {context} = req.query;
+        const user: User = req['user'];
+        if (context === undefined)
+            return res.status(400).json({success: false, message: "context not provided !"});
+        new ContextController().getContextByUuid(user.uuid, Services.GITHUB, context as string, (contextFound, error) => {
+            if (error)
+                return res.status(400).json({success: false, message: error})
+            GithubService.getUser(user, contextFound, (githubUser) => {
+                return res.status(200).json(githubUser);
+            }, (errorCb) => {
+                return res.status(400).json({success: false, message: errorCb})
+            })
+        });
     }
 
     /**

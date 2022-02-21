@@ -20,7 +20,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            services: undefined,
+            applet: undefined,
             isOn: false,
         }
         this.cookies = props;
@@ -36,7 +36,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
             this.setState({ user: this.authContext.getUser() })
         }
         this.controllerAppletProperty = new ControllerAppletProperty(this.authContext, this.cookies, this);
-        this.controllerAppletProperty.loadApplet("<id exemple>");
+        this.controllerAppletProperty.loadApplet();
     }
 
     handleSwitch() {
@@ -83,13 +83,11 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
             return (
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
-                    <Box style={{ backgroundColor: "grey" }}>
+                    <Box style={{ backgroundColor: (component.state.applet && component.state.applet.color) || "grey"}}>
                         <Header component={component} menu={menu} />
                         <Box sx={{ pb: 2, mx: 2 }} style={{ paddingLeft: "10px" }}>
                             <Button
-                                variant="outlined"
-                                size="small"
-                                style={Style.roundButtonEmpty}
+                                style={Style.roundButtonFull}
                                 onClick={() => component.onClickBack()}>
                                 {"< Back"}
                             </Button>
@@ -98,17 +96,18 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                         <div style={Style.container}>
                             <Box sx={{ pb: 2, mx: 2 }} style={{ width: "800px" }}>
                                 <Box style={{ textAlign: "left", paddingLeft: "20px", fontStyle: "bold" }}>
-                                    Applet's title
+                                    {(component.state.applet && component.state.applet.title) || "Applet's title"}
                                 </Box>
                                 <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "30px" }}>
-                                    Dame, plus simple on peut pas faire, quand même, plus besoin de votre crayon gris pour écrire des longs textes. Bon, faut dire ce qui est, des fois ça part an distribil, dans le lagen, mais c'est pas la mort.
+                                    {(component.state.applet && component.state.applet.description) || "Dame, plus simple on peut pas faire, quand même, plus besoin de votre crayon gris pour écrire des longs textes. Bon, faut dire ce qui est, des fois ça part an distribil, dans le lagen, mais c'est pas la mort."}
                                 </Box>
                                 <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "20px", }}>
-                                    {"by github <3"}
+                                    {(component.state.applet && component.state.applet.author) || "by github <3"}
                                 </Box>
                             </Box>
                         </div>
                     </Box>
+                    <Box sx={{ pb: 2, mx: 2 }} />
                     <Box sx={{ pb: 2, mx: 2 }} />
                     <div style={Style.container}>
                         <SwitchButton isOn={component.state.isOn} onClick={() => component.handleSwitch()} />
