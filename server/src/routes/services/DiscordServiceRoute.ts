@@ -3,12 +3,7 @@ import express = require('express');
 import ServiceAuthRoute from "./ServiceAuthRoute"
 import {authorization} from "../../middlewares/AuthMiddleware";
 import {Services} from "../../models/Services"
-import axios from "axios";
-import {User} from "../../models/User";
 import {checkContext} from "../../middlewares/ContextMiddleware";
-import {Context} from "../../models/Context";
-import DiscordService from "../../services/external/DiscordService";
-
 export default class DiscordServiceRoute extends Route {
 
     /**
@@ -62,7 +57,6 @@ export default class DiscordServiceRoute extends Route {
         params.append('client_id', process.env.DISCORD_SERVICES_CLIENT_ID);
         params.append('client_secret', process.env.DISCORD_SERVICES_CLIENT_SECRET);
         params.append('grant_type', "authorization_code");
-        /*params.append('scope', "bot");*/
         params.append('scope', "bot");
         params.append('redirect_uri', type === 'web' ? process.env.DISCORD_SERVICES_REDIRECT_URL_WEB : process.env.DISCORD_SERVICES_REDIRECT_URL_MOBILE);
 
