@@ -32,6 +32,7 @@ import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
 import { swaggerOptions } from "./documentation/Swagger"
 import Logger from "./utils/Logger";
+import {ContextRoute} from "./routes/context/ContextRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -116,6 +117,9 @@ export default class App {
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
+
+        // CONTEXT ROUTES
+        new ContextRoute().register(this.app, '/context');
 
         // ABOUT ROUTE
         new AboutRoute().register(this.app, '/about.json');

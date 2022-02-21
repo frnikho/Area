@@ -12,9 +12,8 @@ import {
   Center,
   Toast,
 } from 'native-base';
-import app from '../axios_config';
-import {SafeAreaView, ScrollView} from 'react-native';
-import RegisterController from '../controller/RegisterController';
+import {ScrollView} from 'react-native';
+import RegisterController from '../../controller/RegisterController';
 export default class RegisterScreen extends Component {
   state: {
     firstName: string | undefined;

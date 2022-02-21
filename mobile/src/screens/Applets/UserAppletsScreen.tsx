@@ -1,9 +1,8 @@
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Text, VStack } from 'native-base';
-import AppletsController from '../controller/AppletsControler';
+import AppletsController from '../../controller/AppletsControler';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class UserApplets extends Component {
 
@@ -56,14 +55,16 @@ export default class UserApplets extends Component {
     myApplets() {
         if (this.state.userApplets === undefined || this.state.userApplets.length === 0) {
             return (
-                <Text bold style={styles.noAppletsText} fontFamily="body" fontWeight={400} fontSize="3xl">You havn't applets</Text>
+                <Text bold style={styles.noAppletsText} fontFamily="body" fontWeight={400} fontSize="3xl">You have no applets</Text>
             );
         }
         return (this.state.userApplets.map((applet, i) => {
+            let cardColor = applet.cardColor === undefined ? "#ffffff" : applet.cardColor;
+            let textColor = applet.cardColor === undefined ? "#222222" : "#ffffff";
             return (
-                <Card key={i} style={styles.myAppletsCard}>
-                    <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
-                    <Text style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
+                <Card key={i} style={{ marginTop: 20, width: '100%', justifyContent: 'center', borderRadius: 15, backgroundColor: cardColor }}>
+                    <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
+                    <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
                 </Card>
             );
         }));
@@ -72,7 +73,7 @@ export default class UserApplets extends Component {
     mainTextRender() {
         return (
             <VStack id="mainText" alignItems="center" style={styles.mainText}>
-                <Text fontFamily="body" fontWeight={400} fontSize="4xl">My applets    <IconFontAwesome name="user" size={40} color="black" onPress={() => this.props.navigation.navigate('profile')} /></Text>
+                <Text fontFamily="body" fontWeight={400} fontSize="4xl">My applets</Text>
             </VStack>
         );
     }
@@ -96,13 +97,7 @@ export default class UserApplets extends Component {
 
 const styles = StyleSheet.create({
     mainText: {
-        marginTop: 10,
-    },
-    myAppletsCard: {
-        marginTop: 20,
-        width: '100%',
-        justifyContent: 'center',
-        borderRadius: 15,
+        marginTop: 5,
     },
     myAppletsCardText: {
         marginTop: 10,

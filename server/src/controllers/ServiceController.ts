@@ -2,7 +2,6 @@ import DBService from "../services/DBService";
 
 export interface TokenData {
     key: string,
-    type: string,
     token: object,
     created_at: Date
 }
@@ -33,7 +32,7 @@ export default class ServiceController {
     }
 
     public registerUserToken(userUuid: string, token: TokenData, success: success, error: error) {
-        this.getUserTokens(userUuid, token.type, (tokens) => {
+        this.getUserTokens(userUuid, 'token.type', (tokens) => {
             let tokensArray;
             try {
                 tokensArray = JSON.parse(tokens);
@@ -45,7 +44,7 @@ export default class ServiceController {
                 tokensArray = [];
             }
             tokensArray.push(token);
-            DBService.query(`UPDATE area.services t SET t.${token.type} = '${JSON.stringify(tokensArray)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
+            DBService.query(`UPDATE area.services t SET t.'{token.type}' = '${JSON.stringify(tokensArray)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
                 if (result['affectedRows'] >= 1)
                     return success();
                 return error('An error occurred, please try again later !');
@@ -103,7 +102,7 @@ export default class ServiceController {
      * @returns
      */
     public updateTokenByKeyAndService(newToken: TokenData, userUuid: string, callback: (status: boolean, response: string) => void) {
-        let serviceName = newToken.type;
+        let serviceName = 'newToken.type';
         if (serviceName === undefined)
             return callback(false, "Invalid reaction service type !");
         let key = newToken.key;

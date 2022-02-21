@@ -35,8 +35,23 @@ export default class AxiosController {
     public get(url: string, headers: object, callback: (status: boolean, response: any) => void) {
         axios.get(url, headers).then((response) => {
             return callback(true, response);
-        }).catch((response) => {
-            return callback(false, response);
+        }).catch((err) => {
+            return callback(false, err);
+        });
+    }
+
+    /**
+     * Delete request
+     *
+     * @param url
+     * @param headers
+     * @param callback
+     */
+    public del(url: string, headers: object, callback: (status: boolean, response: any) => void) {
+        axios.delete(url, headers).then((response) => {
+            return callback(true, response);
+        }).catch((err) => {
+            return callback(false, err);
         });
     }
 }

@@ -1,6 +1,6 @@
-import {ActionSettingsDialog} from "./actions/ActionSettingsDialog";
+import {ActionSettingsDialog} from "../ActionSettingsDialog";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import {Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
+import {Box, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
 import {FaGithub, FaLock} from "react-icons/fa";
 import GithubServiceOauth from "../../../Components/oauth/GithubServiceOauth";
 import React from "react";

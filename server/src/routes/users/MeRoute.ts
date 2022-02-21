@@ -34,6 +34,8 @@ export default class MeRoute extends Route {
      * @openapi
      * /me:
      *   get:
+     *     security:
+     *       - bearerAuth: []
      *     tags:
      *       - User
      *     description: Get information about logged user

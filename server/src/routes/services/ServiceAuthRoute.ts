@@ -21,6 +21,7 @@ export default class ServiceAuthRoute {
     public postRequest(url: string, body: object, header: object, userUUID: string, tokenType: string, success: token, errorFunc: errorFnc): void {
         axios.post(url, body, header).then((response) => {
             const {error, access_token, refresh_token} = response.data;
+            console.log(response.data)
             if (error)
                 return errorFunc(error);
             return this.token(tokenType, access_token, refresh_token, userUUID, (tokenData) => {
@@ -73,16 +74,11 @@ export default class ServiceAuthRoute {
         const token: TokenData = {
             key: randomstring.generate(),
             created_at: new Date(),
-            type: tokenType,
             token: {
                 access_token: accessToken,
                 refresh_token: refreshToken,
             }
         }
-        new ServiceController().registerUserToken(userUUID, token, () => {
-            return success(token);
-        }, (err) => {
-            return errorFunc(err);
-        });
+        return success(token);
     }
 }

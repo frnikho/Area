@@ -12,6 +12,7 @@ import DashboardPage from "./Views/Area/DashboardPage"
 import ProfilePage from "./Views/Area/ProfilePage"
 import AppletPage from "./Views/Area/AppletPage";
 import AppletPropertyPage from "./Views/Area/AppletPropertyPage";
+import ContextPage from "./Views/Area/ContextPage";
 
 class App extends React.Component {
 
@@ -58,6 +59,7 @@ class App extends React.Component {
                             <Route path="add" element={<AppletPage />} />
                             <Route path="property/:id" element={<AppletPropertyPage />} />
                         </Route>
+                        <Route path={"context"} element={<ContextPage/>}/>
                         <Route path={"dashboard"} element={<DashboardPage />} />
                         <Route path={"profile"} element={<ProfilePage />} />
                     </Route>

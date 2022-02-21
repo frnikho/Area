@@ -22,7 +22,7 @@ export const swaggerOptions = {
                 url: `https://area-backend.nikho.dev/`,
             },
             {
-                url: `https://localhost`,
+                url: `https://localhost:8080/`,
             }
         ],
     },
@@ -41,6 +41,9 @@ export const swaggerOptions = {
 
         // APPLETS
         "./src/routes/applets/AppletRoute.ts",
+
+        // CONTEXTS
+        "./src/routes/context/ContextRoute.ts",
 
         // USERS
         "./src/routes/users/MeRoute.ts",

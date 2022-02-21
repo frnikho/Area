@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
     Box,
-    Button,
     Dialog,
     DialogActions,
     DialogContent,
-    Divider,
     IconButton,
     Typography
 } from "@mui/material";
@@ -25,8 +23,8 @@ export class ReactionSettingsDialog extends React.Component {
         this.props.onClose();
     }
 
-    onCreate (data) {
-        console.log("data: ", data);
+    onCreate (data, b) {
+        console.log("data: ", data, b);
     }
 
     validate() {
@@ -64,7 +62,6 @@ export class ReactionSettingsDialog extends React.Component {
     renderCreateButton() {
 
     }
-
 
 }
 

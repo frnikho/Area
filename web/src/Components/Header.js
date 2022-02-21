@@ -14,7 +14,7 @@ export default function Header({ component, menu }) {
                     {menu.left.name || "Epitech 2022 Project"}
                 </Button>
             </Box>
-            {/* <Box sx={{ mt: 0 }} style={Style.centerMenu} /> */}
+            <Box sx={{ mt: 0 }} style={{...Style.centerMenu, ...{backgroundColor: "green"}}} />
             <Box style={Style.menuRight}>
                 <MenuDashboard props={component} menu={menu.right} />
             </Box>
