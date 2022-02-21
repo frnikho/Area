@@ -1,9 +1,9 @@
 
-import { Button, IconButton, Text } from 'native-base';
+import { Button, Text } from 'native-base';
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import UserApplets from './UserAppletsScreen';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View } from 'react-native';
+import UserApplets from './Applets/UserAppletsScreen';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class HomeScreen extends Component {
 
@@ -28,9 +28,10 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('profile')}>
-          <IconFontAwesome name="user" size={40} color="black" />
-        </TouchableOpacity>
+        <Button
+          onPress={() => this.props.navigation.navigate('settings')}
+          leftIcon={<Icon name="settings" size={40} color="black" />}
+          style={styles.settingsButton} />
         <UserApplets />
         {this.createAppletButtonRender()}
       </View>
@@ -42,6 +43,13 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
   },
+  settingsButton: {
+    backgroundColor: 'transparent',
+    marginTop: 10,
+    marginRight: 10,
+    marginBottom: -20,
+    alignSelf: 'flex-end',
+  },
   createAppletButton: {
     bottom: 10,
     marginLeft: 10,
@@ -49,13 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: "#222222",
     borderRadius: 15,
-  },
-  profileButton: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
-    marginTop: 10,
-    marginRight: 10,
   },
   createAppletText: {
     color: "#ffffff",

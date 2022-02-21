@@ -13,7 +13,7 @@ import {
   Toast,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LoginController from '../controller/LoginController';
+import LoginController from '../../controller/LoginController';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class LoginScreen extends Component {
   state: {
