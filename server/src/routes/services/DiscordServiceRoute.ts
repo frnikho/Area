@@ -4,6 +4,9 @@ import ServiceAuthRoute from "./ServiceAuthRoute"
 import {authorization} from "../../middlewares/AuthMiddleware";
 import {Services} from "../../models/Services"
 import {checkContext} from "../../middlewares/ContextMiddleware";
+import DiscordService from "../../services/external/DiscordService";
+import {User} from "../../models/User";
+import {Context} from "../../models/Context";
 export default class DiscordServiceRoute extends Route {
 
     /**
