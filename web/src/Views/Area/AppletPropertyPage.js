@@ -87,9 +87,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                         <Header component={component} menu={menu} />
                         <Box sx={{ pb: 2, mx: 2 }} style={{ paddingLeft: "10px" }}>
                             <Button
-                                variant="outlined"
-                                size="small"
-                                style={Style.roundButtonEmpty}
+                                style={Style.roundButtonFull}
                                 onClick={() => component.onClickBack()}>
                                 {"< Back"}
                             </Button>
