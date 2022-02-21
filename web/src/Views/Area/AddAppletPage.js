@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography,CssBaseline } from "@mui/material";
+import { Box, ButtonBase, Container, Paper, ThemeProvider, Typography, CssBaseline, Button } from "@mui/material";
 import { styles } from "../../Resources/Styles/AddAppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
 import ActionDialog from "../Dialogs/ActionDialog";
@@ -8,6 +8,7 @@ import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
 import Header from "../../Components/Header"
+import app, { config } from "../../Utils/Axios";
 
 /**
  * @class AddAppletPage
@@ -27,6 +28,43 @@ export default class AddAppletPage extends Page {
         this.onCloseDialog = this.onCloseDialog.bind(this);
         this.onClickAddReaction = this.onClickAddReaction.bind(this);
         this.onClickAddAction = this.onClickAddAction.bind(this);
+        this.oncreate = this.onCreate.bind(this);
+    }
+
+    onCreate() {
+        // app.post("/applets", {
+        //     "action_key": "frnikho/blogjs",
+        //     "action_type": "github_repository_push",
+        //     "action": {
+        //         "parameters": [
+        //             {
+        //                 "name": "repository_name",
+        //                 "value": "frnikho/blogjs"
+        //             }
+        //         ]
+        //     },
+        //     "reactions": [
+        //         {
+        //             "type": "discord_send_chanel_message",
+        //             "base_key": "123456",
+        //             "parameters": [
+        //                 {
+        //                     "name": "chanel_id",
+        //                     "value": "123456"
+        //                 },
+        //                 {
+        //                     "name": "text",
+        //                     "value": "456789"
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // }, config(token)).then((response) => {
+
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
+
     }
 
     onActionSelected(action, actionAbout, serviceAbout) {
@@ -45,7 +83,7 @@ export default class AddAppletPage extends Page {
     }
 
     onClose() {
-        this.setRedirectUrl({url: '/'})
+        this.setRedirectUrl({ url: '/' })
     }
 
     onClickHelp() {
@@ -87,23 +125,23 @@ export default class AddAppletPage extends Page {
     showActionButton() {
         if (this.state.action === undefined) {
             return (
-                <Paper sx={{backgroundColor: "#222222", mb:4, mt: 1, borderRadius: 8}}>
-                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
-                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40}/></Typography>
+                <Paper sx={{ backgroundColor: "#222222", mb: 4, mt: 1, borderRadius: 8 }}>
+                    <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40} /></Typography>
                         </Box>
                     </ButtonBase>
                 </Paper>
             )
         } else {
             return (
-                <Paper sx={{backgroundColor: `${this.state.action.service.color}`, mb:4, mt: 1, borderRadius: 8}}>
-                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
-                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-  {/*                          <Box sx={{mb: 2}}>
+                <Paper sx={{ backgroundColor: `${this.state.action.service.color}`, mb: 4, mt: 1, borderRadius: 8 }}>
+                    <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                            {/*                          <Box sx={{mb: 2}}>
                                 <MdEditNote color={"white"} size={24}/>
                             </Box>*/}
-                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loarding . . ."/>
+                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loarding . . ." />
                             <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{this.state.action.about.name}</Typography>
                         </Box>
                     </ButtonBase>
@@ -114,10 +152,10 @@ export default class AddAppletPage extends Page {
 
     showReactionButton() {
         if (this.state.reactions.length === 0) {
-            return (<Paper sx={{backgroundColor: "#999999", borderRadius: 8}}>
-                <ButtonBase disabled={this.state.action === undefined} sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
-                    <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                        <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40}/></Typography>
+            return (<Paper sx={{ backgroundColor: "#999999", borderRadius: 8 }}>
+                <ButtonBase disabled={this.state.action === undefined} sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddReaction}>
+                    <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                        <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>Then that <AddIcon size={40} /></Typography>
                     </Box>
                 </ButtonBase>
             </Paper>)
@@ -139,7 +177,7 @@ export default class AddAppletPage extends Page {
                 ],
                 left: {
                     name: "Cancel",
-                    action: () => component.setRedirectUrl({url: "/"}),
+                    action: () => component.setRedirectUrl({ url: "/" }),
                 }
             }
 
@@ -156,6 +194,13 @@ export default class AddAppletPage extends Page {
                             <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
                                 {component.showActionButton()}
                                 {component.showReactionButton()}
+                                <Box sx={{ pb: 2, mx: 2 }} />
+                                <Box sx={{ pb: 2, mx: 2 }} />
+                                <Button
+                                    onClick={() => component.onCreate()}
+                                    style={styles.roundButtonFull}>
+                                    {"Create"}
+                                </Button>
                             </Box>
                         </Container>
                     </Box>

@@ -13,8 +13,9 @@ export default withCookies(class AppletsPage extends Page {
 
     constructor(props) {
         super(props);
-            this.state = {
+        this.state = {
             user: undefined,
+            applet: props
         }
         this.cookies = props.cookies;
     }
@@ -22,20 +23,21 @@ export default withCookies(class AppletsPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() === undefined) {
-            this.setRedirectUrl({url: '/auth/login'})
+            this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.authContext.getUser() })
         }
         this.controllerApplet = new ControllerApplet(this.authContext, this.cookies, this);
+        this.controllerApplet.loadApplet()
     }
 
     render() {
         if (!this.authContext)
-        return (null);
+            return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
 
             return (
-                <AppletChildItemCard {...component.props} />
+                <AppletChildItemCard {...{ ...component.state.applet, ...{ onClick: () => component.setRedirectUrl({ url: "/area/applets/property", params: component.state.applet.uuid }) } }} />
             );
         }));
     }
