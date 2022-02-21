@@ -39,6 +39,8 @@ export default class ContextController {
 
     public createContext(userUuid: string, service: Services, context: Context, callback: (context: Context, error: string) => void) {
         this.getContextsByService(userUuid, service, (userContexts) => {
+            if (userContexts === undefined)
+                return callback(null, "Contexts not founds !");
             userContexts.push(context);
             DBService.query(`UPDATE area.services t SET t.${service.valueOf()} = '${JSON.stringify(userContexts)}' WHERE t.user_uuid = '${userUuid}'`, (result) => {
                 if (result === undefined)
@@ -51,7 +53,6 @@ export default class ContextController {
 
     public getContextByUuid(userUuid: string, service: Services, uuid: string, callback: (context: Context, error: string) => void): void {
         this.getContextsByService(userUuid, service, (contexts, error) => {
-            console.log(contexts);
             if (error)
                 return callback(null, error);
             callback(contexts.find((context) => context.uuid === uuid), null);
@@ -89,5 +90,4 @@ export default class ContextController {
             });
         });
     }
-
 }

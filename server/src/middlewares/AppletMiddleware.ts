@@ -97,8 +97,10 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
     if (applets.action.missing.length !== 0)
         return res.status(400).json({success: false, error: `Missing parameters '${applets.action.missing}' for action '${action_type}'`})
 
-   if (applets.reactions.filter((reaction) => reaction['missing'].length > 0).length > 0)
+   if (applets.reactions.filter((reaction) => reaction['missing'].length > 0).length > 0) {
+       console.log(applets.reactions.filter((reaction) => reaction['missing'].length > 0));
        return res.status(400).json({success: false, error: `Missing parameters for reactions !`})
+   }
 
     const applet: Applet = {
         action_type: type,

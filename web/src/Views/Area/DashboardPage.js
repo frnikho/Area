@@ -6,9 +6,10 @@ import ControllerDashboard from "../../Controllers/Area/ControllerDashboard"
 import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 import Style from "../../Resources/Styles/styleDashboard"
-import ServicePage from "../../Views/Area/ServicePage"
+import AppletsPage from "./AppletsPage"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
+import app, { config } from "../../Utils/Axios";
 
 export default withCookies(class DashboardPage extends Page {
 
@@ -18,10 +19,11 @@ export default withCookies(class DashboardPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            services: undefined
+            services: undefined,
+            applets: undefined,
         }
         this.cookies = props;
-        this.showServices = this.showServices.bind(this)
+        this.showApplets = this.showApplets.bind(this)
     }
 
     componentDidMount() {
@@ -36,14 +38,21 @@ export default withCookies(class DashboardPage extends Page {
         this.controllerDashboard.loadApplets()
     }
 
-    showServices(component) {
-        if (component.state.services === undefined)
-            return (null);
-        return component.state.services.map((service, index) => (
-            <Grid item xs={2} sm={4} md={2.9} key={index} justifyContent={"center"} textAlign={"center"}>
-                <ServicePage service={service} />
-            </Grid>
-        ))
+    showApplets(component) {
+        if (component.state.applets === undefined || component.state.applets.length === 0 || component.state.applets.length === undefined)
+            return (
+                <div style={{ ...Style.container, fontSize: 30 }}>
+                    <div style={{ margin: "75px" }} />
+                    No applets found
+                </div>
+            );
+        else
+            return component.state.applets.map((applets, index) => (
+                // <Grid item xs={2} sm={4} md={4} key={index}>
+                <Grid item /* xs={2} sm={4} md={2.9} */ /* spacing={1} */ key={index}>
+                    <AppletsPage {...applets} />
+                </Grid>
+            ))
     }
 
     render() {
@@ -57,7 +66,41 @@ export default withCookies(class DashboardPage extends Page {
                         name: 'Create',
                         style: Style.roundButtonFull,
                         variant: "contained",
-                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
+                        // action: () => component.setRedirectUrl({ url: "/area/applets/add" })
+                        action: () => {
+                            app.post("/applets", {
+                                "action_key": "frnikho/blogjs",
+                                "action_type": "github_repository_push",
+                                "action": {
+                                    "parameters": [
+                                        {
+                                            "name": "repository_name",
+                                            "value": "frnikho/blogjs"
+                                        }
+                                    ]
+                                },
+                                "reactions": [
+                                    {
+                                        "type": "discord_send_chanel_message",
+                                        "base_key": "123456",
+                                        "parameters": [
+                                            {
+                                                "name": "chanel_id",
+                                                "value": "123456"
+                                            },
+                                            {
+                                                "name": "text",
+                                                "value": "456789"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }, config(component.authContext.getToken())).then((response) => {
+                                console.log(response);
+                            }).catch((err) => {
+                                console.log(err)
+                            })
+                        }
                     },
                     // {
                     //     name: 'Area',
@@ -77,9 +120,10 @@ export default withCookies(class DashboardPage extends Page {
                     },
                 ],
                 left: {
-                    action: () => console.log("hello world")
+                    // action: () => console.log("hello world")
                 }
             }
+
             return (
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
@@ -87,9 +131,12 @@ export default withCookies(class DashboardPage extends Page {
                     <div style={Style.container}>
                         My applets
                     </div>
-                    <Box sx={{ marginLeft: "2%", marginRight: "auto" }}>
-                        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                            {component.showServices(component)}
+                    {/* <Grid container xs={2} justifyContent={"center"} textAlign={"center"}>
+                        {component.showApplets(component)}
+                    </Grid> */}
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent={"center"} textAlign={"center"}>
+                            {component.showApplets(component)}
                         </Grid>
                     </Box>
                 </ThemeProvider >

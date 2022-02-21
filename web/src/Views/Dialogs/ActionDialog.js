@@ -8,7 +8,7 @@ import {
     List,
     Typography
 } from "@mui/material";
-import ServiceChildItemCard from "../../Components/ServiceChildItemCard";
+import AppletChildItemCard from "../../Components/AppletChildItemCard";
 import GithubRepositoryDeletedDialog from "./github/actions/GithubRepositoryDeletedDialog";
 import GithubNewPushRepositoryDialog from "./github/actions/GithubNewPushRepositoryDialog";
 import PropTypes from "prop-types";
@@ -65,14 +65,14 @@ export default class ActionDialog extends React.Component {
                                 <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={46} sx={{ mx: 2 }}>
                                     {service.name}
                                 </Typography>
-                                <img src={`https://localhost:8080/static/${service.icon}`} width={58} alt="Loarding . . ." />
+                                <img src={`https://localhost:8080/static/${service.icon}`} width={58} alt="Loading . . ." />
                             </Box>
                             <div>
                                 <Grid container spacing={2} direction="row" justifyContent="center">
                                     {service.actions.map((action, indexA) => {
                                         return (
                                             <Grid item key={indexA}>
-                                                <ServiceChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)} />
+                                                <AppletChildItemCard title={action.name} description={action.description} color={service.color} onClick={() => this.onClickAction(action, service)} />
                                             </Grid>)
                                     })}
                                 </Grid>

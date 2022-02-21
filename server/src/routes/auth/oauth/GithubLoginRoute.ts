@@ -51,7 +51,7 @@ export default class GithubLoginRoute extends Route {
             if (error)
                 return res.status(400).json({success: false, error: error_description});
 
-            GithubService.getUser(response.data['access_token'], (data) => {
+            GithubService.getUserByToken(response.data['access_token'], (data) => {
                 if (data.email === null || data.email === undefined)
                     return res.status(400).json({success: false, error: 'Your email need to be public !', link: 'https://github.com/settings/profile'});
 
