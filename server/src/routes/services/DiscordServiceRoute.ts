@@ -29,6 +29,12 @@ export default class DiscordServiceRoute extends Route {
      *           type: string
      *         description: Code given by Discord OAuth
      *         required: true
+     *      - in: path
+     *         name: type
+     *         schema:
+     *           type: string
+     *         description: Context if request come from mobile or web ('web' or 'mobile')
+     *         required: true
      *     responses:
      *       200:
      *         description: Successful login
@@ -37,6 +43,7 @@ export default class DiscordServiceRoute extends Route {
      */
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
+        const type: string = req.query['type'] as string;
 
         const headers = {
             headers: {
@@ -50,7 +57,7 @@ export default class DiscordServiceRoute extends Route {
         params.append('client_secret', process.env.DISCORD_SERVICES_CLIENT_SECRET);
         params.append('grant_type', "authorization_code");
         params.append('scope', "bot");
-        params.append('redirect_uri', process.env.DISCORD_SERVICES_REDIRECT_URL);
+        params.append('redirect_uri', type === 'web' ? process.env.DISCORD_SERVICES_REDIRECT_URL_WEB : process.env.DISCORD_SERVICES_REDIRECT_URL_MOBILE);
 
         new ServiceAuthRoute().postRequest("https://discord.com/api/oauth2/token", params, headers, req['user']['uuid'], Services.DISCORD.valueOf(), (token) => {
             console.log(token);
