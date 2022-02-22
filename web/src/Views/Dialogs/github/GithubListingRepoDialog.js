@@ -1,7 +1,7 @@
 import {ActionSettingsDialog} from "../ActionSettingsDialog";
 import {AuthContext} from "../../../Contexts/AuthContext";
 import {Box, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material";
-import {FaGithub, FaLock} from "react-icons/fa";
+import {FaLock} from "react-icons/fa";
 import React from "react";
 import app, {config} from "../../../Utils/Axios";
 

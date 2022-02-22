@@ -1,6 +1,5 @@
 import {ActionSettingsDialog} from "../../ActionSettingsDialog";
-import {Box, Button, MenuItem, Select, TextField, Typography} from "@mui/material";
-import {TextFields} from "@mui/icons-material";
+import {Box, Button, MenuItem, Select, Typography} from "@mui/material";
 
 export default class DiscordChannelCreatedDialog extends ActionSettingsDialog {
 

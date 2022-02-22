@@ -1,5 +1,5 @@
 import {ActionSettingsDialog} from "../../ActionSettingsDialog";
-import {Box, Button, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
 
 export default class DiscordGuildMessageReactionRemoveDialog extends ActionSettingsDialog {
 
