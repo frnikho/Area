@@ -32,10 +32,10 @@ export default withCookies(class DashboardPage extends Page {
             this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.authContext.getUser() })
+            this.controllerDashboard = new ControllerDashboard(this.authContext, this.cookies, this);
+            this.controllerDashboard.loadServices()
+            this.controllerDashboard.loadApplets()
         }
-        this.controllerDashboard = new ControllerDashboard(this.authContext, this.cookies, this);
-        this.controllerDashboard.loadServices();
-        this.controllerDashboard.loadApplets()
     }
 
     showApplets(component) {

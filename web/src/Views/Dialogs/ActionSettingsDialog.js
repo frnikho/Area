@@ -6,7 +6,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent, FormControl,
-    IconButton, InputLabel, MenuItem, Paper, Select,
+    IconButton, MenuItem, Select,
     Typography
 } from "@mui/material";
 import {MdClose} from "react-icons/md";

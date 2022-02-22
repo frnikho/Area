@@ -20,7 +20,7 @@ import Page from "../Page"
 import {FaPlus} from "react-icons/fa";
 import app, {config} from "../../Utils/Axios";
 import {AuthContext} from "../../Contexts/AuthContext";
-import Header from "../../Components/Header"
+// import Header from "../../Components/Header"
 
 /**
  * @class AddAppletPage

@@ -27,7 +27,7 @@ export default class ControllerAppletProperty {
     disableApplet() {
         console.log("disable the applet with the id: " + this.id)
         app.post(`/applets/disable`, {
-            appletId: this.id
+            appletUuid: this.id
         }, config(this.token)).then((response) => {
             console.log(response);
         }).catch((error) => {
@@ -38,7 +38,7 @@ export default class ControllerAppletProperty {
     enableApplet() {
         console.log("enable the applet with the id: " + this.id)
         app.post(`/applets/enable`, {
-            appletId: this.id
+            appletUuid: this.id
         }, config(this.token)).then((response) => {
             console.log(response);
         }).catch((error) => {
