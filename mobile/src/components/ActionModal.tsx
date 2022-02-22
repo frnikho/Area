@@ -1,7 +1,8 @@
-import {Box, Center, CheckIcon, Select, Spinner} from 'native-base';
+import {Box, Button, Center, CheckIcon, Select, Spinner} from 'native-base';
 import React from 'react';
 import {Text} from 'react-native';
 import ServicesAuthentificationsController from '../controller/ServicesAuthentifications';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class ActionModal extends React.Component {
   constructor(props: any) {
@@ -28,8 +29,7 @@ export default class ActionModal extends React.Component {
     );
   }
 
-  loadData(param: any) {
-  }
+  loadData(param: any) {}
 
   renderLoading() {
     return (
@@ -45,6 +45,22 @@ export default class ActionModal extends React.Component {
   }
 
   renderAuthContext() {
+    if (this.state.servicesAuth.count <= 0) {
+      return (
+        <Center>
+          <Button
+            w="46%"
+            colorScheme="indigo"
+            onPress={() => this.props.navigation.navigate('servicesAuthentification')}
+            leftIcon={<Icon name="settings" size={25} color="white" />}
+            style={{
+              backgroundColor: '#b03f47',
+            }}>
+            Register an auth context
+          </Button>
+        </Center>
+      );
+    }
     return (
       <Center>
         <Box w="3/4" maxW="300">
@@ -58,11 +74,15 @@ export default class ActionModal extends React.Component {
               endIcon: <CheckIcon size="5" />,
             }}
             mt={1}
-            onValueChange={itemValue =>
-              this.onChangeContext(itemValue)
-            }>
+            onValueChange={itemValue => this.onChangeContext(itemValue)}>
             {this.state.servicesAuth.contexts.map((context, i) => {
-              return <Select.Item key={i} label={context.title} value={context.uuid} />;
+              return (
+                <Select.Item
+                  key={i}
+                  label={context.title}
+                  value={context.uuid}
+                />
+              );
             })}
           </Select>
         </Box>
