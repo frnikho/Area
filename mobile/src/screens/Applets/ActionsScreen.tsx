@@ -14,11 +14,15 @@ export default class ActionsScreen extends React.Component {
 
   renderModals() {
     const actionsModalList = {
-      github_repository_push: (
-        <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />
-      ),
+      github: {
+        github_repository_push: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_release_created: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_opened: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_closed: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_reopened: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+      }
     };
-    return actionsModalList[this.state.action.type];
+    return actionsModalList[this.props.service.type][this.state.action.type];
   }
 
   renderActionsList() {
