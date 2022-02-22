@@ -1,17 +1,11 @@
 import {
   Center,
-  Button,
-  Stack,
-  Spinner,
   Select,
   CheckIcon,
   Box,
 } from 'native-base';
 import React from 'react';
-import {Text, TouchableHighlightBase} from 'react-native';
 import ActionModal from '../ActionModal';
-import Icon from 'react-native-vector-icons/Ionicons';
-import LoginController from '../../controller/LoginController';
 import app, {config} from '../../axios_config';
 import TokenController from '../../controller/TokenController';
 

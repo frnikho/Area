@@ -5,16 +5,11 @@ import {
   VStack,
   FormControl,
   Input,
-  Link,
   Button,
-  HStack,
-  Text,
   Center,
   Toast,
   ChevronLeftIcon,
 } from 'native-base';
-import Icon from 'react-native-vector-icons/Ionicons';
-import TokenController from './../../controller/TokenController';
 import ServicesAuthentificationsController from '../../controller/ServicesAuthentifications';
 export default class CreateServiceAuthentificationScreen extends Component {
   constructor(props: any) {

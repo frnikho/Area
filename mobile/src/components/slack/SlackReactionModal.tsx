@@ -1,6 +1,5 @@
-import {Center, Button, Stack} from 'native-base';
+import {Center, Button} from 'native-base';
 import React from 'react';
-import {Text, TouchableHighlightBase} from 'react-native';
 import ActionModal from '../ActionModal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoginController from '../../controller/LoginController';

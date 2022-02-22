@@ -1,10 +1,8 @@
 import {
-  AspectRatio,
   Box,
   Center,
   Heading,
   HStack,
-  Image,
   Stack,
   Text,
 } from 'native-base';
