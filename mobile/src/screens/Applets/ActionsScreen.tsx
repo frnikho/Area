@@ -1,7 +1,7 @@
-import { Button, Center, Modal, ScrollView, Stack, Text } from 'native-base';
+import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
-import GithubActionModal from '../../components/github/GithubActionModal';
+import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -10,13 +10,19 @@ export default class ActionsScreen extends React.Component {
       action: undefined,
       dialog: undefined,
     };
-
   }
 
   renderModals() {
-    return (
-      <GithubActionModal action={this.state.action} />
-    );
+    const actionsModalList = {
+      github: {
+        github_repository_push: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_release_created: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_opened: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_closed: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+        github_issue_reopened: <GithubListRepoActionModal action={this.state.action} navigation={this.props.navigation} />,
+      }
+    };
+    return actionsModalList[this.props.service.type][this.state.action.type];
   }
 
   renderActionsList() {
@@ -30,7 +36,12 @@ export default class ActionsScreen extends React.Component {
               return (
                 <ChoiceCard
                   name={action.name}
-                  onPress={() => { this.setState({ action: action, dialog: action.type.toUpperCase() }) }}
+                  onPress={() => {
+                    this.setState({
+                      action: action,
+                      dialog: action.type.toUpperCase(),
+                    });
+                  }}
                   key={i}
                   style={{marginBottom: 10}}
                 />
@@ -48,13 +59,27 @@ export default class ActionsScreen extends React.Component {
         <Modal isOpen={true} onClose={this.props.onClose} size="full">
           <Modal.Content maxWidth="375px">
             <Modal.CloseButton />
-            <Modal.Header><Text bold fontFamily="body" fontWeight={400} fontSize="xl">Choose one of {this.props.service.name}</Text></Modal.Header>
-            <ScrollView contentContainerStyle={{ padding: 20 }}>
-              <Modal.Body>{this.state.dialog === undefined ? this.renderActionsList() : this.renderModals()}</Modal.Body>
+            <Modal.Header>
+              <Text bold fontFamily="body" fontWeight={400} fontSize="xl">
+                Choose one of {this.props.service.name}
+              </Text>
+            </Modal.Header>
+            <ScrollView contentContainerStyle={{padding: 20}}>
+              <Modal.Body>
+                {this.state.dialog === undefined
+                  ? this.renderActionsList()
+                  : this.renderModals()}
+              </Modal.Body>
             </ScrollView>
             <Modal.Footer>
               <Button.Group space={2}>
-                <Button onPress={() => { this.props.onSave(this.state.action) }} isDisabled={this.state.dialog ? false : true} >Save</Button>
+                <Button
+                  onPress={() => {
+                    this.props.onSave(this.state.action);
+                  }}
+                  isDisabled={this.state.dialog ? false : true}>
+                  Save
+                </Button>
               </Button.Group>
             </Modal.Footer>
           </Modal.Content>

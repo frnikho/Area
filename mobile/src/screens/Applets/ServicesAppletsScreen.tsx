@@ -107,7 +107,7 @@ export default class ServicesAppletsScreen extends Component {
     }
     return (
       <>
-        {modalContext === 'actions' ? <ActionsScreen service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} /> : <ReactionsScreen service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} />}
+        {modalContext === 'actions' ? <ActionsScreen navigation={this.props.navigation} service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} /> : <ReactionsScreen service={this.state.currentService} onClose={this.onClose} onSave={this.onSave} />}
       </>
     );
   }

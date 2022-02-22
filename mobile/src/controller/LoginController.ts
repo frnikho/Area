@@ -65,7 +65,7 @@ export default class LoginController {
     authorize(config)
       .then(result => {
         app
-          .get(`/auth/github/code?code=${result.authorizationCode}$type=mobile`)
+          .get(`/auth/github/code?code=${result.authorizationCode}&type=mobile`)
           .then(response => {
             callback(true, response);
           })
@@ -98,10 +98,9 @@ export default class LoginController {
       .then(result => {
         new TokenController().getUserToken((status, res) => {
           if (status === true) {
-            console.log(result);
             app
               .get(
-                `/services/github/callback?code=${result.authorizationCode}$type=mobile`,
+                `/services/github/callback?code=${result.authorizationCode}&type=mobile`,
                 config(res),
               )
               .then(response => {
