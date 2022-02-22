@@ -19,6 +19,16 @@ import GithubIssueReopenedDialog from "./github/actions/GithubIssueReopenedDialo
 import GithubRepositoryCreatedDialog from "./github/actions/GithubRepositoryCreatedDialog";
 import app from "../../Utils/Axios";
 import DiscordChannelCreatedDialog from "./discord/actions/DiscordChannelCreatedDialog";
+import DiscordChannelDeletedDialog from "./discord/actions/DiscordChannelDeletedDialog";
+import DiscordPrivateMessageReceivedDialog from "./discord/actions/DiscordPrivateMessageReceivedDialog";
+import DiscordGuildMessageReceivedDialog from "./discord/actions/DiscordGuildMessageReceivedDialog";
+import DiscordGuildMessageUpdatedDialog from "./discord/actions/DiscordGuildMessageUpdatedDialog";
+import DiscordGuildMessageDeletedDialog from "./discord/actions/DiscordGuildMessageDeletedDialog";
+import DiscordGuildMessageReactionAddDialog from "./discord/actions/DiscordGuildMessageReactionAddDialog";
+import DiscordGuildMessageReactionRemoveDialog from "./discord/actions/DiscordGuildMessageReactionRemoveDialog";
+import DiscordMemberBannedDialog from "./discord/actions/DiscordMemberBannedDialog";
+import DiscordMemberUnbannedDialog from "./discord/actions/DiscordMemberUnbannedDialog";
+import DiscordGuildUpdatedDialog from "./discord/actions/DiscordGuildUpdatedDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -111,7 +121,17 @@ export default class ActionDialog extends React.Component {
             GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
             GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
             GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_CHANNEL_CREATED: <DiscordChannelCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>
+            DISCORD_CHANNEL_CREATED: <DiscordChannelCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_CHANNEL_DELETED: <DiscordChannelDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_PRIVATE_MESSAGE_RECEIVED: <DiscordPrivateMessageReceivedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MESSAGE_RECEIVED: <DiscordGuildMessageReceivedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MESSAGE_UPDATED: <DiscordGuildMessageUpdatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MESSAGE_DELETED: <DiscordGuildMessageDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MESSAGE_REACTION_ADD: <DiscordGuildMessageReactionAddDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MESSAGE_REACTION_REMOVED: <DiscordGuildMessageReactionRemoveDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MEMBER_BANNED: <DiscordMemberBannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_MEMBER_UNBANNED: <DiscordMemberUnbannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_GUILD_UPDATE: <DiscordGuildUpdatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
         }
         return data[this.state.dialog];
     }

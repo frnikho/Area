@@ -7,7 +7,7 @@ import {FaGithub} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
 
-export default class DiscordNewContextDialog extends NewContextDialog {
+export default class SlackNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -23,7 +23,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/discord/callback?code=${data.code}&type=web`, config(auth.getToken())).then((response) => {
+        app.get(`services/slack/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,
@@ -40,16 +40,15 @@ export default class DiscordNewContextDialog extends NewContextDialog {
     renderContextLogin(valid) {
         return (
             <OAuth2Login
-                authorizationUrl="https://discord.com/api/oauth2/authorize"
-                clientId={process.env.REACT_APP_DISCORD_CLIENT_ID}
+                authorizationUrl="https://slack.com/oauth/v2/authorize"
+                clientId={process.env.REACT_APP_SLACK_SERVICES_CLIENT_ID}
                 responseType="code"
-                redirectUri={process.env.REACT_APP_DISCORD_REDIRECT_URL}
-                scope={"identify%20email%20guilds%20connections%20bot%20messages.read"}
-                extraParams={{permissions: 8}}
+                scope={"channels:read,chat:write,chat:write.public,groups:read,im:read,mpim:read"}
                 onSuccess={this.onPopupSuccess}
-                onFailure={this.onPopupClose}
+                onFailure={() => this.onPopupClose}
+                extraParams={{user_scope: ""}}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to discord" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
                 )}
             />);
     }
@@ -64,7 +63,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
 
 }
 
-DiscordNewContextDialog.propTypes = {
+SlackNewContextDialog.propTypes = {
     service: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired

@@ -24,11 +24,7 @@ export default class ServiceAuthRoute {
             console.log(error);
             if (error)
                 return errorFunc(error);
-            return this.token(response.data, userUUID, (tokenData) => {
-                return success(tokenData);
-            }, (err) => {
-                return errorFunc(err);
-            });
+            return success(ServiceAuthRoute.token(response.data));
         }).catch((err) => {
             console.log(err.response.data);
             return errorFunc(err);
@@ -50,11 +46,7 @@ export default class ServiceAuthRoute {
             const {error} = response.data;
             if (error)
                 return errorFunc(error);
-            return this.token(response.data, userUUID, (tokenData) => {
-                return success(tokenData);
-            }, (err) => {
-                return errorFunc(err);
-            });
+            return success(ServiceAuthRoute.token(response.data));
         }).catch((err) => {
             return errorFunc(err);
         })
@@ -64,17 +56,12 @@ export default class ServiceAuthRoute {
      * Generate token
      *
      * @param data
-     * @param userUUID
-     * @param success - return token
-     * @param errorFunc - return error
      */
-    private token(data: object, userUUID: string, success: token, errorFunc: errorFnc) {
-        // tslint:disable-next-line:no-shadowed-variable
-        const token: TokenData = {
+    public static token(data: object): TokenData {
+        return {
             key: randomstring.generate(),
             created_at: new Date(),
             token: data
-        }
-        return success(token);
+        } as TokenData
     }
 }
