@@ -29,7 +29,7 @@ export default class ActionModal extends React.Component {
     );
   }
 
-  loadData(param: any) {}
+  loadData() {}
 
   renderLoading() {
     return (
@@ -41,7 +41,7 @@ export default class ActionModal extends React.Component {
 
   onChangeContext(uuid: string) {
     this.setState({contextValue: uuid});
-    this.loadData(uuid);
+    this.loadData();
   }
 
   renderAuthContext() {
