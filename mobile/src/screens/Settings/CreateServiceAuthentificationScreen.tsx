@@ -29,11 +29,20 @@ export default class CreateServiceAuthentificationScreen extends Component {
     this.onCreateContext = this.onCreateContext.bind(this);
   }
 
+  /**
+   * @description On select a service
+   * @param service
+   * @param token_data
+   */
   onServiceSelected(service: object, token_data: object): void {
     this.setState({service: service, token_data: token_data});
     this.props.navigation.goBack();
   }
 
+  /**
+   * @description Create new context with parameters
+   * @returns
+   */
   onCreateContext() {
     if (
       this.state.service === undefined ||

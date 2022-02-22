@@ -78,6 +78,15 @@ export default class ServicesAuthentificationsController {
     });
   }
 
+  /**
+   * @description Create new service authentification token
+   *
+   * @param title
+   * @param description
+   * @param token_data
+   * @param serviceName
+   * @param callback
+   */
   public createServiceAuthentification(
     title: string,
     description: string,

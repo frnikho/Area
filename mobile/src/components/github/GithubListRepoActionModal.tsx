@@ -25,6 +25,9 @@ export default class GithubListRepoActionModal extends ActionModal {
     };
   }
 
+  /**
+   * @description Load all user repositories
+   */
   loadData() {
     new TokenController().getUserToken((status, res) => {
       if (status) {
@@ -43,14 +46,10 @@ export default class GithubListRepoActionModal extends ActionModal {
     });
   }
 
-  renderLoading() {
-    return (
-      <Center>
-        <Spinner accessibilityLabel="Loading posts" size={50} />
-      </Center>
-    );
-  }
-
+  /**
+   * @description Render list of repositories
+   * @returns
+   */
   renderListRepositories() {
     return (
       <Center>
@@ -81,6 +80,10 @@ export default class GithubListRepoActionModal extends ActionModal {
     );
   }
 
+  /**
+   * @description render body
+   * @returns
+   */
   renderBody() {
     return this.state.repositories === undefined ? (
       <></>

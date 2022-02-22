@@ -15,6 +15,9 @@ export default class ActionModal extends React.Component {
     this.renderAuthContext = this.renderAuthContext.bind(this);
   }
 
+  /**
+   * @description Load all auth context
+   */
   componentDidMount() {
     new ServicesAuthentificationsController().getAllUserServicesAuthentifications(
       (status, response) => {
@@ -29,8 +32,15 @@ export default class ActionModal extends React.Component {
     );
   }
 
+  /**
+   * @description Must be overridden if need. Load data to display form.
+   */
   loadData() {}
 
+  /**
+   * @description Render loading
+   * @returns
+   */
   renderLoading() {
     return (
       <Center>
@@ -39,11 +49,19 @@ export default class ActionModal extends React.Component {
     );
   }
 
+  /**
+   * @description on change auth context, store context uuid
+   * @param uuid
+   */
   onChangeContext(uuid: string) {
     this.setState({contextValue: uuid});
     this.loadData();
   }
 
+  /**
+   * @description render list of auth context
+   * @returns
+   */
   renderAuthContext() {
     if (this.state.servicesAuth.count <= 0) {
       return (
@@ -90,10 +108,17 @@ export default class ActionModal extends React.Component {
     );
   }
 
+  /**
+   * @description Need to be overridden. Display body of the action modal (ex: form submission)
+   */
   renderBody() {
     throw new Error('This method must be overridden');
   }
 
+  /**
+   * @description Render
+   * @returns
+   */
   render() {
     return (
       <Center>

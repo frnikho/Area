@@ -14,6 +14,9 @@ export default class DiscordPostMessageReaction extends ReactionModal {
     };
   }
 
+  /**
+   * @description Load all discord channel
+   */
   loadData() {
     new TokenController().getUserToken((status, response) => {
       if (status) {
@@ -33,6 +36,10 @@ export default class DiscordPostMessageReaction extends ReactionModal {
     });
   }
 
+  /**
+   * @description Render list of channel
+   * @returns
+   */
   renderListChannels() {
     return (
       <Center>
@@ -59,6 +66,10 @@ export default class DiscordPostMessageReaction extends ReactionModal {
     );
   }
 
+  /**
+   * @description render body
+   * @returns
+   */
   renderBody() {
     return this.state.channels === undefined ? (
       <></>
