@@ -6,7 +6,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent, FormControl,
-    IconButton, InputLabel, MenuItem, Paper, Select,
+    IconButton, MenuItem, Select,
     Typography
 } from "@mui/material";
 import {MdClose} from "react-icons/md";
@@ -30,19 +30,21 @@ export class ActionSettingsDialog extends React.Component {
 
     componentDidMount() {
         app.get(`context/all?service=${this.props.service.type}`, config(this.context.getToken())).then((response) => {
-            this.setState({
-                contexts: response.data,
-                selectedContextUuid: response.data[0].uuid
-            })
+            if (response.data.length === 0) {
+                this.setState({
+                    contexts: response.data,
+                });
+            } else {
+                this.setState({
+                    contexts: response.data,
+                    selectedContextUuid: response.data[0].uuid
+                })
+            }
         });
     }
 
     onClose () {
         this.props.onClose();
-    }
-
-    onCreate (data) {
-        console.log("data: ", data);
     }
 
     validate() {

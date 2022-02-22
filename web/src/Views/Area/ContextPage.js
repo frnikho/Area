@@ -101,8 +101,6 @@ export default class ContextPage extends Page {
                             action={<IconButton onClick={() => this.onClickDelete(context)}><FaTrash color={"white"}/></IconButton>}>
                         </CardHeader>
 
-
-
                         <CardContent>
                             <Typography color={"white"} style={{ wordWrap: "break-word" }} fontSize={24}><b>{context.title}</b></Typography>
                             <Typography color={"white"} fontSize={20} style={{ wordWrap: "break-word" }}>{context.description}</Typography>

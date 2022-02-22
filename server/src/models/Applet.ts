@@ -58,6 +58,7 @@ export interface Reaction {
 
 export interface Applet {
     uuid?: string,
+    title: string,
     user_uuid: string,
     action: Action,
     action_key: string,

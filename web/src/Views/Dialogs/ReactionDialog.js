@@ -132,7 +132,6 @@ export default class ReactionDialog extends React.Component {
 }
 
 ReactionDialog.propTypes = {
-    action: PropTypes.object.isRequired,
     onSelected: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
 }

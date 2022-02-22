@@ -451,7 +451,7 @@ export const AppAbout = {
         services: [{
             name: "Github",
             type: 'github',
-            color: "#95A5A6",
+            color: "#4078C0",
             icon: "icons/github.png",
             actions: GithubAppletActionsAbout,
             reactions: GithubAppletReactionsAbout
@@ -459,34 +459,34 @@ export const AppAbout = {
             name: "Discord",
             type: 'discord',
             icon: "icons/discord.png",
-            color: "#34495E",
+            color: "#7289DA",
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
             name: "Slack",
             type: 'slack',
             icon: "icons/slack.png",
-            color: "#8E44AD",
+            color: "#4A154B",
             actions: [],
             reactions: SlackAppletReactionsAbout,
         }, {
             name: "Twitter",
             type: 'twitter',
-            color: "#1DA1F2",
+            color: "#00ABEC",
             actions: [],
             icon: "icons/twitter.png",
             reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
             type: 'epitech_intra',
-            color: "#2980B9",
+            color: "#23448B",
             icon: "icons/epitech.png",
             actions: IntraAppletActionsAbout,
             reactions: [],
         }, {
             name: "Spotify",
             type: 'spotify',
-            color: "#27AE60",
+            color: "#1DB954",
             icon: "icons/spotify.png",
             actions: SpotifyAppletActionsAbout,
             reactions: [],
@@ -494,7 +494,7 @@ export const AppAbout = {
             name: "Gmail",
             type: 'google',
             icon: "icons/gmail.png",
-            color: "#C0392B",
+            color: "#23448B",
             actions: GmailAppletActionsAbout,
             reactions: []
         }]

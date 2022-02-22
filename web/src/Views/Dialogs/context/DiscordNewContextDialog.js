@@ -23,7 +23,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/discord/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/discord/callback?code=${data.code}&type=web`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,

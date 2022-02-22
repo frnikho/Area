@@ -18,6 +18,7 @@ import GithubIssueClosedDialog from "./github/actions/GithubIssueClosedDialog";
 import GithubIssueReopenedDialog from "./github/actions/GithubIssueReopenedDialog";
 import GithubRepositoryCreatedDialog from "./github/actions/GithubRepositoryCreatedDialog";
 import app from "../../Utils/Axios";
+import DiscordChannelCreatedDialog from "./discord/actions/DiscordChannelCreatedDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -44,6 +45,7 @@ export default class ActionDialog extends React.Component {
     }
 
     onClickAction(action, service) {
+        console.log(action.type.toUpperCase());
         this.setState({
             dialog: action.type.toUpperCase(),
             action: action,
@@ -108,7 +110,8 @@ export default class ActionDialog extends React.Component {
             GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
             GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
             GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
+            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            DISCORD_CHANNEL_CREATED: <DiscordChannelCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>
         }
         return data[this.state.dialog];
     }

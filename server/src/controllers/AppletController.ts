@@ -27,7 +27,7 @@ export default class AppletController {
     }
 
     public registerApplets(applet: Applet, userUuid: string, success: successGet, errorCallback: error) {
-        DBService.queryValues(`INSERT INTO applets (user_uuid, action, action_type, reactions, enable, action_key) VALUES (?, ?, ?, ?, ?, ?) RETURNING uuid, user_uuid, action, action_type, reactions, updated_at, enable, created_at, action_key`, [userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1', applet?.action_key], (result) => {
+        DBService.queryValues(`INSERT INTO applets (title, user_uuid, action, action_type, reactions, enable, action_key) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, title, user_uuid, action, action_type, reactions, updated_at, enable, created_at, action_key`, [applet.title, userUuid, JSON.stringify(applet.action), ActionType[applet.action_type], JSON.stringify(applet.reactions), '1', applet?.action_key], (result) => {
             result[0]['action'] = JSON.parse(result[0]['action']);
             result[0]['reactions'] = JSON.parse(result[0]['reactions']);
             return success(result[0]);
@@ -95,6 +95,7 @@ export default class AppletController {
         const reactions: Reaction[] = JSON.parse(app.reactions);
         return {
             action_type: actionType,
+            title: app.title,
             uuid: app.uuid,
             user_uuid: app.user_uuid,
             action,

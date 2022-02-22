@@ -21,6 +21,7 @@ export default class ServiceAuthRoute {
     public postRequest(url: string, body: object, header: object, userUUID: string, tokenType: string, success: token, errorFunc: errorFnc): void {
         axios.post(url, body, header).then((response) => {
             const {error} = response.data;
+            console.log(error);
             if (error)
                 return errorFunc(error);
             return this.token(response.data, userUUID, (tokenData) => {
@@ -29,6 +30,7 @@ export default class ServiceAuthRoute {
                 return errorFunc(err);
             });
         }).catch((err) => {
+            console.log(err.response.data);
             return errorFunc(err);
         })
     }
