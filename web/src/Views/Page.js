@@ -50,7 +50,11 @@ export default class Page extends React.Component {
     }
 
     render() {
-        return (null)
+        return (
+            <div>
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : null}
+            </div>
+        )
     }
 
 }

@@ -42,6 +42,37 @@ const useStyles = {
     },
     space: {
         margin: "125px",
+    },
+    bar: {
+        justifyContent: "justify",
+        alignItems: "justify",
+        whiteSpace: "nowrap",
+        display: "flex",
+    },
+    menuRight: {
+        justifyContent: "right",
+        alignItems: "right",
+        display: "flex",
+        flex: "1",
+        position: "relative",
+        whiteSpace: "nowrap",
+        textAlign: "right",
+    },
+    menuLeft: {
+        whiteSpace: "nowrap",
+        justifyContent: "left",
+        alignItems: "left",
+        display: "flex",
+        flex: "1",
+        position: "relative",
+        textAlign: "left",
+    },
+    edit: {
+        fontSize: "20px",
+        fontFamily: "Anton",
+        color: "white",
+        textDecoration: "underline",
+        textTransform: "none",
     }
 };
 

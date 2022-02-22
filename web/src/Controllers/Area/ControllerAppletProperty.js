@@ -51,8 +51,9 @@ export default class ControllerAppletProperty {
         console.log(this.id)
         app.get(`/applets/` + this.id, config(this.token)).then((response) => {
             if (response.statusText === "OK") {
+                console.log(response.data[0])
                 this.page.setState({
-                    applet: { ...{ ...response.data[0] }, ...{ title: "Github", color: "red", description: "hello from the other side adzadad" } }
+                    applet: { ...{ ...response.data[0] }, ...{ title: "If ... then ...", color: "grey" } }
                 })
             }
         }).catch((error) => {

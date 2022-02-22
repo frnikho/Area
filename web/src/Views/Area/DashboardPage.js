@@ -102,10 +102,6 @@ export default withCookies(class DashboardPage extends Page {
                             })
                         }
                     },
-                    // {
-                    //     name: 'Area',
-                    //     action: () => component.setRedirectUrl({ url: "/description" })
-                    // },
                     {
                         name: 'Services',
                         action: () => component.setRedirectUrl({ url: "/area/context" })
@@ -113,10 +109,6 @@ export default withCookies(class DashboardPage extends Page {
                     {
                         name: 'Profile',
                         action: () => component.setRedirectUrl({ url: "/area/profile" })
-                    },
-                    {
-                        name: 'applets test',
-                        action: () => component.setRedirectUrl({ url: "/area/applets/property", params: 1234 })
                     },
                 ],
                 left: {
