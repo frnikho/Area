@@ -55,6 +55,7 @@ export default class ControllerAppletProperty {
             for (let itAction in this.page.state.services[itService].actions) {
                 if (this.page.state.services[itService].actions[itAction].type === actionType) {
                     return {
+                        author: this.page.state.services[itService].name,
                         color: this.page.state.services[itService].color,
                         icon: this.page.state.services[itService].icon,
                         // title: "if " + this.page.state.services[itService].actions[itAction].if

@@ -24,7 +24,7 @@ const useStyles = {
         borderRadius: '50px',
         borderColor: 'white',
         fontFamily: 'Dongle',
-        fontSize: '45px',
+        fontSize: '35px',
         textTransform: "none",
         color: "white"
     },
@@ -73,7 +73,7 @@ const useStyles = {
         color: "white",
         textDecoration: "underline",
         textTransform: "none",
-    }
+    },
 };
 
 export default useStyles;

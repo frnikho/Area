@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, CssBaseline, Box, Button, TextField } from "@mui/material";
+import { ThemeProvider, CssBaseline, Box, Button, TextField, IconButton } from "@mui/material";
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"
@@ -56,18 +56,19 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
 
     onEditClick() {
         //save Title
+        console.log("save Title")
         this.setState({ editTitle: !this.state.editTitle })
     }
 
     handleChandleTitle(e) {
         this.setState({
-            applet: { ...this.state.applet, Title: e.target.value },
+            applet: { ...this.state.applet, title: e.target.value },
         })
     }
 
     showTitle() {
         return (
-            <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "20px" }}>
+            <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "60px" }}>
                 {this.state.editTitle === false ? (this.state.applet && this.state.applet.title) || "Title" : <TextField
                     id="filled-multiline-static"
                     label="Title"
@@ -92,6 +93,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
     }
 
     render() {
+        // if (!this.authContext || !this.state.applet)
         if (!this.authContext)
             return (null);
         const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
@@ -132,17 +134,18 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     </Box>
                     <Box sx={{ pb: 2, mx: 2 }} />
                     <div style={Style.container}>
-                        <Box sx={{ pb: 2, mx: 2 }} style={{ width: "800px" }}>
+                        <Box sx={{ pb: 2, mx: 2 }} style={{ width: "500px" }}>
                             <Box style={{ textAlign: "left", paddingLeft: "20px", fontStyle: "bold" }}>
-                                {"Applet's logo"}
+                                {(this.state.applet && this.state.applet.icon) &&
+                                    <IconButton >
+                                        <img src={`https://localhost:8080/static/${this.state.applet.icon}`} width={80} alt="Loarding . . ." />
+                                    </IconButton>
+                                }
                             </Box>
                             {this.showTitle()}
-                            <Box style={Style.bar}>
-                                <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "20px" }}>
-                                    {(this.state.applet && this.state.applet.author) || "by service"}
-                                </Box>
-                                <Box sx={{ mt: 0 }} style={{ ...Style.centerMenu, ...{ backgroundColor: "green" } }} />
-                                {this.showEditButton()}
+                            {this.showEditButton()}
+                            <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "30px", fontFamily: "Dongle" }}>
+                                {"by " + ((this.state.applet && this.state.applet.author) || "author service")}
                             </Box>
                         </Box>
                     </div>
