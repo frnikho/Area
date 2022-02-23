@@ -438,7 +438,12 @@ export const SpotifyAppletReactionsAbout = [
                 name: 'context_uuid',
                 type: 'string',
                 required: true,
-            }
+            },
+            {
+                name: "user_uuid",
+                type: 'string',
+                required: true,
+            },
         ]
     },
     {
@@ -450,6 +455,11 @@ export const SpotifyAppletReactionsAbout = [
         parameters: [
             {
                 name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: "user_uuid",
                 type: 'string',
                 required: true,
             },
@@ -469,6 +479,11 @@ export const SpotifyAppletReactionsAbout = [
         parameters: [
             {
                 name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: "user_uuid",
                 type: 'string',
                 required: true,
             },

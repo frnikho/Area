@@ -30,6 +30,7 @@ const parse = (uuid: string, req: express.Request, res: express.Response, next: 
         return res.status(400).json({success: false, error: 'Required appletsUuid body parameters !'})
 
     return new AppletController().getAppletByUuid(uuid, (applet) => {
+        console.log(applet);
         if (applet === undefined || applet === null)
             return res.status(400).json({success: false, error: `Applet with uuid '${uuid}' not found !`});
         req['applet'] = applet;
