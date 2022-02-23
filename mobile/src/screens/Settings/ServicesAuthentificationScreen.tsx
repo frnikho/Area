@@ -14,6 +14,7 @@ export default class ServicesAuthentificationScreen extends Component {
             refresh: false,
         };
         this.onRefresh = this.onRefresh.bind(this);
+        this.getUserServicesAuth = this.getUserServicesAuth.bind(this);
     }
 
     componentDidMount() {
@@ -21,7 +22,7 @@ export default class ServicesAuthentificationScreen extends Component {
     }
 
     componentDidUpdate() {
-        this.getUserServicesAuth();
+        this.getUserServicesAuth;
     }
 
     /**
