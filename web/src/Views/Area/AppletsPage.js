@@ -5,7 +5,7 @@ import Page from "../Page"
 import { AuthContext } from "../../Contexts/AuthContext";
 // import Style from "../../Resources/Styles/styleProfile"
 import ControllerApplet from "../../Controllers/Area/ControllerApplet"
-import AppletChildItemCard from "../../Components/AppletChildItemCard"
+import AppletCard from "../../Components/AppletCard"
 import PropTypes from "prop-types";
 
 class AppletsPage extends Page {
@@ -36,10 +36,11 @@ class AppletsPage extends Page {
         return (this.pageRender(this, function RenderDashboardPage({ component }) {
             return (
                 <>
-                    <AppletChildItemCard
+                    <AppletCard
                         title={component.props.applet.title}
                         color={component.props.applet.color}
-                        description={""}
+                        description={component.props.applet.description}
+                        icon={component.props.applet.icon}
                         onClick={() => component.setRedirectUrl({ url: "/area/applets/property", params: component.props.applet.uuid })} />
                 </>
             );

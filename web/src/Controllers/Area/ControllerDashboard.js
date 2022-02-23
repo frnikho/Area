@@ -22,7 +22,7 @@ export default class ControllerDashboard {
                     return {
                         color: this.page.state.services[itService].color,
                         icon: this.page.state.services[itService].icon,
-                        // title: "if " + this.page.state.services[itService].actions[itAction].if
+                        description: "if " + this.page.state.services[itService].actions[itAction].if
                     }
                 }
             }
@@ -34,7 +34,7 @@ export default class ControllerDashboard {
             for (let itReaction in this.page.state.services[itService].reactions) {
                 if (this.page.state.services[itService].reactions[itReaction].type === reactionType) {
                     return {
-                        title: "then " + this.page.state.services[itService].reactions[itReaction].then
+                        description: "then " + this.page.state.services[itService].reactions[itReaction].then
                     }
                 }
             }
@@ -43,21 +43,17 @@ export default class ControllerDashboard {
 
     getDataFromService(actionType, reactionType) {
         var action = this.getActionFromServiceData(actionType)
-        // var reaction = this.getReactionFromServiceData(reactionType)
-        // title already setup
-        return { ...action, /* ...{title: action.title + " " + reaction.title}  */}
+        var reaction = this.getReactionFromServiceData(reactionType)
+        return { ...action, ...{ description: action.description + " " + reaction.description } }
     }
 
     completeApplets(data) {
         var applets = []
         for (let it in data) {
             let serviceData = this.getDataFromService(data[it].action_type, data[it].reactions[0].type)
-            applets.push({
-                ...{ ...data[it] }, ...{ ...serviceData }
-            })
+            applets.push({ ...{ ...data[it], ...serviceData, title: (data[it].title !== "" ? data[it].title : "<applet title>") }, description: serviceData.description })
         }
         this.page.setState({ applets: applets })
-        console.log(applets)
     }
 
     loadServices() {
