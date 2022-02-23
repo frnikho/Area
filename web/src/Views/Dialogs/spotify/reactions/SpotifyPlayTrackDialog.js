@@ -14,7 +14,6 @@ export default class SpotifyPlayTrackDialog extends ReactionSettingsDialog {
         }
     }
 
-
     onCreate() {
         const reaction = {
             type: "spotify_play_track",
@@ -23,6 +22,10 @@ export default class SpotifyPlayTrackDialog extends ReactionSettingsDialog {
                 {
                     name: "context_uuid",
                     value: this.state.selectedContextUuid,
+                },
+                {
+                    name: "user_uuid",
+                    value: this.context.getUser()['uuid'],
                 },
                 {
                     name: "song_uri",

@@ -24,6 +24,10 @@ export default class SpotifyPauseTrackDialog extends ReactionSettingsDialog {
                     name: "context_uuid",
                     value: this.state.selectedContextUuid,
                 },
+                {
+                    name: "user_uuid",
+                    value: this.context.getUser()['uuid'],
+                }
             ]
         }
         this.props.onReactionCreated(reaction, this.props.reaction, this.props.service);

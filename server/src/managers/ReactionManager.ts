@@ -57,6 +57,9 @@ export default class ReactionManager {
 
     private spotifyPlaySpotify(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {
         const contextUuid: string = reaction.parameters.filter((param) => param['name'] === 'context_uuid')[0]['value'];
+        const userUuid: string = reaction.parameters.filter((param) => param['name'] === 'user_uuid')[0]['value'];
+
+        console.log(tokenData);
     }
 
 }

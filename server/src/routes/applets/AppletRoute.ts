@@ -24,8 +24,8 @@ export default class AppletRoute extends Route {
     constructor() {
         super();
         this.router.get('/all', authorization, this.getAll) // GOOD
-        this.router.get('/:appletUuid', parseAppletParams, authorization, this.get); // GOOD
-        this.router.delete('/:appletUuid', parseAppletParams, authorization, this.delete); // GOOD
+        this.router.get('/:appletUuid', authorization, parseAppletParams, this.get); // GOOD
+        this.router.delete('/:appletUuid', authorization, parseAppletParams, this.delete); // GOOD
         this.router.post('/toggle', parseAppletBody, authorization, this.toggle); // GOOD
         this.router.post('/enable', parseAppletBody, authorization, this.enable); // GOOD
         this.router.post('/disable', parseAppletBody, authorization, this.disable); // GOOD
@@ -78,11 +78,7 @@ export default class AppletRoute extends Route {
      */
     private get(req: express.Request, res: express.Response) {
         const applet: Applet = req['applet'];
-        applet.action_type = ActionType[applet.action_type];
-        applet.reactions.forEach((reaction) => {
-            reaction.type = ReactionType[reaction.type];
-        })
-        return res.status(200).json(applet);
+        return res.status(200).json(applet[0]);
     }
 
     private create(req: express.Request, res: express.Response) {

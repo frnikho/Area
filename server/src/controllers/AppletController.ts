@@ -56,7 +56,14 @@ export default class AppletController {
         DBService.query(`SELECT * FROM applets WHERE uuid = '${uuid}'`, (result) => {
             if (result.length === 0)
                 return success(null);
-            success(result.map(app => this.parseApplet(app)));
+            success(result.map(app => {
+                const newApp = this.parseApplet(app)
+                newApp.action_type = ActionType[newApp.action_type];
+                newApp.reactions.forEach((reaction) => {
+                    reaction.type = ReactionType[reaction.type];
+                })
+                return newApp;
+            }));
         }, errorCallback);
     }
 
@@ -91,6 +98,7 @@ export default class AppletController {
 
     public parseApplet(app: any) {
         const action: Action = JSON.parse(app.action);
+        console.log(action);
         const actionType: ActionType = getActionTypeByStr(app.action_type);
         const reactions: Reaction[] = JSON.parse(app.reactions);
         return {
