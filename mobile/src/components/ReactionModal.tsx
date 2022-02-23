@@ -1,7 +1,8 @@
-import {Box, Center, CheckIcon, Icon, Select, Spinner} from 'native-base';
+import { Box, Center, CheckIcon, Icon, Select } from 'native-base';
 import React from 'react';
-import {Button, Text} from 'react-native';
+import { Button, Text } from 'react-native';
 import ServicesAuthentificationsController from '../controller/ServicesAuthentifications';
+import Loading from './Loading';
 
 export default class ReactionModal extends React.Component {
   constructor(props: any) {
@@ -23,7 +24,7 @@ export default class ReactionModal extends React.Component {
         if (status) {
           response.map((service: object) => {
             if (service.service === this.state.serviceName) {
-              this.setState({servicesAuth: service});
+              this.setState({ servicesAuth: service });
             }
           });
         }
@@ -34,12 +35,12 @@ export default class ReactionModal extends React.Component {
   /**
    * @description Must be overridden. Save param from reaction
    */
-   onChangeParam(param: any) {}
+  onChangeParam(param: any) { }
 
   /**
    * @description Must be overridden if need. Load data to display form.
    */
-  loadData(param: any) {}
+  loadData(param: any) { }
 
   /**
    * @description Need to be overridden. Display body of the reaction modal (ex: form submission)
@@ -53,7 +54,7 @@ export default class ReactionModal extends React.Component {
    * @param uuid
    */
   onChangeContext(uuid: string) {
-    this.setState({contextValue: uuid});
+    this.setState({ contextValue: uuid });
     this.loadData(uuid);
   }
 
@@ -108,18 +109,6 @@ export default class ReactionModal extends React.Component {
   }
 
   /**
-   * @description Render loading
-   * @returns
-   */
-  renderLoading() {
-    return (
-      <Center>
-        <Spinner accessibilityLabel="Loading posts" size={50} />
-      </Center>
-    );
-  }
-
-  /**
    * @description Render
    * @returns
    */
@@ -128,12 +117,12 @@ export default class ReactionModal extends React.Component {
       <Center>
         <Text>
           {this.props.reaction.description === undefined ||
-          this.props.reaction.description.length === 0
+            this.props.reaction.description.length === 0
             ? 'No description is available for the moment'
             : this.props.reaction.description}
         </Text>
         {this.state.servicesAuth === undefined
-          ? this.renderLoading()
+          ? <Loading accessibilityLabel="Loading reactions" />
           : this.renderAuthContext()}
         {this.renderBody()}
       </Center>

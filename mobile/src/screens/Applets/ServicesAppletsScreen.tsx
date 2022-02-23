@@ -1,4 +1,4 @@
-import { Button, Center, HStack, Spinner, Text, ChevronLeftIcon } from 'native-base';
+import { Button, Text, ChevronLeftIcon } from 'native-base';
 import React, { Component } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import ServiceCard from '../../components/ServiceCard';
@@ -6,6 +6,7 @@ import ServicesController from '../../controller/ServicesController';
 import ActionsScreen from './ActionsScreen';
 import ReactionsScreen from './ReactionsScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loading from '../../components/Loading';
 
 export default class ServicesAppletsScreen extends Component {
   constructor(props: any) {
@@ -38,20 +39,6 @@ export default class ServicesAppletsScreen extends Component {
         console.error(response);
       }
     });
-  }
-
-  renderLoading() {
-    return (
-      <View style={{ padding: '50%' }}>
-        <Center>
-          <HStack space={2} justifyContent="center">
-            <Center>
-              <Spinner accessibilityLabel="Loading posts" size={100} />
-            </Center>
-          </HStack>
-        </Center>
-      </View>
-    );
   }
 
   renderServicesCards() {
@@ -123,7 +110,7 @@ export default class ServicesAppletsScreen extends Component {
           onPress={() => this.props.navigation.goBack()}
         />
         {this.state.services === undefined
-          ? this.renderLoading()
+          ? <Loading accessibilityLabel="Loading services" />
           : this.renderServicesCards()}
         {this.renderModal()}
       </>

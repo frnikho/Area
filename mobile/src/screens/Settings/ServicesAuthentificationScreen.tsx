@@ -3,6 +3,7 @@ import { Box, Button, Card, ChevronLeftIcon, Heading, Text, VStack } from 'nativ
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ServicesAuthentificationsController from "../../controller/ServicesAuthentifications";
+import Loading from "../../components/Loading";
 
 export default class ServicesAuthentificationScreen extends Component {
 
@@ -159,7 +160,9 @@ export default class ServicesAuthentificationScreen extends Component {
                     contentContainerStyle={{ padding: 20 }}
                     refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
                 >
-                    {this.servicesAuthentificationsListRender()}
+                    {this.state.servicesAuth === undefined
+                        ? <Loading accessibilityLabel="Loading services authentification" />
+                        : this.servicesAuthentificationsListRender()}
                 </ScrollView>
                 {this.createServicesAuthButtonRender()}
             </View>

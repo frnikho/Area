@@ -3,6 +3,8 @@ import React from 'react';
 import {Text} from 'react-native';
 import ServicesAuthentificationsController from '../controller/ServicesAuthentifications';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loading from './Loading';
+
 
 export default class ActionModal extends React.Component {
   constructor(props: any) {
@@ -41,18 +43,6 @@ export default class ActionModal extends React.Component {
    * @description Must be overridden if need. Load data to display form.
    */
   loadData() {}
-
-  /**
-   * @description Render loading
-   * @returns
-   */
-  renderLoading() {
-    return (
-      <Center>
-        <Spinner accessibilityLabel="Loading posts" size={50} />
-      </Center>
-    );
-  }
 
   /**
    * @description on change auth context, store context uuid
@@ -134,7 +124,7 @@ export default class ActionModal extends React.Component {
             : this.props.action.description}
         </Text>
         {this.state.servicesAuth === undefined
-          ? this.renderLoading()
+          ? <Loading accessibilityLabel="Loading actions" />
           : this.renderAuthContext()}
         {this.renderBody()}
       </Center>

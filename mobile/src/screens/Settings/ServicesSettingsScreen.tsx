@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
-import {Center, HStack, Spinner, Text, ChevronLeftIcon} from 'native-base';
+import { Text, ChevronLeftIcon} from 'native-base';
 import ServicesController from '../../controller/ServicesController';
 import ServiceCard from '../../components/ServiceCard';
 import LoginController from '../../controller/LoginController';
+import Loading from '../../components/Loading';
 
 export default class ServicesSettingsScreen extends Component {
   constructor(props: any) {
@@ -27,24 +28,6 @@ export default class ServicesSettingsScreen extends Component {
         console.error(response);
       }
     });
-  }
-
-  /**
-   * @description Render loading
-   * @returns
-   */
-  renderLoading() {
-    return (
-      <View style={{padding: '50%'}}>
-        <Center>
-          <HStack space={2} justifyContent="center">
-            <Center>
-              <Spinner accessibilityLabel="Loading posts" size={100} />
-            </Center>
-          </HStack>
-        </Center>
-      </View>
-    );
   }
 
   /**
@@ -148,7 +131,7 @@ export default class ServicesSettingsScreen extends Component {
           onPress={() => this.props.navigation.goBack()}
         />
         {this.state.services === undefined
-          ? this.renderLoading()
+          ? <Loading accessibilityLabel="Loading services" />
           : this.renderServicesCards()}
       </>
     );
