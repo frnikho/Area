@@ -2,7 +2,7 @@ import React from 'react';
 import ReactionModal from '../ReactionModal';
 import TokenController from '../../controller/TokenController';
 import app, {config} from '../../axios_config';
-import {Center, Box, Select, CheckIcon} from 'native-base';
+import {Center, Box, Select, CheckIcon, FormControl, Input} from 'native-base';
 
 export default class DiscordPostMessageReaction extends ReactionModal {
   constructor(props: any) {
@@ -11,6 +11,7 @@ export default class DiscordPostMessageReaction extends ReactionModal {
       serviceName: 'discord',
       channels: undefined,
       channel: undefined,
+      text: undefined,
     };
     this.onChangeParam = this.onChangeParam.bind(this);
   }
@@ -40,9 +41,22 @@ export default class DiscordPostMessageReaction extends ReactionModal {
    * @description Set channel and send it to main screen
    * @param repository
    */
-  onChangeParam(channel: any) {
-    this.props.onChangeParam(channel);
-    this.setState({channel: channel})
+  onChangeParam(text: string) {
+    this.props.onChangeParam([this.state.channel, text]);
+  }
+
+  onChangeChannel(channel: any) {
+    this.setState({channel: channel});
+    if (this.state.channel && this.state.text) {
+      this.onChangeParam(this.state.text);
+    }
+  }
+
+  onChangeText(text: any) {
+    this.setState({text: text});
+    if (this.state.channel && this.state.text) {
+      this.onChangeParam(text);
+    }
   }
 
   /**
@@ -53,25 +67,46 @@ export default class DiscordPostMessageReaction extends ReactionModal {
     return (
       <Center>
         <Box w="3/4" maxW="300">
-          <Select
-            selectedValue={this.state.channel}
-            minWidth="200"
-            accessibilityLabel="Choose a channel"
-            placeholder="Choose a channel"
-            _selectedItem={{
-              bg: 'primary.200',
-              endIcon: <CheckIcon size="5" />,
-            }}
-            mt={1}
-            onValueChange={itemValue => this.onChangeParam(itemValue)}>
-            {this.state.channels.map((channel, i) => {
-              return (
-                <Select.Item key={i} label={channel.name} value={channel.id} isDisabled={channel.type !== 0} />
-              );
-            })}
-          </Select>
+          <Box mt='3'>
+            <Select
+              selectedValue={this.state.channel}
+              minWidth="200"
+              accessibilityLabel="Choose a channel"
+              placeholder="Choose a channel"
+              _selectedItem={{
+                bg: 'primary.200',
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={itemValue => this.onChangeChannel(itemValue)}>
+              {this.state.channels.map((channel, i) => {
+                return (
+                  <Select.Item
+                    key={i}
+                    label={channel.name}
+                    value={channel.id}
+                    isDisabled={channel.type !== 0}
+                  />
+                );
+              })}
+            </Select>
+          </Box>
+          <Input
+            mt="3"
+            placeholder="Type your text"
+            onChangeText={val => this.onChangeText(val)}
+          />
         </Box>
       </Center>
+    );
+  }
+
+  renderTextInput() {
+    return (
+      <FormControl w="100%">
+        <FormControl.Label>Text</FormControl.Label>
+        <Input onChangeText={val => this.onChangeText(val)} />
+      </FormControl>
     );
   }
 
