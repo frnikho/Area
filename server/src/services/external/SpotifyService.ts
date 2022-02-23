@@ -1,4 +1,6 @@
 import axios from "axios";
+import {User} from "../../models/User";
+import {Context} from "../../models/Context";
 
 export enum SpotifyControlType {
     NEXT,
@@ -43,6 +45,20 @@ export default class SpotifyService {
                 return callback(false);
             return callback(true);
         })
+    }
+
+    public playTrack(user: User, context: Context, songUri: string, callback: (data: string, error?: string) => void) {
+        axios.put("https://api.spotify.com/v1/me/player/play", {
+            context_uri: songUri,
+        }, this.buildAuthorizationHeader(context.tokenData.token['access_token'])).then((response) => {
+            callback(response.data, null);
+        }).catch((err) => callback(null, err));
+    }
+
+    public pauseTrack(user: User, context: Context, callback: (data: string, error?: string) => void) {
+        axios.put("https://api.spotify.com/v1/me/player/pause", {}, this.buildAuthorizationHeader(context.tokenData.token['access_token'])).then((response) => {
+            callback(response.data, null);
+        }).catch((err) => callback(null, err));
     }
 
     public refreshToken(refreshToken: string, callback: (newToken: string, error: string) => void) {

@@ -426,6 +426,61 @@ export const GithubAppletReactionsAbout = [
     ]
 
 
+export const SpotifyAppletReactionsAbout = [
+    {
+        name: 'Pause the current track',
+        description: 'Pause the current track',
+        type: 'spotify_pause_track',
+        then: 'pause spotify current track',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            }
+        ]
+    },
+    {
+        name: 'Play a track',
+        description: 'Play a specific track with spotify song uri',
+        type: 'spotify_play_track',
+        then: 'play a track',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'song_uri',
+                type: 'string',
+                required: true
+            }
+        ]
+    },
+    {
+        name: 'Change volume',
+        description: 'Change the player volume',
+        type: 'spotify_change_volume',
+        then: 'change volume',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'volume',
+                type: 'number',
+                required: true
+            }
+        ]
+    }
+]
+
 export const TwitterAppletReactionsAbout = [
     {
         name: 'Tweet',
@@ -489,7 +544,7 @@ export const AppAbout = {
             color: "#1DB954",
             icon: "icons/spotify.png",
             actions: SpotifyAppletActionsAbout,
-            reactions: [],
+            reactions: SpotifyAppletReactionsAbout,
         }, {
             name: "Gmail",
             type: 'google',

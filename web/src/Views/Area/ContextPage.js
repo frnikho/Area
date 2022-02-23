@@ -25,6 +25,7 @@ import DiscordNewContextDialog from "../Dialogs/context/DiscordNewContextDialog"
 import EpitechNewContextDialog from "../Dialogs/context/EpitechNewContextDialog";
 import TwitterNewContextDialog from "../Dialogs/context/TwitterNewContextDialog";
 import SlackNewContextDialog from "../Dialogs/context/SlackNewContextDialog";
+import SpotifyNewContextDialog from "../Dialogs/context/SpotifyNewContextDialog";
 
 export default class ContextPage extends Page {
 
@@ -138,6 +139,7 @@ export default class ContextPage extends Page {
             epitech_intra: <EpitechNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
             twitter: <TwitterNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
             slack: <SlackNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            spotify: <SpotifyNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
         }
         return dialogs[this.state.dialog];
     }

@@ -17,10 +17,10 @@ export default class EpitechServiceRoute extends Route {
         const user: User = req['user'];
         if (url === undefined)
             return res.status(400).json({success: false, message: "Url query parameters required !"});
-        EpitechService.tryEpitechAutologinLink(url as string, (success, error) => {
+        EpitechService.getUser(url as string, (success, error) => {
             if (error)
                 return res.status(400).json({success: false, message: error});
-            return res.status(200).json(ServiceAuthRoute.token({url: url as string}));
+            return res.status(200).json(ServiceAuthRoute.token({url: url as string, user: success}));
         });
     }
 

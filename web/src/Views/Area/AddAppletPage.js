@@ -190,7 +190,7 @@ export default class AddAppletPage extends Page {
             },
             reactions: this.state.reactions.map((reaction) => reaction.reaction),
         }
-
+        console.log(body);
         app.post('/applets', body, config(this.context.getToken())).then((response) => {
             console.log(response.data);
 

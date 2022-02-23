@@ -12,4 +12,24 @@ export default class EpitechService {
         });
     }
 
+    public static getUser(link: string, callback: (success?: object, error?: string) => void) {
+        axios.get(link + "/user/?format=json").then((response) => {
+            if (response.status === 200)
+                return callback(response.data);
+            return callback(undefined, "");
+        }).catch((err) => {
+            callback(undefined, err);
+        })
+    }
+
+    public static getNotifications(link: string, callback: (success?, error?: string) => void) {
+        axios.get(`${link}/user/notification/message?format=json`).then((response) => {
+            if (response.status === 200)
+                return callback(response.data);
+            return callback(undefined, "");
+        }).catch((err) => {
+            callback(undefined, err);
+        })
+    }
+
 }

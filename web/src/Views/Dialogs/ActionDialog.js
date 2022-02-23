@@ -29,6 +29,7 @@ import DiscordGuildMessageReactionRemoveDialog from "./discord/actions/DiscordGu
 import DiscordMemberBannedDialog from "./discord/actions/DiscordMemberBannedDialog";
 import DiscordMemberUnbannedDialog from "./discord/actions/DiscordMemberUnbannedDialog";
 import DiscordGuildUpdatedDialog from "./discord/actions/DiscordGuildUpdatedDialog";
+import EpitechNewNotificationDialog from "./epitech/actions/EpitechNewNotificationDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -132,6 +133,7 @@ export default class ActionDialog extends React.Component {
             DISCORD_GUILD_MEMBER_BANNED: <DiscordMemberBannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
             DISCORD_GUILD_MEMBER_UNBANNED: <DiscordMemberUnbannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
             DISCORD_GUILD_UPDATE: <DiscordGuildUpdatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            INTRA_NEW_NOTIFICATIONS: <EpitechNewNotificationDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
         }
         return data[this.state.dialog];
     }

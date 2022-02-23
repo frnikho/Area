@@ -3,6 +3,7 @@ import IntraWorker from "../workers/IntraWorker";
 import SpotifyWorker from "../workers/SpotifyWorker";
 import {isProd} from "../utils/Node";
 import Logger from "../utils/Logger";
+import EpitechWorker from "../workers/EpitechWorker";
 
 export default class WorkerManager {
 
@@ -15,8 +16,7 @@ export default class WorkerManager {
     }
 
     private register() {
-        this.workers.push(new IntraWorker());
-        this.workers.push(new SpotifyWorker());
+        this.workers.push(new EpitechWorker());
     }
 
     public startWorkers() {
