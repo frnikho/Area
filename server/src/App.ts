@@ -33,6 +33,7 @@ import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 import { swaggerOptions } from "./documentation/Swagger"
 import Logger from "./utils/Logger";
 import {ContextRoute} from "./routes/context/ContextRoute";
+import EpitechServiceRoute from "./routes/services/EpitechServiceRoute";
 
 const DEFAULT_PORT = 8080;
 
@@ -114,6 +115,7 @@ export default class App {
         new DiscordServiceRoute().register(this.app, '/services/discord');
         new TwitterServiceRoute().register(this.app, '/services/twitter');
         new SpotifyServiceRoute().register(this.app, '/services/spotify');
+        new EpitechServiceRoute().register(this.app, '/services/epitech');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');

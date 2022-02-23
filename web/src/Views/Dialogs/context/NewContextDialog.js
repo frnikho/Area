@@ -84,7 +84,7 @@ export default class NewContextDialog extends React.Component {
             console.log(response.data);
             fnc();
         }).catch((err) => {
-            console.log(err);
+            console.log(err.response.data);
         });
     }
 

@@ -47,10 +47,10 @@ export default withCookies(class DashboardPage extends Page {
                 </div>
             );
         else
-            return component.state.applets.map((applets, index) => (
+            return component.state.applets.map((applet, index) => (
                 // <Grid item xs={2} sm={4} md={4} key={index}>
                 <Grid item /* xs={2} sm={4} md={2.9} */ /* spacing={1} */ key={index}>
-                    <AppletsPage {...applets} />
+                    <AppletsPage applet={applet} color={"#123456"} />
                 </Grid>
             ))
     }

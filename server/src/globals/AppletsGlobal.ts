@@ -426,6 +426,61 @@ export const GithubAppletReactionsAbout = [
     ]
 
 
+export const SpotifyAppletReactionsAbout = [
+    {
+        name: 'Pause the current track',
+        description: 'Pause the current track',
+        type: 'spotify_pause_track',
+        then: 'pause spotify current track',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            }
+        ]
+    },
+    {
+        name: 'Play a track',
+        description: 'Play a specific track with spotify song uri',
+        type: 'spotify_play_track',
+        then: 'play a track',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'song_uri',
+                type: 'string',
+                required: true
+            }
+        ]
+    },
+    {
+        name: 'Change volume',
+        description: 'Change the player volume',
+        type: 'spotify_change_volume',
+        then: 'change volume',
+        base_key: 'context_uuid',
+        parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'volume',
+                type: 'number',
+                required: true
+            }
+        ]
+    }
+]
+
 export const TwitterAppletReactionsAbout = [
     {
         name: 'Tweet',
@@ -451,7 +506,7 @@ export const AppAbout = {
         services: [{
             name: "Github",
             type: 'github',
-            color: "#95A5A6",
+            color: "#4078C0",
             icon: "icons/github.png",
             actions: GithubAppletActionsAbout,
             reactions: GithubAppletReactionsAbout
@@ -459,42 +514,42 @@ export const AppAbout = {
             name: "Discord",
             type: 'discord',
             icon: "icons/discord.png",
-            color: "#34495E",
+            color: "#7289DA",
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
             name: "Slack",
             type: 'slack',
             icon: "icons/slack.png",
-            color: "#8E44AD",
+            color: "#4A154B",
             actions: [],
             reactions: SlackAppletReactionsAbout,
         }, {
             name: "Twitter",
             type: 'twitter',
-            color: "#1DA1F2",
+            color: "#00ABEC",
             actions: [],
             icon: "icons/twitter.png",
             reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
             type: 'epitech_intra',
-            color: "#2980B9",
+            color: "#23448B",
             icon: "icons/epitech.png",
             actions: IntraAppletActionsAbout,
             reactions: [],
         }, {
             name: "Spotify",
             type: 'spotify',
-            color: "#27AE60",
+            color: "#1DB954",
             icon: "icons/spotify.png",
             actions: SpotifyAppletActionsAbout,
-            reactions: [],
+            reactions: SpotifyAppletReactionsAbout,
         }, {
             name: "Gmail",
             type: 'google',
             icon: "icons/gmail.png",
-            color: "#C0392B",
+            color: "#23448B",
             actions: GmailAppletActionsAbout,
             reactions: []
         }]

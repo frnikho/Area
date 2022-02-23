@@ -20,8 +20,6 @@ export default abstract class Worker {
         }, (err) => callback([]));
     }
 
-    public abstract manageHook(applet: Applet);
-
     public start() {
         if (this.getTime() <= 0)
             throw new Error("Invalid time for Worker ! (must be > 0)");

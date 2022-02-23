@@ -6,7 +6,7 @@ import {User} from "../models/User";
 import {Services} from "../models/Services";
 
 const sendError = (res: express.Response, message: string) => {
-    return res.status(400).json({success: false, message: message});
+    return res.status(400).json({success: false, message});
 }
 
 export const checkContextCreation = (req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -65,13 +65,53 @@ export default class LoginController {
     authorize(config)
       .then(result => {
         app
-          .get(`/auth/github/code?code=${result.authorizationCode}`)
+          .get(`/auth/github/code?code=${result.authorizationCode}$type=mobile`)
           .then(response => {
             callback(true, response);
           })
           .catch(err => {
             callback(false, err);
           });
+      })
+      .catch(err => {
+        callback(false, err);
+      });
+  }
+
+  public githubLoginService(
+    callback: (status: boolean, response: any) => void,
+  ): void {
+    const conf = {
+      redirectUrl: process.env.GITHUB_REDIRECT_URL,
+      clientId: process.env.GITHUB_CLIENT_ID,
+      scopes: ['identity'],
+      additionalHeaders: {Accept: 'application/json'},
+      skipCodeExchange: true,
+      responseType: 'code',
+      serviceConfiguration: {
+        authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+        tokenEndpoint: 'https://github.com/login/oauth/access_token',
+        revocationEndpoint: `https://github.com/settings/connections/applications/${process.env.GITHUB_CLIENT_ID}`,
+      },
+    };
+    authorize(conf)
+      .then(result => {
+        new TokenController().getUserToken((status, res) => {
+          if (status === true) {
+            console.log(result);
+            app
+              .get(
+                `/services/github/callback?code=${result.authorizationCode}$type=mobile`,
+                config(res),
+              )
+              .then(response => {
+                callback(true, response);
+              })
+              .catch(err => {
+                callback(false, err);
+              });
+          }
+        });
       })
       .catch(err => {
         callback(false, err);
@@ -113,7 +153,7 @@ export default class LoginController {
       // usePKCE: false,
       additionalParameters: {
         permissions: '8',
-      }
+      },
     };
 
     authorize(conf)
@@ -121,10 +161,11 @@ export default class LoginController {
         console.log(result);
         new TokenController().getUserToken((status, res) => {
           if (status === true) {
+            console.log(res);
             app
               .get(
-                `/services/discord/callback?code=${result.authorizationCode}`,
-                config(res)
+                `/services/discord/callback?code=${result.authorizationCode}&type=mobile`,
+                config(res),
               )
               .then(res => {
                 callback(true, res);

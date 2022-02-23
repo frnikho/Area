@@ -1,8 +1,9 @@
-import express = require('express')
+import express = require('express');
 import Route from "../../Route";
 import {authorization} from "../../middlewares/AuthMiddleware";
 import AppletController from "../../controllers/AppletController";
 import {checkNewApplet, parseAppletBody, parseAppletParams} from "../../middlewares/AppletMiddleware";
+import {ActionType, Applet, ReactionType} from "../../models/Applet";
 
 /**
  * @openapi
@@ -76,7 +77,12 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private get(req: express.Request, res: express.Response) {
-        return res.status(200).json(req['applet']);
+        const applet: Applet = req['applet'];
+        applet.action_type = ActionType[applet.action_type];
+        applet.reactions.forEach((reaction) => {
+            reaction.type = ReactionType[reaction.type];
+        })
+        return res.status(200).json(applet);
     }
 
     private create(req: express.Request, res: express.Response) {

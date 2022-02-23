@@ -111,7 +111,7 @@ export default class GithubServiceRoute extends Route {
                 code,
                 client_id: process.env.GITHUB_CLIENT_ID_MOBILE,
                 client_secret: process.env.GITHUB_CLIENT_SECRET_MOBILE,
-                redirect_uri: process.env.GITHUB_CLIENT_ID_MOBILE,
+                redirect_uri: process.env.GITHUB_REDIRECT_URL_MOBILE,
             }
         } else {
             body = {

@@ -21,6 +21,10 @@ import { theme } from "../../Resources/Styles/AppTheme";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import GithubNewContextDialog from "../Dialogs/context/GithubNewContextDialog";
 import DiscordNewContextDialog from "../Dialogs/context/DiscordNewContextDialog";
+import EpitechNewContextDialog from "../Dialogs/context/EpitechNewContextDialog";
+import TwitterNewContextDialog from "../Dialogs/context/TwitterNewContextDialog";
+import SlackNewContextDialog from "../Dialogs/context/SlackNewContextDialog";
+import SpotifyNewContextDialog from "../Dialogs/context/SpotifyNewContextDialog";
 
 export default class ContextPage extends Page {
 
@@ -100,8 +104,6 @@ export default class ContextPage extends Page {
                             action={<IconButton onClick={() => this.onClickDelete(context)}><FaTrash color={"white"} /></IconButton>}>
                         </CardHeader>
 
-
-
                         <CardContent>
                             <Typography color={"white"} style={{ wordWrap: "break-word" }} fontSize={24}><b>{context.title}</b></Typography>
                             <Typography color={"white"} fontSize={20} style={{ wordWrap: "break-word" }}>{context.description}</Typography>
@@ -121,6 +123,7 @@ export default class ContextPage extends Page {
     }
 
     openDialog() {
+        console.log(this.state.selectedService.type);
         this.setState({
             dialog: this.state.selectedService.type
         })
@@ -130,8 +133,12 @@ export default class ContextPage extends Page {
         if (this.state.dialog === undefined)
             return
         const dialogs = {
-            github: <GithubNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
-            discord: <DiscordNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />
+            github: <GithubNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            discord: <DiscordNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            epitech_intra: <EpitechNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            twitter: <TwitterNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            slack: <SlackNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
+            spotify: <SpotifyNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
         }
         return dialogs[this.state.dialog];
     }
@@ -198,8 +205,8 @@ export default class ContextPage extends Page {
                     <div style={Style.container}>
                         Services
                     </div>
-                    <Paper sx={{ m: 4, p: 2, borderRadius: 2 }}>
-                        <Box sx={{ alignItems: "center", justifyContent: "center", textAlign: "center", marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Paper sx={{m: 4, p:2, borderRadius: 2, backgroundColor: "#B2BEC3"}}>
+                        <Box sx={{alignItems: "center", justifyContent: "center", textAlign: "center", marginLeft: 'auto', marginRight: 'auto'}}>
                             {component.showServicesSelectIcon()}
                             {component.showContextWithFilter()}
                             {component.showCreateButton()}
