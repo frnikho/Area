@@ -58,7 +58,7 @@ export default class ControllerAppletProperty {
                         author: this.page.state.services[itService].name,
                         color: this.page.state.services[itService].color,
                         icon: this.page.state.services[itService].icon,
-                        title: "if " + this.page.state.services[itService].actions[itAction].if
+                        description: "if " + this.page.state.services[itService].actions[itAction].if
                     }
                 }
             }
@@ -70,7 +70,7 @@ export default class ControllerAppletProperty {
             for (let itReaction in this.page.state.services[itService].reactions) {
                 if (this.page.state.services[itService].reactions[itReaction].type === reactionType) {
                     return {
-                        title: "then " + this.page.state.services[itService].reactions[itReaction].then
+                        description: "then " + this.page.state.services[itService].reactions[itReaction].then
                     }
                 }
             }
@@ -80,12 +80,12 @@ export default class ControllerAppletProperty {
     getDataFromService(actionType, reactionType) {
         var action = this.getActionFromServiceData(actionType)
         var reaction = this.getReactionFromServiceData(reactionType)
-        return { ...action, ...{title: action.title + " " + reaction.title} }
+        return { ...action, ...{ description: action.description + " " + reaction.description } }
     }
 
     completeApplets(data) {
         let serviceData = this.getDataFromService(data.action_type, data.reactions[0].type)
-        this.page.setState({ applet: {...{ ...data, ...serviceData, title: (data.title !== "" ? data.title : serviceData.title)}} })
+        this.page.setState({ applet: { ...{ ...data, ...serviceData, title: (data.title !== "" ? data.title : "<applet title>") }, description: serviceData.description } })
     }
 
     loadServices() {
