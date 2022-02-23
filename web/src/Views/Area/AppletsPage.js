@@ -16,7 +16,6 @@ class AppletsPage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            applet: props
         }
         this.cookies = props.cookies;
     }
@@ -34,17 +33,22 @@ class AppletsPage extends Page {
     render() {
         if (!this.authContext)
             return (null);
-        return (this.pageRender(this, function RenderProfilePage({ component }) {
+        return (this.pageRender(this, function RenderDashboardPage({ component }) {
             return (
-                <AppletChildItemCard title={component.props.applet.title} color={component.props.color} description={""}/>
+                <>
+                    <AppletChildItemCard
+                        title={this.props.applet.title}
+                        color={this.props.applet.color}
+                        description={""}
+                        onClick={() => this.setRedirectUrl({ url: "/area/applets/property", params: this.props.applet.uuid })} />
+                </>
             );
-        }));
+        }))
     }
 };
 
 AppletsPage.propTypes = {
     applet: PropTypes.object.isRequired,
-    color: PropTypes.string.isRequired,
 }
 
 export default withCookies(AppletsPage);
