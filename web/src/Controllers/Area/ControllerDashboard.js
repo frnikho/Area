@@ -22,7 +22,7 @@ export default class ControllerDashboard {
                     return {
                         color: this.page.state.services[itService].color,
                         icon: this.page.state.services[itService].icon,
-                        title: "if " + this.page.state.services[itService].actions[itAction].if
+                        // title: "if " + this.page.state.services[itService].actions[itAction].if
                     }
                 }
             }
@@ -43,8 +43,9 @@ export default class ControllerDashboard {
 
     getDataFromService(actionType, reactionType) {
         var action = this.getActionFromServiceData(actionType)
-        var reaction = this.getReactionFromServiceData(reactionType)
-        return { ...action, ...{title: action.title + " " + reaction.title} }
+        // var reaction = this.getReactionFromServiceData(reactionType)
+        // title already setup
+        return { ...action, /* ...{title: action.title + " " + reaction.title}  */}
     }
 
     completeApplets(data) {

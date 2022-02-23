@@ -35,7 +35,7 @@ export default class ControllerDashboard {
     logout() {
         const { cookies } = this.cookies;
         cookies.remove('session', { path: '/', SameSite: 'none', secure: true })
+        this.page.setRedirectUrl({ url: "/" })
         this.page.authContext.setUser(undefined)
-        this.page.setRedirectUrl({url: "/"})
     }
 }

@@ -37,10 +37,10 @@ class AppletsPage extends Page {
             return (
                 <>
                     <AppletChildItemCard
-                        title={this.props.applet.title}
-                        color={this.props.applet.color}
+                        title={component.props.applet.title}
+                        color={component.props.applet.color}
                         description={""}
-                        onClick={() => this.setRedirectUrl({ url: "/area/applets/property", params: this.props.applet.uuid })} />
+                        onClick={() => component.setRedirectUrl({ url: "/area/applets/property", params: component.props.applet.uuid })} />
                 </>
             );
         }))

@@ -39,9 +39,10 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
             this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.authContext.getUser() })
+            this.controllerAppletProperty = new ControllerAppletProperty(this.authContext, this.cookies, this);
+            this.controllerAppletProperty.loadServices()
+            this.controllerAppletProperty.loadApplet();
         }
-        this.controllerAppletProperty = new ControllerAppletProperty(this.authContext, this.cookies, this);
-        this.controllerAppletProperty.loadApplet();
     }
 
     handleSwitch() {
@@ -60,7 +61,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
 
     handleChandleTitle(e) {
         this.setState({
-            applet: {...this.state.applet, Title: e.target.value},
+            applet: { ...this.state.applet, Title: e.target.value },
         })
     }
 
