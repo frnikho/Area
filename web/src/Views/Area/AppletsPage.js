@@ -28,7 +28,6 @@ export default withCookies(class AppletsPage extends Page {
             this.setState({ user: this.authContext.getUser() })
         }
         this.controllerApplet = new ControllerApplet(this.authContext, this.cookies, this);
-        this.controllerApplet.loadApplet()
     }
 
     render() {
