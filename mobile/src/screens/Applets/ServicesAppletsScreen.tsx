@@ -20,10 +20,10 @@ export default class ServicesAppletsScreen extends Component {
     this.renderServicesCards = this.renderServicesCards.bind(this);
   }
 
-  onSave(action: object) {
+  onSave(action: object, param: object) {
     const { onSelected } = this.props.route.params;
     this.setState({ onShowModal: false })
-    onSelected(action);
+    onSelected(action, param);
   }
 
   onClose() {

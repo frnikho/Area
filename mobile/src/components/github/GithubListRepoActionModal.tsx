@@ -17,6 +17,7 @@ export default class GithubListRepoActionModal extends ActionModal {
       repositories: undefined,
       repository: undefined,
     };
+    this.onChangeParam = this.onChangeParam.bind(this);
   }
 
   /**
@@ -41,6 +42,15 @@ export default class GithubListRepoActionModal extends ActionModal {
   }
 
   /**
+   * @description Set repository and send it to main screen
+   * @param repository
+   */
+  onChangeParam(repository: any) {
+    this.props.onChangeParam([repository]);
+    this.setState({repository: repository})
+  }
+
+  /**
    * @description Render list of repositories
    * @returns
    */
@@ -58,7 +68,9 @@ export default class GithubListRepoActionModal extends ActionModal {
               endIcon: <CheckIcon size="5" />,
             }}
             mt={1}
-            onValueChange={itemValue => this.setState({repository: itemValue})}>
+            onValueChange={itemValue => {
+              this.onChangeParam(itemValue);
+            }}>
             {this.state.repositories.map((repo, i) => {
               return (
                 <Select.Item

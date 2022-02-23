@@ -54,4 +54,19 @@ export default class AxiosController {
             return callback(false, err);
         });
     }
+
+    /**
+     * Post request
+     *
+     * @param url
+     * @param headers
+     * @param callback
+     */
+     public post(url: string, headers: object, callback: (status: boolean, response: any) => void) {
+        axios.post(url, headers).then((response) => {
+            return callback(true, response);
+        }).catch((err) => {
+            return callback(false, err);
+        });
+    }
 }
