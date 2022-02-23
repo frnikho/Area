@@ -12,6 +12,7 @@ export default class DiscordPostMessageReaction extends ReactionModal {
       channels: undefined,
       channel: undefined,
     };
+    this.onChangeParam = this.onChangeParam.bind(this);
   }
 
   /**
@@ -26,7 +27,6 @@ export default class DiscordPostMessageReaction extends ReactionModal {
             config(response),
           )
           .then(response => {
-            console.log(response.data);
             this.setState({
               channels: response.data,
             });
@@ -34,6 +34,15 @@ export default class DiscordPostMessageReaction extends ReactionModal {
           .catch(err => console.log(err.response));
       }
     });
+  }
+
+  /**
+   * @description Set channel and send it to main screen
+   * @param repository
+   */
+  onChangeParam(channel: any) {
+    this.props.onChangeParam(channel);
+    this.setState({channel: channel})
   }
 
   /**
@@ -54,7 +63,7 @@ export default class DiscordPostMessageReaction extends ReactionModal {
               endIcon: <CheckIcon size="5" />,
             }}
             mt={1}
-            onValueChange={itemValue => this.setState({channel: itemValue})}>
+            onValueChange={itemValue => this.onChangeParam(itemValue)}>
             {this.state.channels.map((channel, i) => {
               return (
                 <Select.Item key={i} label={channel.name} value={channel.id} isDisabled={channel.type !== 0} />

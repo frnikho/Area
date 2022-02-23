@@ -32,6 +32,11 @@ export default class ReactionModal extends React.Component {
   }
 
   /**
+   * @description Must be overridden. Save param from reaction
+   */
+   onChangeParam(param: any) {}
+
+  /**
    * @description Must be overridden if need. Load data to display form.
    */
   loadData(param: any) {}

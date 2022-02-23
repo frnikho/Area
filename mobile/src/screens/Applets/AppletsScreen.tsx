@@ -9,18 +9,22 @@ export default class AppletsScreen extends Component {
         this.state = {
             action: undefined,
             reaction: undefined,
+            actionParameters: undefined,
+            reactionParameters: undefined,
         }
         this.onActionSelected = this.onActionSelected.bind(this)
         this.onReactionSelected = this.onReactionSelected.bind(this)
     }
 
-    onActionSelected(action: object) {
-        this.setState({ action: action });
+    onActionSelected(action: object, param: object) {
+        console.log(param);
+        this.setState({ action: action, actionParameters: param });
         this.props.navigation.goBack();
     }
 
-    onReactionSelected(reaction: object) {
-        this.setState({ reaction: reaction });
+    onReactionSelected(reaction: object, param: object) {
+        console.log(param);
+        this.setState({ reaction: reaction, reactionParameters: param });
         this.props.navigation.goBack();
     }
 
