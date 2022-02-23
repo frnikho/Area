@@ -68,7 +68,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
 
     showTitle() {
         return (
-            <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "60px" }}>
+            <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "50px", lineHeight: "50px", fontFamily: "Secular One"}}>
                 {this.state.editTitle === false ? (this.state.applet && this.state.applet.title) || "Title" : <TextField
                     id="filled-multiline-static"
                     label="Title"
@@ -143,7 +143,8 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                                 }
                             </Box>
                             {this.showTitle()}
-                            {this.showEditButton()}
+                            {/* add button for edit title but miss route in server */}
+                            {/* {this.showEditButton()} */}
                             <Box style={{ textAlign: "left", paddingLeft: "20px", fontSize: "30px", fontFamily: "Dongle" }}>
                                 {"by " + ((this.state.applet && this.state.applet.author) || "author service")}
                             </Box>
