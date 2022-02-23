@@ -86,7 +86,7 @@ export default class ReactionsScreen extends React.Component {
                   onPress={() => {
                     this.onSave();
                   }}
-                  isDisabled={this.state.reaction ? false : true}>
+                  isDisabled={this.state.reaction && this.state.parameters ? false : true}>
                   Save
                 </Button>
               </Button.Group>
