@@ -112,7 +112,7 @@ export default class SpotifyService {
                 this.refreshToken(context, userUuid, (newContext => {
                     axios.get(`https://api.spotify.com/v1/me/player`, this.buildAuthorizationHeader(newContext.tokenData.token['access_token'])).then((response) => {
                         callback(response.data, null);
-                    }).catch((newErr) => console.error(newErr.response.data));
+                    }).catch((newErr) => console.error(newErr));
                 }));
             } else {
                 callback(null, err.response.data);
@@ -147,13 +147,14 @@ export default class SpotifyService {
         params.append('refresh_token', context.tokenData.token['refresh_token']);
         params.append('grant_type', "refresh_token");
         axios.post(`https://accounts.spotify.com/api/token`, params, headers).then((response) => {
-            context.tokenData.token = response.data;
+            context.tokenData.token['access_token'] = response.data['access_token'];
+            if (response.data['refresh_token'] !== undefined)
+                context.tokenData.token['refresh_token'] = response.data['refresh_token'];
             new ContextController().updateContext(userUuid, Services.SPOTIFY, context, (replacedContext, contextError) => {
                 if (contextError)
                     return callback(undefined, contextError);
                 return callback(replacedContext, null);
             });
-           console.log(response.data);
         }).catch((err) => console.log(err.response.data));
     }
 
