@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, CssBaseline, Box, Button, TextField, IconButton, Typography } from "@mui/material";
+import { ThemeProvider, CssBaseline, Box, Button, TextField, IconButton } from "@mui/material";
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"

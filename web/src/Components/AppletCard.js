@@ -23,7 +23,26 @@ export default class AppletCard extends React.Component {
                     <Typography color={"white"}>
                         {this.props.description}
                     </Typography>
-                    <Box sx={{ px: 4 }} style={{ height: "20%" }} />
+                    {/* state */}
+                    <Box style={Style.authorContainer} >
+                        <Typography color={"white"}>
+                            {"Status: "}
+                        </Typography>
+                        <Box sx={{ px: 0.2 }} style={{ with: "1%" }} />
+                        <Typography color={this.props.appletStatus ? "green" : "red"} fontWeight={"800"}>
+                            {this.props.appletStatus ? "connedted" : "disconected"}
+                        </Typography>
+                    </Box>
+                    <Box style={Style.authorContainer} >
+                        <Typography color={"white"}>
+                            {"by "}
+                        </Typography>
+                        <Box sx={{ px: 0.2 }} style={{ with: "1%" }} />
+                        <Typography color={"white"} fontWeight={"800"}>
+                            {this.props.author}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ px: 4 }} style={{ height: "5%" }} />
                     <Box sx={{ pb: 1, mx: 1 }} style={Style.imageContainer} >
                         <Box style={Style.image}>
                             {this.props.ifIcon &&
@@ -49,5 +68,7 @@ AppletCard.propTypes = {
     description: PropTypes.string,
     ifIcon: PropTypes.string,
     thenIcon: PropTypes.string,
+    author: PropTypes.string,
+    appletStatus: PropTypes.bool,
     onClick: PropTypes.func,
 }

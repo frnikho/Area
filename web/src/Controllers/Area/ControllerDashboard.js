@@ -20,6 +20,7 @@ export default class ControllerDashboard {
             for (let itAction in this.page.state.services[itService].actions) {
                 if (this.page.state.services[itService].actions[itAction].type === actionType) {
                     return {
+                        author: this.page.state.services[itService].name,
                         color: this.page.state.services[itService].color,
                         ifIcon: this.page.state.services[itService].icon,
                         description: "if " + this.page.state.services[itService].actions[itAction].if
@@ -54,6 +55,7 @@ export default class ControllerDashboard {
             let serviceData = this.getDataFromService(data[it].action_type, data[it].reactions[0].type)
             applets.push({ ...{ ...data[it], ...serviceData, title: (data[it].title !== "" ? data[it].title : "<applet title>") }, description: serviceData.description })
         }
+        console.log(applets)
         this.page.setState({ applets: applets })
     }
 

@@ -9,7 +9,7 @@ const useStyles = {
         borderRadius: 6,
         p: 4,
         width: 300,
-        height: 215,
+        height: 275,
         textAlign: "start",
     },
     image: {
@@ -25,6 +25,12 @@ const useStyles = {
         position: "relative",
         whiteSpace: "nowrap",
         textAlign: "right"
+    },
+    authorContainer: {
+        display: "flex",
+        flex: "1",
+        position: "relative",
+        whiteSpace: "nowrap",
     },
 };
 
