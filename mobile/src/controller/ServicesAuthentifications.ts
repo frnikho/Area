@@ -100,6 +100,7 @@ export default class ServicesAuthentificationsController {
       service: serviceName,
       token_data: token_data,
     };
+    console.log(body);
     new TokenController().getUserToken((status, res) => {
       if (status === true) {
         app

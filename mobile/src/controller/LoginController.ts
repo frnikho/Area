@@ -216,13 +216,11 @@ export default class LoginController {
 
     authorize(conf)
       .then(result => {
-        console.log(result);
         new TokenController().getUserToken((status, res) => {
           if (status === true) {
-            console.log(res);
             app
               .get(
-                `/services/discord/callback?code=${result.authorizationCode}&type=mobile`,
+                `/services/discord/callback?code=${result.authorizationCode}&codeVerifier=${result.codeVerifier}&type=mobile`,
                 config(res),
               )
               .then(res => {

@@ -65,7 +65,7 @@ export default class ServicesSettingsScreen extends Component {
   onDiscordLogin(callback: (token_data: object) => void) {
     new LoginController().discordLogin((status, res) => {
       if (status === true) {
-        console.log(res);
+        callback(res.data.token)
       } else {
         console.log(res);
       }
@@ -79,7 +79,7 @@ export default class ServicesSettingsScreen extends Component {
   onTwitterLogin(callback: (token_data: object) => void) {
     new LoginController().twitterLogin((status, res) => {
       if (status) {
-        callback(true, res.data.token);
+        callback(res.data.token);
       } else {
         console.log(res);
       }
