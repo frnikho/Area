@@ -24,7 +24,6 @@ export default withCookies(class DashboardPage extends Page {
         }
         this.cookies = props;
         this.showApplets = this.showApplets.bind(this)
-        this.renderDashboardPage = this.renderDashboardPage.bind(this)
     }
 
     componentDidMount() {
@@ -56,7 +55,7 @@ export default withCookies(class DashboardPage extends Page {
             ))
     }
 
-    renderDashboardPage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
         const menu = {
@@ -130,9 +129,5 @@ export default withCookies(class DashboardPage extends Page {
                 </Box>
             </ThemeProvider >
         )
-    }
-
-    render() {
-        return(this.pageRender(this.renderDashboardPage))
     }
 })

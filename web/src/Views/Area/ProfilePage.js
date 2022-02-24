@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, Box, CssBaseline } from "@mui/material";
+import { ThemeProvider, Box, CssBaseline,TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import { FaUser } from "react-icons/fa";
 
@@ -22,11 +22,11 @@ export default withCookies(withSnackbar(class ProfilePage extends Page {
         super(props);
         this.state = {
             user: undefined,
-            token: undefined
+            token: undefined,
+            appletTitle: undefined,
         }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.renderProfilePage = this.renderProfilePage.bind(this)
     }
 
     componentDidMount() {
@@ -49,7 +49,7 @@ export default withCookies(withSnackbar(class ProfilePage extends Page {
         this.controllerProfile.updateProfile(this.state.token, data.get(fieldName), fieldName);
     }
 
-    renderProfilePage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
         const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
@@ -113,9 +113,4 @@ export default withCookies(withSnackbar(class ProfilePage extends Page {
             </ThemeProvider >
         );
     };
-
-    render() {
-        return (this.pageRender(this.renderProfilePage))
-    }
-
 }))

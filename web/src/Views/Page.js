@@ -31,18 +31,13 @@ export default class Page extends React.Component {
         this.setState({ redirectUrl: url })
     }
 
-    pageRender(Page) {
-        return (
-            <div>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : <Page />}
-            </div>
-        );
+    pageRender() {
     }
 
     render() {
         return (
             <div>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : null}
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : this.pageRender()}
             </div>
         )
     }

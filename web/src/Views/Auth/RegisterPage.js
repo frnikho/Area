@@ -24,7 +24,6 @@ export default withCookies(withSnackbar(class RegisterPage extends Page {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.renderRegisterPage = this.renderRegisterPage.bind(this)
     }
 
     componentDidMount() {
@@ -67,7 +66,7 @@ export default withCookies(withSnackbar(class RegisterPage extends Page {
         this.controllerRegister.githubLogin(response);
     }
 
-    renderRegisterPage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
 
@@ -198,7 +197,4 @@ export default withCookies(withSnackbar(class RegisterPage extends Page {
         )
     }
 
-    render() {
-        return(this.pageRender(this.renderRegisterPage))
-    }
 }))

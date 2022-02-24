@@ -46,7 +46,6 @@ class ContextPage extends Page {
         this.refresh = this.refresh.bind(this);
         this.onCreateContext = this.onCreateContext.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);
-        this.renderContextPage = this.renderContextPage.bind(this);
     }
 
     componentDidMount() {
@@ -186,7 +185,7 @@ class ContextPage extends Page {
         </Button>
     }
 
-    renderContextPage() {
+    pageRender() {
         const menu = {
             right: [
                 {
