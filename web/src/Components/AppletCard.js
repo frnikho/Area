@@ -69,6 +69,6 @@ AppletCard.propTypes = {
     ifIcon: PropTypes.string,
     thenIcon: PropTypes.string,
     author: PropTypes.string,
-    appletStatus: PropTypes.bool,
+    appletStatus: PropTypes.number,
     onClick: PropTypes.func,
 }

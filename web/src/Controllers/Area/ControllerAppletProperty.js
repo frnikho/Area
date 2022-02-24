@@ -87,6 +87,7 @@ export default class ControllerAppletProperty {
     completeApplets(data) {
         let serviceData = this.getDataFromService(data.action_type, data.reactions[0].type)
         this.page.setState({ applet: { ...{ ...data, ...serviceData, title: (data.title !== "" ? data.title : "<applet title>") }, description: serviceData.description } })
+        this.page.setState({isOn: data.enable})
     }
 
     loadServices() {
