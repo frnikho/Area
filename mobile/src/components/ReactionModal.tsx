@@ -122,7 +122,7 @@ export default class ReactionModal extends React.Component {
             : this.props.reaction.description}
         </Text>
         {this.state.servicesAuth === undefined
-          ? <Loading accessibilityLabel="Loading reactions" />
+          ? <Loading />
           : this.renderAuthContext()}
         {this.renderBody()}
       </Center>

@@ -124,7 +124,7 @@ export default class ActionModal extends React.Component {
             : this.props.action.description}
         </Text>
         {this.state.servicesAuth === undefined
-          ? <Loading accessibilityLabel="Loading actions" />
+          ? <Loading />
           : this.renderAuthContext()}
         {this.renderBody()}
       </Center>

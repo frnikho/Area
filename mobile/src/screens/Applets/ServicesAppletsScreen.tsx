@@ -110,7 +110,7 @@ export default class ServicesAppletsScreen extends Component {
           onPress={() => this.props.navigation.goBack()}
         />
         {this.state.services === undefined
-          ? <Loading accessibilityLabel="Loading services" />
+          ? <Loading />
           : this.renderServicesCards()}
         {this.renderModal()}
       </>

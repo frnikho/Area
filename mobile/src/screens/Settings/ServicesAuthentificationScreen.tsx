@@ -162,7 +162,7 @@ export default class ServicesAuthentificationScreen extends Component {
                     refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
                 >
                     {this.state.servicesAuth === undefined
-                        ? <Loading accessibilityLabel="Loading services authentification" />
+                        ? <Loading />
                         : this.servicesAuthentificationsListRender()}
                 </ScrollView>
                 {this.createServicesAuthButtonRender()}

@@ -9,13 +9,12 @@ export default class Loading extends React.Component {
     }
 
     render() {
-        const { accessibility } = this.props.route.params;
         return (
             <View style={{ padding: '50%' }}>
                 <Center>
                     <HStack space={2} justifyContent="center">
                         <Center>
-                            <Spinner accessibilityLabel={accessibility} size={100} />
+                            <Spinner size={100} />
                         </Center>
                     </HStack>
                 </Center>
