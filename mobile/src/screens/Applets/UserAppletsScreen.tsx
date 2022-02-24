@@ -4,6 +4,7 @@ import AppletsController from '../../controller/AppletsControler';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Loading from '../../components/Loading';
 
 export default class UserApplets extends Component {
 
@@ -105,7 +106,7 @@ export default class UserApplets extends Component {
                     refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
                 >
                     <View id="myApplets" style={styles.myApplets}>
-                        {this.myApplets()}
+                        { this.state.userApplets === undefined ? <Loading /> : this.myApplets()}
                     </View>
                 </ScrollView>
             </>
