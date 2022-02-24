@@ -80,7 +80,7 @@ export default class SettingsScreen extends Component {
    */
   logoutButtonRender() {
     return (
-      <View id="logoutButton">
+      <View id="logoutButton" style={styles.logoutContainer}>
         <Button mode="contained" style={styles.logoutButton} onPress={() => this.onDisconnect()}>
           <Text fontFamily="body" fontWeight={600} fontSize="2xl" style={styles.logoutButtonText}>Logout</Text>
         </Button>
@@ -115,6 +115,11 @@ const styles = StyleSheet.create({
   userInfo: {
     marginTop: 30,
     marginLeft: 20,
+  },
+  logoutContainer: {
+      position: 'absolute',
+      width: '100%',
+      bottom: 10,
   },
   logoutButton: {
     marginTop: 50,

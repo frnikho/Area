@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
-import { Text, ChevronLeftIcon} from 'native-base';
+import React, { Component } from 'react';
+import { ScrollView, View, StyleSheet } from 'react-native';
+import { Text, ChevronLeftIcon } from 'native-base';
 import ServicesController from '../../controller/ServicesController';
 import ServiceCard from '../../components/ServiceCard';
 import LoginController from '../../controller/LoginController';
@@ -14,16 +14,23 @@ export default class ServicesSettingsScreen extends Component {
     };
 
     this.onGithubLogin = this.onGithubLogin.bind(this);
+    this.getServices = this.getServices.bind(this);
   }
 
   /**
    * @description Load all service
    */
   componentDidMount() {
+    this.getServices()
+  }
+
+  /**
+   * Get services
+   */
+  getServices() {
     new ServicesController().getAboutPointJSON((status, response) => {
       if (status) {
-        this.setState({services: response.data.server.services});
-        // console.log(response.data.server.services)
+        this.setState({ services: response.data.server.services });
       } else {
         console.error(response);
       }
@@ -77,7 +84,7 @@ export default class ServicesSettingsScreen extends Component {
    * @param service
    */
   async onPressService(service: object) {
-    const {onSelected} = this.props.route.params;
+    const { onSelected } = this.props.route.params;
     const servicesLogins = {
       github: this.onGithubLogin,
       gmail: this.onGoogleLogin,
@@ -94,7 +101,7 @@ export default class ServicesSettingsScreen extends Component {
    */
   renderServicesCards() {
     return (
-      <ScrollView style={{padding: 20, flex: 1}}>
+      <ScrollView style={{ padding: 20, flex: 1 }}>
         <Text fontFamily="body" fontWeight={600} fontSize="4xl">
           Services
         </Text>
