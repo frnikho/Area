@@ -226,10 +226,6 @@ class ContextPage extends Page {
             </ThemeProvider>
         )
     }
-
-    render() {
-        return (this.pageRender(this.renderContextPage))
-    }
 }
 
 export default withSnackbar(ContextPage);
