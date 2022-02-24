@@ -15,7 +15,7 @@ export default class SpotifyServiceRoute extends Route {
     }
 
     public callback(req: express.Request, res: express.Response) {
-        const {code} = req.query;
+        const {code, type} = req.query;
 
 
         const headers = {
@@ -28,7 +28,7 @@ export default class SpotifyServiceRoute extends Route {
         const params = new URLSearchParams();
         params.append('code', code as string);
         params.append('grant_type', "authorization_code");
-        params.append('redirect_uri', process.env.SPOTIFY_SERVICE_REDIRECT_URL);
+        params.append('redirect_uri', type === 'web' ? process.env.SPOTIFY_SERVICE_REDIRECT_URL : process.env.SPOTIFY_SERVICE_REDIRECT_URL_MOBILE);
 
         new ServiceAuthRoute().postRequest("https://accounts.spotify.com/api/token", params, headers, req['user']['uuid'], Services.SPOTIFY.valueOf(), (token) => {
             return res.status(200).json({success: true, token});
