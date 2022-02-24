@@ -122,7 +122,7 @@ export default class GithubServiceRoute extends Route {
             }
         }
 
-        new ServiceAuthRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, req['user']['uuid'], Services.GITHUB.valueOf(), (token) => {
+        new ServiceAuthRoute().postRequest("https://github.com/login/oauth/access_token", body, headers, (token) => {
             return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
