@@ -69,9 +69,9 @@ export default class RegisterScreen extends Component {
             this.props.navigation.navigate('login');
           }, 1000);
         } else {
-          console.log(res);
+          console.log(res)
           Toast.show({
-            title: res.response.data.error,
+            title: "Error something is missing",
             status: 'warning',
             description: 'Please try again !',
           });
