@@ -6,10 +6,10 @@ import {
     Dialog,
     DialogActions,
     DialogContent, Divider, FormControl, Grid, Grow,
-    IconButton, MenuItem, Select, Slide,
+    IconButton, MenuItem, Select, Slide, Tooltip,
     Typography
 } from "@mui/material";
-import {MdClose} from "react-icons/md";
+import {MdClose, MdSettings} from "react-icons/md";
 import app, {config} from "../../Utils/Axios";
 import {AuthContext} from "../../Contexts/AuthContext";
 import {Navigate} from "react-router-dom";
@@ -87,12 +87,20 @@ export class ActionSettingsDialog extends React.Component {
         )
     }
 
+    showSettingsIcon = () => (
+        <Tooltip style={{fontSize: 30}} title={`Click here to manage ${this.props.service.name} context`}>
+            <IconButton onClick={() => this.setState({redirect: '/area/context'})}>
+                <MdSettings fontSize={44} color={"white"}/>
+            </IconButton>
+        </Tooltip>
+    )
+
     render() {
         return (
             <Dialog open={true} maxWidth={"xl"} fullWidth={true} fullScreen={true} onClose={() => this.props.onClose(true)} PaperProps={{style: {backgroundColor: this.props.service.color}}}>
                 {this.state.redirect !== undefined ? <Navigate to={this.state.redirect}/> : null}
                 <Grid container sx={{p: 2}}>
-                    <Grid item xs={2} textAlign={"start"}>Help</Grid>
+                    <Grid item xs={2} textAlign={"start"}>{this.showSettingsIcon()}</Grid>
                     <Grid item xs={8} textAlign={"center"}>
                         <Typography fontSize={44} color={"white"} fontFamily={"Roboto"} fontWeight={"700"}>{this.props.service.name} Action settings</Typography>
                     </Grid>

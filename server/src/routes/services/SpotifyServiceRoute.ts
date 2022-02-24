@@ -1,7 +1,6 @@
 import Route from "../../Route";
 
 import express = require('express');
-import * as querystring from "querystring";
 import {Services} from "../../models/Services";
 import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute";

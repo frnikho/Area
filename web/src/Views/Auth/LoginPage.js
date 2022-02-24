@@ -13,8 +13,9 @@ import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
+import {withSnackbar} from "notistack";
 
-export default withCookies(class LoginPage extends Page {
+class LoginPage extends Page {
 
     static contextType = AuthContext;
 
@@ -42,11 +43,26 @@ export default withCookies(class LoginPage extends Page {
             const data = new FormData(event.currentTarget);
             const loginId = implement(LoginModel)({ email: data.get('email'), password: data.get('password') })
 
-            if ([loginId.email, loginId.password].includes(""))
-                return this.setNotification({ message: ["Email", "Password"][[loginId.email, loginId.password].indexOf("")] + " cannot be empty !", show: true, type: "error" });
-            this.controllerLogin.loginDb(loginId);
+            if ([loginId.email, loginId.password].includes("")) {
+                return this.props.enqueueSnackbar(["Email", "Password"][[loginId.email, loginId.password].indexOf("")] + " cannot be empty !", {
+                    variant: 'error',
+                })
+            }
+            this.controllerLogin.loginDb(loginId, (success, error) => {
+                if (!success) {
+                    return this.props.enqueueSnackbar(error, {
+                        variant: 'error'
+                    });
+                } else {
+                    return this.props.enqueueSnackbar("You're logged !", {
+                        variant: 'success',
+                    })
+                }
+            });
         } catch (e) {
-            return this.setNotification({ message: e.message.split('\'')[5] + " cannot be empty !", show: true, type: "error" });
+            return this.props.enqueueSnackbar(e.message.split('\'')[5] + " cannot be empty !", {
+                variant: 'error',
+            })
         }
     }
 
@@ -164,10 +180,11 @@ export default withCookies(class LoginPage extends Page {
                             </Box>
                         </Box>
                         <Box sx={{ padding: 1 }} />
-                        {component.notificationComponent()}
                     </Container>
                 </ThemeProvider >
             )
         }));
     }
-})
+}
+
+export default withCookies(withSnackbar(LoginPage));

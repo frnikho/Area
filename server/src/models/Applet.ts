@@ -64,6 +64,7 @@ export interface Applet {
     title: string,
     user_uuid: string,
     action: Action,
+    enable: boolean,
     action_key: string,
     action_type: ActionType | string,
     reactions: Reaction[],

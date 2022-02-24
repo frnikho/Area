@@ -29,20 +29,20 @@ export default class ControllerLogin {
         }
     }
 
-    loginDb(loginId) {
+    loginDb(loginId, callback) {
         ControllerDataBase.connect(loginId, (data) => {
             if (data.success === true) {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.cookies;
-
                     cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
                     this.page.setRedirectUrl({url: '/'})
+                    callback(true);
                 })
             } else {
-                this.page.setNotification({ message: "Error with ControllerDataBase", show: true, type: "error" });
+                callback(false, "An error occurred ! please try again later");
             }
         }, (error) => {
-            this.page.setNotification({ message: error.data.error, show: true, type: "error" });
+            callback(false, error.data.error);
         })
     }
 
