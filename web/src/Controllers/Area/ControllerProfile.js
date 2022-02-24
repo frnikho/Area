@@ -22,13 +22,13 @@ export default class ControllerDashboard {
             if (data.success === true) {
                 this.page.authContext.loginFromCache(token, () => {
                     this.page.forceUpdate()
-                    this.page.setNotification({ message: fieldName + " change !", show: true, type: "success" });
+                    this.page.props.enqueueSnackbar(fieldName + " change !", { variant: 'success' });
                 })
             } else {
-                this.page.setNotification({ message: "Error with database", show: true, type: "error" });
+                this.page.props.enqueueSnackbar("Error with database", { variant: 'error' });
             }
         }, (error) => {
-            this.page.setNotification({ message: error.data.error, show: true, type: "error" });
+            this.page.props.enqueueSnackbar(error.data.error, { variant: 'error' });
         })
     }
 

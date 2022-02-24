@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import NotifComponent from "../Components/NotifComponent"
 
 export default class Page extends React.Component {
 

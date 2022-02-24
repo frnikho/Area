@@ -11,8 +11,10 @@ import Style from "../../Resources/Styles/styleProfile"
 import FieldSettings from "../../Components/FieldSettings"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
+import { withSnackbar } from "notistack";
 
-export default withCookies(class ProfilePage extends Page {
+
+export default withCookies(withSnackbar(class ProfilePage extends Page {
 
     static contextType = AuthContext;
 
@@ -42,7 +44,7 @@ export default withCookies(class ProfilePage extends Page {
         const data = new FormData(event.currentTarget);
 
         if (data.get(fieldName) === "")
-            return this.setNotification({ message: fieldName + " cannot be empty !", show: true, type: "error" });
+            return this.props.enqueueSnackbar(fieldName + " cannot be empty !", { variant: 'error' });
         this.controllerProfile.updateProfile(this.state.token, data.get(fieldName), fieldName);
     }
 
@@ -105,9 +107,6 @@ export default withCookies(class ProfilePage extends Page {
                             </div>
                         </div>
                     </div>
-                    <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
-                        {component.notificationComponent()}
-                    </Box>
                     <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
                         <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerProfile.logout()}>Logout</Button>
                     </Box>
@@ -116,4 +115,4 @@ export default withCookies(class ProfilePage extends Page {
             );
         }));
     }
-})
+}))
