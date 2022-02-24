@@ -3,6 +3,7 @@ import { Box, Button, Card, ChevronLeftIcon, Heading, Text, VStack } from 'nativ
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ServicesAuthentificationsController from "../../controller/ServicesAuthentifications";
+import Loading from "../../components/Loading";
 
 export default class ServicesAuthentificationScreen extends Component {
 
@@ -13,10 +14,15 @@ export default class ServicesAuthentificationScreen extends Component {
             refresh: false,
         };
         this.onRefresh = this.onRefresh.bind(this);
+        this.getUserServicesAuth = this.getUserServicesAuth.bind(this);
     }
 
     componentDidMount() {
         this.getUserServicesAuth();
+    }
+
+    componentDidUpdate() {
+        this.getUserServicesAuth;
     }
 
     /**
@@ -155,7 +161,9 @@ export default class ServicesAuthentificationScreen extends Component {
                     contentContainerStyle={{ padding: 20 }}
                     refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
                 >
-                    {this.servicesAuthentificationsListRender()}
+                    {this.state.servicesAuth === undefined
+                        ? <Loading />
+                        : this.servicesAuthentificationsListRender()}
                 </ScrollView>
                 {this.createServicesAuthButtonRender()}
             </View>

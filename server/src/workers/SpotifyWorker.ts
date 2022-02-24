@@ -1,52 +1,42 @@
-import Worker, {hooks} from "./Worker";
-import {ActionType, Applet} from "../models/Applet";
-import ServiceController from "../controllers/ServiceController";
+import Worker from "./Worker";
+import {ActionType} from "../models/Applet";
+import SpotifyYepHook from "../yephook/SpotifyYepHook";
+import SpotifySongChangedYephook from "../yephook/spotify/SpotifySongChangedYephook";
 
 export default class SpotifyWorker extends Worker {
 
-    private yephooks = [];
-
-    private hooks: hooks[] = [{
-        actionType: ActionType.spotify_song_changed,
-        func: this.spotifySongChanged,
-    }]
+    private yepHooks: SpotifyYepHook[] = [];
 
     constructor() {
         super();
     }
 
-    public manageHook(applet: Applet) {
-        this.hooks.map((hook) => {
-            if (hook.actionType === applet.action_type) {
-                hook.func(applet)
-            }
-        })
+    getTime(): number {
+        return 10;
     }
 
-    public getTime(): number {
-        return 1;
-    }
-
-    public run() {
+    run() {
         this.getApplets('spotify', (applets) => {
+            const tmpArray: string[] = [];
             applets.forEach((applet) => {
-                this.manageHook(applet);
+                tmpArray.push(applet.uuid);
+                if (this.yepHooks.find((yepHook) => yepHook.getApplet().uuid === applet.uuid) === undefined) {
+                    if (applet.action_type === ActionType.spotify_song_changed) {
+                        const newYepHook: SpotifyYepHook = new SpotifySongChangedYephook(applet);
+                        newYepHook.start();
+                        this.yepHooks.push(newYepHook);
+                    }
+                }
             });
-        });
-    }
 
-    public spotifySongChanged(applet: Applet) {
-        new ServiceController().getTokenByKeyAndService(applet.user_uuid, 'spotify', applet.action_key, (token) => {
-            if (token === null) {
-                console.log("Token error !");
-                return;
-            }
-
-
-
-        }, (error) => {
-            console.log(error);
+            this.yepHooks.forEach((yepHook, index) => {
+                const uuidToRemoved = tmpArray.find((uuid) => yepHook.getApplet().uuid);
+                if (uuidToRemoved === undefined) {
+                    console.log("spotify applet need to be removed !");
+                    yepHook.stop();
+                    this.yepHooks.splice(index, 1);
+                }
+            })
         })
     }
-
 }

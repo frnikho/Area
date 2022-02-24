@@ -6,8 +6,9 @@ import { AuthContext } from "../../Contexts/AuthContext";
 // import Style from "../../Resources/Styles/styleProfile"
 import ControllerApplet from "../../Controllers/Area/ControllerApplet"
 import AppletChildItemCard from "../../Components/AppletChildItemCard"
+import PropTypes from "prop-types";
 
-export default withCookies(class AppletsPage extends Page {
+class AppletsPage extends Page {
 
     static contextType = AuthContext;
 
@@ -35,10 +36,16 @@ export default withCookies(class AppletsPage extends Page {
         if (!this.authContext)
             return (null);
         return (this.pageRender(this, function RenderProfilePage({ component }) {
-
             return (
-                <AppletChildItemCard {...{ ...component.state.applet, ...{ onClick: () => component.setRedirectUrl({ url: "/area/applets/property", params: component.state.applet.uuid }) } }} />
+                <AppletChildItemCard title={component.props.applet.title} color={component.props.color} description={""}/>
             );
         }));
     }
-})
+};
+
+AppletsPage.propTypes = {
+    applet: PropTypes.object.isRequired,
+    color: PropTypes.string.isRequired,
+}
+
+export default withCookies(AppletsPage);

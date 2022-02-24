@@ -1,17 +1,13 @@
 import {
   Box,
   Center,
-  Divider,
   Heading,
   HStack,
   Stack,
-  Text,
-  VStack,
 } from 'native-base';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 class ServiceCard extends Component {
   constructor(props: any) {
