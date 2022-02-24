@@ -22,9 +22,20 @@ export const SpotifyAppletActionsAbout = [
         name: "Song Changed",
         description: '',
         type: 'spotify_song_changed',
-        base_key: 'token_key',
+        base_key: 'context_uuid',
         if: "No information for the moment",
+        ingredients: ["track_name", "track_uri", "track_url"],
         parameters: [
+            {
+                name: 'context_uuid',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'user_uuid',
+                type: 'string',
+                required: true,
+            }
         ]
     }
 ]

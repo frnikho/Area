@@ -98,7 +98,6 @@ export default class AppletController {
 
     public parseApplet(app: any) {
         const action: Action = JSON.parse(app.action);
-        console.log(action);
         const actionType: ActionType = getActionTypeByStr(app.action_type);
         const reactions: Reaction[] = JSON.parse(app.reactions);
         return {

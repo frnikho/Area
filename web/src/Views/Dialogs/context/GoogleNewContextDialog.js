@@ -3,11 +3,12 @@ import NewContextDialog from "./NewContextDialog";
 import PropTypes from "prop-types";
 import OAuth2Login from "react-simple-oauth2-login";
 import {Box, Button} from "@mui/material";
+import {FaGithub, FaGoogle} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import {FaSpotify} from "react-icons/fa";
+import GoogleLogin from "react-google-login";
 
-export default class SpotifyNewContextDialog extends NewContextDialog {
+export default class GoogleNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -23,7 +24,7 @@ export default class SpotifyNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/spotify/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/github/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,
@@ -39,18 +40,17 @@ export default class SpotifyNewContextDialog extends NewContextDialog {
 
     renderContextLogin(valid) {
         return (
-            <OAuth2Login
-                authorizationUrl="https://accounts.spotify.com/authorize"
-                clientId={process.env.REACT_APP_SPOTIFY_SERVICE_CLIENT_ID}
-                responseType="code"
-                redirectUri={process.env.REACT_APP_SPOTIFY_SERVICE_REDIRECT_URL}
-                state={""}
-                scope={"user-read-private user-read-email user-modify-playback-state user-read-recently-played user-read-playback-state"}
-                onSuccess={this.onPopupSuccess}
-                onFailure={() => this.onPopupClose}
+            <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                buttonText="Login"
+                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
+                scope={"https://mail.google.com/"}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaSpotify/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
+                    <Button onClick={renderProps.onClick} disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
                 )}
+                onSuccess={(response) => console.log(response)}
+                accessType={"offline"}
+                onFailure={(error => console.error(error))}
             />);
     }
 
@@ -64,7 +64,7 @@ export default class SpotifyNewContextDialog extends NewContextDialog {
 
 }
 
-SpotifyNewContextDialog.propTypes = {
+GoogleNewContextDialog.propTypes = {
     service: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired

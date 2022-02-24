@@ -3,6 +3,8 @@ import {TokenData} from "../controllers/ServiceController";
 import DiscordService from "../services/external/DiscordService";
 import Logger from "../utils/Logger";
 import ContextController from "../controllers/ContextController";
+import {Services} from "../models/Services";
+import SpotifyService from "../services/external/SpotifyService";
 
 type reactionsFunc = (reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) => void;
 type reactionHook = {type: ReactionType, func: reactionsFunc};
@@ -21,7 +23,11 @@ export class ReactionEnd {
 export default class ReactionManager {
 
     private static instance: ReactionManager;
-    private readonly reactions: reactionHook[] = [{type: ReactionType.discord_send_chanel_message, func: this.discordSendChanelMessage}, {type: ReactionType.spotify_play_track, func: this.spotifyPlaySpotify}]
+    private readonly reactions: reactionHook[] = [
+        {type: ReactionType.discord_send_chanel_message, func: this.discordSendChanelMessage},
+        {type: ReactionType.spotify_play_track, func: this.spotifyPlay},
+        {type: ReactionType.spotify_pause_track, func: this.spotifyPause},
+        {type: ReactionType.spotify_change_volume, func: this.spotifyChangeVolume}]
 
     private constructor() {
         Logger.i("AREA", "ReactionManager initialize");
@@ -55,11 +61,51 @@ export default class ReactionManager {
         new DiscordService().sendDiscordBotChanelMessage(channelId, message);
     }
 
-    private spotifyPlaySpotify(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {
+    private spotifyPlay(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {
+        const contextUuid: string = reaction.parameters.filter((param) => param['name'] === 'context_uuid')[0]['value'];
+        const userUuid: string = reaction.parameters.filter((param) => param['name'] === 'user_uuid')[0]['value'];
+        const songUri: string = reaction.parameters.filter((param) => param['name'] === 'song_uri')[0]['value'];
+
+        new ContextController().getContextByUuid(userUuid, Services.SPOTIFY, contextUuid, (context, error) => {
+            if (error)
+                return console.error(error);
+            new SpotifyService().playTrack(userUuid, context, songUri, (data, spotifyError) => {
+                if (spotifyError)
+                    return console.error(spotifyError);
+                console.log(data);
+            });
+        });
+    }
+
+    private spotifyPause(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) {
         const contextUuid: string = reaction.parameters.filter((param) => param['name'] === 'context_uuid')[0]['value'];
         const userUuid: string = reaction.parameters.filter((param) => param['name'] === 'user_uuid')[0]['value'];
 
-        console.log(tokenData);
+        new ContextController().getContextByUuid(userUuid, Services.SPOTIFY, contextUuid, (context, error) => {
+            if (error)
+                return console.error(error);
+            new SpotifyService().pauseTrack(userUuid, context, (data, spotifyError) => {
+                if (spotifyError)
+                    return console.error(spotifyError);
+                console.log(data);
+            });
+        });
+    }
+
+    private spotifyChangeVolume(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) {
+        const contextUuid: string = reaction.parameters.filter((param) => param['name'] === 'context_uuid')[0]['value'];
+        const userUuid: string = reaction.parameters.filter((param) => param['name'] === 'user_uuid')[0]['value'];
+        const volume: number = reaction.parameters.filter((param) => param['name'] === 'volume')[0]['value'];
+
+        new ContextController().getContextByUuid(userUuid, Services.SPOTIFY, contextUuid, (context, error) => {
+            if (error)
+                return console.error(error);
+            new SpotifyService().changeVolume(userUuid, context, volume,(data, spotifyError) => {
+                if (spotifyError)
+                    return console.error(spotifyError);
+                console.log(data);
+            });
+        });
     }
 
 }

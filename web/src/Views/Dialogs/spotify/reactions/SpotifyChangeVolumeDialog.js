@@ -1,22 +1,24 @@
 import React from "react";
 import {ReactionSettingsDialog} from "../../ReactionSettingsDialog";
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, Slider, TextField} from "@mui/material";
 import {AuthContext} from "../../../../Contexts/AuthContext";
+import {VolumeDown, VolumeUp} from "@mui/icons-material";
+import Stack from "@mui/material/Stack";
 
-export default class SpotifyPlayTrackDialog extends ReactionSettingsDialog {
+export default class SpotifyChangeVolumeDialog extends ReactionSettingsDialog {
 
     static contextType = AuthContext
 
     constructor(props) {
         super(props);
         this.state = {
-            songUri: '',
+            volume: 50,
         }
     }
 
     onCreate() {
         const reaction = {
-            type: "spotify_play_track",
+            type: "spotify_change_volume",
             base_key: this.state.selectedContextUuid,
             parameters: [
                 {
@@ -28,8 +30,8 @@ export default class SpotifyPlayTrackDialog extends ReactionSettingsDialog {
                     value: this.context.getUser()['uuid'],
                 },
                 {
-                    name: "song_uri",
-                    value: this.state.songUri,
+                    name: "volume",
+                    value: this.state.volume,
                 }
             ]
         }
@@ -45,7 +47,11 @@ export default class SpotifyPlayTrackDialog extends ReactionSettingsDialog {
     renderDialogContent() {
         return (<Box>
             <Box sx={{mt: 4}}>
-                <TextField label={"spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"} value={this.state.songUri} onChange={(event) => this.setState({songUri: event.target.value})}>Song uri</TextField>
+                <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                    <VolumeDown />
+                    <Slider aria-label="Volume" value={this.state.volume} onChange={(event, volume) => this.setState({volume: volume})} />
+                    <VolumeUp />
+                </Stack>
             </Box>
         </Box>)
     }
