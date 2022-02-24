@@ -30,7 +30,6 @@ const parse = (uuid: string, req: express.Request, res: express.Response, next: 
         return res.status(400).json({success: false, error: 'Required appletsUuid body parameters !'})
 
     return new AppletController().getAppletByUuid(uuid, (applet) => {
-        console.log(applet);
         if (applet === undefined || applet === null)
             return res.status(400).json({success: false, error: `Applet with uuid '${uuid}' not found !`});
         req['applet'] = applet;
@@ -101,7 +100,6 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
         return res.status(400).json({success: false, error: `Missing parameters '${applets.action.missing}' for action '${action_type}'`})
 
    if (applets.reactions.filter((reaction) => reaction['missing'].length > 0).length > 0) {
-       console.log(applets.reactions.filter((reaction) => reaction['missing'].length > 0));
        return res.status(400).json({success: false, error: `Missing parameters for reactions !`})
    }
 

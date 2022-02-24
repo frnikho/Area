@@ -20,12 +20,14 @@ import Page from "../Page"
 import {FaPlus, FaTrash} from "react-icons/fa";
 import app, {config} from "../../Utils/Axios";
 import {AuthContext} from "../../Contexts/AuthContext";
+import {withSnackbar} from "notistack";
+import {Navigate} from 'react-router-dom'
 
 /**
  * @class AddAppletPage
  * Page for create an applets
  */
-export default class AddAppletPage extends Page {
+class AddAppletPage extends Page {
 
     static contextType = AuthContext;
 
@@ -36,6 +38,7 @@ export default class AddAppletPage extends Page {
             action: undefined,
             reactions: [],
             currentDialog: undefined,
+            redirect: undefined,
         }
         this.onActionSelected = this.onActionSelected.bind(this);
         this.onReactionSelected = this.onReactionSelected.bind(this);
@@ -193,8 +196,14 @@ export default class AddAppletPage extends Page {
         console.log(body);
         app.post('/applets', body, config(this.context.getToken())).then((response) => {
             console.log(response.data);
-
+            this.props.enqueueSnackbar('New applet created successfully', {
+                variant: 'success',
+                onClose: () => {this.setState({redirect: '/'})},
+            });
         }).catch((err) => {
+            this.props.enqueueSnackbar(`${err.message}`, {
+                variant: 'error'
+            });
             console.log(err.response.data);
         })
     }
@@ -215,6 +224,7 @@ export default class AddAppletPage extends Page {
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
+                {this.state.redirect !== undefined ? <Navigate to={this.state.redirect}/> : null }
                 {this.showDialogs()}
                 {this.showTitle()}
                 <Box style={styles.content}>
@@ -231,3 +241,5 @@ export default class AddAppletPage extends Page {
         );
     }
 }
+
+export default withSnackbar(AddAppletPage);

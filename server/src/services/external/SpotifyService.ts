@@ -107,7 +107,8 @@ export default class SpotifyService {
                 callback(undefined, undefined);
             callback(response.data, null);
         }).catch((err) => {
-            console.log(err);
+            if (err === undefined)
+                return callback(undefined, "An error occurred, please try again later");
             if (err.response.status === 401) {
                 this.refreshToken(context, userUuid, (newContext => {
                     axios.get(`https://api.spotify.com/v1/me/player`, this.buildAuthorizationHeader(newContext.tokenData.token['access_token'])).then((response) => {

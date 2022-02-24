@@ -105,6 +105,7 @@ export default class AppletController {
             title: app.title,
             uuid: app.uuid,
             user_uuid: app.user_uuid,
+            enable: app.enable,
             action,
             reactions: reactions.map((reaction) => {
                 const type: ReactionType = ReactionType[reaction.type as unknown as string];

@@ -12,9 +12,11 @@ const sendError = (res: express.Response, message: string) => {
 export const checkContextCreation = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (req.body === undefined)
         return sendError(res, "Required context body for creation !");
-    const {title, description, token_data, service} = req.body;
-    if (title === undefined || description === undefined || token_data === undefined || service === undefined)
-        return sendError(res, "missing parameters ! (required: title, description, token_data, service)");
+    let {title, description, token_data, service} = req.body;
+    if (title === undefined || token_data === undefined || service === undefined)
+        return sendError(res, "missing parameters ! (required: title, token_data, service)");
+    if (description === undefined)
+        description = "";
     req['context'] = {
         description,
         title,

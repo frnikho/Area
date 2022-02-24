@@ -26,8 +26,9 @@ import TwitterNewContextDialog from "../Dialogs/context/TwitterNewContextDialog"
 import SlackNewContextDialog from "../Dialogs/context/SlackNewContextDialog";
 import SpotifyNewContextDialog from "../Dialogs/context/SpotifyNewContextDialog";
 import GoogleNewContextDialog from "../Dialogs/context/GoogleNewContextDialog";
+import {withSnackbar} from "notistack";
 
-export default class ContextPage extends Page {
+class ContextPage extends Page {
 
     static contextType = AuthContext;
 
@@ -157,12 +158,21 @@ export default class ContextPage extends Page {
             loading: true,
         });
         this.refresh();
+        this.props.enqueueSnackbar("Context created successfully", {
+            variant: 'success',
+        })
     }
 
     onClickDelete(context) {
         app.delete(`/context/?key=${context.uuid}&service=${this.state.selectedService.type}`, config(this.context.getToken())).then((response) => {
             this.refresh();
+            this.props.enqueueSnackbar("Applet deleted !", {
+                variant: 'success',
+            })
         }).catch((err) => {
+            this.props.enqueueSnackbar("An error occurred when deleting context !", {
+                variant: 'error',
+            })
             console.log(err);
         })
     }
@@ -219,3 +229,5 @@ export default class ContextPage extends Page {
         }))
     }
 }
+
+export default withSnackbar(ContextPage);

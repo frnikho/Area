@@ -13,6 +13,11 @@ import React from 'react';
 
 const Stack = createNativeStackNavigator();
 
+/**
+ * @description Handle routes
+ * @param param0
+ * @returns
+ */
 const Router = ({isLoggedIn}:boolean) => {
     // console.log(isLoggedIn['isLoggedIn']);
     // console.log(isLoggedIn == true ? 'home' : 'login')

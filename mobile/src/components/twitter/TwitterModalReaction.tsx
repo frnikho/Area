@@ -1,10 +1,7 @@
 import { Button, Center } from 'native-base';
-import { Linking } from 'react-native';
 import React from 'react';
 import ReactionModal from '../ReactionModal';
 import Icon from 'react-native-vector-icons/Ionicons';
-import app from '../../axios_config';
-import {authorize} from 'react-native-app-auth';
 // const pkceChallenge = require('pkce-challenge');
 
 

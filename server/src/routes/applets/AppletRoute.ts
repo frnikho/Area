@@ -111,7 +111,7 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private delete(req: express.Request, res: express.Response) {
-        new AppletController().deleteApplet(req['applet']['uuid'], (success) => {
+        new AppletController().deleteApplet(req['applet'][0]['uuid'], (success) => {
             return res.status(200).json({success});
         });
     }
