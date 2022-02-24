@@ -187,6 +187,20 @@ export default class LoginController {
     })
   }
 
+  public epitechLogin(autologinUrl: string, callback: (status: boolean, response: any) => void) {
+    new TokenController().getUserToken((status, res) => {
+      if (status) {
+        app.get(`/services/epitech/callback?url=${autologinUrl}`, config(res)).then((response) => {
+          if (response.status === 200) {
+            callback(true, response);
+          }
+        }).catch((err) => {
+          callback(false, err);
+        })
+      }
+    })
+  }
+
   public discordLogin(
     callback: (status: boolean, response: any) => void,
   ): void {

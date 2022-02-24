@@ -96,6 +96,10 @@ export default class ServicesSettingsScreen extends Component {
     })
   }
 
+  onEpitechLogin(callback: (token_data: object) => void) {
+    callback({epitech: true});
+  }
+
   /**
    * @description Call good service login. Send data to other screen
    * @param service
@@ -107,7 +111,8 @@ export default class ServicesSettingsScreen extends Component {
       gmail: this.onGoogleLogin,
       discord: this.onDiscordLogin,
       twitter: this.onTwitterLogin,
-      spotify: this.onSpotifyLogin
+      spotify: this.onSpotifyLogin,
+      epitech_intra: this.onEpitechLogin,
     };
     servicesLogins[service.type]((token_data: object) => {
       onSelected(service, token_data);
