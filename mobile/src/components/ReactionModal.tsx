@@ -13,23 +13,21 @@ export default class ReactionModal extends React.Component {
       serviceName: undefined,
     };
     this.renderAuthContext = this.renderAuthContext.bind(this);
+    this.getServicesAuth = this.getServicesAuth.bind(this);
+  }
+
+  componentDidMount() {
+    this.getServicesAuth();
   }
 
   /**
-   * @description Load all auth context
+   * Get services auth of user by service name
    */
-  componentDidMount() {
-    new ServicesAuthentificationsController().getAllUserServicesAuthentifications(
-      (status, response) => {
-        if (status) {
-          response.map((service: object) => {
-            if (service.service === this.state.serviceName) {
-              this.setState({ servicesAuth: service });
-            }
-          });
-        }
-      },
-    );
+  getServicesAuth() {
+    new ServicesAuthentificationsController().getServicesAuthByService(this.state.serviceName, (status, response) => {
+      if (status)
+        this.setState({ servicesAuth: response });
+    });
   }
 
   /**

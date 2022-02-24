@@ -183,7 +183,7 @@ export default class AppletRoute extends Route {
      *   post:
      *     tags:
      *       - Applets
-     *     description: disable a user applet with specific applet id in body
+     *     description: enable or disable a user applet with specific applet id in body
      *     requestBody:
      *       description: applet body
      *       required: true

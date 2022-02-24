@@ -1,16 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-  Box,
   Button,
-  Center,
   ChevronLeftIcon,
   Text,
   Toast,
   VStack,
 } from 'native-base';
-import {StyleSheet, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AppletsController from '../../controller/AppletsControler';
+import { StyleSheet, View } from 'react-native';
+import AppletsController from '../../controller/AppletsController';
 
 export default class AppletsScreen extends Component {
   constructor(props: any) {
@@ -36,12 +33,12 @@ export default class AppletsScreen extends Component {
   }
 
   onActionSelected(action: object, param: object) {
-    this.setState({action: action, actionParameters: param});
+    this.setState({ action: action, actionParameters: param });
     this.props.navigation.goBack();
   }
 
   onReactionSelected(reaction: object, param: object) {
-    this.setState({reaction: reaction, reactionParameters: param});
+    this.setState({ reaction: reaction, reactionParameters: param });
     this.props.navigation.goBack();
   }
 
@@ -172,25 +169,20 @@ export default class AppletsScreen extends Component {
     );
   }
 
-  renderFooter() {
+  /**
+   * Create applet Button Render
+   *
+   */
+  createButtonRender() {
     return (
-      <View style={styles.createContainer}>
-        <Button
-          isDisabled={!this.isValid()}
-          mode="contained"
-          style={styles.createButton}
-          onPress={this.onCreate}>
-          <Text
-            fontFamily="body"
-            fontWeight={600}
-            fontSize="4xl"
-            style={styles.createText}>
-            Create
-          </Text>
+      <View id="createApplet" style={styles.createContainer}>
+        <Button isDisabled={!this.isValid()} mode="contained" style={styles.createButton} onPress={this.onCreate}>
+          <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.createText}>Create</Text>
         </Button>
       </View>
     );
   }
+
 
   render() {
     return (
@@ -205,7 +197,7 @@ export default class AppletsScreen extends Component {
         {this.mainTextRender()}
         {this.actionButtonRender()}
         {this.reactionButtonRender()}
-        {this.renderFooter()}
+        {this.createButtonRender()}
       </View>
     );
   }
@@ -228,6 +220,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     backgroundColor: '#222222',
+    borderRadius: 15,
   },
   actionText: {
     color: '#ffffff',
@@ -238,15 +231,18 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     backgroundColor: '#999999',
+    borderRadius: 15,
   },
   reactionText: {
     color: '#ffffff',
   },
   createButton: {
-    justifyContent: 'center',
-    backgroundColor: '#222222',
+    bottom: 10,
     marginLeft: 10,
     marginRight: 10,
+    justifyContent: 'center',
+    backgroundColor: "#222222",
+    borderRadius: 15,
   },
   createText: {
     color: '#ffffff',

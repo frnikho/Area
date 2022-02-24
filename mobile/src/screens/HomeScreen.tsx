@@ -17,7 +17,7 @@ export default class HomeScreen extends Component {
    */
   createAppletButtonRender() {
     return (
-      <View id="createApplet" >
+      <View id="createApplet">
         <Button mode="contained" style={styles.createAppletButton} onPress={() => this.props.navigation.navigate('applets')}>
           <Text fontFamily="body" fontWeight={600} fontSize="2xl" style={styles.createAppletText}>Create</Text>
         </Button>
@@ -25,13 +25,22 @@ export default class HomeScreen extends Component {
     );
   }
 
-  render() {
+  settingsButtonRender() {
     return (
-      <View style={styles.mainView}>
+      <View id="settingsButton">
         <Button
+          mode="contained"
           onPress={() => this.props.navigation.navigate('settings')}
           leftIcon={<Icon name="settings" size={40} color="black" />}
           style={styles.settingsButton} />
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={styles.mainView}>
+        {this.settingsButtonRender()}
         <UserApplets />
         {this.createAppletButtonRender()}
       </View>

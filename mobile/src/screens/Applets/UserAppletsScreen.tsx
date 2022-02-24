@@ -1,8 +1,10 @@
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { Text, VStack } from 'native-base';
-import AppletsController from '../../controller/AppletsControler';
+import { Button, HStack, Stack, Switch, Text, VStack } from 'native-base';
+import AppletsController from '../../controller/AppletsController';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Loading from '../../components/Loading';
 
 export default class UserApplets extends Component {
 
@@ -13,6 +15,7 @@ export default class UserApplets extends Component {
             refresh: false,
         }
         this.onRefresh = this.onRefresh.bind(this)
+        this.getUserApplets = this.getUserApplets.bind(this)
     }
 
     componentDidMount() {
@@ -50,6 +53,27 @@ export default class UserApplets extends Component {
     }
 
     /**
+     * Delete user's applet
+    */
+    onDelete(appletInfo: object) {
+        new AppletsController().deleteUserApplet(appletInfo.uuid, (status, response) => {
+            if (status === false)
+                console.log(response)
+        });
+    }
+
+    /**
+     * Enable or disable user applet
+     * @param appletInfo
+     */
+    enableDisableUserApplet(appletInfo: object) {
+        new AppletsController().toggleUserApplet(appletInfo.uuid, (status, response) => {
+            if (status === false)
+                console.log(response)
+        });
+    }
+
+    /**
      * Generate user's applets
      */
     myApplets() {
@@ -63,8 +87,18 @@ export default class UserApplets extends Component {
             let textColor = applet.cardColor === undefined ? "#222222" : "#ffffff";
             return (
                 <Card key={i} style={{ marginTop: 20, width: '100%', justifyContent: 'center', borderRadius: 15, backgroundColor: cardColor }}>
+                    <Text color={textColor} style={styles.myAppletsCardText} fontFamily="body" fontWeight={400} fontSize="4xl">{applet.title}</Text>
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
+                    <Stack space={3} alignItems="flex-end">
+                        <HStack>
+                            <Button
+                                onPress={() => { this.onDelete({ uuid: applet.appletUuid }) }}
+                                leftIcon={<Icon name="delete" size={35} color="white" />}
+                                style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} />
+                            <Switch style={{ marginRight: 15 }} size="lg" colorScheme="white" onTrackColor="white" onThumbColor="white" defaultIsChecked={applet.enable} onValueChange={() => { this.enableDisableUserApplet(applet.appletUuid) }} />
+                        </HStack>
+                    </Stack>
                 </Card>
             );
         }));
@@ -80,17 +114,19 @@ export default class UserApplets extends Component {
 
     render() {
         return (
-            <ScrollView
-                contentContainerStyle={{ padding: 20 }}
-                refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
-            >
+            <>
                 <View id="mainText" style={styles.mainText}>
                     {this.mainTextRender()}
                 </View>
-                <View id="myApplets" style={styles.myApplets}>
-                    {this.myApplets()}
-                </View>
-            </ScrollView>
+                <ScrollView
+                    contentContainerStyle={{ padding: 20 }}
+                    refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
+                >
+                    <View id="myApplets" style={styles.myApplets}>
+                        {this.state.userApplets === undefined ? <Loading /> : this.myApplets()}
+                    </View>
+                </ScrollView>
+            </>
         );
     }
 }
