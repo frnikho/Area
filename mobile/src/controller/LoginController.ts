@@ -192,7 +192,6 @@ export default class LoginController {
   ): void {
     const conf = {
       clientId: process.env.DISCORD_SERVICES_CLIENT_ID,
-      // clientSecret: 'YOUR_CLIENT_SECRET',
       redirectUrl: 'com.area://callback',
       scopes: [
         'email',
@@ -202,7 +201,6 @@ export default class LoginController {
         'bot',
         'messages.read',
       ],
-      // usePKCE: false,
       skipCodeExchange: true,
       responseType: 'code',
       serviceConfiguration: {
@@ -211,7 +209,6 @@ export default class LoginController {
         revocationEndpoint: 'https://discordapp.com/api/oauth2/token/revoke',
       },
       useNonce: false,
-      // usePKCE: false,
       additionalParameters: {
         permissions: '8',
       },
@@ -232,7 +229,7 @@ export default class LoginController {
                 callback(true, res);
               })
               .catch(err => {
-                callback(false, err);
+                callback(false, err.response.data);
               });
           }
         });
