@@ -2,7 +2,6 @@ import Route from "../../Route";
 import express = require('express');
 import ServiceAuthRoute from "./ServiceAuthRoute"
 import {authorization} from "../../middlewares/AuthMiddleware";
-import {Services} from "../../models/Services"
 import {checkContext} from "../../middlewares/ContextMiddleware";
 import DiscordService from "../../services/external/DiscordService";
 import {User} from "../../models/User";
@@ -66,7 +65,7 @@ export default class DiscordServiceRoute extends Route {
             params.append('code_verifier', codeVerifier);
         params.append('redirect_uri', type === 'web' ? process.env.DISCORD_SERVICES_REDIRECT_URL_WEB : process.env.DISCORD_SERVICES_REDIRECT_URL_MOBILE);
 
-        new ServiceAuthRoute().postRequest("https://discord.com/api/oauth2/token", params, headers, req['user']['uuid'], Services.DISCORD.valueOf(), (token) => {
+        new ServiceAuthRoute().postRequest("https://discord.com/api/oauth2/token", params, headers, (token) => {
             return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});

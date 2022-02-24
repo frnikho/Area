@@ -7,7 +7,7 @@ import {
   VStack,
 } from 'native-base';
 import { StyleSheet, View } from 'react-native';
-import AppletsController from '../../controller/AppletsControler';
+import AppletsController from '../../controller/AppletsController';
 
 export default class AppletsScreen extends Component {
   constructor(props: any) {

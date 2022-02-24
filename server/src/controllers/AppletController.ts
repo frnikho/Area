@@ -134,11 +134,19 @@ export default class AppletController {
     }
 
     public enableAppletByUuid(uuid: string, success: successBool): void {
-
+        DBService.query(`UPDATE area.applets applet SET applet.enable = '${1}' WHERE applet.uuid = '${uuid}'`, (result) => {
+            return success(true)
+        }, (err) => {
+            success(false);
+        });
     }
 
     public disableAppletByUuid(uuid: string, success: successBool): void {
-
+        DBService.query(`UPDATE area.applets applet SET applet.enable = '${0}' WHERE applet.uuid = '${uuid}'`, (result) => {
+            return success(true)
+        }, (err) => {
+            success(false);
+        });
     }
 
 }

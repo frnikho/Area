@@ -1,6 +1,6 @@
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Text, VStack } from 'native-base';
-import AppletsController from '../../controller/AppletsControler';
+import { Button, HStack, Stack, Switch, Text, VStack } from 'native-base';
+import AppletsController from '../../controller/AppletsController';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,12 +20,6 @@ export default class UserApplets extends Component {
 
     componentDidMount() {
         this.getUserApplets();
-    }
-
-    componentDidUpdate(prevProps: any, prevState: any) {
-        if (prevState !== this.state) {
-            this.getUserApplets();
-        }
     }
 
     /**
@@ -65,7 +59,18 @@ export default class UserApplets extends Component {
         new AppletsController().deleteUserApplet(appletInfo.uuid, (status, response) => {
             if (status === false)
                 console.log(response)
-        })
+        });
+    }
+
+    /**
+     * Enable or disable user applet
+     * @param appletInfo
+     */
+    enableDisableUserApplet(appletInfo: object) {
+        new AppletsController().toggleUserApplet(appletInfo.uuid, (status, response) => {
+            if (status === false)
+                console.log(response)
+        });
     }
 
     /**
@@ -85,10 +90,15 @@ export default class UserApplets extends Component {
                     <Text color={textColor} style={styles.myAppletsCardText} fontFamily="body" fontWeight={400} fontSize="4xl">{applet.title}</Text>
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
-                    <Button
-                        onPress={() => { this.onDelete({ uuid: applet.appletUuid }) }}
-                        leftIcon={<Icon name="delete" size={40} color="white" />}
-                        style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} />
+                    <Stack space={3} alignItems="flex-end">
+                        <HStack>
+                            <Button
+                                onPress={() => { this.onDelete({ uuid: applet.appletUuid }) }}
+                                leftIcon={<Icon name="delete" size={35} color="white" />}
+                                style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} />
+                            <Switch style={{ marginRight: 15 }} size="lg" colorScheme="white" onTrackColor="white" onThumbColor="white" defaultIsChecked={applet.enable} onValueChange={() => { this.enableDisableUserApplet(applet.appletUuid) }} />
+                        </HStack>
+                    </Stack>
                 </Card>
             );
         }));
@@ -113,7 +123,7 @@ export default class UserApplets extends Component {
                     refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
                 >
                     <View id="myApplets" style={styles.myApplets}>
-                        { this.state.userApplets === undefined ? <Loading /> : this.myApplets()}
+                        {this.state.userApplets === undefined ? <Loading /> : this.myApplets()}
                     </View>
                 </ScrollView>
             </>

@@ -62,8 +62,8 @@ export default class AxiosController {
      * @param headers
      * @param callback
      */
-     public post(url: string, headers: object, callback: (status: boolean, response: any) => void) {
-        axios.post(url, headers).then((response) => {
+     public post(url: string, body: object, headers: object, callback: (status: boolean, response: any) => void) {
+        axios.post(url, body, headers).then((response) => {
             return callback(true, response);
         }).catch((err) => {
             return callback(false, err);
