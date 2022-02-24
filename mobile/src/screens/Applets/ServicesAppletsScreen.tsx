@@ -19,6 +19,7 @@ export default class ServicesAppletsScreen extends Component {
     this.onSave = this.onSave.bind(this);
     this.onClose = this.onClose.bind(this);
     this.renderServicesCards = this.renderServicesCards.bind(this);
+    this.getServices = this.getServices.bind(this);
   }
 
   onSave(action: object, param: object) {
@@ -32,6 +33,13 @@ export default class ServicesAppletsScreen extends Component {
   }
 
   componentDidMount() {
+    this.getServices();
+  }
+
+  /**
+   * Get services
+   */
+  getServices() {
     new ServicesController().getAboutPointJSON((status, response) => {
       if (status) {
         this.setState({ services: response.data.server.services });
@@ -47,7 +55,7 @@ export default class ServicesAppletsScreen extends Component {
       <ScrollView style={{ padding: 20, flex: 1 }}>
         <Text fontFamily="body" fontWeight={600} fontSize="4xl">
           Services
-          </Text>
+        </Text>
         <Button
           onPress={() => this.props.navigation.navigate('servicesAuthentification')}
           leftIcon={<Icon name="settings" size={40} color="black" />}
