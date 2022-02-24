@@ -1,6 +1,6 @@
-import {Box, Button, Center, CheckIcon, Select, Spinner} from 'native-base';
+import { Box, Button, Center, CheckIcon, Select, Spinner } from 'native-base';
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 import ServicesAuthentificationsController from '../controller/ServicesAuthentifications';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loading from './Loading';
@@ -15,41 +15,39 @@ export default class ActionModal extends React.Component {
       serviceName: undefined,
     };
     this.renderAuthContext = this.renderAuthContext.bind(this);
+    this.getServicesAuth = this.getServicesAuth.bind(this);
+  }
+
+  componentDidMount() {
+    this.getServicesAuth();
   }
 
   /**
-   * @description Load all auth context
+   * Get services auth of user by service name
    */
-  componentDidMount() {
-    new ServicesAuthentificationsController().getAllUserServicesAuthentifications(
-      (status, response) => {
-        if (status) {
-          response.map((service: object) => {
-            if (service.service === this.state.serviceName) {
-              this.setState({servicesAuth: service});
-            }
-          });
-        }
-      },
-    );
+  getServicesAuth() {
+    new ServicesAuthentificationsController().getServicesAuthByService(this.state.serviceName, (status, response) => {
+      if (status)
+        this.setState({ servicesAuth: response });
+    });
   }
 
   /**
    * @description Must be overridden. Save param from action
    */
-  onChangeParam(param: any) {}
+  onChangeParam(param: any) { }
 
   /**
    * @description Must be overridden if need. Load data to display form.
    */
-  loadData() {}
+  loadData() { }
 
   /**
    * @description on change auth context, store context uuid
    * @param uuid
    */
   onChangeContext(uuid: string) {
-    this.setState({contextValue: uuid});
+    this.setState({ contextValue: uuid });
     this.loadData();
   }
 
@@ -119,7 +117,7 @@ export default class ActionModal extends React.Component {
       <Center>
         <Text>
           {this.props.action.description === undefined ||
-          this.props.action.description.length === 0
+            this.props.action.description.length === 0
             ? 'No description is available for the moment'
             : this.props.action.description}
         </Text>
