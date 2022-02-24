@@ -31,13 +31,18 @@ export default class LoginController {
     GoogleSignin.configure({
       scopes: ['profile'],
       webClientId: process.env.GOOGLE_CLIENT_ID,
+      offlineAccess: true,
     });
 
     GoogleSignin.hasPlayServices()
       .then(() => {
         GoogleSignin.signIn()
           .then(res => {
-            callback(true, res);
+            app.get(`/auth/google/code?code=${res.serverAuthCode}`).then(res => {
+              callback(true, res);
+            }).catch(err => {
+              callback(false, err);
+            })
           })
           .catch(err => {
             callback(false, err);

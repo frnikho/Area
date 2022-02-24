@@ -28,12 +28,13 @@ export default class LoginScreen extends Component {
       password: undefined,
     };
     this.onLogin = this.onLogin.bind(this);
+    this.onLoginGoogle = this.onLoginGoogle.bind(this);
   }
 
   onLogin() {
     if (this.state.email === undefined || this.state.password === undefined) {
       Toast.show({
-        title: "Email and password are required",
+        title: 'Email and password are required',
         status: 'warning',
         description: 'Please try again !',
       });
@@ -66,12 +67,25 @@ export default class LoginScreen extends Component {
   }
 
   onLoginGoogle() {
-    console.log('test');
-    new LoginController().googleLogin((status, res) => {
+    new LoginController().googleLogin(async (status, res) => {
       if (status) {
-        console.log(res);
+        await AsyncStorage.setItem('@token', res.data.token);
+        Toast.show({
+          title: 'You are successfully authenticated',
+          status: 'success',
+          description: 'You can now navigate in the dashboard.',
+          duration: 2000,
+        });
+        setTimeout(() => {
+          this.props.navigation.navigate('home');
+        }, 1000);
       } else {
         console.log(res);
+        Toast.show({
+          title: res.response.data.error,
+          status: 'warning',
+          description: 'Please try again !',
+        });
       }
     });
   }
