@@ -11,6 +11,7 @@ import {
   ChevronLeftIcon,
 } from 'native-base';
 import ServicesAuthentificationsController from '../../controller/ServicesAuthentifications';
+
 export default class CreateServiceAuthentificationScreen extends Component {
   constructor(props: any) {
     super(props);
@@ -66,7 +67,7 @@ export default class CreateServiceAuthentificationScreen extends Component {
       (status, res) => {
         if (status === true) {
           Toast.show({
-            title: `You are successfully created a ${this.state.service.name} service.`,
+            title: `${this.state.service.name} service authentification is successfully created.`,
             status: 'success',
             description: 'You can now navigate in the dashboard.',
             duration: 2000,
