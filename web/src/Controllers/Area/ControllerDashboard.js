@@ -60,7 +60,6 @@ export default class ControllerDashboard {
     loadServices() {
         app.get(`about.json`).then((response) => {
             this.page.setState({ services: response.data.server.services })
-            console.log(response.data.server)
         })
     }
 
