@@ -29,7 +29,7 @@ export default class AppletCard extends React.Component {
                             {"Status: "}
                         </Typography>
                         <Box sx={{ px: 0.2 }} style={{ with: "1%" }} />
-                        <Typography color={this.props.appletStatus ? "green" : "red"} fontWeight={"800"}>
+                        <Typography color={this.props.appletStatus ? "#4fe100" : "red"} fontWeight={"800"}>
                             {this.props.appletStatus ? "connedted" : "disconected"}
                         </Typography>
                     </Box>

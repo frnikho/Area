@@ -55,7 +55,6 @@ export default class ControllerDashboard {
             let serviceData = this.getDataFromService(data[it].action_type, data[it].reactions[0].type)
             applets.push({ ...{ ...data[it], ...serviceData, title: (data[it].title !== "" ? data[it].title : "<applet title>") }, description: serviceData.description })
         }
-        console.log(applets)
         this.page.setState({ applets: applets })
     }
 

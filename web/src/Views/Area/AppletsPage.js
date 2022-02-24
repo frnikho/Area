@@ -43,6 +43,7 @@ class AppletsPage extends Page {
                         ifIcon={component.props.applet.ifIcon}
                         thenIcon={component.props.applet.thenIcon}
                         author={component.props.applet.author}
+                        appletStatus={component.props.applet.enable === 1 ? true : false}
                         onClick={() => component.setRedirectUrl({ url: "/area/applets/property", params: component.props.applet.uuid })} />
                 </>
             );
