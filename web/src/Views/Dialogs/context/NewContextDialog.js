@@ -47,7 +47,7 @@ export default class NewContextDialog extends React.Component {
                 fullWidth={true}
                 onClose={() => this.props.onClose()}>
                 <DialogActions sx={{height: 40}}>
-                    <IconButton onClick={() => this.onClose()}><MdClose color={"black"}/></IconButton>
+                    <IconButton onClick={() => this.props.onClose()}><MdClose color={"black"}/></IconButton>
                 </DialogActions>
                 <Box textAlign={"start"} sx={{mx: 4}}>
                     <Typography fontFamily={"Roboto"} fontSize={34} fontWeight={"700"}>
