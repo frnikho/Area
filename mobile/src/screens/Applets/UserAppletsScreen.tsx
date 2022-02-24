@@ -15,10 +15,17 @@ export default class UserApplets extends Component {
             refresh: false,
         }
         this.onRefresh = this.onRefresh.bind(this)
+        this.getUserApplets = this.getUserApplets.bind(this)
     }
 
     componentDidMount() {
         this.getUserApplets();
+    }
+
+    componentDidUpdate(prevProps: any, prevState: any) {
+        if (prevState !== this.state) {
+            this.getUserApplets();
+        }
     }
 
     /**

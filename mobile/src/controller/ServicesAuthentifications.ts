@@ -1,6 +1,7 @@
 import AxiosController from './AxiosController';
 import TokenController from './TokenController';
-import app, {config} from '../axios_config';
+import app, { config } from '../axios_config';
+
 export default class ServicesAuthentificationsController {
   /**
    * Check if user have services authentifications
@@ -62,10 +63,10 @@ export default class ServicesAuthentificationsController {
         let baseURL = new AxiosController().baseURL();
         new AxiosController().del(
           baseURL +
-            '/context?key=' +
-            serviceAuthUuid +
-            '&service=' +
-            serviceName,
+          '/context?key=' +
+          serviceAuthUuid +
+          '&service=' +
+          serviceName,
           new AxiosController().config(tokenResponse),
           (status, contextDelResponse) => {
             return callback(status, contextDelResponse.data);
@@ -111,5 +112,24 @@ export default class ServicesAuthentificationsController {
           });
       }
     });
+  }
+
+  /**
+   * Get services auth by service name
+   * @param serviceName
+   * @param callback
+   */
+  public getServicesAuthByService(serviceName: string, callback: (status: boolean, response: any) => void) {
+    new ServicesAuthentificationsController().getAllUserServicesAuthentifications((status, response) => {
+      if (status) {
+        let obj = response.filter(service => {
+          if (service.service === serviceName) return true;
+        });
+        return callback(status, obj[0])
+      } else {
+        return callback(status, response);
+      }
+    },
+    );
   }
 }
