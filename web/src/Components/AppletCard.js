@@ -17,10 +17,23 @@ export default class AppletCard extends React.Component {
                     <Typography color={"white"}>
                         {this.props.description}
                     </Typography>
-                    <Box sx={{ pb: 1, mx: 1 }} />
-                    {this.props.icon &&
-                        <img src={`https://localhost:8080/static/${this.props.icon}`} width={40} alt="Loarding . . ." />
-                    }
+                    <Box sx={{ pb: 1, mx: 1 }} style={{
+                        justifyContent: "justify",
+                        alignItems: "center",
+                        display: "flex",
+                    }} >
+                        <Box style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
+                            {this.props.ifIcon &&
+                                <img src={`https://localhost:8080/static/${this.props.ifIcon}`} width={40} alt="Loarding . . ." />
+                            }
+                        </Box>
+                        <Box sx={{ mt: 0 }} style={{ width: "10px" }} />
+                        <Box style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
+                            {this.props.thenIcon &&
+                                <img src={`https://localhost:8080/static/${this.props.thenIcon}`} width={40} alt="Loarding . . ." />
+                            }
+                        </Box>
+                    </Box>
                 </Paper>
             </ButtonBase>
         );
@@ -31,6 +44,7 @@ AppletCard.propTypes = {
     title: PropTypes.string,
     color: PropTypes.string,
     description: PropTypes.string,
-    icon: PropTypes.string,
+    ifIcon: PropTypes.string,
+    thenIcon: PropTypes.string,
     onClick: PropTypes.func,
 }

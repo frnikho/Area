@@ -21,7 +21,7 @@ export default class ControllerDashboard {
                 if (this.page.state.services[itService].actions[itAction].type === actionType) {
                     return {
                         color: this.page.state.services[itService].color,
-                        icon: this.page.state.services[itService].icon,
+                        ifIcon: this.page.state.services[itService].icon,
                         description: "if " + this.page.state.services[itService].actions[itAction].if
                     }
                 }
@@ -34,7 +34,8 @@ export default class ControllerDashboard {
             for (let itReaction in this.page.state.services[itService].reactions) {
                 if (this.page.state.services[itService].reactions[itReaction].type === reactionType) {
                     return {
-                        description: "then " + this.page.state.services[itService].reactions[itReaction].then
+                        description: "then " + this.page.state.services[itService].reactions[itReaction].then,
+                        thenIcon: this.page.state.services[itService].icon,
                     }
                 }
             }
@@ -44,7 +45,7 @@ export default class ControllerDashboard {
     getDataFromService(actionType, reactionType) {
         var action = this.getActionFromServiceData(actionType)
         var reaction = this.getReactionFromServiceData(reactionType)
-        return { ...action, ...{ description: action.description + " " + reaction.description } }
+        return { ...action, ...reaction, ...{ description: action.description + " " + reaction.description } }
     }
 
     completeApplets(data) {

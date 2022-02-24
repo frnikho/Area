@@ -40,7 +40,8 @@ class AppletsPage extends Page {
                         title={component.props.applet.title}
                         color={component.props.applet.color}
                         description={component.props.applet.description}
-                        icon={component.props.applet.icon}
+                        ifIcon={component.props.applet.ifIcon}
+                        thenIcon={component.props.applet.thenIcon}
                         onClick={() => component.setRedirectUrl({ url: "/area/applets/property", params: component.props.applet.uuid })} />
                 </>
             );
