@@ -50,6 +50,7 @@ export default withCookies(class DashboardPage extends Page {
             return this.state.applets.map((applet, index) => (
                 // <Grid item xs={2} sm={4} md={4} key={index}>
                 <Grid item /* xs={2} sm={4} md={2.9} */ /* spacing={1} */ key={index}>
+
                     <AppletsPage applet={applet} />
                 </Grid>
             ))
@@ -122,8 +123,8 @@ export default withCookies(class DashboardPage extends Page {
                 <div style={Style.container}>
                     My applets
                 </div>
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent={"center"} textAlign={"center"}>
+                <Box sx={{ flexGrow: 1 }} style={{display: "flex", justifyContent: 'center', alignItems: 'center'}}>
+                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{  width: '95%', height: '95%',}}>
                         {this.showApplets(this)}
                     </Grid>
                 </Box>
