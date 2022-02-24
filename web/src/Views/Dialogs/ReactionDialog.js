@@ -11,6 +11,9 @@ import AppletChildItemCard from "../../Components/AppletChildItemCard";
 import app from "../../Utils/Axios";
 import DiscordSendMessageDialog from "./discord/reactions/DiscordSendMessageDialog";
 import PropTypes from "prop-types";
+import SpotifyPauseTrackDialog from "./spotify/reactions/SpotifyPauseTrackDialog";
+import SpotifyPlayTrackDialog from "./spotify/reactions/SpotifyPlayTrackDialog";
+import SpotifyChangeVolumeDialog from "./spotify/reactions/SpotifyChangeVolumeDialog";
 
 export default class ReactionDialog extends React.Component {
 
@@ -64,6 +67,9 @@ export default class ReactionDialog extends React.Component {
             return;
         const hooks = {
             discord_send_chanel_message: <DiscordSendMessageDialog action={this.props.action} onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
+            spotify_pause_track: <SpotifyPauseTrackDialog action={this.props.action} onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
+            spotify_play_track: <SpotifyPlayTrackDialog action={this.props.action} onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
+            spotify_change_volume: <SpotifyChangeVolumeDialog action={this.props.action} onClose={this.onDialogsClosed} onReactionCreated={this.onReactionCreated} reaction={this.state.reaction} service={this.state.service}/>,
         }
         return hooks[this.state.dialog];
     }
@@ -132,7 +138,6 @@ export default class ReactionDialog extends React.Component {
 }
 
 ReactionDialog.propTypes = {
-    action: PropTypes.object.isRequired,
     onSelected: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
 }

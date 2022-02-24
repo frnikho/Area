@@ -8,6 +8,8 @@ export default class ContextController {
         if (service === undefined)
             return callback(undefined, `Unknown service '${service}'`);
         DBService.query(`SELECT ${service.valueOf()} FROM area.services WHERE user_uuid = '${userUuid}'`, (result) => {
+            if (result[0] === undefined)
+                return callback(undefined, "not context founds !");
             const jsonData = result[0][service.valueOf()];
             callback(JSON.parse(jsonData), null);
         })

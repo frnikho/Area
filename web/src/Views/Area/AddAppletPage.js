@@ -8,7 +8,7 @@ import {
     Typography,
     CssBaseline,
     TextField,
-    Button
+    Button, Grid, Card, CardHeader, IconButton, CardContent, CardActions
 } from "@mui/material";
 import { styles } from "../../Resources/Styles/AddAppletPageStyles";
 import { theme } from "../../Resources/Styles/AppTheme";
@@ -17,10 +17,9 @@ import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
-import {FaPlus} from "react-icons/fa";
+import {FaPlus, FaTrash} from "react-icons/fa";
 import app, {config} from "../../Utils/Axios";
 import {AuthContext} from "../../Contexts/AuthContext";
-import Header from "../../Components/Header"
 
 /**
  * @class AddAppletPage
@@ -121,17 +120,17 @@ export default class AddAppletPage extends Page {
             )
         } else {
             return (
-                <Paper sx={{ backgroundColor: `${this.state.action.service.color}`, mb: 4, mt: 1, borderRadius: 8 }}>
-                    <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
-                        <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
-                            {/*                          <Box sx={{mb: 2}}>
-                                <MdEditNote color={"white"} size={24}/>
-                            </Box>*/}
-                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loading . . ." />
+                <Grid item xs={8} sx={{my: 2, width: "100%"}}>
+                    <Card sx={{backgroundColor: this.state.action.service.color, borderRadius: 8 }}>
+                        <CardHeader action={<IconButton onClick={() => this.setState({action: undefined, reactions: []})} ><FaTrash color={"white"}/> </IconButton>}/>
+                        <CardContent>
+                            <Typography variant={"h3"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>IF</Typography>
                             <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{this.state.action.about.name}</Typography>
-                        </Box>
-                    </ButtonBase>
-                </Paper>
+                            <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loading . . ." />
+                        </CardContent>
+                        <CardActions/>
+                    </Card>
+                </Grid>
             )
         }
     }
@@ -147,39 +146,43 @@ export default class AddAppletPage extends Page {
             </Paper>)
         } else {
             return (
-                <Box>
-                    {this.state.reactions.map((reaction, index) => {
-                        return (
-                            <Box key={index} sx={{m: 2}}>
-                                <Paper sx={{backgroundColor: reaction.service.color, borderRadius: 8}}>
-                                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddReaction}>
-                                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                                            <Typography fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{reaction.about.name}</Typography>
-                                            <img src={`https://localhost:8080/static/` + reaction.service.icon} width={50} alt="Loarding . . ."/>
-                                        </Box>
-                                    </ButtonBase>
-                                </Paper>
-                            </Box>
-                        )
-                    })}
-                    <ButtonBase>
-                        <FaPlus onClick={this.onClickAddReaction}/>
-                    </ButtonBase>
-                </Box>
+                this.state.reactions.map((reaction, index) => {
+                    return (
+                        <Grid item key={index} xs={8} sx={{my: 2, width: "100%"}}>
+                            <Card sx={{backgroundColor: reaction.service.color, borderRadius: 8 }}>
+                                <CardHeader action={<IconButton onClick={() => this.setState({action: undefined, reactions: []})} ><FaTrash color={"white"}/> </IconButton>}/>
+                                <CardContent>
+                                    <img src={`https://localhost:8080/static/` + reaction.service.icon} width={50} alt="Loarding . . ."/>
+                                    <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{reaction.about.name}</Typography>
+                                </CardContent>
+                                <CardActions/>
+                            </Card>
+                        </Grid>
+                    )
+                })
             )
         }
     }
 
     showCreateButton() {
-        return (<Box sx={{my: 2}}>
+        return (<Box sx={{mt: 8}}>
             <Button variant={"contained"} disabled={this.state.action === undefined || this.state.reactions.length === 0} sx={{width: 300, p: 2}} onClick={this.onClickCreate}>Create</Button>
         </Box>);
+    }
+
+    showAddMoreReactionButton() {
+        if (this.state.reactions.length === 0)
+            return;
+        return (<ButtonBase>
+            <FaPlus onClick={this.onClickAddReaction}/>
+        </ButtonBase>)
     }
 
     onClickCreate() {
         console.log(this.state.action);
 
         const body = {
+            title: this.state.appletTitle,
             action_key: this.state.action.data.base_key,
             action_type: this.state.action.data.action_type,
             action: {
@@ -187,7 +190,7 @@ export default class AddAppletPage extends Page {
             },
             reactions: this.state.reactions.map((reaction) => reaction.reaction),
         }
-
+        console.log(body);
         app.post('/applets', body, config(this.context.getToken())).then((response) => {
             console.log(response.data);
 
@@ -202,8 +205,8 @@ export default class AddAppletPage extends Page {
 
     showTitle() {
         return (
-            <Box sx={{ mt: 2 }} style={styles.topBar.centerMenu}>
-                <TextField variant="standard" value={this.state.appletTitle} onChange={this.onChangeTitle}/>
+            <Box sx={{ mt: 8 }} style={styles.topBar.centerMenu}>
+                <TextField name={"Applet's title"} label={"Applet's title"} inputProps={{style: {fontSize: 30}}} variant="filled" value={this.state.appletTitle} onChange={this.onChangeTitle}/>
             </Box>
         )
     }
@@ -219,6 +222,7 @@ export default class AddAppletPage extends Page {
                         <Box sx={{mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center"}}>
                             {this.showActionButton()}
                             {this.showReactionButton()}
+                            {this.showAddMoreReactionButton()}
                             {this.showCreateButton()}
                         </Box>
                     </Container>

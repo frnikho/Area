@@ -38,7 +38,10 @@ export const getReactionService = (type: ReactionType) => {
 
 export enum ReactionType {
     discord_send_chanel_message,
-    discord_create_channel
+    discord_create_channel,
+    spotify_pause_track,
+    spotify_play_track,
+    spotify_change_volume
 }
 
 export interface Ingredient {
@@ -58,6 +61,7 @@ export interface Reaction {
 
 export interface Applet {
     uuid?: string,
+    title: string,
     user_uuid: string,
     action: Action,
     action_key: string,

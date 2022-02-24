@@ -23,7 +23,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/discord/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/discord/callback?code=${data.code}&type=web`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,
@@ -47,7 +47,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
                 scope={"identify%20email%20guilds%20connections%20bot%20messages.read"}
                 extraParams={{permissions: 8}}
                 onSuccess={this.onPopupSuccess}
-                onFailure={() => this.onPopupClose}
+                onFailure={this.onPopupClose}
                 render={renderProps => (
                     <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to discord" : "Logged !"}</Button>
                 )}

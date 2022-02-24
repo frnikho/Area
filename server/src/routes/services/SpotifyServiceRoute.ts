@@ -21,14 +21,14 @@ export default class SpotifyServiceRoute extends Route {
         const headers = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                'Authorization': 'Basic ' + (new Buffer(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_SECRET).toString('base64'))
+                'Authorization': 'Basic ' + (new Buffer(process.env.SPOTIFY_SERVICE_CLIENT_ID + ':' + process.env.SPOTIFY_SERVICE_CLIENT_SECRET).toString('base64'))
             },
         };
 
         const params = new URLSearchParams();
         params.append('code', code as string);
         params.append('grant_type', "authorization_code");
-        params.append('redirect_uri', process.env.SPOTIFY_REDIRECT_URL);
+        params.append('redirect_uri', process.env.SPOTIFY_SERVICE_REDIRECT_URL);
 
         new ServiceAuthRoute().postRequest("https://accounts.spotify.com/api/token", params, headers, req['user']['uuid'], Services.SPOTIFY.valueOf(), (token) => {
             return res.status(200).json({success: true, token});
@@ -42,12 +42,12 @@ export default class SpotifyServiceRoute extends Route {
     }
 
     public login(req: express.Request, res: express.Response) {
-        const scope: string = 'user-read-private user-read-email';
+        const scope: string = 'user-read-private user-read-email user-modify-playback-state';
         const data = new URLSearchParams();
         data.set('response_type', 'code');
-        data.set('client_id', process.env.SPOTIFY_CLIENT_ID);
+        data.set('client_id', process.env.SPOTIFY_SERVICE_CLIENT_ID);
         data.set('scope', scope);
-        data.set('redirect_uri', process.env.SPOTIFY_REDIRECT_URL);
+        data.set('redirect_uri', process.env.SPOTIFY_SERVICE_REDIRECT_URL);
         data.set('state', '');
         return res.redirect(`https://accounts.spotify.com/authorize?${data.toString()}`);
     }

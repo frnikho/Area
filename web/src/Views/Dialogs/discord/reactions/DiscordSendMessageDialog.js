@@ -1,7 +1,7 @@
 import React from "react";
 import {ReactionSettingsDialog} from "../../ReactionSettingsDialog";
 import {Box, Button, Chip, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
-import {FaDiscord, FaLock} from "react-icons/fa";
+import {FaLock} from "react-icons/fa";
 import app, {config} from "../../../../Utils/Axios";
 import {AuthContext} from "../../../../Contexts/AuthContext";
 

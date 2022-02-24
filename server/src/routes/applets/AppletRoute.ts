@@ -1,8 +1,9 @@
-import express = require('express')
+import express = require('express');
 import Route from "../../Route";
 import {authorization} from "../../middlewares/AuthMiddleware";
 import AppletController from "../../controllers/AppletController";
 import {checkNewApplet, parseAppletBody, parseAppletParams} from "../../middlewares/AppletMiddleware";
+import {ActionType, Applet, ReactionType} from "../../models/Applet";
 
 /**
  * @openapi
@@ -23,8 +24,8 @@ export default class AppletRoute extends Route {
     constructor() {
         super();
         this.router.get('/all', authorization, this.getAll) // GOOD
-        this.router.get('/:appletUuid', parseAppletParams, authorization, this.get); // GOOD
-        this.router.delete('/:appletUuid', parseAppletParams, authorization, this.delete); // GOOD
+        this.router.get('/:appletUuid', authorization, parseAppletParams, this.get); // GOOD
+        this.router.delete('/:appletUuid', authorization, parseAppletParams, this.delete); // GOOD
         this.router.post('/toggle', parseAppletBody, authorization, this.toggle); // GOOD
         this.router.post('/enable', parseAppletBody, authorization, this.enable); // GOOD
         this.router.post('/disable', parseAppletBody, authorization, this.disable); // GOOD
@@ -76,7 +77,8 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private get(req: express.Request, res: express.Response) {
-        return res.status(200).json(req['applet']);
+        const applet: Applet = req['applet'];
+        return res.status(200).json(applet[0]);
     }
 
     private create(req: express.Request, res: express.Response) {
