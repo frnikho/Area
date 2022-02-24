@@ -15,7 +15,7 @@ export default class ControllerLogin {
 
     googleLogin(response) {
         if (response.error) {
-            this.page.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.page.props.enqueueSnackbar("Error with Google", { variant: 'error' });
         } else {
             ControllerGoogle.connect(response);
         }
@@ -24,7 +24,7 @@ export default class ControllerLogin {
     githubLogin(response) {
         console.log(response);
         if (response.error) {
-            this.page.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.page.props.enqueueSnackbar("Error with GitHub", { variant: 'error' });
         } else {
             ControllerGithub.connect(response);
         }
@@ -36,14 +36,14 @@ export default class ControllerLogin {
                 this.authContext.loginFromCache((data.token), () => {
                     const { cookies } = this.cookies;
                     cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
-                    this.page.setRedirectUrl({url: '/'})
-                    callback(true);
+                    this.page.setRedirectUrl({ url: '/' })
+                    this.page.props.enqueueSnackbar("You're logged !", { variant: 'success', })
                 })
             } else {
-                callback(false, "An error occurred ! please try again later");
+                this.page.props.enqueueSnackbar("An error occurred ! please try again later", { variant: 'error' });
             }
         }, (error) => {
-            callback(false, error.data.error);
+            this.page.props.enqueueSnackbar(error.data && error.data.error, { variant: 'error' });
         })
     }
 

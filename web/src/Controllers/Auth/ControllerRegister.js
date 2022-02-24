@@ -15,7 +15,7 @@ export default class ControllerRegister {
 
     googleLogin(response) {
         if (response.error) {
-            this.page.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.page.props.enqueueSnackbar("Error with google", { variant: 'error' });
         } else {
             ControllerGoogle.connect(response);
         }
@@ -23,7 +23,7 @@ export default class ControllerRegister {
 
     githubLogin(response) {
         if (response.error) {
-            this.page.setNotification({ message: "Error with google", show: true, type: "error" });
+            this.page.props.enqueueSnackbar("Error with github", { variant: 'error' });
         } else {
             ControllerGithub.connect(response);
         }
@@ -33,12 +33,12 @@ export default class ControllerRegister {
         ControllerDataBase.register(registerId, (response) => {
             if (response.data.success === true) {
                 this.page.setRedirectUrl({url: '/auth/login'})
-                this.page.setNotification({ message: "Register", show: true, type: "succes" });
+                this.page.props.enqueueSnackbar("Your register !", { variant: 'success' });
             } else {
-                this.setNotification({ message: "error with the ControllerDataBase", show: true, type: "error" });
+                this.page.props.enqueueSnackbar("Error with the database", { variant: 'error' });
             }
         }, (err) => {
-            this.page.setNotification({ message: err.data.error, show: true, type: "error" });
+            this.page.props.enqueueSnackbar(err.data.error, { variant: 'error' });
         });
     }
 

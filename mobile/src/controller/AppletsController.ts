@@ -1,9 +1,11 @@
 import TokenController from './TokenController';
 import AxiosController from './AxiosController';
 import ServicesController from './ServicesController';
-import {UserApplets} from '../models/AppletsModels';
-import app, {config} from '../axios_config';
+import { UserApplets } from '../models/AppletsModels';
+import app, { config } from '../axios_config';
+
 export default class AppletsController {
+
   /**
    * Get user's applets
    *
@@ -22,7 +24,7 @@ export default class AppletsController {
                 (status, aboutResponse) => {
                   if (status) {
                     return callback(
-                      true,
+                      status,
                       userAppletsResponse.data.data.map(obj => {
                         let info = this.getInfoByType(
                           aboutResponse.data,
@@ -30,9 +32,12 @@ export default class AppletsController {
                           obj.reactions[0].type,
                         );
                         return {
+                          title: obj.title,
+                          appletUuid: obj.uuid,
                           action: info.action,
                           reaction: info.reaction,
                           cardColor: info.color,
+                          enable: obj.enable === 1 ? true : false,
                         } as UserApplets;
                       }),
                     );
@@ -84,7 +89,6 @@ export default class AppletsController {
         },
       ],
     };
-    console.log(reactionParam);
     new TokenController().getUserToken((status, tokenResponse) => {
       if (status) {
         app
@@ -126,6 +130,45 @@ export default class AppletsController {
       if (objReaction.length !== 0) reaction = objReaction[0].then;
       if (action !== undefined || reaction != undefined) color = service.color;
     });
-    return {action: action, reaction: reaction, color: color};
+    return { action: action, reaction: reaction, color: color };
+  }
+
+  /**
+   * Delete an user applet
+   * @param appletUuid
+   * @param callback
+   */
+  public deleteUserApplet(appletUuid: string, callback: (status: boolean, response: any) => void) {
+    new TokenController().getUserToken((status, tokenResponse) => {
+      if (status) {
+        let baseURL = new AxiosController().baseURL();
+        new AxiosController().del(baseURL + "/applets/" + appletUuid, new AxiosController().config(tokenResponse), (status, appletDelResponse) => {
+          return callback(status, appletDelResponse.data);
+        });
+      } else {
+        return callback(status, tokenResponse);
+      }
+    });
+  }
+
+  /**
+   * Enable Disable user's applet
+   * @param appletUuid
+   * @param callback
+   */
+  public toggleUserApplet(appletUuid: string, callback: (status: boolean, response: any) => void) {
+    new TokenController().getUserToken((status, tokenResponse) => {
+      if (status) {
+        let baseURL = new AxiosController().baseURL();
+        const body = new URLSearchParams();
+        body.append('appletUuid', appletUuid);
+        new AxiosController().post(baseURL + "/applets/toggle", body, new AxiosController().config(tokenResponse), (status, toggleAppletResponse) => {
+          console.log(toggleAppletResponse)
+          return callback(status, toggleAppletResponse.data);
+        });
+      } else {
+        return callback(status, tokenResponse);
+      }
+    });
   }
 }

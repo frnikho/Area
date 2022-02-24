@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
-import { Text, ChevronLeftIcon} from 'native-base';
+import React, { Component } from 'react';
+import { ScrollView, View, StyleSheet } from 'react-native';
+import { Text, ChevronLeftIcon } from 'native-base';
 import ServicesController from '../../controller/ServicesController';
 import ServiceCard from '../../components/ServiceCard';
 import LoginController from '../../controller/LoginController';
@@ -14,16 +14,23 @@ export default class ServicesSettingsScreen extends Component {
     };
 
     this.onGithubLogin = this.onGithubLogin.bind(this);
+    this.getServices = this.getServices.bind(this);
   }
 
   /**
    * @description Load all service
    */
   componentDidMount() {
+    this.getServices()
+  }
+
+  /**
+   * Get services
+   */
+  getServices() {
     new ServicesController().getAboutPointJSON((status, response) => {
       if (status) {
-        this.setState({services: response.data.server.services});
-        // console.log(response.data.server.services)
+        this.setState({ services: response.data.server.services });
       } else {
         console.error(response);
       }
@@ -34,8 +41,8 @@ export default class ServicesSettingsScreen extends Component {
    * @description Github login
    * @param callback
    */
-  async onGithubLogin(callback: (token_data: object) => void) {
-    await new LoginController().githubLoginService((status, res) => {
+  onGithubLogin(callback: (token_data: object) => void) {
+    new LoginController().githubLoginService((status, res) => {
       if (status === true) {
         callback(res.data.token);
       } else {
@@ -48,8 +55,8 @@ export default class ServicesSettingsScreen extends Component {
    * @description Google login
    * @param callback
    */
-  async onGoogleLogin(callback: (token_data: object) => void) {
-    await new LoginController().googleLogin((status, res) => {
+  onGoogleLogin(callback: (token_data: object) => void) {
+    new LoginController().googleLogin((status, res) => {
       if (status === true) {
         console.log(res);
       } else {
@@ -62,10 +69,10 @@ export default class ServicesSettingsScreen extends Component {
    * @description Discord login
    * @param callback
    */
-  async onDiscordLogin(callback: (token_data: object) => void) {
-    await new LoginController().discordLogin((status, res) => {
+  onDiscordLogin(callback: (token_data: object) => void) {
+    new LoginController().discordLogin((status, res) => {
       if (status === true) {
-        console.log(res);
+        callback(res.data.token)
       } else {
         console.log(res);
       }
@@ -73,17 +80,48 @@ export default class ServicesSettingsScreen extends Component {
   }
 
   /**
+   * @description Twitter login
+   * @param callback
+   */
+  onTwitterLogin(callback: (token_data: object) => void) {
+    new LoginController().twitterLogin((status, res) => {
+      if (status) {
+        callback(res.data.token);
+      } else {
+        console.log(res);
+      }
+    })
+  }
+
+  onSpotifyLogin(callback: (token_data: object) => void) {
+    new LoginController().spotifyLogin((status, res) => {
+      if (status === true) {
+        callback(res.data.token);
+      } else {
+        console.log(res);
+      }
+    })
+  }
+
+  onEpitechLogin(callback: (token_data: object) => void) {
+    callback({epitech: true});
+  }
+
+  /**
    * @description Call good service login. Send data to other screen
    * @param service
    */
-  async onPressService(service: object) {
+  onPressService(service: object) {
     const {onSelected} = this.props.route.params;
     const servicesLogins = {
       github: this.onGithubLogin,
       gmail: this.onGoogleLogin,
       discord: this.onDiscordLogin,
+      twitter: this.onTwitterLogin,
+      spotify: this.onSpotifyLogin,
+      epitech_intra: this.onEpitechLogin,
     };
-    await servicesLogins[service.type]((token_data: object) => {
+    servicesLogins[service.type]((token_data: object) => {
       onSelected(service, token_data);
     });
   }
@@ -94,7 +132,7 @@ export default class ServicesSettingsScreen extends Component {
    */
   renderServicesCards() {
     return (
-      <ScrollView style={{padding: 20, flex: 1}}>
+      <ScrollView style={{ padding: 20, flex: 1 }}>
         <Text fontFamily="body" fontWeight={600} fontSize="4xl">
           Services
         </Text>

@@ -13,12 +13,10 @@ export default class ServiceAuthRoute {
      * @param url
      * @param body
      * @param header
-     * @param userUUID
-     * @param tokenType - cf Services in "./src/models/Services"
      * @param success - return token
      * @param errorFunc return error
      */
-    public postRequest(url: string, body: object, header: object, userUUID: string, tokenType: string, success: token, errorFunc: errorFnc): void {
+    public postRequest(url: string, body: object, header: object, success: token, errorFunc: errorFnc): void {
         axios.post(url, body, header).then((response) => {
             const {error} = response.data;
             if (error)
@@ -35,12 +33,10 @@ export default class ServiceAuthRoute {
      *
      * @param url
      * @param params
-     * @param userUUID
-     * @param tokenType - cf Services in "./src/models/Services"
      * @param success - return token
      * @param errorFunc - return error
      */
-    public getRequest(url: string, params: object, userUUID: string, tokenType: string, success: token, errorFunc: errorFnc): void {
+    public getRequest(url: string, params: object, success: token, errorFunc: errorFnc): void {
         axios.get(url, {params}).then((response) => {
             const {error} = response.data;
             if (error)

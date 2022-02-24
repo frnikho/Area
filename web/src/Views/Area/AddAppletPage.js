@@ -17,11 +17,10 @@ import ReactionDialog from "../Dialogs/ReactionDialog";
 import HelpDialog from "../Dialogs/HelpDialog";
 import AddIcon from '@mui/icons-material/Add';
 import Page from "../Page"
-import {FaPlus, FaTrash} from "react-icons/fa";
-import app, {config} from "../../Utils/Axios";
-import {AuthContext} from "../../Contexts/AuthContext";
-import {withSnackbar} from "notistack";
-import {Navigate} from 'react-router-dom'
+import { FaPlus, FaTrash } from "react-icons/fa";
+import app, { config } from "../../Utils/Axios";
+import { AuthContext } from "../../Contexts/AuthContext";
+import { withSnackbar } from "notistack";
 
 /**
  * @class AddAppletPage
@@ -47,6 +46,7 @@ class AddAppletPage extends Page {
         this.onClickAddAction = this.onClickAddAction.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onClickCreate = this.onClickCreate.bind(this);
+        this.renderAddAppletPage = this.renderAddAppletPage.bind(this)
     }
 
     onActionSelected(action, actionAbout, serviceAbout) {
@@ -67,7 +67,7 @@ class AddAppletPage extends Page {
             about,
             service,
         });
-        this.setState({reactions});
+        this.setState({ reactions });
     }
 
     onClose() {
@@ -113,25 +113,25 @@ class AddAppletPage extends Page {
     showActionButton() {
         if (this.state.action === undefined) {
             return (
-                <Paper sx={{backgroundColor: "#222222", mb:4, mt: 1, borderRadius: 8}}>
-                    <ButtonBase sx={{borderRadius: 8}} centerRipple={true} onClick={this.onClickAddAction}>
-                        <Box sx={{width: 600, p: 3, borderRadius: 8}}>
-                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40}/></Typography>
+                <Paper sx={{ backgroundColor: "#222222", mb: 4, mt: 1, borderRadius: 8 }}>
+                    <ButtonBase sx={{ borderRadius: 8 }} centerRipple={true} onClick={this.onClickAddAction}>
+                        <Box sx={{ width: 600, p: 3, borderRadius: 8 }}>
+                            <Typography variant={"h1"} fontFamily={""} fontWeight={"700"} color={"white"}>If This<AddIcon size={40} /></Typography>
                         </Box>
                     </ButtonBase>
                 </Paper>
             )
         } else {
             return (
-                <Grid item xs={8} sx={{my: 2, width: "100%"}}>
-                    <Card sx={{backgroundColor: this.state.action.service.color, borderRadius: 8 }}>
-                        <CardHeader action={<IconButton onClick={() => this.setState({action: undefined, reactions: []})} ><FaTrash color={"white"}/> </IconButton>}/>
+                <Grid item xs={8} sx={{ my: 2, width: "100%" }}>
+                    <Card sx={{ backgroundColor: this.state.action.service.color, borderRadius: 8 }}>
+                        <CardHeader action={<IconButton onClick={() => this.setState({ action: undefined, reactions: [] })} ><FaTrash color={"white"} /> </IconButton>} />
                         <CardContent>
                             <Typography variant={"h3"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>IF</Typography>
                             <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{this.state.action.about.name}</Typography>
                             <img src={`https://localhost:8080/static/` + this.state.action.service.icon} width={50} alt="Loading . . ." />
                         </CardContent>
-                        <CardActions/>
+                        <CardActions />
                     </Card>
                 </Grid>
             )
@@ -151,14 +151,14 @@ class AddAppletPage extends Page {
             return (
                 this.state.reactions.map((reaction, index) => {
                     return (
-                        <Grid item key={index} xs={8} sx={{my: 2, width: "100%"}}>
-                            <Card sx={{backgroundColor: reaction.service.color, borderRadius: 8 }}>
-                                <CardHeader action={<IconButton onClick={() => this.setState({action: undefined, reactions: []})} ><FaTrash color={"white"}/> </IconButton>}/>
+                        <Grid item key={index} xs={8} sx={{ my: 2, width: "100%" }}>
+                            <Card sx={{ backgroundColor: reaction.service.color, borderRadius: 8 }}>
+                                <CardHeader action={<IconButton onClick={() => this.setState({ action: undefined, reactions: [] })} ><FaTrash color={"white"} /> </IconButton>} />
                                 <CardContent>
-                                    <img src={`https://localhost:8080/static/` + reaction.service.icon} width={50} alt="Loarding . . ."/>
+                                    <img src={`https://localhost:8080/static/` + reaction.service.icon} width={50} alt="Loarding . . ." />
                                     <Typography variant={"h4"} fontFamily={"Roboto"} fontWeight={"700"} color={"white"}>{reaction.about.name}</Typography>
                                 </CardContent>
-                                <CardActions/>
+                                <CardActions />
                             </Card>
                         </Grid>
                     )
@@ -168,8 +168,8 @@ class AddAppletPage extends Page {
     }
 
     showCreateButton() {
-        return (<Box sx={{mt: 8}}>
-            <Button variant={"contained"} disabled={this.state.action === undefined || this.state.reactions.length === 0} sx={{width: 300, p: 2}} onClick={this.onClickCreate}>Create</Button>
+        return (<Box sx={{ mt: 8 }}>
+            <Button variant={"contained"} disabled={this.state.action === undefined || this.state.reactions.length === 0} sx={{ width: 300, p: 2 }} onClick={this.onClickCreate}>Create</Button>
         </Box>);
     }
 
@@ -177,7 +177,7 @@ class AddAppletPage extends Page {
         if (this.state.reactions.length === 0)
             return;
         return (<ButtonBase>
-            <FaPlus onClick={this.onClickAddReaction}/>
+            <FaPlus onClick={this.onClickAddReaction} />
         </ButtonBase>)
     }
 
@@ -198,7 +198,7 @@ class AddAppletPage extends Page {
             console.log(response.data);
             this.props.enqueueSnackbar('New applet created successfully', {
                 variant: 'success',
-                onClose: () => {this.setState({redirect: '/'})},
+                onClose: () => { this.setState({ redirect: '/' }) },
             });
         }).catch((err) => {
             this.props.enqueueSnackbar(`${err.message}`, {
@@ -209,27 +209,26 @@ class AddAppletPage extends Page {
     }
 
     onChangeTitle(event) {
-        this.setState({appletTitle: event.target.value})
+        this.setState({ appletTitle: event.target.value })
     }
 
     showTitle() {
         return (
             <Box sx={{ mt: 8 }} style={styles.topBar.centerMenu}>
-                <TextField name={"Applet's title"} label={"Applet's title"} inputProps={{style: {fontSize: 30}}} variant="filled" value={this.state.appletTitle} onChange={this.onChangeTitle}/>
+                <TextField name={"Applet's title"} label={"Applet's title"} inputProps={{ style: { fontSize: 30 } }} variant="filled" value={this.state.appletTitle} onChange={this.onChangeTitle} />
             </Box>
         )
     }
 
-    render() {
+    renderAddAppletPage() {
         return (
             <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                {this.state.redirect !== undefined ? <Navigate to={this.state.redirect}/> : null }
+                <CssBaseline />
                 {this.showDialogs()}
                 {this.showTitle()}
                 <Box style={styles.content}>
                     <Container>
-                        <Box sx={{mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center"}}>
+                        <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: "center" }}>
                             {this.showActionButton()}
                             {this.showReactionButton()}
                             {this.showAddMoreReactionButton()}
@@ -239,6 +238,10 @@ class AddAppletPage extends Page {
                 </Box>
             </ThemeProvider>
         );
+    }
+
+    render() {
+        return(this.pageRender(this.renderAddAppletPage))
     }
 }
 
