@@ -127,7 +127,31 @@ export default class LoginController {
   ): void {}
 
   public twitterLogin(callback: (status: boolean, response: any) => void) {
-    // const pkce = pkceChallenge();
+    const conf = {
+      redirectUrl: process.env.TWITTER_SERVICES_REDIRECT_URL,
+      clientId: process.env.TWITTER_SERVICES_CLIENT_ID,
+      scopes: ['tweet.write', 'tweet.read', 'users.read', 'offline.access'],
+      skipCodeExchange: true,
+      responseType: 'code',
+      serviceConfiguration: {
+        authorizationEndpoint: 'https://twitter.com/i/oauth2/authorize',
+        tokenEndpoint: 'https://api.twitter.com/2/oauth2/token',
+        revocationEndpoint: `https://api.twitter.com/oauth2/invalidate_token`,
+      },
+    }
+    authorize(conf).then(result => {
+      new TokenController().getUserToken((status, res) => {
+        if (status === true) {
+          app.get(`/services/twitter/callback?code=${result.authorizationCode}&code_verifier=${result.codeVerifier}`, config(res)).then(result => {
+            callback(true, result);
+          }).catch(error => {
+            callback(false, error.response.data);
+          })
+        }
+      })
+    }).catch(err => {
+      callback(false, err);
+    })
   }
 
   public discordLogin(

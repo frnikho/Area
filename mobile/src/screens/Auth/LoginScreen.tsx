@@ -29,6 +29,7 @@ export default class LoginScreen extends Component {
     };
     this.onLogin = this.onLogin.bind(this);
     this.onLoginGoogle = this.onLoginGoogle.bind(this);
+    this.onLoginGithub = this.onLoginGithub.bind(this);
   }
 
   onLogin() {
@@ -91,11 +92,26 @@ export default class LoginScreen extends Component {
   }
 
   onLoginGithub() {
-    new LoginController().githubLogin((status, res) => {
+    new LoginController().githubLogin(async (status, res) => {
       if (status) {
-        console.log(res);
+        console.log(res.data);
+        // await AsyncStorage.setItem('@token', res.data.token);
+        // Toast.show({
+        //   title: 'You are successfully authenticated',
+        //   status: 'success',
+        //   description: 'You can now navigate in the dashboard.',
+        //   duration: 2000,
+        // });
+        // setTimeout(() => {
+        //   this.props.navigation.navigate('home');
+        // }, 1000);
       } else {
-        console.log(res);
+        console.log(res.response.data);
+        // Toast.show({
+        //   title: res.response.data.error,
+        //   status: 'warning',
+        //   description: 'Please try again !',
+        // });
       }
     });
   }
