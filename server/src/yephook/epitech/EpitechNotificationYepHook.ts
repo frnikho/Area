@@ -15,7 +15,7 @@ export default class EpitechNotificationYepHook extends EpitechYepHook {
 
     constructor(applet: Applet) {
         super(60, applet);
-        console.log("new Epitech notification yephook");
+        Logger.d(`new spotify notification yephook for applet '${applet.uuid}'`);
         this.onDataChanged = this.onDataChanged.bind(this);
     }
 
@@ -39,7 +39,6 @@ export default class EpitechNotificationYepHook extends EpitechYepHook {
     onDataChanged(first, notification) {
         if (first) {
             console.log("fill json data array");
-            this.data.push(notification['id']);
         } else {
             new AppletController().callReactions(this.getApplet(), ingredientsHook(notification, ActionType.intra_new_notifications), (error) => {
                 if (error)

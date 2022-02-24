@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
-    Box, ButtonBase, CircularProgress,
+    Box, Button, ButtonBase, CircularProgress, Collapse,
     Dialog,
     DialogActions,
-    DialogContent, FormControl,
-    IconButton, MenuItem, Select,
+    DialogContent, Divider, FormControl, Grid, Grow,
+    IconButton, MenuItem, Select, Slide,
     Typography
 } from "@mui/material";
 import {MdClose} from "react-icons/md";
@@ -65,10 +65,13 @@ export class ActionSettingsDialog extends React.Component {
             </Alert>)
         }
         return (
-            <Box>
-                <Typography sx={{mt: 2, mb: 2}} fontSize={20} fontWeight={"500"} fontFamily={"Roboto"}>Context</Typography>
-                <FormControl>
+            <Box textAlign={"start"}>
+                <Grid item xs={3} sx={{margin: "auto"}}>
+                    <Typography sx={{mt: 2, mb: 2}} fontSize={20} fontWeight={"500"} fontFamily={"Roboto"} color={"white"}>Context</Typography>
                     <Select
+                        style={{borderRadius: "18px", borderColor: "white", backgroundColor: "white"}}
+                        sx={{width: "100%", margin: "auto"}}
+                        fullWidth={true}
                         variant={"outlined"}
                         value={this.state.selectedContextUuid}
                         onChange={(event) => this.setState({selectedContextUuid: event.target.value})}>
@@ -79,31 +82,37 @@ export class ActionSettingsDialog extends React.Component {
                             </Box>
                         </MenuItem>)}
                     </Select>
-                </FormControl>
+                </Grid>
             </Box>
         )
     }
 
     render() {
         return (
-            <Dialog open={true} maxWidth={"xl"} fullWidth={true} onClose={() => this.props.onClose(true)}>
+            <Dialog open={true} maxWidth={"xl"} fullWidth={true} fullScreen={true} onClose={() => this.props.onClose(true)} PaperProps={{style: {backgroundColor: this.props.service.color}}}>
                 {this.state.redirect !== undefined ? <Navigate to={this.state.redirect}/> : null}
-                <DialogActions sx={{height: 40}}>
-                    <IconButton onClick={() => this.onClose()}><MdClose color={"black"}/></IconButton>
-                </DialogActions>
-                <Box textAlign={"start"} sx={{mx: 4}}>
-                    <Typography fontFamily={"Roboto"} fontSize={34} fontWeight={"700"}>
+                <Grid container sx={{p: 2}}>
+                    <Grid item xs={2} textAlign={"start"}>Help</Grid>
+                    <Grid item xs={8} textAlign={"center"}>
+                        <Typography fontSize={44} color={"white"} fontFamily={"Roboto"} fontWeight={"700"}>{this.props.service.name} Action settings</Typography>
+                    </Grid>
+                    <Grid item xs={2} textAlign={"end"}><IconButton onClick={() => this.onClose()}><MdClose color={"white"} fontSize={44}/></IconButton></Grid>
+                </Grid>
+                <Divider color={this.props.service.color} sx={{opacity: "80%"}}/>
+                <Box textAlign={"center"} sx={{mt: 10}}>
+                    <img width={160} src={`https://localhost:8080/static/` + this.props.service.icon}/>
+                    <Typography sx={{mt: 4}} fontFamily={"Roboto"} fontSize={44} fontWeight={"700"} color={"white"}>
                         {this.props.action.name}
                     </Typography>
-                    <Typography fontFamily={"Roboto"} fontSize={20}>{this.props.action.description}</Typography>
+                    <Typography fontFamily={"Roboto"} fontSize={20} color={"white"}>{this.props.action.description}</Typography>
                 </Box>
                 <DialogContent>
                     {this.showContexts()}
                     {this.renderDialogContent()}
+                    <Box textAlign={"center"} sx={{mt: 10}}>
+                        {this.renderCreateButton()}
+                    </Box>
                 </DialogContent>
-                <DialogActions>
-                    {this.renderCreateButton()}
-                </DialogActions>
             </Dialog>
         );
     }
