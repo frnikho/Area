@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {MdClose} from "react-icons/md";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import {withSnackbar} from "notistack";
+// import {withSnackbar} from "notistack";
 
 class NewContextDialog extends React.Component {
 
@@ -48,7 +48,7 @@ class NewContextDialog extends React.Component {
                 fullWidth={true}
                 onClose={() => this.props.onClose()}>
                 <DialogActions sx={{height: 40}}>
-                    <IconButton onClick={() => this.onClose()}><MdClose color={"black"}/></IconButton>
+                    <IconButton onClick={() => this.props.onClose()}><MdClose color={"black"}/></IconButton>
                 </DialogActions>
                 <Box textAlign={"start"} sx={{mx: 4}}>
                     <Typography fontFamily={"Roboto"} fontSize={34} fontWeight={"700"}>

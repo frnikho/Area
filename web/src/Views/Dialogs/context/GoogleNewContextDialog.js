@@ -58,7 +58,7 @@ class GoogleNewContextDialog extends NewContextDialog {
             title={"Google login"}
             onClose={this.onPopupClose}
             onCode={(code) => this.onPopupSuccess(code)}>
-                <Button disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
+                <Button variant={"outlined"} disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
         </OauthPopup>)
     }
 

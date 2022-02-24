@@ -1,4 +1,4 @@
-import {useParams, useLocation, useSearchParams} from "react-router-dom";
+import {useParams, useLocation, /* useSearchParams */} from "react-router-dom";
 
 
 function withParams(Component) {

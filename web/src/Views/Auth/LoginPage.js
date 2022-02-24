@@ -25,7 +25,6 @@ class LoginPage extends Page {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.renderLoginPage = this.renderLoginPage.bind(this)
     }
 
     componentDidMount() {
@@ -75,7 +74,7 @@ class LoginPage extends Page {
         this.controllerLogin.githubLogin(response);
     }
 
-    renderLoginPage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
         const menu = {
@@ -182,10 +181,6 @@ class LoginPage extends Page {
                 </Container>
             </ThemeProvider >
         )
-    }
-
-    render() {
-        return(this.pageRender(this.renderLoginPage))
     }
 }
 

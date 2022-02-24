@@ -50,7 +50,7 @@ class SpotifyNewContextDialog extends NewContextDialog {
                 onSuccess={this.onPopupSuccess}
                 onFailure={() => this.onPopupClose}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaSpotify/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaSpotify/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to Spotify" : "Logged !"}</Button>
                 )}
             />);
     }
