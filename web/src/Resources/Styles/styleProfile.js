@@ -3,7 +3,7 @@ import style from "../CSS/Font.css";
 
 const useStyles = {
     accountContainer: {
-        marginLeft: "700px",
+        marginLeft: "35%",
         fontFamily: "Dongle",
         fontSize: "85px",
     },

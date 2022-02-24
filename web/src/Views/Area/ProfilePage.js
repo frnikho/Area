@@ -69,7 +69,7 @@ export default withCookies(class ProfilePage extends Page {
                     }
                 ],
                 left: {
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
@@ -79,7 +79,7 @@ export default withCookies(class ProfilePage extends Page {
                     <CssBaseline />
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', whiteSpace: "nowrap" }}>
                             <div>
                                 <FaUser size={50} />
                             </div>
