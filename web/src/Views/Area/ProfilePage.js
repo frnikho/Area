@@ -11,8 +11,10 @@ import Style from "../../Resources/Styles/styleProfile"
 import FieldSettings from "../../Components/FieldSettings"
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
+import { withSnackbar } from "notistack";
 
-export default withCookies(class ProfilePage extends Page {
+
+export default withCookies(withSnackbar(class ProfilePage extends Page {
 
     static contextType = AuthContext;
 
@@ -42,7 +44,7 @@ export default withCookies(class ProfilePage extends Page {
         const data = new FormData(event.currentTarget);
 
         if (data.get(fieldName) === "")
-            return this.setNotification({ message: fieldName + " cannot be empty !", show: true, type: "error" });
+            return this.props.enqueueSnackbar(fieldName + " cannot be empty !", { variant: 'error' });
         this.controllerProfile.updateProfile(this.state.token, data.get(fieldName), fieldName);
     }
 
@@ -59,10 +61,6 @@ export default withCookies(class ProfilePage extends Page {
                         variant: "contained",
                         action: () => component.setRedirectUrl({ url: "/area/applets/add" })
                     },
-                    // {
-                    //     name: 'Area',
-                    //     action: () => component.setRedirectUrl({ url: "/description" })
-                    // },
                     {
                         name: 'Services',
                         action: () => component.setRedirectUrl({ url: "/area/context" })
@@ -73,7 +71,7 @@ export default withCookies(class ProfilePage extends Page {
                     }
                 ],
                 left: {
-                        action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
                 }
             }
             const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
@@ -83,7 +81,7 @@ export default withCookies(class ProfilePage extends Page {
                     <CssBaseline />
                     <Header component={component} menu={menu} />
                     <div style={Style.container}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', whiteSpace: "nowrap" }}>
                             <div>
                                 <FaUser size={50} />
                             </div>
@@ -109,9 +107,6 @@ export default withCookies(class ProfilePage extends Page {
                             </div>
                         </div>
                     </div>
-                    <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
-                        {component.notificationComponent()}
-                    </Box>
                     <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
                         <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerProfile.logout()}>Logout</Button>
                     </Box>
@@ -120,4 +115,4 @@ export default withCookies(class ProfilePage extends Page {
             );
         }));
     }
-})
+}))

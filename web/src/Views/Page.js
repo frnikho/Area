@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import NotifComponent from "../Components/NotifComponent"
 
 export default class Page extends React.Component {
 
@@ -33,7 +32,11 @@ export default class Page extends React.Component {
     }
 
     render() {
-        return (null)
+        return (
+            <div>
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : null}
+            </div>
+        )
     }
 
 }

@@ -63,13 +63,13 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
         return <FormControl>
             <InputLabel id="channel-select-label">Channel</InputLabel>
             <Select
-                sx={{width: 300}}
+                sx={{ width: 300 }}
                 labelId="channel-select-label"
                 id="channel-select"
                 value={this.state.selectedChannel}
                 label="Select a Channel"
                 onChange={(event) => {
-                    this.setState({selectedChannel: event.target.value});
+                    this.setState({ selectedChannel: event.target.value });
                     this.onChannelSelected(event.target.value);
                 }}>
                 <MenuItem value={''}>Select a Channel</MenuItem>
@@ -81,8 +81,8 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
                             <Typography fontFamily={"Roboto"}>
                                 {channel.name}
                             </Typography>
-                            <Box sx={{mx: 1}}>
-                                {channel.type === 2 ? <FaLock color={"grey"}/> : null}
+                            <Box sx={{ mx: 1 }}>
+                                {channel.type === 2 ? <FaLock color={"grey"} /> : null}
                             </Box>
                         </MenuItem>)
                 })}
@@ -95,14 +95,14 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
             return;
 
         return (
-            <Box sx={{my: 2}}>
+            <Box sx={{ my: 2 }}>
                 <Typography fontFamily={"Roboto"} fontWeight={"700"} fontSize={24}>Text</Typography>
-                <Box sx={{my: 2}}>
+                <Box sx={{ my: 2 }}>
                     <Typography fontFamily={"Roboto"}>
                         {this.props.action.about.name} <b>ingredients:</b>
                     </Typography>
                     {this.props.action.about.ingredients.map((ingredient, index) => {
-                        return (<Chip sx={{mx: 1}} key={index} label={ingredient} onClick={() => console.log(ingredient)} />)
+                        return (<Chip sx={{ mx: 1 }} key={index} label={ingredient} onClick={() => console.log(ingredient)} />)
                     })}
                 </Box>
                 <Box>
@@ -110,7 +110,7 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
                         this.setState({
                             text: event.target.value
                         })
-                    }}/>
+                    }} />
                 </Box>
             </Box>
         )
@@ -124,7 +124,7 @@ export default class DiscordSendMessageDialog extends ReactionSettingsDialog {
 
     renderDialogContent() {
         return (<Box>
-            <Box sx={{mt: 4}}>
+            <Box sx={{ mt: 4 }}>
                 {this.showSelect()}
                 {this.showTextField()}
             </Box>

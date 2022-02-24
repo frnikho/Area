@@ -10,6 +10,7 @@ export default class AppletChildItemCard extends React.Component {
     }
 
     render() {
+        console.log(this.props.description)
         return (
             <ButtonBase sx={{borderRadius: 6}} onClick={this.props.onClick}>
                 <Paper sx={{backgroundColor: this.props.color, borderRadius: 6, p: 4, width: 250, height: 215, textAlign: "start"}}>

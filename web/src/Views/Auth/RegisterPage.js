@@ -1,4 +1,4 @@
-import { Box, Button, Container, ThemeProvider, TextField, Typography, CssBaseline} from "@mui/material";
+import { Box, Button, Container, ThemeProvider, TextField, Typography, CssBaseline } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaGithubSquare } from "react-icons/fa";
 import implement from 'implement-js'
@@ -12,8 +12,9 @@ import OAuth2Login from 'react-simple-oauth2-login';
 import { withCookies } from "react-cookie";
 import Header from "../../Components/Header"
 import { theme } from "../../Resources/Styles/AppTheme";
+import { withSnackbar } from "notistack";
 
-export default withCookies(class RegisterPage extends Page {
+export default withCookies(withSnackbar(class RegisterPage extends Page {
 
     static contextType = AuthContext;
 
@@ -28,7 +29,7 @@ export default withCookies(class RegisterPage extends Page {
     componentDidMount() {
         this.authContext = this.context;
         if (this.authContext.getUser() !== undefined) {
-            this.setRedirectUrl({url: '/area/dashboard'})
+            this.setRedirectUrl({ url: '/area/dashboard' })
         }
         this.forceUpdate()
         this.controllerRegister = new ControllerRegister(this.authContext, this.cookies, this);
@@ -48,12 +49,12 @@ export default withCookies(class RegisterPage extends Page {
             })
 
             if ([registerId.firstName, registerId.lastName, registerId.email, registerId.password, registerId.confpassword].includes(""))
-                return this.setNotification({ message: ["First Name", "Last Name", "Email", "Password", "Confirm Password"][[registerId.firstName, registerId.lastName, registerId.email, registerId.password, registerId.confpassword].indexOf("")] + " cannot be empty !", show: true, type: "error" });
+                return this.props.enqueueSnackbar(["First Name", "Last Name", "Email", "Password", "Confirm Password"][[registerId.firstName, registerId.lastName, registerId.email, registerId.password, registerId.confpassword].indexOf("")] + " cannot be empty !", { variant: 'error' });
             if (registerId.confpassword !== registerId.password)
-                return this.setNotification({ message: "Passwords are not the same !", show: true, type: "error" });
+                return this.props.enqueueSnackbar("Passwords are not the same !", { variant: 'error' });
             this.controllerRegister.registerDb(registerId);
         } catch (e) {
-            return this.setNotification({ message: e.message.split('\'')[5] + " cannot be empty !", show: true, type: "error" });
+            return this.props.enqueueSnackbar(e.message.split('\'')[5] + " cannot be empty !", { variant: 'error' });
         }
     }
 
@@ -74,7 +75,7 @@ export default withCookies(class RegisterPage extends Page {
                 right: [
                     {
                         name: 'Area',
-                        action: () => component.setRedirectUrl({url: "/description"})
+                        action: () => component.setRedirectUrl({ url: "/description" })
                     },
                 ],
                 left: {
@@ -192,10 +193,9 @@ export default withCookies(class RegisterPage extends Page {
                             </Box>
                         </Box>
                         <Box sx={{ padding: 1 }} />
-                        {component.notificationComponent()}
                     </Container>
                 </ThemeProvider>
             )
         }));
     }
-})
+}))

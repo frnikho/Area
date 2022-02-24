@@ -4,7 +4,6 @@ import {Box, Button, IconButton, TextField, Tooltip, Typography} from "@mui/mate
 import {FaCheck, FaQuestion} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import {MdClose} from "react-icons/md";
 
 export default class EpitechNewContextDialog extends NewContextDialog {
 

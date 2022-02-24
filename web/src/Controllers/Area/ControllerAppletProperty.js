@@ -10,6 +10,10 @@ export default class ControllerAppletProperty {
         this.token = this.authContext.getToken();
         this.loadApplet = this.loadApplet.bind(this)
         this.disableApplet = this.disableApplet.bind(this)
+        this.completeApplets = this.completeApplets.bind(this)
+        this.getDataFromService = this.getDataFromService.bind(this)
+        this.getActionFromServiceData = this.getActionFromServiceData.bind(this)
+        this.getReactionFromServiceData = this.getReactionFromServiceData.bind(this)
     }
 
     deleteApplet() {
@@ -27,7 +31,7 @@ export default class ControllerAppletProperty {
     disableApplet() {
         console.log("disable the applet with the id: " + this.id)
         app.post(`/applets/disable`, {
-            appletId: this.id
+            appletUuid: this.id
         }, config(this.token)).then((response) => {
             console.log(response);
         }).catch((error) => {
@@ -38,7 +42,7 @@ export default class ControllerAppletProperty {
     enableApplet() {
         console.log("enable the applet with the id: " + this.id)
         app.post(`/applets/enable`, {
-            appletId: this.id
+            appletUuid: this.id
         }, config(this.token)).then((response) => {
             console.log(response);
         }).catch((error) => {
@@ -46,14 +50,56 @@ export default class ControllerAppletProperty {
         })
     }
 
+    getActionFromServiceData(actionType) {
+        for (let itService in this.page.state.services) {
+            for (let itAction in this.page.state.services[itService].actions) {
+                if (this.page.state.services[itService].actions[itAction].type === actionType) {
+                    return {
+                        author: this.page.state.services[itService].name,
+                        color: this.page.state.services[itService].color,
+                        ifIcon: this.page.state.services[itService].icon,
+                        description: "if " + this.page.state.services[itService].actions[itAction].if
+                    }
+                }
+            }
+        }
+    }
+
+    getReactionFromServiceData(reactionType) {
+        for (let itService in this.page.state.services) {
+            for (let itReaction in this.page.state.services[itService].reactions) {
+                if (this.page.state.services[itService].reactions[itReaction].type === reactionType) {
+                    return {
+                        description: "then " + this.page.state.services[itService].reactions[itReaction].then,
+                        thenIcon: this.page.state.services[itService].icon,
+                    }
+                }
+            }
+        }
+    }
+
+    getDataFromService(actionType, reactionType) {
+        var action = this.getActionFromServiceData(actionType)
+        var reaction = this.getReactionFromServiceData(reactionType)
+        return { ...action, ...reaction, ...{ description: action.description + " " + reaction.description } }
+    }
+
+    completeApplets(data) {
+        let serviceData = this.getDataFromService(data.action_type, data.reactions[0].type)
+        this.page.setState({ applet: { ...{ ...data, ...serviceData, title: (data.title !== "" ? data.title : "<applet title>") }, description: serviceData.description } })
+        this.page.setState({isOn: data.enable})
+    }
+
+    loadServices() {
+        app.get(`about.json`).then((response) => {
+            this.page.setState({ services: response.data.server.services })
+        })
+    }
+
     loadApplet() {
-        console.log("get the applet with the id: " + this.id)
-        console.log(this.id)
         app.get(`/applets/` + this.id, config(this.token)).then((response) => {
             if (response.statusText === "OK") {
-                this.page.setState({
-                    applet: { ...{ ...response.data[0] }, ...{ title: "Github", color: "red", description: "hello from the other side adzadad" } }
-                })
+                this.completeApplets(response.data)
             }
         }).catch((error) => {
             console.log(error);
