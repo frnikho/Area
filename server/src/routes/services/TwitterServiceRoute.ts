@@ -39,6 +39,12 @@ export default class TwitterServiceRoute extends Route {
      *          type: string
      *        description: code_verifier is given after PKCE generation
      *        required: true
+     *      - in: path
+     *        name: type
+     *        schema:
+     *          type: string
+     *        description: type if is mobile or web
+     *        required: true
      *     responses:
      *       200:
      *         description: Successful login
@@ -48,6 +54,7 @@ export default class TwitterServiceRoute extends Route {
     private callback(req: express.Request, res: express.Response) {
         const code: string = req.query['code'] as string;
         const codeVerifier: string = req.query['code_verifier'] as string;
+        const type: string = req.query['type'] as string;
 
         const authStr = utf8.encode(process.env.TWITTER_SERVICES_CLIENT_ID + ":" + process.env.TWITTER_SERVICES_CLIENT_SECRET);
         const headers = {
@@ -62,7 +69,7 @@ export default class TwitterServiceRoute extends Route {
         params.append('client_id', process.env.TWITTER_SERVICES_CLIENT_ID);
         params.append("code_verifier", (codeVerifier === undefined || codeVerifier.length === 0 ? TwitterServiceRoute.codeVerifier : codeVerifier));
         params.append("grant_type", "authorization_code");
-        params.append('redirect_uri', process.env.TWITTER_SERVICES_REDIRECT_URL);
+        params.append('redirect_uri', type === 'web' ? process.env.TWITTER_SERVICES_REDIRECT_URL : process.env.TWITTER_SERVICES_REDIRECT_URL_MOBILE);
 
         new ServiceAuthRoute().postRequest("https://api.twitter.com/2/oauth2/token", params, headers, req['user']['uuid'], Services.TWITTER.valueOf(), (token) => {
             return res.status(200).json({success: true, token});
