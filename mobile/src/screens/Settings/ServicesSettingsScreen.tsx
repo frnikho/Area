@@ -89,7 +89,7 @@ export default class ServicesSettingsScreen extends Component {
   onSpotifyLogin(callback: (token_data: object) => void) {
     new LoginController().spotifyLogin((status, res) => {
       if (status === true) {
-        console.log(res);
+        callback(res.data.token);
       } else {
         console.log(res);
       }

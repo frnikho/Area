@@ -131,6 +131,8 @@ export default class LoginController {
       scopes: ['user-read-private', 'user-read-email', 'user-modify-playback-state'],
       skipCodeExchange: true,
       responseType: 'code',
+      usePKCE: false,
+      useNonce: false,
       serviceConfiguration: {
         authorizationEndpoint: 'https://accounts.spotify.com/authorize',
         tokenEndpoint: 'https://accounts.spotify.com/api/token',

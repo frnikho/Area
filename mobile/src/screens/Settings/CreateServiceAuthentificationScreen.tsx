@@ -80,6 +80,10 @@ export default class CreateServiceAuthentificationScreen extends Component {
     );
   }
 
+  isValid() {
+    return this.state.title && this.state.token_data && this.state.service;
+  }
+
   render() {
     return (
       <>
@@ -130,6 +134,7 @@ export default class CreateServiceAuthentificationScreen extends Component {
                   : 'Choose service'}
               </Button>
               <Button
+                isDisabled={!this.isValid()}
                 mt="2"
                 colorScheme="indigo"
                 onPress={this.onCreateContext}>
