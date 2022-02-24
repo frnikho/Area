@@ -18,6 +18,7 @@ class AppletsPage extends Page {
             user: undefined,
         }
         this.cookies = props.cookies;
+        this.renderAppletsPage = this.renderAppletsPage.bind(this)
     }
 
     componentDidMount() {
@@ -30,24 +31,26 @@ class AppletsPage extends Page {
         this.controllerApplet = new ControllerApplet(this.authContext, this.cookies, this);
     }
 
-    render() {
+    renderAppletsPage() {
         if (!this.authContext)
             return (null);
-        return (this.pageRender(this, function RenderDashboardPage({ component }) {
-            return (
-                <>
-                    <AppletCard
-                        title={component.props.applet.title}
-                        color={component.props.applet.color}
-                        description={component.props.applet.description}
-                        ifIcon={component.props.applet.ifIcon}
-                        thenIcon={component.props.applet.thenIcon}
-                        author={component.props.applet.author}
-                        appletStatus={component.props.applet.enable}
-                        onClick={() => component.setRedirectUrl({ url: "/area/applets/property", params: component.props.applet.uuid })} />
-                </>
-            );
-        }))
+        return (
+            <>
+                <AppletCard
+                    title={this.props.applet.title}
+                    color={this.props.applet.color}
+                    description={this.props.applet.description}
+                    ifIcon={this.props.applet.ifIcon}
+                    thenIcon={this.props.applet.thenIcon}
+                    author={this.props.applet.author}
+                    appletStatus={this.props.applet.enable}
+                    onClick={() => this.setRedirectUrl({ url: "/area/applets/property", params: this.props.applet.uuid })} />
+            </>
+        );
+    }
+
+    render() {
+        return(this.pageRender(this.renderAppletsPage))
     }
 };
 

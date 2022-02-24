@@ -1,9 +1,8 @@
 import React from "react";
 import NewContextDialog from "./NewContextDialog";
 import PropTypes from "prop-types";
-import OAuth2Login from "react-simple-oauth2-login";
 import {Box, Button} from "@mui/material";
-import {FaGithub, FaGoogle} from "react-icons/fa";
+import {FaGoogle} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
 import GoogleLogin from "react-google-login";

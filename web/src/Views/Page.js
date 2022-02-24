@@ -14,6 +14,14 @@ export default class Page extends React.Component {
         this.pageRender = this.pageRender.bind(this)
     }
 
+    redirectUrl() {
+        return (
+            <div>
+                <Navigate to={this.state.redirectUrl.url} />
+            </div>
+        )
+    }
+
     getUrl() { return this.state.redirectUrl }
 
     setRedirectUrl(url) {
@@ -23,10 +31,10 @@ export default class Page extends React.Component {
         this.setState({ redirectUrl: url })
     }
 
-    pageRender(component, Page) {
+    pageRender(Page) {
         return (
             <div>
-                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : <Page component={component} />}
+                {this.state.redirectUrl !== undefined ? <Navigate to={this.state.redirectUrl.url} /> : <Page />}
             </div>
         );
     }

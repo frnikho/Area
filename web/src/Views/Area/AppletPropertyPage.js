@@ -31,6 +31,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         this.onEditClick = this.onEditClick.bind(this);
         this.showTitle = this.showTitle.bind(this)
         this.showEditButton = this.showEditButton.bind(this)
+        this.renderAppletPropertyPage = this.renderAppletPropertyPage.bind(this)
     }
 
     componentDidMount() {
@@ -78,7 +79,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     defaultValue={(this.state.applet && this.state.applet.title) || "title"}
                     variant="filled"
                 />}
-                <Box style={{ textAlign: "left", fontSize: "20px", lineHeight: "30px", fontFamily: "Anton", fontWeight: ""}}>
+                <Box style={{ textAlign: "left", fontSize: "20px", lineHeight: "30px", fontFamily: "Anton", fontWeight: "" }}>
                     {this.state.applet && this.state.applet.description}
                 </Box>
             </Box>
@@ -95,10 +96,12 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         )
     }
 
-    render() {
+    renderAppletPropertyPage() {
         // if (!this.authContext || !this.state.applet)
         if (!this.authContext)
             return (null);
+        if (this.getUrl())
+            return (this.redirectUrl())
         const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
         const menu = {
             right: [
@@ -124,7 +127,6 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
 
         return (
             <ThemeProvider theme={theme}>
-                {super.render()}
                 <CssBaseline />
                 <Box style={{ backgroundColor: (this.state.applet && this.state.applet.color) || "grey" }}>
                     <Header component={this} menu={menu} />
@@ -170,5 +172,9 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                 </Box>
             </ThemeProvider >
         )
+    }
+
+    render() {
+        return(this.pageRender(this.renderAppletPropertyPage))
     }
 }))

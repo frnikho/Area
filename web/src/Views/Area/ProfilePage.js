@@ -26,6 +26,7 @@ export default withCookies(withSnackbar(class ProfilePage extends Page {
         }
         this.cookies = props;
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.renderProfilePage = this.renderProfilePage.bind(this)
     }
 
     componentDidMount() {
@@ -48,71 +49,73 @@ export default withCookies(withSnackbar(class ProfilePage extends Page {
         this.controllerProfile.updateProfile(this.state.token, data.get(fieldName), fieldName);
     }
 
-    render() {
+    renderProfilePage() {
         if (!this.authContext)
             return (null);
-        return (this.pageRender(this, function RenderProfilePage({ component }) {
-
-            const menu = {
-                right: [
-                    {
-                        name: 'Create',
-                        style: Style.roundButtonFull,
-                        variant: "contained",
-                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
-                    },
-                    {
-                        name: 'Services',
-                        action: () => component.setRedirectUrl({ url: "/area/context" })
-                    },
-                    {
-                        name: 'Profile',
-                        redirectUrl: undefined
-                    }
-                ],
-                left: {
-                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
+        const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
+        const menu = {
+            right: [
+                {
+                    name: 'Create',
+                    style: Style.roundButtonFull,
+                    variant: "contained",
+                    action: () => this.setRedirectUrl({ url: "/area/applets/add" })
+                },
+                {
+                    name: 'Services',
+                    action: () => this.setRedirectUrl({ url: "/area/context" })
+                },
+                {
+                    name: 'Profile',
+                    redirectUrl: undefined
                 }
+            ],
+            left: {
+                action: () => this.setRedirectUrl({ url: "/area/dashboard" })
             }
-            const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
+        }
 
-            return (
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <Header component={component} menu={menu} />
-                    <div style={Style.container}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', whiteSpace: "nowrap" }}>
-                            <div>
-                                <FaUser size={50} />
-                            </div>
-                            <Box sx={{ padding: 2 }} />
-                            Account settings
-                        </Box>
-                    </div>
-                    <div style={Style.accountContainer}>
-                        Profile
-                        <FieldSettings props={component} style={Style} fieldName={"First Name"} value={component.authContext.user.firstname} active={true} />
-                        <FieldSettings props={component} style={Style} fieldName={"Last Name"} value={component.authContext.user.lastname} active={true} />
-                        <FieldSettings props={component} style={Style} fieldName={"Email"} value={component.authContext.user.email} active={false} />
+        return (
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Header component={this} menu={menu} />
+                <div style={Style.container}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', whiteSpace: "nowrap" }}>
+                        <div>
+                            <FaUser size={50} />
+                        </div>
+                        <Box sx={{ padding: 2 }} />
+                        Account settings
+                    </Box>
+                </div>
+                <div style={Style.accountContainer}>
+                    Profile
+                    <FieldSettings props={this} style={Style} fieldName={"First Name"} value={this.authContext.user.firstname} active={true} />
+                    <FieldSettings props={this} style={Style} fieldName={"Last Name"} value={this.authContext.user.lastname} active={true} />
+                    <FieldSettings props={this} style={Style} fieldName={"Email"} value={this.authContext.user.email} active={false} />
+                    <div style={Style.little}>
+                        Password
                         <div style={Style.little}>
-                            Password
-                            <div style={Style.little}>
-                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                    •••••••••
-                                    <Box sx={{ padding: 1 }} />
-                                    {/* <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
-                                        Change password ?
-                                    </Link> */}
-                                </Box>
-                            </div>
+                            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                •••••••••
+                                <Box sx={{ padding: 1 }} />
+                                {/* <Link to="/area/profile/changePassword" style={{ color: 'black', fontSize: '40px' }}>
+                                    Change password ?
+                                </Link> */}
+                            </Box>
                         </div>
                     </div>
-                    <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
-                        <Button variant="contained" color="error" style={buttonMenu} onClick={() => component.controllerProfile.logout()}>Logout</Button>
-                    </Box>
-                    <div style={Style.space} />
-                </ThemeProvider >
-            );
-        }));
+                </div>
+                <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+                    <Button variant="contained" color="error" style={buttonMenu} onClick={() => this.controllerProfile.logout()}>Logout</Button>
+                </Box>
+                <div style={Style.space} />
+            </ThemeProvider >
+        );
+    };
+
+    render() {
+        return (this.pageRender(this.renderProfilePage))
     }
+
 }))

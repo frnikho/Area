@@ -26,7 +26,7 @@ import TwitterNewContextDialog from "../Dialogs/context/TwitterNewContextDialog"
 import SlackNewContextDialog from "../Dialogs/context/SlackNewContextDialog";
 import SpotifyNewContextDialog from "../Dialogs/context/SpotifyNewContextDialog";
 import GoogleNewContextDialog from "../Dialogs/context/GoogleNewContextDialog";
-import {withSnackbar} from "notistack";
+import { withSnackbar } from "notistack";
 
 class ContextPage extends Page {
 
@@ -46,6 +46,7 @@ class ContextPage extends Page {
         this.refresh = this.refresh.bind(this);
         this.onCreateContext = this.onCreateContext.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);
+        this.renderContextPage = this.renderContextPage.bind(this);
     }
 
     componentDidMount() {
@@ -135,13 +136,13 @@ class ContextPage extends Page {
         if (this.state.dialog === undefined)
             return
         const dialogs = {
-            github: <GithubNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            discord: <DiscordNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            epitech_intra: <EpitechNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            twitter: <TwitterNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            slack: <SlackNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            spotify: <SpotifyNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>,
-            google: <GoogleNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext}/>
+            github: <GithubNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            discord: <DiscordNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            epitech_intra: <EpitechNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            twitter: <TwitterNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            slack: <SlackNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            spotify: <SpotifyNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />,
+            google: <GoogleNewContextDialog service={this.state.selectedService} onClose={this.closeDialog} onCreate={this.onCreateContext} />
         }
         return dialogs[this.state.dialog];
     }
@@ -185,48 +186,50 @@ class ContextPage extends Page {
         </Button>
     }
 
-    render() {
-        return (this.pageRender(this, function RenderContextPropertyPage({ component }) {
-            const menu = {
-                right: [
-                    {
-                        name: 'Create',
-                        style: Style.roundButtonFull,
-                        variant: "contained",
-                        action: () => component.setRedirectUrl({ url: "/area/applets/add" })
-                    },
-                    {
-                        name: 'Services',
-                        // action: () => component.setRedirectUrl({ url: "/area/context" })
-                    },
-                    {
-                        name: 'Profile',
-                        action: () => component.setRedirectUrl({ url: "/area/profile" })
-                    },
-                ],
-                left: {
-                    action: () => component.setRedirectUrl({ url: "/area/dashboard" })
-                }
+    renderContextPage() {
+        const menu = {
+            right: [
+                {
+                    name: 'Create',
+                    style: Style.roundButtonFull,
+                    variant: "contained",
+                    action: () => this.setRedirectUrl({ url: "/area/applets/add" })
+                },
+                {
+                    name: 'Services',
+                    // action: () => this.setRedirectUrl({ url: "/area/context" })
+                },
+                {
+                    name: 'Profile',
+                    action: () => this.setRedirectUrl({ url: "/area/profile" })
+                },
+            ],
+            left: {
+                action: () => this.setRedirectUrl({ url: "/area/dashboard" })
             }
+        }
 
-            return (
-                <ThemeProvider theme={theme}>
-                    {component.showContextDialogs()}
-                    <CssBaseline />
-                    <Header component={component} menu={menu} />
-                    <div style={Style.container}>
-                        Services
-                    </div>
-                    <Paper sx={{m: 4, p:2, borderRadius: 2, backgroundColor: "#B2BEC3"}}>
-                        <Box sx={{alignItems: "center", justifyContent: "center", textAlign: "center", marginLeft: 'auto', marginRight: 'auto'}}>
-                            {component.showServicesSelectIcon()}
-                            {component.showContextWithFilter()}
-                            {component.showCreateButton()}
-                        </Box>
-                    </Paper>
-                </ThemeProvider>
-            )
-        }))
+        return (
+            <ThemeProvider theme={theme}>
+                {this.showContextDialogs()}
+                <CssBaseline />
+                <Header component={this} menu={menu} />
+                <div style={Style.container}>
+                    Services
+                </div>
+                <Paper sx={{ m: 4, p: 2, borderRadius: 2, backgroundColor: "#B2BEC3" }}>
+                    <Box sx={{ alignItems: "center", justifyContent: "center", textAlign: "center", marginLeft: 'auto', marginRight: 'auto' }}>
+                        {this.showServicesSelectIcon()}
+                        {this.showContextWithFilter()}
+                        {this.showCreateButton()}
+                    </Box>
+                </Paper>
+            </ThemeProvider>
+        )
+    }
+
+    render() {
+        return (this.pageRender(this.renderContextPage))
     }
 }
 

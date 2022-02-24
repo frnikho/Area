@@ -1,6 +1,6 @@
 import React from "react";
 import {ReactionSettingsDialog} from "../../ReactionSettingsDialog";
-import {Box, Button, Slider, TextField} from "@mui/material";
+import {Box, Button, Slider} from "@mui/material";
 import {AuthContext} from "../../../../Contexts/AuthContext";
 import {VolumeDown, VolumeUp} from "@mui/icons-material";
 import Stack from "@mui/material/Stack";

@@ -18,24 +18,23 @@ export default class HomePage extends Page {
     componentDidMount() {
         this.auth = this.context;
         if (this.auth.getUser() === undefined) {
-            this.setRedirectUrl({url: '/auth/login'})
+            this.setRedirectUrl({ url: '/auth/login' })
         } else {
             this.setState({ user: this.auth.getUser() })
-            this.setRedirectUrl({url: '/area/dashboard'})
+            this.setRedirectUrl({ url: '/area/dashboard' })
         }
         this.controllerHome = new ControllerHome(this.cookies, this);
     }
 
     render() {
-        return (this.pageRender(this, function RenderRegisterPage({ component }) {
-            if (component.state.user === undefined)
-                return (null);
-            return (
-                <div>
-                    <h2>Welcome {component.state.user.email}</h2>
-                </div>
-            )
-        }
-        ));
+        if (this.getUrl())
+            return (this.redirectUrl())
+        if (this.state.user === undefined)
+            return (null);
+        return (
+            <div>
+                <h2>Welcome {this.state.user.email}</h2>
+            </div>
+        )
     }
 }
