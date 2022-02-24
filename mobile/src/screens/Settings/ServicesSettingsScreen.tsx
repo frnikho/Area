@@ -79,7 +79,7 @@ export default class ServicesSettingsScreen extends Component {
   onTwitterLogin(callback: (token_data: object) => void) {
     new LoginController().twitterLogin((status, res) => {
       if (status) {
-        console.log(res);
+        callback(true, res.data.token);
       } else {
         console.log(res);
       }
