@@ -86,6 +86,16 @@ export default class ServicesSettingsScreen extends Component {
     })
   }
 
+  onSpotifyLogin(callback: (token_data: object) => void) {
+    new LoginController().spotifyLogin((status, res) => {
+      if (status === true) {
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    })
+  }
+
   /**
    * @description Call good service login. Send data to other screen
    * @param service
@@ -97,6 +107,7 @@ export default class ServicesSettingsScreen extends Component {
       gmail: this.onGoogleLogin,
       discord: this.onDiscordLogin,
       twitter: this.onTwitterLogin,
+      spotify: this.onSpotifyLogin
     };
     servicesLogins[service.type]((token_data: object) => {
       onSelected(service, token_data);

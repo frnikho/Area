@@ -124,7 +124,38 @@ export default class LoginController {
 
   public spotifyLogin(
     callback: (status: boolean, response: any) => void,
-  ): void {}
+  ): void {
+    const conf = {
+      redirectUrl: process.env.SPOTIFY_SERVICES_REDIRECT_URL,
+      clientId: process.env.SPOTIFY_SERVICES_CLIENT_ID,
+      scopes: ['user-read-private', 'user-read-email', 'user-modify-playback-state'],
+      skipCodeExchange: true,
+      responseType: 'code',
+      serviceConfiguration: {
+        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+      },
+    }
+    authorize(conf).then(result => {
+      new TokenController().getUserToken((status, res) => {
+        if (status === true) {
+          app
+            .get(
+              `/services/spotify/callback?code=${result.authorizationCode}&type=mobile`,
+              config(res),
+            )
+            .then(response => {
+              callback(true, response);
+            })
+            .catch(err => {
+              callback(false, err);
+            });
+        }
+      });
+    }).then(err => {
+      callback(false, err);
+    })
+  }
 
   public twitterLogin(callback: (status: boolean, response: any) => void) {
     const conf = {
