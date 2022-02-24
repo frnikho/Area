@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     backgroundColor: '#222222',
+    borderRadius: 15,
   },
   actionText: {
     color: '#ffffff',
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     backgroundColor: '#999999',
+    borderRadius: 15,
   },
   reactionText: {
     color: '#ffffff',
