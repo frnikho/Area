@@ -3,7 +3,7 @@ import NewContextDialog from "./NewContextDialog";
 import PropTypes from "prop-types";
 import OAuth2Login from "react-simple-oauth2-login";
 import {Box, Button} from "@mui/material";
-import {FaGithub} from "react-icons/fa";
+import {FaDiscord} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
 
@@ -49,7 +49,7 @@ export default class DiscordNewContextDialog extends NewContextDialog {
                 onSuccess={this.onPopupSuccess}
                 onFailure={this.onPopupClose}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to discord" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaDiscord/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to discord" : "Logged !"}</Button>
                 )}
             />);
     }

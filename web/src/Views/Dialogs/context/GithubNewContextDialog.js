@@ -48,7 +48,7 @@ export default class GithubNewContextDialog extends NewContextDialog {
                 onSuccess={this.onPopupSuccess}
                 onFailure={() => this.onPopupClose}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to Github" : "Logged !"}</Button>
                 )}
             />);
     }

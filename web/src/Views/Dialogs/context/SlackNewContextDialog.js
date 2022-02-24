@@ -3,7 +3,7 @@ import NewContextDialog from "./NewContextDialog";
 import PropTypes from "prop-types";
 import OAuth2Login from "react-simple-oauth2-login";
 import {Box, Button} from "@mui/material";
-import {FaGithub} from "react-icons/fa";
+import {FaSlack} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
 
@@ -48,7 +48,7 @@ export default class SlackNewContextDialog extends NewContextDialog {
                 onFailure={() => this.onPopupClose}
                 extraParams={{user_scope: ""}}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaSlack/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to Slack" : "Logged !"}</Button>
                 )}
             />);
     }

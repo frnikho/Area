@@ -45,7 +45,7 @@ export default class GoogleNewContextDialog extends NewContextDialog {
                 redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
                 scope={"https://mail.google.com/"}
                 render={renderProps => (
-                    <Button onClick={renderProps.onClick} disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
+                    <Button variant={"outlined"} onClick={renderProps.onClick} disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
                 )}
                 onSuccess={(response) => console.log(response)}
                 accessType={"offline"}
