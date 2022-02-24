@@ -3,7 +3,9 @@ import AxiosController from './AxiosController';
 import ServicesController from './ServicesController';
 import {UserApplets} from '../models/AppletsModels';
 import app, {config} from '../axios_config';
+
 export default class AppletsController {
+
   /**
    * Get user's applets
    *
@@ -22,7 +24,7 @@ export default class AppletsController {
                 (status, aboutResponse) => {
                   if (status) {
                     return callback(
-                      true,
+                      status,
                       userAppletsResponse.data.data.map(obj => {
                         let info = this.getInfoByType(
                           aboutResponse.data,
@@ -30,6 +32,8 @@ export default class AppletsController {
                           obj.reactions[0].type,
                         );
                         return {
+                          title: obj.title,
+                          appletUuid: obj.uuid,
                           action: info.action,
                           reaction: info.reaction,
                           cardColor: info.color,
@@ -84,7 +88,6 @@ export default class AppletsController {
         },
       ],
     };
-    console.log(reactionParam);
     new TokenController().getUserToken((status, tokenResponse) => {
       if (status) {
         app
@@ -127,5 +130,23 @@ export default class AppletsController {
       if (action !== undefined || reaction != undefined) color = service.color;
     });
     return {action: action, reaction: reaction, color: color};
+  }
+
+  /**
+   * Delete an user applet
+   * @param appletUuid
+   * @param callback
+   */
+  public deleteUserApplet(appletUuid: string, callback: (status: boolean, response: any) => void) {
+    new TokenController().getUserToken((status, tokenResponse) => {
+      if (status) {
+        let baseURL = new AxiosController().baseURL();
+        new AxiosController().del(baseURL + "/applets/" + appletUuid, new AxiosController().config(tokenResponse), (status, appletDelResponse) => {
+          return callback(status, appletDelResponse.data);
+        });
+      } else {
+        return callback(status, tokenResponse);
+      }
+    });
   }
 }

@@ -68,7 +68,6 @@ export default class ServicesAuthentificationsController {
             serviceName,
           new AxiosController().config(tokenResponse),
           (status, contextDelResponse) => {
-            console.log(contextDelResponse);
             return callback(status, contextDelResponse.data);
           },
         );
