@@ -78,7 +78,7 @@ export default class UserApplets extends Component {
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">If <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.action}</Text><Text bold fontFamily="body" fontWeight={400} fontSize="3xl">,</Text></Text>
                     <Text color={textColor} style={styles.myAppletsCardText} bold fontFamily="body" fontWeight={400} fontSize="3xl">then <Text fontFamily="body" fontWeight={400} fontSize="2xl">{applet.reaction}</Text></Text>
                     <Button
-                        onPress={() => { this.onDelete({uuid: applet.appletUuid}) }}
+                        onPress={() => { this.onDelete({ uuid: applet.appletUuid }) }}
                         leftIcon={<Icon name="delete" size={40} color="white" />}
                         style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} />
                 </Card>
@@ -96,17 +96,19 @@ export default class UserApplets extends Component {
 
     render() {
         return (
-            <ScrollView
-                contentContainerStyle={{ padding: 20 }}
-                refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
-            >
+            <>
                 <View id="mainText" style={styles.mainText}>
                     {this.mainTextRender()}
                 </View>
-                <View id="myApplets" style={styles.myApplets}>
-                    {this.myApplets()}
-                </View>
-            </ScrollView>
+                <ScrollView
+                    contentContainerStyle={{ padding: 20 }}
+                    refreshControl={<RefreshControl refreshing={this.state.refresh} onRefresh={this.onRefresh} />}
+                >
+                    <View id="myApplets" style={styles.myApplets}>
+                        {this.myApplets()}
+                    </View>
+                </ScrollView>
+            </>
         );
     }
 }
