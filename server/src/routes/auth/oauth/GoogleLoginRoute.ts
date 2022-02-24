@@ -10,7 +10,7 @@ export default class GoogleLoginRoute extends Route {
 
     constructor() {
         super();
-        this.router.get('/code', this.code);
+        this.router.get('/callback', this.code);
         this.router.get('/', this.get);
     }
 

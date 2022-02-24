@@ -22,6 +22,7 @@ export default class ControllerLogin {
     }
 
     githubLogin(response) {
+        console.log(response);
         if (response.error) {
             this.page.setNotification({ message: "Error with google", show: true, type: "error" });
         } else {

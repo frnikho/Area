@@ -1,20 +1,21 @@
 import React from "react";
 import NewContextDialog from "./NewContextDialog";
 import PropTypes from "prop-types";
-import OAuth2Login from "react-simple-oauth2-login";
 import {Box, Button} from "@mui/material";
-import {FaGithub, FaGoogle} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import GoogleLogin from "react-google-login";
+import OauthPopup from "react-oauth-popup";
+import {FaGoogle} from "react-icons/fa";
+import {withSnackbar} from "notistack";
 
-export default class GoogleNewContextDialog extends NewContextDialog {
+class GoogleNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
     constructor(props) {
         super(props);
         this.state = {
+            url: undefined,
             valid: false,
             tokenData: undefined,
         }
@@ -22,9 +23,20 @@ export default class GoogleNewContextDialog extends NewContextDialog {
         this.onClickCreate = this.onClickCreate.bind(this);
     }
 
-    onPopupSuccess(data) {
+    componentDidMount() {
+        app.get('/services/google/link').then((response) => {
+            console.log(response.data);
+            this.setState({
+                url: response.data.url,
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    onPopupSuccess(code) {
         const auth = this.context;
-        app.get(`services/github/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/google/callback?code=${code}`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,
@@ -39,19 +51,15 @@ export default class GoogleNewContextDialog extends NewContextDialog {
     }
 
     renderContextLogin(valid) {
-        return (
-            <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                buttonText="Login"
-                redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-                scope={"https://mail.google.com/"}
-                render={renderProps => (
-                    <Button onClick={renderProps.onClick} disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
-                )}
-                onSuccess={(response) => console.log(response)}
-                accessType={"offline"}
-                onFailure={(error => console.error(error))}
-            />);
+        if (this.state.url === undefined)
+            return;
+        return (<OauthPopup
+            url={this.state.url}
+            title={"Google login"}
+            onClose={this.onPopupClose}
+            onCode={(code) => this.onPopupSuccess(code)}>
+                <Button disabled={this.state.tokenData !== undefined} endIcon={<FaGoogle/>}>Login to google</Button>
+        </OauthPopup>)
     }
 
     renderCreateButton(valid) {
@@ -69,3 +77,5 @@ GoogleNewContextDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired
 }
+
+export default withSnackbar(GoogleNewContextDialog);

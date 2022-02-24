@@ -46,7 +46,7 @@ export default class GithubLoginRoute extends Route {
 
         axios.post(`https://github.com/login/oauth/access_token`, {
             client_id: type === 'web' ? process.env.GITHUB_CLIENT_ID : process.env.GITHUB_CLIENT_ID_MOBILE,
-            client_secret: type === 'web' ? process.env.GITHUB_SECRET : process.env.GITHUB_CLIENT_SECRET_MOBILE,
+            client_secret: type === 'web' ? process.env.GITHUB_CLIENT_SECRET : process.env.GITHUB_CLIENT_SECRET_MOBILE,
             code,
             redirect_uri: type === 'web' ? process.env.GITHUB_REDIRECT_URL : process.env.GITHUB_REDIRECT_URL_MOBILE,
         }, {

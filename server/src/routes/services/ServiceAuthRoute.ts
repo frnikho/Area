@@ -21,7 +21,6 @@ export default class ServiceAuthRoute {
     public postRequest(url: string, body: object, header: object, userUUID: string, tokenType: string, success: token, errorFunc: errorFnc): void {
         axios.post(url, body, header).then((response) => {
             const {error} = response.data;
-            console.log(error);
             if (error)
                 return errorFunc(error);
             return success(ServiceAuthRoute.token(response.data));

@@ -6,8 +6,9 @@ import {Box, Button} from "@mui/material";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
 import {FaSpotify} from "react-icons/fa";
+import {withSnackbar} from "notistack";
 
-export default class SpotifyNewContextDialog extends NewContextDialog {
+class SpotifyNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -69,3 +70,5 @@ SpotifyNewContextDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired
 }
+
+export default withSnackbar(SpotifyNewContextDialog);

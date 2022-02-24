@@ -4,9 +4,9 @@ import {Box, Button, IconButton, TextField, Tooltip, Typography} from "@mui/mate
 import {FaCheck, FaQuestion} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-import {MdClose} from "react-icons/md";
+import {withSnackbar} from "notistack";
 
-export default class EpitechNewContextDialog extends NewContextDialog {
+class EpitechNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -68,3 +68,5 @@ export default class EpitechNewContextDialog extends NewContextDialog {
 EpitechNewContextDialog.propTypes = {
 
 }
+
+export default withSnackbar(EpitechNewContextDialog);

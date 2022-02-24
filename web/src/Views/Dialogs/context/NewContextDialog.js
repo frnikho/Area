@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import {MdClose} from "react-icons/md";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
+import {withSnackbar} from "notistack";
 
-export default class NewContextDialog extends React.Component {
+class NewContextDialog extends React.Component {
 
     static contextType = AuthContext;
 
@@ -82,8 +83,14 @@ export default class NewContextDialog extends React.Component {
             service: this.props.service.type
         }, config(this.context.getToken())).then((response) => {
             console.log(response.data);
+            this.props.enqueueSnackbar(`New ${ this.props.service.name} context created successfully`, {
+                variant: 'success',
+            });
             fnc();
         }).catch((err) => {
+            this.props.enqueueSnackbar(`${err.response.data.message}`, {
+                variant: 'error',
+            });
             console.log(err.response.data);
         });
     }
@@ -97,3 +104,5 @@ NewContextDialog.propTypes = {
     service: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
 }
+
+export default NewContextDialog;

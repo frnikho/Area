@@ -71,12 +71,13 @@ class LoginPage extends Page {
     }
 
     onClickGithubLogin(response) {
+        console.log("abc", response);
         this.controllerLogin.githubLogin(response);
     }
 
     render() {
         if (!this.authContext)
-            return (null);
+            return null;
         return (this.pageRender(this, function RenderLoginPage({ component }) {
 
             const menu = {
@@ -138,7 +139,7 @@ class LoginPage extends Page {
                                         responseType="code"
                                         scope={"openid%20profile%20email&"}
                                         redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-                                        onSuccess={() => component.onClickGoogleLogin}
+                                        onSuccess={component.onClickGoogleLogin}
                                         onFailure={(abc) => console.error(abc)}
                                         buttonText={"Google"}
                                         render={renderProps => (
@@ -158,7 +159,7 @@ class LoginPage extends Page {
                                         responseType="code"
                                         scope={"user:email"}
                                         redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                                        onSuccess={() => component.onClickGithubLogin}
+                                        onSuccess={component.onClickGithubLogin}
                                         onFailure={(abc) => console.error(abc)}
                                         buttonText={"Github"}
                                         render={renderProps => (

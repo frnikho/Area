@@ -6,8 +6,9 @@ import {Box, Button} from "@mui/material";
 import {FaGithub} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
+import {withSnackbar} from "notistack";
 
-export default class DiscordNewContextDialog extends NewContextDialog {
+class DiscordNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -69,3 +70,5 @@ DiscordNewContextDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired
 }
+
+export default withSnackbar(DiscordNewContextDialog);

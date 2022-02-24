@@ -4,8 +4,9 @@ import {Button} from "@mui/material";
 import {FaGithub} from "react-icons/fa";
 import React from "react";
 import app, {config} from "../../../Utils/Axios";
+import {withSnackbar} from "notistack";
 
-export default class TwitterNewContextDialog extends NewContextDialog {
+class TwitterNewContextDialog extends NewContextDialog {
 
     constructor(props) {
         super(props);
@@ -49,6 +50,6 @@ export default class TwitterNewContextDialog extends NewContextDialog {
             extraParams={{code_challenge_method: "s256", code_challenge: ""}}
         />)
     }
-
-
 }
+
+export default withSnackbar(TwitterNewContextDialog);
