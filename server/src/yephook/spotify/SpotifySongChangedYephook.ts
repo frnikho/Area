@@ -27,7 +27,7 @@ export default class SpotifySongChangedYephook extends SpotifyYepHook {
             new SpotifyService().getCurrentPlayingSong(context, userUuid, ((data, spotifyError) => {
                 if (spotifyError)
                     return Logger.e(spotifyError)
-                if (data === undefined || data === null)
+                if (data === undefined || data === null || data['item'] === undefined)
                     return;
                 if (this.lastPlayedSong !== data['item']['id']) {
                     this.onDataChanged(first, data['item'])
