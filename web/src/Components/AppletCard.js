@@ -24,13 +24,13 @@ export default class AppletCard extends React.Component {
                     }} >
                         <Box style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
                             {this.props.ifIcon &&
-                                <img src={`https://localhost:8080/static/${this.props.ifIcon}`} width={40} alt="Loarding . . ." />
+                                <img src={`https://localhost:8080/static/${this.props.ifIcon}`} width={20} alt="Loarding . . ." />
                             }
                         </Box>
                         <Box sx={{ mt: 0 }} style={{ width: "10px" }} />
                         <Box style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
                             {this.props.thenIcon &&
-                                <img src={`https://localhost:8080/static/${this.props.thenIcon}`} width={40} alt="Loarding . . ." />
+                                <img src={`https://localhost:8080/static/${this.props.thenIcon}`} width={20} alt="Loarding . . ." />
                             }
                         </Box>
                     </Box>

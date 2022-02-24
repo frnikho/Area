@@ -139,9 +139,14 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     <div style={Style.container}>
                         <Box sx={{ pb: 2, mx: 2 }} style={{ width: "500px" }}>
                             <Box style={{ textAlign: "left", paddingLeft: "20px", fontStyle: "bold" }}>
-                                {(this.state.applet && this.state.applet.icon) &&
+                                {(this.state.applet && this.state.applet.ifIcon) &&
                                     <IconButton >
-                                        <img src={`https://localhost:8080/static/${this.state.applet.icon}`} width={80} alt="Loarding . . ." />
+                                        <img src={`https://localhost:8080/static/${this.state.applet.ifIcon}`} width={80} alt="Loarding . . ." />
+                                    </IconButton>
+                                }
+                                {(this.state.applet && this.state.applet.thenIcon) &&
+                                    <IconButton >
+                                        <img src={`https://localhost:8080/static/${this.state.applet.thenIcon}`} width={80} alt="Loarding . . ." />
                                     </IconButton>
                                 }
                             </Box>
