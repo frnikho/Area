@@ -17,10 +17,15 @@ export default class AppletCard extends React.Component {
                     <Typography color={"white"}>
                         {this.props.description}
                     </Typography>
+                    <Box sx={{px: 4}} style={{height: "20%", backgroundColor: "white"}}/>
                     <Box sx={{ pb: 1, mx: 1 }} style={{
-                        justifyContent: "justify",
-                        alignItems: "center",
+                        justifyContent: "right",
+                        alignItems: "right",
                         display: "flex",
+                        flex: "1",
+                        position: "relative",
+                        whiteSpace: "nowrap",
+                        textAlign: "right",
                     }} >
                         <Box style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
                             {this.props.ifIcon &&
