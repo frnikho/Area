@@ -47,7 +47,7 @@ export default class SlackServiceRoute extends Route {
         params.append('client_id', process.env.SLACK_SERVICES_CLIENT_ID);
         params.append('client_secret', process.env.SLACK_SERVICES_CLIENT_SECRET);
 
-        new ServiceAuthRoute().getRequest("https://slack.com/api/oauth.v2.access", params, req['user']['uuid'], Services.SLACK.valueOf(), (token) => {
+        new ServiceAuthRoute().getRequest("https://slack.com/api/oauth.v2.access", params, (token) => {
             return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});

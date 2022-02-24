@@ -64,7 +64,7 @@ export default class TwitterServiceRoute extends Route {
         params.append("grant_type", "authorization_code");
         params.append('redirect_uri', process.env.TWITTER_SERVICES_REDIRECT_URL);
 
-        new ServiceAuthRoute().postRequest("https://api.twitter.com/2/oauth2/token", params, headers, req['user']['uuid'], Services.TWITTER.valueOf(), (token) => {
+        new ServiceAuthRoute().postRequest("https://api.twitter.com/2/oauth2/token", params, headers, (token) => {
             return res.status(200).json({success: true, token});
         }, (err) => {
             return res.status(400).json({success: false, error: err});
