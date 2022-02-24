@@ -1,6 +1,6 @@
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, HStack, Stack, Switch, Text, VStack } from 'native-base';
-import AppletsController from '../../controller/AppletsControler';
+import AppletsController from '../../controller/AppletsController';
 import { Card } from 'react-native-paper';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
