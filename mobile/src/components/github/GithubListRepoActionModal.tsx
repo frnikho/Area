@@ -46,7 +46,7 @@ export default class GithubListRepoActionModal extends ActionModal {
    * @param repository
    */
   onChangeParam(repository: any) {
-    this.props.onChangeParam(repository);
+    this.props.onChangeParam([repository]);
     this.setState({repository: repository})
   }
 
