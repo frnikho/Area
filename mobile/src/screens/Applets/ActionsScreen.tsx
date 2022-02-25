@@ -2,6 +2,7 @@ import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
+import TextInputAction from '../../components/generic_modal/TextInputAction';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -59,6 +60,24 @@ export default class ActionsScreen extends React.Component {
             onChangeParam={this.onChangeParameters}
           />
         ),
+        github_repository_created: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder="Type github name"
+            serviceName='github'
+          />
+        ),
+        github_repository_deleted: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder="Type github name"
+            serviceName='github'
+          />
+        )
       },
     };
     return actionsModalList[this.props.service.type][this.state.action.type];
