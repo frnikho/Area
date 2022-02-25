@@ -23,6 +23,7 @@ export class GooglePubSub {
                 time: data.publishTime,
                 msg: data.data.toString(),
             });
+            data.ack();
             let payload;
             try {
                 payload = JSON.parse(data.data.toString());
@@ -52,7 +53,6 @@ export class GooglePubSub {
                     })
                 })
             });
-            data.ack();
 
         });
     }
