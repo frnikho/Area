@@ -164,6 +164,8 @@ export default class AppletsScreen extends Component {
             duration: 2000,
           });
           this.props.navigation.navigate('home');
+        } else {
+          console.log(res.response.data);
         }
       },
     );

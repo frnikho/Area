@@ -3,6 +3,7 @@ import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
 import TextInputAction from '../../components/generic_modal/TextInputAction';
+import DiscordGuildAction from '../../components/discord/DiscordGuildAction';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -79,6 +80,22 @@ export default class ActionsScreen extends React.Component {
           />
         )
       },
+      discord: {
+        discord_channel_created: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navifation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_channel_deleted: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navifation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        )
+      }
     };
     return actionsModalList[this.props.service.type][this.state.action.type];
   }
