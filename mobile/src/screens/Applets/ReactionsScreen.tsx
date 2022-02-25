@@ -19,7 +19,7 @@ export default class ReactionsScreen extends React.Component {
   }
 
   onSave() {
-    this.props.onSave({ action: this.state.reaction, serviceColor: this.state.serviceColor }, this.state.parameters);
+    this.props.onSave({ reaction: this.state.reaction, serviceColor: this.state.serviceColor }, this.state.parameters);
   }
 
   renderModals() {
