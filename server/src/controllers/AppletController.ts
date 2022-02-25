@@ -148,4 +148,19 @@ export default class AppletController {
             success(false);
         });
     }
+
+    public getGmailApplets(historyId: string, callback: (appletFound: Applet, error?: string) => void) {
+        this.getAppletsByActionType(ActionType[ActionType.gmail_new_email], (applets) => {
+            const appletFound = applets.find((applet) => {
+                const value = applet.action.parameters.find((params) => params['name'] === 'history_id')['value'];
+                if (value === historyId)
+                    return true;
+            })
+            if (appletFound === undefined)
+                return callback(undefined, "No applets found !");
+            return callback(appletFound);
+        }, (appletError) => {
+            return callback(undefined, appletError);
+        })
+    }
 }

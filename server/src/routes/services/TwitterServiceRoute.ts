@@ -2,12 +2,18 @@ import Route from "../../Route";
 import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute"
-import {Services} from "../../models/Services"
 const pkceChallenge = require("pkce-challenge");
 const utf8 = require('utf8');
+import randomstring = require('randomstring');
+
+interface CodeVerifier {
+    key: string,
+    codeVerifier: string,
+}
 
 export default class TwitterServiceRoute extends Route {
 
+    private static codes: CodeVerifier[] = [];
     private static codeVerifier: any;
 
     /**
@@ -17,6 +23,7 @@ export default class TwitterServiceRoute extends Route {
         super();
         this.router.get('/callback', authorization, this.callback);
         this.router.get('/', this.login);
+        this.router.get('/link', this.link);
     }
 
     /**
@@ -93,15 +100,38 @@ export default class TwitterServiceRoute extends Route {
      * @returns
      */
     private login(req: express.Request, res: express.Response) {
-            const pkce = pkceChallenge();
-            TwitterServiceRoute.codeVerifier = pkce["codeVerifier"];
-            return res.redirect("https://twitter.com/i/oauth2/authorize?"
-                + "response_type=code&"
-                + "client_id=" + process.env.TWITTER_SERVICES_CLIENT_ID + "&"
-                + "redirect_uri=" + process.env.TWITTER_SERVICES_REDIRECT_URL + "&"
-                + "scope=tweet.write tweet.read users.read offline.access&"
-                + "state=state&"
-                + "code_challenge=" + pkce["code_challenge"] + "&"
-                + "code_challenge_method=s256");
+        const pkce = pkceChallenge();
+        TwitterServiceRoute.codeVerifier = pkce["codeVerifier"];
+        return res.redirect("https://twitter.com/i/oauth2/authorize?"
+            + "response_type=code&"
+            + "client_id=" + process.env.TWITTER_SERVICES_CLIENT_ID + "&"
+            + "redirect_uri=" + process.env.TWITTER_SERVICES_REDIRECT_URL + "&"
+            + "scope=tweet.write tweet.read users.read offline.access&"
+            + "state=state&"
+            + "code_challenge=" + pkce["code_challenge"] + "&"
+            + "code_challenge_method=s256");
+    }
+
+    private link(req: express.Request, res: express.Response) {
+        const pkce = pkceChallenge();
+        const key: string = randomstring.generate();
+        TwitterServiceRoute.codes.push({
+            key,
+            codeVerifier: pkce['codeVerifier']
+        })
+
+        const url = "https://twitter.com/i/oauth2/authorize?"
+            + "response_type=code&"
+            + "client_id=" + process.env.TWITTER_SERVICES_CLIENT_ID + "&"
+            + "redirect_uri=" + process.env.TWITTER_SERVICES_REDIRECT_URL + "&"
+            + "scope=tweet.write tweet.read users.read offline.access&"
+            + "state=state&"
+            + "code_challenge=" + pkce["code_challenge"] + "&"
+            + "code_challenge_method=s256";
+
+        return res.status(200).json({
+            pkceKey: key,
+            link: url
+        });
     }
 }

@@ -2,15 +2,24 @@ export const GmailAppletActionsAbout = [
     {
         name: "New email received",
         description: '',
-        type: 'google_gmail_email_received',
+        type: 'gmail_new_email',
         base_key: 'email',
         if: "new email is received",
         parameters: [
             {
-                name: "token_key",
+                name: "gmail_email",
+                type: 'string',
+                required: true
+            },
+            {
+                name: "context_uuid",
                 type: 'string',
                 required: true,
-
+            },
+            {
+                name: "user_uuid",
+                type: 'string',
+                required: true,
             }
         ],
         ingredients: [],
