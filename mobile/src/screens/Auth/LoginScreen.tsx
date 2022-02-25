@@ -120,8 +120,9 @@ export default class LoginScreen extends Component {
       <Center>
         <Box safeArea p="2" py="8" w="90%" maxW="290" mt="24%">
           <Heading
-            size="lg"
-            fontWeight="600"
+            size="xl"
+            fontFamily="body"
+            fontWeight={600}
             color="coolGray.800"
             _dark={{
               color: 'warmGray.50',
@@ -177,7 +178,7 @@ export default class LoginScreen extends Component {
             </HStack>
             <HStack mt="6" justifyContent="center">
               <Text
-                fontSize="sm"
+                fontSize="md"
                 color="coolGray.600"
                 _dark={{
                   color: 'warmGray.200',
@@ -188,7 +189,7 @@ export default class LoginScreen extends Component {
                 _text={{
                   color: 'indigo.500',
                   fontWeight: 'medium',
-                  fontSize: 'sm',
+                  fontSize: 'md',
                 }}
                 onPress={() => this.props.navigation.navigate('register')}>
                 Sign Up
