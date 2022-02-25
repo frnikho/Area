@@ -2,6 +2,7 @@ import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import DiscordPostMessageReaction from '../../components/discord/DiscordPostMessageReaction';
+import SpotifyPauseMusicReaction from '../../components/spotify/SpotifyPauseMusicReaction';
 
 export default class ReactionsScreen extends React.Component {
   constructor(props: any) {
@@ -32,6 +33,15 @@ export default class ReactionsScreen extends React.Component {
           />
         ),
       },
+      spotify: {
+        spotify_pause_track: (
+          <SpotifyPauseMusicReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        )
+      }
     };
     return reactionsModalList[this.props.service.type][
       this.state.reaction.type
