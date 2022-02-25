@@ -5,6 +5,7 @@ import DiscordPostMessageReaction from '../../components/discord/DiscordPostMess
 import SpotifyPauseMusicReaction from '../../components/spotify/SpotifyPauseMusicReaction';
 import SpotifyPlayMusicReaction from '../../components/spotify/SpotifyPlayMusicReaction';
 import SpotifyVolumeReaction from '../../components/spotify/SpotifyVolumeReaction';
+import TextInputReaction from '../../components/generic_modal/TextInputReaction';
 
 export default class ReactionsScreen extends React.Component {
   constructor(props: any) {
@@ -55,6 +56,17 @@ export default class ReactionsScreen extends React.Component {
             reaction={this.state.reaction}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
+          />
+        )
+      },
+      twitter: {
+        twitter_post_tweet: (
+          <TextInputReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            serviceName='twitter'
+            placeholder="Type your tweet"
           />
         )
       }

@@ -167,9 +167,6 @@ export default class AppletsScreen extends Component {
           this.props.navigation.navigate('home');
         } else {
           console.log(res.response.data);
-          error(res.response.data, () => {
-            this.props.navigation.navigate('home');
-          })
         }
       },
     );
