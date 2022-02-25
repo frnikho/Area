@@ -213,13 +213,13 @@ class AddAppletPage extends Page {
 
     showTitle() {
         return (
-            <Box sx={{ mt: 8 }} style={styles.topBar.centerMenu}>
+            <Box sx={{mt: 8}} style={styles.topBar.centerMenu}>
                 <TextField name={"Applet's title"} label={"Applet's title"} inputProps={{ style: { fontSize: 30 } }} variant="filled" value={this.state.appletTitle} onChange={this.onChangeTitle} />
             </Box>
         )
     }
 
-    renderAddAppletPage() {
+    pageRender() {
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline />

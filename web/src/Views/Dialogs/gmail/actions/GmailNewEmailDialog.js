@@ -30,7 +30,7 @@ export default class GmailNewEmailDialog extends ActionSettingsDialog {
                     parameters: [
                         {
                             name: "gmail_email",
-                            value: response.data['historyId']
+                            value: context.tokenData.token.email,
                         },
                         {
                             name: "context_uuid",

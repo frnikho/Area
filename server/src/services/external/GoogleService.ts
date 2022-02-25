@@ -2,6 +2,7 @@ import axios from "axios";
 import {GoogleUser} from "../../models/GoogleUser";
 import {buildAuthorizationHeaders} from "../../utils/Axios";
 import {Context} from "../../models/Context";
+import {response} from "express";
 
 const {OAuth2Client} = require('google-auth-library');
 
@@ -66,7 +67,7 @@ export default class GoogleService {
     public static sendWatchGmail(token: string, userEmail: string, callback: (successData: object | null, error: string | null) => void): void {
         axios.post(`https://gmail.googleapis.com/gmail/v1/users/${userEmail}/watch/`, {
             topicName: process.env.GMAIL_PUBSUB_TOPIC,
-            labelIds: ["INBOX"]
+            labelIds: ["INBOX"],
         }, buildAuthorizationHeaders(token)).then((response) => {
             return callback(response.data, null);
         }).catch((error) => {
@@ -84,21 +85,30 @@ export default class GoogleService {
         });
     }
 
-    public static getHistoryEmailId(email: string, startHistoryId: string) {
-        axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId&=${startHistoryId}`).then((response) => {
-            console.log(response.data);
-        });
+    public static getHistoryEmailId(context: Context, messageHistory: string, callback: (data, error?) => void) {
+        try {
+            const email = context.tokenData.token['email'];
+            const token = context.tokenData.token['access_token'];
+            axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId=${messageHistory}`, buildAuthorizationHeaders(token)).then((response) => {
+                return callback(response.data);
+            }).catch((err) => {
+                console.log(err.response.status);
+                console.log(err.response.data);
+            });
+        } catch (ex) {
+            return callback(undefined, "An error occurred ! please try again later !");
+        }
     }
 
     public static getEmail(context: Context, userUuid: string, messageId: string, callback: (data, error?) => void) {
         this.getUser(context.tokenData.token['access_token'], (user) => {
             axios.get(`https://gmail.googleapis.com/gmail/v1/users/${user['email']}/messages/${messageId}`, buildAuthorizationHeaders(context.tokenData.token['access_token'])).then((emailResponse) => {
-                console.log(emailResponse.data)
+                callback(emailResponse.data);
             }).catch((emailError) => {
-                console.log(emailError.response.data);
+                callback(emailError.response.data);
             });
         }, (error) => {
-
+            callback(error.response.data);
         })
     }
 

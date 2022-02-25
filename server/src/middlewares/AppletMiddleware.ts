@@ -69,7 +69,6 @@ export const checkNewApplet = (req: express.Request, res: express.Response, next
                 serviceAction.parameters.forEach((params) => {
                     const {name, required}: {name: string, type: string, required: boolean} = params;
                     const p = action.parameters.filter((par) => par['name'] === name)[0];
-
                     if (p === undefined) {
                         if (required)
                             applets.action.missing.push(name);

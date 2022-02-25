@@ -580,7 +580,7 @@ export const AppAbout = {
             name: "Dropbox",
             type: "dropbox",
             color: "#0062FE",
-            icon: "icon/dropbox.png",
+            icon: "icons/dropbox.png",
             actions: DropboxAppletActionAbout,
             reactions: [],
         }, {
