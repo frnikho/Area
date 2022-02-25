@@ -22,6 +22,7 @@ export default class ControllerLogin {
     }
 
     githubLogin(response) {
+        console.log(response);
         if (response.error) {
             this.page.props.enqueueSnackbar("Error with GitHub", { variant: 'error' });
         } else {

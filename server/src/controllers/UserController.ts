@@ -8,19 +8,19 @@ import {getGithubUserFirstname, getGithubUserLastname, GithubUser} from "../mode
 import {GoogleUser} from "../models/GoogleUser";
 import ServiceController from "./ServiceController";
 
-type success = (user: User) => void;
+type successCallback = (user: User) => void;
 type contextSuccess = (context: string, user: User) => void;
-type error = (msg) => void;
+type errorCallback = (msg) => void;
 
 export default class UserController {
 
-    public update(user: User, success: () => void, error: error): void {
+    public update(user: User, success: () => void, error: errorCallback): void {
         DBService.query(`UPDATE users SET firstname = '${user.firstname}', lastname = '${user.lastname}' WHERE uuid = '${user.uuid}';`, (result) => {
             success();
         }, error);
     }
 
-    public delete(user: User, success: () => void, error: error): void {
+    public delete(user: User, success: () => void, error: errorCallback): void {
         DBService.query(`DELETE FROM users WHERE uuid = '${user.uuid}'`, (result) => {
             DBService.query(`DELETE FROM services WHERE user_uuid = '${user.uuid}'`, (result) => {
                 DBService.query(`DELETE FROM applets WHERE user_uuid = '${user.uuid}'`, (result) => {
@@ -30,7 +30,7 @@ export default class UserController {
         }, error);
     }
 
-    public register(data: RegisterBody, success: success, error: error): void {
+    public register(data: RegisterBody, success: successCallback, error: errorCallback): void {
         new EncryptService(data.password).hash((hashedPassword) => {
             if (hashedPassword === undefined)
                 return error(`Can't hashed password !`);
@@ -45,7 +45,7 @@ export default class UserController {
         });
     }
 
-    public login(email: string, password: string, success: success, error: error) {
+    public login(email: string, password: string, success: successCallback, error: errorCallback) {
         DBService.query(`SELECT password FROM users WHERE email = '${email}'`, (response) => {
             if (response.length === 0)
                 return error('Cannot found user !');
@@ -63,9 +63,13 @@ export default class UserController {
         })
     }
 
-    private registerWithGithub(user: GithubUser, success: contextSuccess, error: error) {
+    private registerWithGithub(user: GithubUser, success: contextSuccess, error: errorCallback) {
         let firstname = getGithubUserFirstname(user);
+        if (firstname === undefined)
+            firstname = "";
         let lastname = getGithubUserLastname(user);
+        if (lastname === undefined)
+            lastname = "";
         DBService.queryValues(`INSERT INTO users (uuid, email, password, firstname, lastname, auth_type, verified) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING uuid, email, firstname, lastname, created_date`, [uuid.v4(), user.email, uuid.v4(), firstname, lastname, 'github', '1'], (response) => {
             new ServiceController().createTableForUser((response[0] as User).uuid, () => {
                 success('register', response[0]);
@@ -73,7 +77,7 @@ export default class UserController {
         }, error);
     }
 
-    private registerWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
+    private registerWithGoogle(user: GoogleUser, success: contextSuccess, error: errorCallback) {
         console.log(user);
         if (user.family_name === undefined)
             user.family_name = "?";
@@ -84,7 +88,7 @@ export default class UserController {
         }, error);
     }
 
-    public loginWithGithub(user: GithubUser, success: contextSuccess, error: error) {
+    public loginWithGithub(user: GithubUser, success: contextSuccess, error: errorCallback) {
         DBService.query(`SELECT uuid, email, firstname, lastname, auth_type FROM users WHERE email = '${user.email}'`, (result) => {
             if (result.length === 0)
                 return error('User not found !');
@@ -92,7 +96,7 @@ export default class UserController {
         }, err => error(err));
     }
 
-    public loginWithGoogle(user: GoogleUser, success: contextSuccess, error: error) {
+    public loginWithGoogle(user: GoogleUser, success: contextSuccess, error: errorCallback) {
         DBService.query(`SELECT uuid, email, firstname, lastname, auth_type FROM users WHERE email = '${user.email}'`, (result) => {
             if (result.length === 0)
                 return error('User not found !');
@@ -100,7 +104,7 @@ export default class UserController {
         }, err => error(err));
     }
 
-    public authWithGithub(githubUser: GithubUser, success: contextSuccess, error: error) {
+    public authWithGithub(githubUser: GithubUser, success: contextSuccess, error: errorCallback) {
         this.getByEmail(githubUser.email, (user) => {
             if (user === undefined)
                 return this.registerWithGithub(githubUser, success, error);
@@ -110,7 +114,7 @@ export default class UserController {
         },);
     }
 
-    public authWithGoogle(googleUser: GoogleUser, success: contextSuccess, error: error) {
+    public authWithGoogle(googleUser: GoogleUser, success: contextSuccess, error: errorCallback) {
         this.getByEmail(googleUser.email, (user) => {
             if (user === undefined)
                 return this.registerWithGoogle(googleUser, success, error);
@@ -140,7 +144,7 @@ export default class UserController {
         })
     }
 
-    public verifyUserEmail(userUuid: string, token: string, success: () => void, error: error) {
+    public verifyUserEmail(userUuid: string, token: string, success: () => void, error: errorCallback) {
         this.getByUuid(userUuid, (user) => {
             if (user === undefined)
                 return error('invalid user uuid !');
@@ -155,14 +159,14 @@ export default class UserController {
         })
     }
 
-    public sendEmailVerification(user: User, success: (info?) => void, error: error) {
+    public sendEmailVerification(user: User, success: (info?) => void, error: errorCallback) {
         new EncryptService(user.email).hash((hashedEmail) => {
             const mailData = {
                 from: 'nicolas.sansd@gmail.com',
                 to: user.email,
                 subject: 'Verify your email address',
                 text: "",
-                html: `<b>Token: ${hashedEmail}</b>`
+                html: `<b>Click here to validate your email: ${process.env.FRONTEND_URL}/auth/verify?userUuid=${user.uuid}&token=${hashedEmail}</b>`
             }
             EmailService.getTransporter().sendMail(mailData, (err, info) => {
                 if (err)

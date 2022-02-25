@@ -13,6 +13,7 @@ import ProfilePage from "./Views/Area/ProfilePage"
 import AddAppletPage from "./Views/Area/AddAppletPage";
 import AppletPropertyPage from "./Views/Area/AppletPropertyPage";
 import ContextPage from "./Views/Area/ContextPage";
+import VerifyPage from "./Views/Area/VerifyPage";
 
 class App extends React.Component {
 
@@ -51,6 +52,7 @@ class App extends React.Component {
                     <Route path='/' element={<HomePage />} />
                     <Route path={"description"} element={<DescriptionPage />} />
                     <Route path="auth">
+                        <Route path={"verify"} element={<VerifyPage/>}/>
                         <Route path={"login"} element={<LoginPage />} />
                         <Route path={"register"} element={<RegisterPage />} />
                     </Route>

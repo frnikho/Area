@@ -3,9 +3,7 @@ import app from "../../Utils/Axios"
 export default class ControllerGithub {
 
     static connect(data) {
-        app.post(`/auth/github/code`, {
-            code: data['code']
-        }).then((response) => {
+        app.get(`/auth/github/code?code=${data['code']}&type=web`).then((response) => {
             console.log(response.data);
         }).catch((err) => {
             console.log(err.response);

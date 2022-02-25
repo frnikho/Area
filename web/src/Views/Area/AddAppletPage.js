@@ -46,7 +46,6 @@ class AddAppletPage extends Page {
         this.onClickAddAction = this.onClickAddAction.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onClickCreate = this.onClickCreate.bind(this);
-        this.renderAddAppletPage = this.renderAddAppletPage.bind(this)
     }
 
     onActionSelected(action, actionAbout, serviceAbout) {
@@ -238,10 +237,6 @@ class AddAppletPage extends Page {
                 </Box>
             </ThemeProvider>
         );
-    }
-
-    render() {
-        return(this.pageRender(this.renderAddAppletPage))
     }
 }
 

@@ -25,7 +25,6 @@ class LoginPage extends Page {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onClickGoogleLogin = this.onClickGoogleLogin.bind(this);
         this.onClickGithubLogin = this.onClickGithubLogin.bind(this);
-        this.renderLoginPage = this.renderLoginPage.bind(this)
     }
 
     componentDidMount() {
@@ -75,7 +74,7 @@ class LoginPage extends Page {
         this.controllerLogin.githubLogin(response);
     }
 
-    renderLoginPage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
         const menu = {
@@ -137,7 +136,7 @@ class LoginPage extends Page {
                                     responseType="code"
                                     scope={"openid%20profile%20email&"}
                                     redirectUri={process.env.REACT_APP_GOOGLE_REDIRECT_URL}
-                                    onSuccess={() => this.onClickGoogleLogin}
+                                    onSuccess={this.onClickGoogleLogin}
                                     onFailure={(abc) => console.error(abc)}
                                     buttonText={"Google"}
                                     render={renderProps => (
@@ -157,7 +156,7 @@ class LoginPage extends Page {
                                     responseType="code"
                                     scope={"user:email"}
                                     redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
-                                    onSuccess={() => this.onClickGithubLogin}
+                                    onSuccess={this.onClickGithubLogin}
                                     onFailure={(abc) => console.error(abc)}
                                     buttonText={"Github"}
                                     render={renderProps => (
@@ -182,10 +181,6 @@ class LoginPage extends Page {
                 </Container>
             </ThemeProvider >
         )
-    }
-
-    render() {
-        return(this.pageRender(this.renderLoginPage))
     }
 }
 

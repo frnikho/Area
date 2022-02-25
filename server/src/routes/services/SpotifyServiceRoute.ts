@@ -16,7 +16,6 @@ export default class SpotifyServiceRoute extends Route {
     public callback(req: express.Request, res: express.Response) {
         const {code, type} = req.query;
 
-
         const headers = {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",

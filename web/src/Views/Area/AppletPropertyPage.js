@@ -31,7 +31,6 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         this.onEditClick = this.onEditClick.bind(this);
         this.showTitle = this.showTitle.bind(this)
         this.showEditButton = this.showEditButton.bind(this)
-        this.renderAppletPropertyPage = this.renderAppletPropertyPage.bind(this)
     }
 
     componentDidMount() {
@@ -96,7 +95,7 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         )
     }
 
-    renderAppletPropertyPage() {
+    pageRender() {
         // if (!this.authContext || !this.state.applet)
         if (!this.authContext)
             return (null);
@@ -172,9 +171,5 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                 </Box>
             </ThemeProvider >
         )
-    }
-
-    render() {
-        return(this.pageRender(this.renderAppletPropertyPage))
     }
 }))
