@@ -3,6 +3,7 @@ import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
 import TextInputAction from '../../components/generic_modal/TextInputAction';
+import DiscordGuildActionChannel from '../../components/discord/DiscordGuildActionChannel';
 import DiscordGuildAction from '../../components/discord/DiscordGuildAction';
 
 export default class ActionsScreen extends React.Component {
@@ -82,19 +83,63 @@ export default class ActionsScreen extends React.Component {
       },
       discord: {
         discord_channel_created: (
-          <DiscordGuildAction
+          <DiscordGuildActionChannel
             action={this.state.action}
-            navifation={this.props.navigation}
+            navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
         discord_channel_deleted: (
-          <DiscordGuildAction
+          <DiscordGuildActionChannel
             action={this.state.action}
-            navifation={this.props.navigation}
+            navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
-        )
+        ),
+        discord_private_message_received: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord user id"}
+            serviceName={"discord"}
+          />
+        ),
+        discord_guild_message_updated: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_message_deleted: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_member_banned: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_member_unbanned: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_update: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
       }
     };
     return actionsModalList[this.props.service.type][this.state.action.type];
