@@ -45,9 +45,6 @@ export default class DiscordGuildChannelAction extends ActionModal {
   renderList() {
     return (
       <Center>
-        {this.state.discordName && (
-            <Text>Discord: {this.state.discordName}</Text>
-        )}
         <Box w="3/4" maxW="300">
           <Box mt="3">
             <Select
@@ -64,6 +61,9 @@ export default class DiscordGuildChannelAction extends ActionModal {
               <Select.Item label={'Vocal'} value={'GUILD_VOICE'} />
               <Select.Item label={'Text'} value={'GUILD_TEXT'} />
             </Select>
+            {this.state.discordName && (
+                <Text mt='3'>Discord: {this.state.discordName}</Text>
+            )}
           </Box>
         </Box>
       </Center>

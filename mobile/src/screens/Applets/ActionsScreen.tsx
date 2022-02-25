@@ -6,6 +6,8 @@ import TextInputAction from '../../components/generic_modal/TextInputAction';
 import DiscordGuildChannelAction from '../../components/discord/DiscordGuildChannelAction';
 import DiscordGuildAction from '../../components/discord/DiscordGuildAction';
 import DiscordGuildMessageAction from '../../components/discord/DiscordGuildMessageAction';
+import EpitechIntraAction from '../../components/epitech/EpitechIntraAction';
+import SpotifyAction from '../../components/spotify/SpotifyAction';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -164,6 +166,24 @@ export default class ActionsScreen extends React.Component {
             onChangeParam={this.onChangeParameters}
             placeholder={"Discord message id"}
             serviceName={"discord"}
+          />
+        )
+      },
+      epitech_intra: {
+        intra_new_notifications: (
+          <EpitechIntraAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+      },
+      spotify: {
+        spotify_song_changed: (
+          <SpotifyAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
           />
         )
       }

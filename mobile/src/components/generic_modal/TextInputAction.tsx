@@ -18,17 +18,23 @@ export default class TextInputAction extends ActionModal {
     this.props.onChangeParam([text]), this.setState({text: text});
   }
 
-  renderBody() {
+  renderTextInput() {
     return (
       <Center>
         <Box w="3/4" maxW="300">
-          <Input
-            mt="3"
-            placeholder={this.props.placeholder}
-            onChangeText={val => this.onChangeParam(val)}
-          />
+          <Box mt="3" minW="100%">
+            <Input
+              mt="3"
+              placeholder={this.props.placeholder}
+              onChangeText={val => this.onChangeParam(val)}
+            />
+          </Box>
         </Box>
       </Center>
     );
+  }
+
+  renderBody() {
+    return (this.renderTextInput());
   }
 }

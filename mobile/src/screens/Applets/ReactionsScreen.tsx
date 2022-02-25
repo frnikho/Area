@@ -42,7 +42,7 @@ export default class ReactionsScreen extends React.Component {
     return (
       <>
         <Stack space={2}>
-          {this.props.service.reactions.length <= 0 ? (
+          {this.props.service.reactions && this.props.service.reactions.length <= 0 ? (
             <Text>
               No reactions is available with {this.props.service.name}
             </Text>
