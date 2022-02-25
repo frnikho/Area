@@ -25,7 +25,6 @@ export default class GithubWebhook {
     }
 
     private onPush(data): void {
-        console.log(data);
         Logger.i("Github On push");
         const repoName: string = data.payload.repository.full_name;
         const appletController = new AppletController();
@@ -41,7 +40,7 @@ export default class GithubWebhook {
                 }
             });
         }, (err) => {
-            Logger.e( err);
+            Logger.e(err);
         });
     }
 
