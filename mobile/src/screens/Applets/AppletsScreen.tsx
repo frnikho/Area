@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import {
+  Box,
   Button,
+  Center,
   ChevronLeftIcon,
+  FormControl,
+  Input,
   Text,
   Toast,
   VStack,
@@ -17,6 +21,7 @@ export default class AppletsScreen extends Component {
       reaction: undefined,
       actionParameters: undefined,
       reactionParameters: undefined,
+      appletTitle: undefined,
     };
     this.onActionSelected = this.onActionSelected.bind(this);
     this.onReactionSelected = this.onReactionSelected.bind(this);
@@ -28,7 +33,8 @@ export default class AppletsScreen extends Component {
       this.state.action &&
       this.state.reaction &&
       this.state.actionParameters &&
-      this.state.reactionParameters
+      this.state.reactionParameters &&
+      this.state.appletTitle
     );
   }
 
@@ -70,7 +76,7 @@ export default class AppletsScreen extends Component {
         <View id="action">
           <Button
             mode="contained"
-            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.action.serviceColor, borderRadius: 15}}
+            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.action.serviceColor, borderRadius: 15 }}
             onPress={() =>
               this.props.navigation.navigate('services', {
                 modalContext: 'actions',
@@ -118,7 +124,7 @@ export default class AppletsScreen extends Component {
         <View id="reaction">
           <Button
             mode="contained"
-            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.reaction.serviceColor, borderRadius: 15}}
+            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.reaction.serviceColor, borderRadius: 15 }}
             onPress={() =>
               this.props.navigation.navigate('services', {
                 modalContext: 'reactions',
@@ -150,7 +156,7 @@ export default class AppletsScreen extends Component {
 
   onCreate() {
     new AppletsController().createUserApplet(
-      'test justin',
+      this.state.serviceTitle,
       this.state.action,
       this.state.reaction,
       this.state.actionParameters,
@@ -158,7 +164,7 @@ export default class AppletsScreen extends Component {
       (status, res) => {
         if (status) {
           Toast.show({
-            title: 'You are successfully created a',
+            title: this.state.serviceTitle + ' applet is successfully created',
             status: 'success',
             description: 'You can now navigate in the dashboard.',
             duration: 2000,
@@ -183,6 +189,25 @@ export default class AppletsScreen extends Component {
     );
   }
 
+  /**
+   * Applet title form render
+   *
+   * @returns
+   */
+  appletTitleFormRender() {
+    return (
+      <Center>
+        <Box safeArea w="100%" maxW="325">
+          <VStack space={3} mt="5">
+            <FormControl>
+              <FormControl.Label isRequired> <Text fontFamily="body" fontWeight={600} fontSize="3xl" style={styles.titleFormText}>Title</Text></FormControl.Label>
+              <Input size="xl" onChangeText={value => this.setState({ appletTitle: value })} />
+            </FormControl>
+          </VStack>
+        </Box>
+      </Center>
+    );
+  }
 
   render() {
     return (
@@ -195,6 +220,7 @@ export default class AppletsScreen extends Component {
           onPress={() => this.props.navigation.goBack()}
         />
         {this.mainTextRender()}
+        {this.appletTitleFormRender()}
         {this.actionButtonRender()}
         {this.reactionButtonRender()}
         {this.createButtonRender()}
@@ -250,5 +276,8 @@ const styles = StyleSheet.create({
   createContainer: {
     width: '100%',
     marginTop: 50,
+  },
+  titleFormText: {
+    color: '#222222',
   },
 });
