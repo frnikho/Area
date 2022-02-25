@@ -1,8 +1,6 @@
-import React from 'react';
 import app, {config} from '../../axios_config';
 import ActionModal from '../ActionModal';
 import TokenController from '../../controller/TokenController';
-import {Center, Text} from 'native-base';
 
 export default class DiscordGuildAction extends ActionModal {
   constructor(props: any) {

@@ -5,6 +5,7 @@ import GithubListRepoActionModal from '../../components/github/GithubListRepoAct
 import TextInputAction from '../../components/generic_modal/TextInputAction';
 import DiscordGuildActionChannel from '../../components/discord/DiscordGuildActionChannel';
 import DiscordGuildAction from '../../components/discord/DiscordGuildAction';
+import DiscordGuildMessageAction from '../../components/discord/DiscordGuildMessageAction';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -140,6 +141,13 @@ export default class ActionsScreen extends React.Component {
             onChangeParam={this.onChangeParameters}
           />
         ),
+        discord_guild_message_received: (
+          <DiscordGuildMessageAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        )
       }
     };
     return actionsModalList[this.props.service.type][this.state.action.type];
