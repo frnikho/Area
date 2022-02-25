@@ -67,7 +67,7 @@ export default class AppletsController {
   ) {
     const body = {
       title: title,
-      action_key: actionParam,
+      action_key: actionParam[0],
       action_type: action.type,
       action: {
         parameters: action.parameters.map((param, i) => {

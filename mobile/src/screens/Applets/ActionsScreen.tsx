@@ -1,7 +1,13 @@
 import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
-import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
+import GithubListRepoAction from '../../components/github/GithubListRepoAction';
+import TextInputAction from '../../components/generic_modal/TextInputAction';
+import DiscordGuildChannelAction from '../../components/discord/DiscordGuildChannelAction';
+import DiscordGuildAction from '../../components/discord/DiscordGuildAction';
+import DiscordGuildMessageAction from '../../components/discord/DiscordGuildMessageAction';
+import EpitechIntraAction from '../../components/epitech/EpitechIntraAction';
+import SpotifyAction from '../../components/spotify/SpotifyAction';
 
 export default class ActionsScreen extends React.Component {
   constructor(props: any) {
@@ -25,41 +31,162 @@ export default class ActionsScreen extends React.Component {
     const actionsModalList = {
       github: {
         github_repository_push: (
-          <GithubListRepoActionModal
+          <GithubListRepoAction
             action={this.state.action}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
         github_release_created: (
-          <GithubListRepoActionModal
+          <GithubListRepoAction
             action={this.state.action}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
         github_issue_opened: (
-          <GithubListRepoActionModal
+          <GithubListRepoAction
             action={this.state.action}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
         github_issue_closed: (
-          <GithubListRepoActionModal
+          <GithubListRepoAction
             action={this.state.action}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
         github_issue_reopened: (
-          <GithubListRepoActionModal
+          <GithubListRepoAction
             action={this.state.action}
             navigation={this.props.navigation}
             onChangeParam={this.onChangeParameters}
           />
         ),
+        github_repository_created: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder="Type github name"
+            serviceName='github'
+          />
+        ),
+        github_repository_deleted: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder="Type github name"
+            serviceName='github'
+          />
+        )
       },
+      discord: {
+        discord_channel_created: (
+          <DiscordGuildChannelAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_channel_deleted: (
+          <DiscordGuildChannelAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_private_message_received: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord user id"}
+            serviceName={"discord"}
+          />
+        ),
+        discord_guild_message_updated: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_message_deleted: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_member_banned: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_member_unbanned: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_update: (
+          <DiscordGuildAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_message_received: (
+          <DiscordGuildMessageAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        discord_guild_message_reaction_add: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord message id"}
+            serviceName={"discord"}
+          />
+        ),
+        discord_guild_message_reaction_removed: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord message id"}
+            serviceName={"discord"}
+          />
+        )
+      },
+      epitech_intra: {
+        intra_new_notifications: (
+          <EpitechIntraAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+      },
+      spotify: {
+        spotify_song_changed: (
+          <SpotifyAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        )
+      }
     };
     return actionsModalList[this.props.service.type][this.state.action.type];
   }

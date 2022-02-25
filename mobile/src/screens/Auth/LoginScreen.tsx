@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoginController from '../../controller/LoginController';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import error from '../../error';
 export default class LoginScreen extends Component {
   state: {
     email: string | undefined;
@@ -34,11 +35,7 @@ export default class LoginScreen extends Component {
 
   onLogin() {
     if (this.state.email === undefined || this.state.password === undefined) {
-      Toast.show({
-        title: 'Email and password are required',
-        status: 'warning',
-        description: 'Please try again !',
-      });
+      error('Email and password are required');
     }
     new LoginController().nativeLogin(
       this.state.email,
@@ -57,11 +54,7 @@ export default class LoginScreen extends Component {
           }, 1000);
         } else {
           console.log(res);
-          Toast.show({
-            title: res.response.data.error,
-            status: 'warning',
-            description: 'Please try again !',
-          });
+          error(res.response.data.error)
         }
       },
     );
@@ -82,11 +75,7 @@ export default class LoginScreen extends Component {
         }, 1000);
       } else {
         console.log(res);
-        Toast.show({
-          title: res.response.data.error,
-          status: 'warning',
-          description: 'Please try again !',
-        });
+        error(res.response.data.error);
       }
     });
   }
@@ -106,11 +95,7 @@ export default class LoginScreen extends Component {
         }, 1000);
       } else {
         console.log(res.response.data);
-        Toast.show({
-          title: res.response.data.error,
-          status: 'warning',
-          description: 'Please try again !',
-        });
+        error(res.response.data.error);
       }
     });
   }

@@ -14,6 +14,7 @@ import {
 } from 'native-base';
 import {ScrollView} from 'react-native';
 import RegisterController from '../../controller/RegisterController';
+import error from '../../error';
 export default class RegisterScreen extends Component {
   state: {
     firstName: string | undefined;
@@ -37,18 +38,11 @@ export default class RegisterScreen extends Component {
 
   onRegister() {
     if (this.state.email === undefined || this.state.password === undefined) {
-      Toast.show({
-        title: 'Email, password, firstname and lastname are required',
-        status: 'warning',
-        description: 'Please try again !',
-      });
+      error('Email, password, firstname and lastname are required');
+      return;
     }
     if (this.state.password !== this.state.rePassword) {
-      Toast.show({
-        title: 'Password does not match',
-        status: 'warning',
-        description: 'Please try again !',
-      });
+      error('Password does not match');
       return;
     }
 
@@ -70,11 +64,7 @@ export default class RegisterScreen extends Component {
           }, 1000);
         } else {
           console.log(res)
-          Toast.show({
-            title: "Error something is missing",
-            status: 'warning',
-            description: 'Please try again !',
-          });
+          error("Error something is missing");
         }
       },
     );
