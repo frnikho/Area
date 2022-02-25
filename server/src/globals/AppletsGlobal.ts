@@ -368,73 +368,79 @@ export const GithubAppletActionsAbout = [
     }]
 
 export const DiscordAppletReactionsAbout = [
-        {
-            name: 'Post chanel message',
-            description: 'Post a message in a server channel',
-            type: 'discord_send_chanel_message',
-            then: "post in Discord channel a message",
-            parameters: [
-                {
-                    name: 'chanel_id',
-                    type: 'string',
-                    required: true
-                },
-                {
-                    name: 'text',
-                    type: 'string',
-                    required: true,
-                }
-            ]
-        }
-    ]
+    {
+        name: 'Post chanel message',
+        description: 'Post a message in a server channel',
+        type: 'discord_send_chanel_message',
+        then: "post in Discord channel a message",
+        parameters: [
+            {
+                name: 'chanel_id',
+                type: 'string',
+                required: true
+            },
+            {
+                name: 'text',
+                type: 'string',
+                required: true,
+            }
+        ]
+    }
+]
+
+export const DropboxAppletActionAbout = [
+    {
+
+    },
+]
 
 export const SlackAppletReactionsAbout = [
-        {
-            name: 'Post chanel message',
-            description: 'Post a message in a channel',
-            type: 'slack_send_chanel_message',
-            then: "post in Slack channel a message",
-            parameters: [
-                {
-                    name: 'chanel_id',
-                    type: 'string',
-                    required: true
-                },
-                {
-                    name: 'text',
-                    type: 'string',
-                    required: true,
-                }
-            ]
-        },
-        {
-            name: 'Post a schedule chanel message',
-            description: 'Post scheduled message in Slack channel',
-            type: 'slack_send_schedule_chanel_message',
-            then: "post in Slack channel a scheduled message",
-            parameters: [
-                {
-                    name: 'chanel_id',
-                    type: 'string',
-                    required: true
-                },
-                {
-                    name: 'text',
-                    type: 'string',
-                    required: true,
-                },
-                {
-                    name: 'scheduling',
-                    type: 'string',
-                    required: true,
-                }
-            ]
-        }
-    ]
+    {
+        name: 'Post chanel message',
+        description: 'Post a message in a channel',
+        type: 'slack_send_chanel_message',
+        then: "post in Slack channel a message",
+        parameters: [
+            {
+                name: 'chanel_id',
+                type: 'string',
+                required: true
+            },
+            {
+                name: 'text',
+                type: 'string',
+                required: true,
+            }
+        ]
+    },
+    {
+        name: 'Post a schedule chanel message',
+        description: 'Post scheduled message in Slack channel',
+        type: 'slack_send_schedule_chanel_message',
+        then: "post in Slack channel a scheduled message",
+        parameters: [
+            {
+                name: 'chanel_id',
+                type: 'string',
+                required: true
+            },
+            {
+                name: 'text',
+                type: 'string',
+                required: true,
+            },
+            {
+                name: 'scheduling',
+                type: 'string',
+                required: true,
+            }
+        ]
+    }
+]
 
 export const GithubAppletReactionsAbout = [
 
-    ]
+]
 
 
 export const SpotifyAppletReactionsAbout = [
@@ -539,23 +545,23 @@ export const AppAbout = {
         }, {
             name: "Discord",
             type: 'discord',
-            icon: "icons/discord.png",
             color: "#7289DA",
+            icon: "icons/discord.png",
             actions: DiscordAppletActionsAbout,
             reactions: DiscordAppletReactionsAbout,
         }, {
             name: "Slack",
             type: 'slack',
-            icon: "icons/slack.png",
             color: "#4A154B",
+            icon: "icons/slack.png",
             actions: [],
             reactions: SlackAppletReactionsAbout,
         }, {
             name: "Twitter",
             type: 'twitter',
             color: "#00ABEC",
-            actions: [],
             icon: "icons/twitter.png",
+            actions: [],
             reactions: TwitterAppletReactionsAbout,
         }, {
             name: "Intra Epitech",
@@ -564,6 +570,13 @@ export const AppAbout = {
             icon: "icons/epitech.png",
             actions: IntraAppletActionsAbout,
             reactions: [],
+        }, {
+            name: "Dropbox",
+            type: "dropbox",
+            color: "#0062FE",
+            icon: "icon/dropbox.png",
+            actions: DropboxAppletActionAbout,
+            reaction: [],
         }, {
             name: "Spotify",
             type: 'spotify',
@@ -574,8 +587,8 @@ export const AppAbout = {
         }, {
             name: "Gmail",
             type: 'google',
-            icon: "icons/gmail.png",
             color: "#23448B",
+            icon: "icons/gmail.png",
             actions: GmailAppletActionsAbout,
             reactions: []
         }]
