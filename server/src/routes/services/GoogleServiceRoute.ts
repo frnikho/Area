@@ -39,7 +39,11 @@ export default class GoogleServiceRoute extends Route {
         GoogleService.getOAuth2ClientOfflineToken(code as string, (tokenData, error) => {
             if (error)
                 return console.error(error);
-            return res.status(200).json(ServiceAuthRoute.token(tokenData['tokens']));
+            GoogleService.getUser(tokenData['tokens']['access_token'], (user) => {
+                return res.status(200).json(ServiceAuthRoute.token(Object.assign({}, tokenData['tokens'], user)));
+            }, (userError) => {
+                return res.status(400).json({success: false, message: userError});
+            })
         });
     }
 
