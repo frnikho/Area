@@ -160,10 +160,11 @@ export default class AppletsController {
     new TokenController().getUserToken((status, tokenResponse) => {
       if (status) {
         let baseURL = new AxiosController().baseURL();
-        const body = new URLSearchParams();
-        body.append('appletUuid', appletUuid);
-        new AxiosController().post(baseURL + "/applets/toggle", body, new AxiosController().config(tokenResponse), (status, toggleAppletResponse) => {
-          console.log(toggleAppletResponse)
+        const param = {
+          appletUuid: appletUuid
+        }
+        new AxiosController().post(baseURL + "/applets/toggle", param, new AxiosController().config(tokenResponse), (status, toggleAppletResponse) => {
+          console.log(toggleAppletResponse.data)
           return callback(status, toggleAppletResponse.data);
         });
       } else {
