@@ -75,7 +75,7 @@ export default class ServicesAppletsScreen extends Component {
                   />
                 </View>
               );
-            } else if (modalContext === 'reactions' && service.reactions.length !== 0) {
+            } else if (modalContext === 'reactions' && service.reactions && service.reactions.length !== 0) {
               return (
                 <View style={styles.card} key={i}>
                   <ServiceCard
