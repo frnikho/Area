@@ -24,6 +24,7 @@ export enum ActionType {
     intra_credits_updated,
 
     spotify_song_changed,
+    gmail_new_email,
 }
 
 export const getActionTypeByStr = (name: string): ActionType => ActionType[name];

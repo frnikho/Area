@@ -24,7 +24,7 @@ class GithubNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/github/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/github/callback?code=${data.code}&type=web`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,
@@ -44,7 +44,7 @@ class GithubNewContextDialog extends NewContextDialog {
                 authorizationUrl="https://github.com/login/oauth/authorize"
                 clientId={process.env.REACT_APP_GITHUB_SERVICES_CLIENT_ID}
                 responseType="code"
-                redirectUri={process.env.REACT_APP_GITHUB_REDIRECT_URL}
+                redirectUri={process.env.REACT_APP_GITHUB_SERVICES_REDIRECT_URL}
                 scope={"repo%20admin:repo_hook"}
                 onSuccess={this.onPopupSuccess}
                 onFailure={() => this.onPopupClose}

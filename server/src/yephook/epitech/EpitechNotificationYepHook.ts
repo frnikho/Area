@@ -20,6 +20,7 @@ export default class EpitechNotificationYepHook extends EpitechYepHook {
     }
 
     checkDataChanged(first: boolean) {
+        Logger.d("EpitechNotificationYepHooks => checking changed ...")
         const action: Action = this.getApplet().action;
         const params = action.parameters.find((parameters) => parameters['name'] === 'login_link');
         EpitechService.getNotifications(params['value'], (success, error) => {

@@ -10,7 +10,7 @@ export default class GoogleLoginRoute extends Route {
 
     constructor() {
         super();
-        this.router.get('/callback', this.code);
+        this.router.get('/code', this.code);
         this.router.get('/', this.get);
     }
 
@@ -36,11 +36,6 @@ export default class GoogleLoginRoute extends Route {
      */
     private code(req: express.Request, res: express.Response) {
         const {code} = req.query;
-
-        console.log(code);
-
-
-
         axios.post(`https://oauth2.googleapis.com/token`, {
             code,
             client_id: process.env.GOOGLE_CLIENT_ID,
