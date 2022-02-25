@@ -10,36 +10,44 @@ export default class DiscordGuildAction extends ActionModal {
     this.state = {
       serviceName: 'discord',
       type: undefined,
+      discordName: undefined,
     };
+    this.onChangeParam = this.onChangeParam.bind(this);
   }
 
   onChangeParam(type: string) {
     this.setState({type: type});
     if (this.state.contextValue) {
-        new TokenController().getUserToken((status, res) => {
-            if (status) {
-              app
-                .get(
-                  `/context?service=Discord&key=${this.state.contextValue}`,
-                  config(res),
-                )
-                .then(response => {
-                  this.props.onChangeParam([
-                    response.data.tokenData.token.guild.id,
-                    type
-                  ]);
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-            }
-          });
+      new TokenController().getUserToken((status, res) => {
+        if (status) {
+          app
+            .get(
+              `/context?service=Discord&key=${this.state.contextValue}`,
+              config(res),
+            )
+            .then(response => {
+              this.setState({
+                discordName: response.data.tokenData.token.guild.name,
+              });
+              this.props.onChangeParam([
+                response.data.tokenData.token.guild.id,
+                type,
+              ]);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      });
     }
   }
 
   renderList() {
     return (
       <Center>
+        {this.state.discordName && (
+            <Text>Discord: {this.state.discordName}</Text>
+        )}
         <Box w="3/4" maxW="300">
           <Box mt="3">
             <Select
@@ -63,6 +71,6 @@ export default class DiscordGuildAction extends ActionModal {
   }
 
   renderBody() {
-      return (this.renderList());
+    return this.renderList();
   }
 }
