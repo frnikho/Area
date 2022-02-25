@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import { StyleSheet, View } from 'react-native';
 import AppletsController from '../../controller/AppletsController';
+import error from '../../error';
 
 export default class AppletsScreen extends Component {
   constructor(props: any) {
@@ -170,6 +171,8 @@ export default class AppletsScreen extends Component {
             duration: 2000,
           });
           this.props.navigation.navigate('home');
+        } else {
+          console.log(res.response.data);
         }
       },
     );

@@ -9,7 +9,7 @@ import ActionModal from '../ActionModal';
 import app, {config} from '../../axios_config';
 import TokenController from '../../controller/TokenController';
 
-export default class GithubListRepoActionModal extends ActionModal {
+export default class GithubListRepoAction extends ActionModal {
   constructor(props: any) {
     super(props);
     this.state = {

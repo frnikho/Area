@@ -53,6 +53,7 @@ export default class CreateServiceAuthentificationScreen extends Component {
     }
     new LoginController().epitechLogin(this.state.epitechUrl, (status, response) => {
       if (status) {
+        console.log(response.data);
         new ServicesAuthentificationsController().createServiceAuthentification(
           this.state.title,
           this.state.description,

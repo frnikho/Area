@@ -2,6 +2,10 @@ import { Button, Center, Modal, ScrollView, Stack, Text } from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import DiscordPostMessageReaction from '../../components/discord/DiscordPostMessageReaction';
+import SpotifyPauseMusicReaction from '../../components/spotify/SpotifyPauseMusicReaction';
+import SpotifyPlayMusicReaction from '../../components/spotify/SpotifyPlayMusicReaction';
+import SpotifyVolumeReaction from '../../components/spotify/SpotifyVolumeReaction';
+import TextInputReaction from '../../components/generic_modal/TextInputReaction';
 
 export default class ReactionsScreen extends React.Component {
   constructor(props: any) {
@@ -33,6 +37,40 @@ export default class ReactionsScreen extends React.Component {
           />
         ),
       },
+      spotify: {
+        spotify_pause_track: (
+          <SpotifyPauseMusicReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        spotify_play_track: (
+          <SpotifyPlayMusicReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        ),
+        spotify_change_volume: (
+          <SpotifyVolumeReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+          />
+        )
+      },
+      twitter: {
+        twitter_post_tweet: (
+          <TextInputReaction
+            reaction={this.state.reaction}
+            navigation={this.props.navigation}
+            onChangeParam={this.onChangeParameters}
+            serviceName='twitter'
+            placeholder="Type your tweet"
+          />
+        )
+      }
     };
     return reactionsModalList[this.props.service.type][
       this.state.reaction.type
@@ -43,7 +81,7 @@ export default class ReactionsScreen extends React.Component {
     return (
       <>
         <Stack space={2}>
-          {this.props.service.reactions.length <= 0 ? (
+          {this.props.service.reactions && this.props.service.reactions.length <= 0 ? (
             <Text>
               No reactions is available with {this.props.service.name}
             </Text>
