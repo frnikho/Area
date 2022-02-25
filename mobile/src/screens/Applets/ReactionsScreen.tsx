@@ -1,4 +1,4 @@
-import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
+import { Button, Center, Modal, ScrollView, Stack, Text } from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import DiscordPostMessageReaction from '../../components/discord/DiscordPostMessageReaction';
@@ -9,16 +9,17 @@ export default class ReactionsScreen extends React.Component {
     this.state = {
       reaction: undefined,
       parameters: undefined,
+      serviceColor: undefined,
     };
     this.onChangeParameters = this.onChangeParameters.bind(this);
   }
 
   onChangeParameters(parameters: any) {
-    this.setState({parameters: parameters});
+    this.setState({ parameters: parameters });
   }
 
   onSave() {
-    this.props.onSave(this.state.reaction, this.state.parameters);
+    this.props.onSave({ action: this.state.reaction, serviceColor: this.state.serviceColor }, this.state.parameters);
   }
 
   renderModals() {
@@ -51,7 +52,7 @@ export default class ReactionsScreen extends React.Component {
               return (
                 <ChoiceCard
                   name={reaction.name}
-                  onPress={() => this.setState({reaction: reaction})}
+                  onPress={() => this.setState({ reaction: reaction, serviceColor: this.props.service.color })}
                   key={i}
                 />
               );
@@ -73,7 +74,7 @@ export default class ReactionsScreen extends React.Component {
                 Choose one of {this.props.service.name}
               </Text>
             </Modal.Header>
-            <ScrollView contentContainerStyle={{padding: 20}}>
+            <ScrollView contentContainerStyle={{ padding: 20 }}>
               <Modal.Body>
                 {this.state.reaction === undefined
                   ? this.renderReactionsList()

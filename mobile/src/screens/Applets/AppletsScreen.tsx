@@ -58,7 +58,7 @@ export default class AppletsScreen extends Component {
             <Text
               fontFamily="body"
               fontWeight={600}
-              fontSize="4xl"
+              fontSize="3xl"
               style={styles.actionText}>
               If this
             </Text>
@@ -70,7 +70,7 @@ export default class AppletsScreen extends Component {
         <View id="action">
           <Button
             mode="contained"
-            style={styles.actionButton}
+            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.action.serviceColor, borderRadius: 15}}
             onPress={() =>
               this.props.navigation.navigate('services', {
                 modalContext: 'actions',
@@ -80,9 +80,9 @@ export default class AppletsScreen extends Component {
             <Text
               fontFamily="body"
               fontWeight={600}
-              fontSize="4xl"
+              fontSize="3xl"
               style={styles.actionText}>
-              {this.state.action.name}
+              If {this.state.action.action.name}
             </Text>
           </Button>
         </View>
@@ -106,7 +106,7 @@ export default class AppletsScreen extends Component {
             <Text
               fontFamily="body"
               fontWeight={600}
-              fontSize="4xl"
+              fontSize="3xl"
               style={styles.reactionText}>
               Then that
             </Text>
@@ -118,7 +118,7 @@ export default class AppletsScreen extends Component {
         <View id="reaction">
           <Button
             mode="contained"
-            style={styles.reactionButton}
+            style={{ marginTop: 50, marginLeft: 30, marginRight: 30, justifyContent: 'center', backgroundColor: this.state.reaction.serviceColor, borderRadius: 15}}
             onPress={() =>
               this.props.navigation.navigate('services', {
                 modalContext: 'reactions',
@@ -128,9 +128,9 @@ export default class AppletsScreen extends Component {
             <Text
               fontFamily="body"
               fontWeight={600}
-              fontSize="4xl"
+              fontSize="3xl"
               style={styles.reactionText}>
-              {this.state.reaction.name}
+              Then that {this.state.reaction.reaction.name}
             </Text>
           </Button>
         </View>
@@ -177,7 +177,7 @@ export default class AppletsScreen extends Component {
     return (
       <View id="createApplet" style={styles.createContainer}>
         <Button isDisabled={!this.isValid()} mode="contained" style={styles.createButton} onPress={this.onCreate}>
-          <Text fontFamily="body" fontWeight={600} fontSize="4xl" style={styles.createText}>Create</Text>
+          <Text fontFamily="body" fontWeight={600} fontSize="3xl" style={styles.createText}>Create</Text>
         </Button>
       </View>
     );
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
   },
   createButton: {
     bottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 30,
+    marginRight: 30,
     justifyContent: 'center',
     backgroundColor: "#222222",
     borderRadius: 15,
@@ -248,8 +248,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   createContainer: {
-    position: 'absolute',
     width: '100%',
-    bottom: 10,
+    marginTop: 50,
   },
 });

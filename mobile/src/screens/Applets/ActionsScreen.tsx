@@ -1,4 +1,4 @@
-import {Button, Center, Modal, ScrollView, Stack, Text} from 'native-base';
+import { Button, Center, Modal, ScrollView, Stack, Text } from 'native-base';
 import React from 'react';
 import ChoiceCard from '../../components/ChoiceCard';
 import GithubListRepoActionModal from '../../components/github/GithubListRepoActionModal';
@@ -9,16 +9,17 @@ export default class ActionsScreen extends React.Component {
     this.state = {
       action: undefined,
       parameters: undefined,
+      serviceColor: undefined,
     };
     this.onChangeParameters = this.onChangeParameters.bind(this);
   }
 
   onChangeParameters(parameters: any) {
-    this.setState({parameters: parameters});
+    this.setState({ parameters: parameters });
   }
 
   onSave() {
-    this.props.onSave(this.state.action, this.state.parameters);
+    this.props.onSave({ action: this.state.action, serviceColor: this.state.serviceColor }, this.state.parameters);
   }
 
   renderModals() {
@@ -78,10 +79,11 @@ export default class ActionsScreen extends React.Component {
                   onPress={() => {
                     this.setState({
                       action: action,
+                      serviceColor: this.props.service.color
                     });
                   }}
                   key={i}
-                  style={{marginBottom: 10}}
+                  style={{ marginBottom: 10 }}
                 />
               );
             })
@@ -102,7 +104,7 @@ export default class ActionsScreen extends React.Component {
                 Choose one of {this.props.service.name}
               </Text>
             </Modal.Header>
-            <ScrollView contentContainerStyle={{padding: 20}}>
+            <ScrollView contentContainerStyle={{ padding: 20 }}>
               <Modal.Body>
                 {this.state.action === undefined
                   ? this.renderActionsList()

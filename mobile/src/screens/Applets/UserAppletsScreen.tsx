@@ -27,7 +27,7 @@ export default class UserApplets extends Component {
             this.getUserApplets();
         }
     }
-    
+
     /**
      * Get user's applets
      */
