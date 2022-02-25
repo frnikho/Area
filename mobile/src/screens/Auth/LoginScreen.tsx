@@ -94,24 +94,23 @@ export default class LoginScreen extends Component {
   onLoginGithub() {
     new LoginController().githubLogin(async (status, res) => {
       if (status) {
-        console.log(res.data);
-        // await AsyncStorage.setItem('@token', res.data.token);
-        // Toast.show({
-        //   title: 'You are successfully authenticated',
-        //   status: 'success',
-        //   description: 'You can now navigate in the dashboard.',
-        //   duration: 2000,
-        // });
-        // setTimeout(() => {
-        //   this.props.navigation.navigate('home');
-        // }, 1000);
+        await AsyncStorage.setItem('@token', res.data.token);
+        Toast.show({
+          title: 'You are successfully authenticated',
+          status: 'success',
+          description: 'You can now navigate in the dashboard.',
+          duration: 2000,
+        });
+        setTimeout(() => {
+          this.props.navigation.navigate('home');
+        }, 1000);
       } else {
         console.log(res.response.data);
-        // Toast.show({
-        //   title: res.response.data.error,
-        //   status: 'warning',
-        //   description: 'Please try again !',
-        // });
+        Toast.show({
+          title: res.response.data.error,
+          status: 'warning',
+          description: 'Please try again !',
+        });
       }
     });
   }
