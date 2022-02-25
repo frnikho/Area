@@ -96,7 +96,7 @@ export default class UserApplets extends Component {
                                 onPress={() => { this.onDelete({ uuid: applet.appletUuid }) }}
                                 leftIcon={<Icon name="delete" size={35} color="white" />}
                                 style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} />
-                            <Switch style={{ marginRight: 15 }} size="lg" colorScheme="white" onTrackColor="white" onThumbColor="white" defaultIsChecked={applet.enable} onValueChange={() => { this.enableDisableUserApplet(applet.appletUuid) }} />
+                            <Switch style={{ marginRight: 15 }} size="lg" colorScheme="white" onTrackColor="white" onThumbColor="white" defaultIsChecked={applet.enable} onValueChange={() => { this.enableDisableUserApplet({ uuid: applet.appletUuid }) }} />
                         </HStack>
                     </Stack>
                 </Card>

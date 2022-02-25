@@ -26,9 +26,7 @@ export default class HomePage extends Page {
         this.controllerHome = new ControllerHome(this.cookies, this);
     }
 
-    render() {
-        if (this.getUrl())
-            return (this.redirectUrl())
+    pageRender() {
         if (this.state.user === undefined)
             return (null);
         return (

@@ -6,8 +6,9 @@ import {Box, Button} from "@mui/material";
 import {FaGithub} from "react-icons/fa";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
+import {withSnackbar} from "notistack";
 
-export default class GithubNewContextDialog extends NewContextDialog {
+class GithubNewContextDialog extends NewContextDialog {
 
     static contextType = AuthContext;
 
@@ -48,7 +49,7 @@ export default class GithubNewContextDialog extends NewContextDialog {
                 onSuccess={this.onPopupSuccess}
                 onFailure={() => this.onPopupClose}
                 render={renderProps => (
-                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to github" : "Logged !"}</Button>
+                    <Button variant={"outlined"} disabled={this.state.valid} endIcon={<FaGithub/>} onClick={renderProps.onClick}>{!this.state.valid ? "Login to Github" : "Logged !"}</Button>
                 )}
             />);
     }
@@ -68,3 +69,5 @@ GithubNewContextDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired
 }
+
+export default withSnackbar(GithubNewContextDialog);

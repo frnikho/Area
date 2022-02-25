@@ -15,10 +15,9 @@ export default withCookies(class DescriptionPage extends Page {
         super(props);
         this.cookies = props;
         this.controllerDescription = new ControllerDescription(this.cookies, this);
-        this.renderDescriptionPage = this.renderDescriptionPage.bind(this)
     }
 
-    renderDescriptionPage() {
+    pageRender() {
         const menu = {
             right: [
                 {
@@ -46,9 +45,5 @@ export default withCookies(class DescriptionPage extends Page {
                 </div>
             </ThemeProvider>
         )
-    }
-
-    render() {
-        return(this.pageRender(this.renderDescriptionPage))
     }
 })

@@ -18,7 +18,6 @@ class AppletsPage extends Page {
             user: undefined,
         }
         this.cookies = props.cookies;
-        this.renderAppletsPage = this.renderAppletsPage.bind(this)
     }
 
     componentDidMount() {
@@ -31,7 +30,7 @@ class AppletsPage extends Page {
         this.controllerApplet = new ControllerApplet(this.authContext, this.cookies, this);
     }
 
-    renderAppletsPage() {
+    pageRender() {
         if (!this.authContext)
             return (null);
         return (
@@ -47,10 +46,6 @@ class AppletsPage extends Page {
                     onClick={() => this.setRedirectUrl({ url: "/area/applets/property", params: this.props.applet.uuid })} />
             </>
         );
-    }
-
-    render() {
-        return(this.pageRender(this.renderAppletsPage))
     }
 };
 
