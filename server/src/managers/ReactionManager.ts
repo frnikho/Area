@@ -5,6 +5,7 @@ import Logger from "../utils/Logger";
 import ContextController from "../controllers/ContextController";
 import {Services} from "../models/Services";
 import SpotifyService from "../services/external/SpotifyService";
+import TwitterService from "../services/external/TwitterService";
 
 type reactionsFunc = (reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) => void;
 type reactionHook = {type: ReactionType, func: reactionsFunc};
@@ -27,7 +28,8 @@ export default class ReactionManager {
         {type: ReactionType.discord_send_chanel_message, func: this.discordSendChanelMessage},
         {type: ReactionType.spotify_play_track, func: this.spotifyPlay},
         {type: ReactionType.spotify_pause_track, func: this.spotifyPause},
-        {type: ReactionType.spotify_change_volume, func: this.spotifyChangeVolume}]
+        {type: ReactionType.spotify_change_volume, func: this.spotifyChangeVolume},
+        {type: ReactionType.twitter_post_tweet, func: this.twitterPostTweet}]
 
     private constructor() {
         Logger.i("AREA", "ReactionManager initialize");
@@ -49,6 +51,16 @@ export default class ReactionManager {
             return error("An error occurred (4001) !");
         }
         return success();
+    }
+
+    private twitterPostTweet(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData) {
+        const userUuid: string = reaction.parameters.filter((param) => param['name'] === 'user_uuid')[0]['value'];
+        const text: string = reaction.parameters.filter((param) => param['name'] === 'text')[0]['value'];
+
+        new TwitterService().SendTweet(tokenData.token["access_token"], userUuid, text, (status, response) => {
+            if (status === false)
+                console.error(response);
+        });
     }
 
     private discordSendChanelMessage(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData): void {

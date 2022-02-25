@@ -530,6 +530,11 @@ export const TwitterAppletReactionsAbout = [
                 name: 'text',
                 type: 'string',
                 required: true,
+            },
+            {
+                name: 'user_uuid',
+                type: 'string',
+                required: true,
             }
         ]
     }

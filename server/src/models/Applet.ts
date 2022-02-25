@@ -42,7 +42,8 @@ export enum ReactionType {
     discord_create_channel,
     spotify_pause_track,
     spotify_play_track,
-    spotify_change_volume
+    spotify_change_volume,
+    twitter_post_tweet,
 }
 
 export interface Ingredient {
