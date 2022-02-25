@@ -157,15 +157,15 @@ export default class AppletsScreen extends Component {
 
   onCreate() {
     new AppletsController().createUserApplet(
-      this.state.serviceTitle,
-      this.state.action,
-      this.state.reaction,
+      this.state.appletTitle,
+      this.state.action.action,
+      this.state.reaction.reaction,
       this.state.actionParameters,
       this.state.reactionParameters,
       (status, res) => {
         if (status) {
           Toast.show({
-            title: this.state.serviceTitle + ' applet is successfully created',
+            title: this.state.appletTitle + ' applet is successfully created',
             status: 'success',
             description: 'You can now navigate in the dashboard.',
             duration: 2000,
