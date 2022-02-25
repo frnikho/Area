@@ -143,7 +143,7 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private enable(req: express.Request, res: express.Response) {
-        new AppletController().enableAppletByUuid(req['applet']['uuid'], (success) => {
+        new AppletController().enableAppletByUuid(req['applet'][0]['uuid'], (success) => {
             return res.status(200).json({success});
         });
     }
@@ -171,7 +171,7 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private disable(req: express.Request, res: express.Response) {
-        new AppletController().disableAppletByUuid(req['applet']['uuid'], (success) => {
+        new AppletController().disableAppletByUuid(req['applet'][0]['uuid'], (success) => {
             return res.status(200).json({success});
         });
     }
@@ -200,12 +200,12 @@ export default class AppletRoute extends Route {
      *         description: Unauthorized
      */
     private toggle(req: express.Request, res: express.Response) {
-        if (req['applet']['enable'] === 1) {
-            new AppletController().disableAppletByUuid(req['applet']['uuid'], (success) => {
+        if (req['applet'][0]['enable'] === 1) {
+            new AppletController().disableAppletByUuid(req['applet'][0]['uuid'], (success) => {
                 return res.status(200).json({success});
             });
         } else {
-            new AppletController().enableAppletByUuid(req['applet']['uuid'], (success) => {
+            new AppletController().enableAppletByUuid(req['applet'][0]['uuid'], (success) => {
                 return res.status(200).json({success});
             });
         }
