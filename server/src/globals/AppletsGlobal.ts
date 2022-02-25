@@ -398,9 +398,6 @@ export const DiscordAppletReactionsAbout = [
 ]
 
 export const DropboxAppletActionAbout = [
-    {
-
-    },
 ]
 
 export const SlackAppletReactionsAbout = [
