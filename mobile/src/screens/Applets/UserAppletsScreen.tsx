@@ -22,6 +22,12 @@ export default class UserApplets extends Component {
         this.getUserApplets();
     }
 
+    componentDidUpdate(prevProps: any, prevState: any) {
+        if (prevState !== this.state) {
+            this.getUserApplets();
+        }
+    }
+    
     /**
      * Get user's applets
      */
