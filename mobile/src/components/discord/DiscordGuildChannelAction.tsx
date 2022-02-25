@@ -4,7 +4,7 @@ import app, {config} from '../../axios_config';
 import ActionModal from '../ActionModal';
 import TokenController from '../../controller/TokenController';
 
-export default class DiscordGuildActionChannel extends ActionModal {
+export default class DiscordGuildChannelAction extends ActionModal {
   constructor(props: any) {
     super(props);
     this.state = {
