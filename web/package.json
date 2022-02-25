@@ -32,6 +32,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-simple-oauth2-login": "^0.5.3",
+    "react-twitter-auth": "^0.0.13",
     "util": "^0.12.4",
     "web-vitals": "^2.1.3"
   },

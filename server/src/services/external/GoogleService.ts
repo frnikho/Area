@@ -1,6 +1,8 @@
 import axios from "axios";
 import {GoogleUser} from "../../models/GoogleUser";
 import {buildAuthorizationHeaders} from "../../utils/Axios";
+import {Context} from "../../models/Context";
+import {response} from "express";
 
 const {OAuth2Client} = require('google-auth-library');
 
@@ -19,7 +21,7 @@ export default class GoogleService {
 
         return oAuth2Client.generateAuthUrl({
             access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/userinfo.profile',
+            scope: 'https://www.googleapis.com/auth/userinfo.profile https://mail.google.com/ https://www.googleapis.com/auth/userinfo.email',
         });
     }
 
@@ -42,10 +44,6 @@ export default class GoogleService {
             prompt: 'consent'
         });
 
-        console.log(authorizeUrl);
-
-        console.log(process.env.GOOGLE_REDIRECT_URL)
-
         oAuth2Client.getToken(code).then((tokenData) => {
             return callback(tokenData)
         }).catch((error) => {
@@ -66,14 +64,12 @@ export default class GoogleService {
         })
     }
 
-    public static sendWatchGmail(token: string, userEmail: string, topicName: string, callback: (successData: object | null, error: string | null) => void): void {
+    public static sendWatchGmail(token: string, userEmail: string, callback: (successData: object | null, error: string | null) => void): void {
         axios.post(`https://gmail.googleapis.com/gmail/v1/users/${userEmail}/watch/`, {
-            topicName,
-            labelIds: ["SENT"]
+            topicName: process.env.GMAIL_PUBSUB_TOPIC,
+            labelIds: ["INBOX"],
         }, buildAuthorizationHeaders(token)).then((response) => {
-            if (response.status === 200)
-                return callback(response.data, null);
-            return callback(null, response.data)
+            return callback(response.data, null);
         }).catch((error) => {
             return callback(null, error);
         });
@@ -87,6 +83,33 @@ export default class GoogleService {
             console.log(err);
             return callback(null, err);
         });
+    }
+
+    public static getHistoryEmailId(context: Context, messageHistory: string, callback: (data, error?) => void) {
+        try {
+            const email = context.tokenData.token['email'];
+            const token = context.tokenData.token['access_token'];
+            axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId=${messageHistory}`, buildAuthorizationHeaders(token)).then((response) => {
+                return callback(response.data);
+            }).catch((err) => {
+                console.log(err.response.status);
+                console.log(err.response.data);
+            });
+        } catch (ex) {
+            return callback(undefined, "An error occurred ! please try again later !");
+        }
+    }
+
+    public static getEmail(context: Context, userUuid: string, messageId: string, callback: (data, error?) => void) {
+        this.getUser(context.tokenData.token['access_token'], (user) => {
+            axios.get(`https://gmail.googleapis.com/gmail/v1/users/${user['email']}/messages/${messageId}`, buildAuthorizationHeaders(context.tokenData.token['access_token'])).then((emailResponse) => {
+                callback(emailResponse.data);
+            }).catch((emailError) => {
+                callback(emailError.response.data);
+            });
+        }, (error) => {
+            callback(error.response.data);
+        })
     }
 
     public static stopWatchGmail(token: string, userEmail: string) {

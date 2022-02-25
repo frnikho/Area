@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {MdClose} from "react-icons/md";
 import app, {config} from "../../../Utils/Axios";
 import {AuthContext} from "../../../Contexts/AuthContext";
-// import {withSnackbar} from "notistack";
 
 class NewContextDialog extends React.Component {
 

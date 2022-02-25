@@ -54,7 +54,7 @@ class ServiceCard extends Component {
                 justifyContent="space-between">
                 <HStack alignItems="center">
                   <Center>
-                    <Image source={{uri: this.props.logo}} style={{width: 50, height: 50}} />
+                    <Image source={{uri: this.props.logo}} resizeMode='contain' style={{width: 100, height: 45}} />
                   </Center>
                 </HStack>
               </Stack>
