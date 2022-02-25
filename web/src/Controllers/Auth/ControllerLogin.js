@@ -17,7 +17,16 @@ export default class ControllerLogin {
         if (response.error) {
             this.page.props.enqueueSnackbar("Error with Google", { variant: 'error' });
         } else {
-            ControllerGoogle.connect(response);
+            ControllerGoogle.connect(response, (data, error) => {
+                if (error)
+                    return this.page.props.enqueueSnackbar(error['error'], { variant: 'error' });
+                this.authContext.loginFromCache((data.token), () => {
+                    const { cookies } = this.cookies;
+                    cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
+                    this.page.setRedirectUrl({ url: '/' })
+                    this.page.props.enqueueSnackbar("You're logged !", { variant: 'success', })
+                })
+            });
         }
     }
 
@@ -26,7 +35,16 @@ export default class ControllerLogin {
         if (response.error) {
             this.page.props.enqueueSnackbar("Error with GitHub", { variant: 'error' });
         } else {
-            ControllerGithub.connect(response);
+            ControllerGithub.connect(response, (data, error) => {
+                if (error)
+                    return this.page.props.enqueueSnackbar(error['error'], { variant: 'error' });
+                this.authContext.loginFromCache((data.token), () => {
+                    const { cookies } = this.cookies;
+                    cookies.set('session', data.token, { path: '/', SameSite: 'None', secure: true });
+                    this.page.setRedirectUrl({ url: '/' })
+                    this.page.props.enqueueSnackbar("You're logged !", { variant: 'success', })
+                })
+            });
         }
     }
 

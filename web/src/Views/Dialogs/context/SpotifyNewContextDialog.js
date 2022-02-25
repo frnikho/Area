@@ -24,7 +24,7 @@ class SpotifyNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(data) {
         const auth = this.context;
-        app.get(`services/spotify/callback?code=${data.code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/spotify/callback?code=${data.code}&type=web`, config(auth.getToken())).then((response) => {
             this.setState({
                 tokenData: response.data.token,
                 valid: true,

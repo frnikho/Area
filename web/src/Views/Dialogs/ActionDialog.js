@@ -31,6 +31,7 @@ import DiscordMemberUnbannedDialog from "./discord/actions/DiscordMemberUnbanned
 import DiscordGuildUpdatedDialog from "./discord/actions/DiscordGuildUpdatedDialog";
 import EpitechNewNotificationDialog from "./epitech/actions/EpitechNewNotificationDialog";
 import SpotifySongChangedDialog from "./spotify/actions/SpotifySongChangedDialog";
+import GmailNewEmailDialog from "./gmail/actions/GmailNewEmailDialog";
 
 export default class ActionDialog extends React.Component {
 
@@ -115,27 +116,35 @@ export default class ActionDialog extends React.Component {
         if (this.state.dialog === undefined)
             return;
 
+        const props = {
+            onClose: this.onDialogsClosed,
+            onActionCreated: this.onActionCreated,
+            action: this.state.action,
+            service: this.state.service,
+        }
+
         const data = {
-            GITHUB_REPOSITORY_DELETED: <GithubRepositoryDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_REPOSITORY_PUSH: <GithubNewPushRepositoryDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_RELEASE_CREATED: <GithubReleaseCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service} />,
-            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_CHANNEL_CREATED: <DiscordChannelCreatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_CHANNEL_DELETED: <DiscordChannelDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_PRIVATE_MESSAGE_RECEIVED: <DiscordPrivateMessageReceivedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MESSAGE_RECEIVED: <DiscordGuildMessageReceivedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MESSAGE_UPDATED: <DiscordGuildMessageUpdatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MESSAGE_DELETED: <DiscordGuildMessageDeletedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MESSAGE_REACTION_ADD: <DiscordGuildMessageReactionAddDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MESSAGE_REACTION_REMOVED: <DiscordGuildMessageReactionRemoveDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MEMBER_BANNED: <DiscordMemberBannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_MEMBER_UNBANNED: <DiscordMemberUnbannedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            DISCORD_GUILD_UPDATE: <DiscordGuildUpdatedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            INTRA_NEW_NOTIFICATIONS: <EpitechNewNotificationDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
-            SPOTIFY_SONG_CHANGED: <SpotifySongChangedDialog onClose={this.onDialogsClosed} onActionCreated={this.onActionCreated} action={this.state.action} service={this.state.service}/>,
+            GITHUB_REPOSITORY_DELETED: <GithubRepositoryDeletedDialog {...props}/>,
+            GITHUB_REPOSITORY_PUSH: <GithubNewPushRepositoryDialog {...props} />,
+            GITHUB_RELEASE_CREATED: <GithubReleaseCreatedDialog {...props} />,
+            GITHUB_ISSUE_OPENED: <GithubIssueOpenedDialog {...props} />,
+            GITHUB_ISSUE_CLOSED: <GithubIssueClosedDialog {...props} />,
+            GITHUB_ISSUE_REOPENED: <GithubIssueReopenedDialog {...props} />,
+            GITHUB_REPOSITORY_CREATED: <GithubRepositoryCreatedDialog {...props}/>,
+            DISCORD_CHANNEL_CREATED: <DiscordChannelCreatedDialog {...props}/>,
+            DISCORD_CHANNEL_DELETED: <DiscordChannelDeletedDialog {...props}/>,
+            DISCORD_PRIVATE_MESSAGE_RECEIVED: <DiscordPrivateMessageReceivedDialog {...props}/>,
+            DISCORD_GUILD_MESSAGE_RECEIVED: <DiscordGuildMessageReceivedDialog {...props}/>,
+            DISCORD_GUILD_MESSAGE_UPDATED: <DiscordGuildMessageUpdatedDialog {...props}/>,
+            DISCORD_GUILD_MESSAGE_DELETED: <DiscordGuildMessageDeletedDialog {...props}/>,
+            DISCORD_GUILD_MESSAGE_REACTION_ADD: <DiscordGuildMessageReactionAddDialog {...props}/>,
+            DISCORD_GUILD_MESSAGE_REACTION_REMOVED: <DiscordGuildMessageReactionRemoveDialog {...props}/>,
+            DISCORD_GUILD_MEMBER_BANNED: <DiscordMemberBannedDialog {...props}/>,
+            DISCORD_GUILD_MEMBER_UNBANNED: <DiscordMemberUnbannedDialog {...props}/>,
+            DISCORD_GUILD_UPDATE: <DiscordGuildUpdatedDialog {...props}/>,
+            INTRA_NEW_NOTIFICATIONS: <EpitechNewNotificationDialog {...props}/>,
+            SPOTIFY_SONG_CHANGED: <SpotifySongChangedDialog {...props}/>,
+            GMAIL_NEW_EMAIL: <GmailNewEmailDialog {...props}/>,
         }
         return data[this.state.dialog];
     }

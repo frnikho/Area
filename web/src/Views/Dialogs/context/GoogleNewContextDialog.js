@@ -36,9 +36,9 @@ class GoogleNewContextDialog extends NewContextDialog {
 
     onPopupSuccess(code) {
         const auth = this.context;
-        app.get(`services/google/callback?code=${code}`, config(auth.getToken())).then((response) => {
+        app.get(`services/google/callback?code=${code}&type=web`, config(auth.getToken())).then((response) => {
             this.setState({
-                tokenData: response.data.token,
+                tokenData: response.data,
                 valid: true,
             })
         }).catch((err) => {

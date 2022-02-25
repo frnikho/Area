@@ -56,12 +56,14 @@ export class ActionSettingsDialog extends React.Component {
         if (this.state.contexts === undefined)
             return <CircularProgress />
         if (this.state.contexts.length === 0) {
-            return (<Alert severity="warning">
-                You don't have any context for {this.props.service.name} -
-                <ButtonBase onClick={() => this.setState({ redirect: '/area/context' })}>
-                    Click here to create a new one
-                </ButtonBase>
-            </Alert>)
+            return (
+                <Grid item xs={3} sx={{ margin: "auto" }}>
+                    <ButtonBase onClick={() => this.setState({ redirect: '/area/context' })}>
+                        <Alert severity="warning">
+                            You don't have any context for {this.props.service.name} - Click here to create a new one
+                        </Alert>
+                    </ButtonBase>
+                </Grid>)
         }
         return (
             <Box textAlign={"start"}>
@@ -94,6 +96,18 @@ export class ActionSettingsDialog extends React.Component {
         </Tooltip>
     )
 
+    showButton() {
+        if (this.state.contexts === undefined || this.state.contexts.length === 0)
+            return
+        return this.renderCreateButton()
+    }
+
+    showDialogContent() {
+        if (this.state.contexts === undefined || this.state.contexts.length === 0)
+            return
+        return this.renderDialogContent()
+    }
+
     render() {
         return (
             <Dialog open={true} maxWidth={"xl"} fullWidth={true} fullScreen={true} onClose={() => this.props.onClose(true)} PaperProps={{ style: { backgroundColor: this.props.service.color } }}>
@@ -107,7 +121,7 @@ export class ActionSettingsDialog extends React.Component {
                 </Grid>
                 <Divider color={this.props.service.color} sx={{ opacity: "80%" }} />
                 <Box textAlign={"center"} sx={{ mt: 10 }}>
-                    <img width={160} src={`https://localhost:8080/static/` + this.props.service.icon} alt="loading ..."/>
+                    <img width={150} src={`https://localhost:8080/static/` + this.props.service.icon} alt="loading ..."/>
                     <Typography sx={{ mt: 4 }} fontFamily={"Roboto"} fontSize={44} fontWeight={"700"} color={"white"}>
                         {this.props.action.name}
                     </Typography>
@@ -115,9 +129,11 @@ export class ActionSettingsDialog extends React.Component {
                 </Box>
                 <DialogContent>
                     {this.showContexts()}
-                    {this.renderDialogContent()}
+                    <Grid item xs={3} sx={{ margin: "auto" }}>
+                        {this.showDialogContent()}
+                    </Grid>
                     <Box textAlign={"center"} sx={{ mt: 10 }}>
-                        {this.renderCreateButton()}
+                        {this.showButton()}
                     </Box>
                 </DialogContent>
             </Dialog>
