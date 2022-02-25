@@ -30,6 +30,7 @@ import { GooglePubSub } from "./clients/GooglePubSub";
 
 import TwitterServiceRoute from "./routes/services/TwitterServiceRoute";
 
+import DropboxServiceRoute from "./routes/services/DropboxServiceRoute";
 import { swaggerOptions } from "./documentation/Swagger"
 import Logger from "./utils/Logger";
 import {ContextRoute} from "./routes/context/ContextRoute";
@@ -118,6 +119,7 @@ export default class App {
         new SpotifyServiceRoute().register(this.app, '/services/spotify');
         new EpitechServiceRoute().register(this.app, '/services/epitech');
         new GoogleServiceRoute().register(this.app, '/services/google');
+        new DropboxServiceRoute().register(this.app, '/services/dropbox');
 
         // APPLETS ROUTES
         new AppletRoute().register(this.app, '/applets');
