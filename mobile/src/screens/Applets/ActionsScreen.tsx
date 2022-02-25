@@ -147,6 +147,24 @@ export default class ActionsScreen extends React.Component {
             navigation={this.state.navigation}
             onChangeParam={this.onChangeParameters}
           />
+        ),
+        discord_guild_message_reaction_add: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord message id"}
+            serviceName={"discord"}
+          />
+        ),
+        discord_guild_message_reaction_removed: (
+          <TextInputAction
+            action={this.state.action}
+            navigation={this.state.navigation}
+            onChangeParam={this.onChangeParameters}
+            placeholder={"Discord message id"}
+            serviceName={"discord"}
+          />
         )
       }
     };
