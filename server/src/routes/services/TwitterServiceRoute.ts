@@ -2,7 +2,6 @@ import Route from "../../Route";
 import express = require('express');
 import {authorization} from "../../middlewares/AuthMiddleware";
 import ServiceAuthRoute from "./ServiceAuthRoute"
-import {Services} from "../../models/Services"
 const pkceChallenge = require("pkce-challenge");
 const utf8 = require('utf8');
 
