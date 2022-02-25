@@ -576,7 +576,7 @@ export const AppAbout = {
             color: "#0062FE",
             icon: "icon/dropbox.png",
             actions: DropboxAppletActionAbout,
-            reaction: [],
+            reactions: [],
         }, {
             name: "Spotify",
             type: 'spotify',
