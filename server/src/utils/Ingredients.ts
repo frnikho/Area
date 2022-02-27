@@ -2,6 +2,8 @@ import {ActionType, Ingredient} from "../models/Applet";
 
 const JSSoup = require('jssoup').default;
 
+const gmailNewEmail = (data): Ingredient[] => [{key: "{{email_id}}", value: data['id']}, {key: "{{email_sender}}", value: data['from']}, {key: "{{email_receiver}}", value: data['to']}, {key: "{{email_date}}", value: data['date']}, {key: "{{email_content}}", value: data['body']}];
+
 const spotifySongChangedData = (data): Ingredient[] => [{key: "{{track_name}}", value: data.name}, {key: "{{track_uri}}", value: data.uri}, {key: "{{track_url}}", value: data.external_urls.spotify}]
 
 const githubPushData = (data) : Ingredient[] => [{key: "{{sender_login}}", value: `${data.sender.login}`}, {key: "{{sender_email}}", value: data.sender.email}, {key: "{{repo_name}}", value: data.repository.name}]
@@ -109,6 +111,7 @@ const hooksType: hookFunc[] = [
     {type: ActionType.discord_channel_created, func: discordChannelData},
     {type: ActionType.discord_channel_deleted, func: discordChannelData},
     {type: ActionType.spotify_song_changed, func: spotifySongChangedData},
+    {type: ActionType.gmail_new_email, func: gmailNewEmail}
 ]
 /**
  * Transform raw data to ingredients

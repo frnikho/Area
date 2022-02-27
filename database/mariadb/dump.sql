@@ -86,7 +86,8 @@ CREATE TABLE `applets` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp(),
   `enable` tinyint(1) DEFAULT 1,
-  `reactions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '{}',
+  `reactions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
+  `history` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '[]',
   `user_uuid` varchar(255) NOT NULL,
   PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
