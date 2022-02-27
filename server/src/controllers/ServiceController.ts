@@ -3,7 +3,8 @@ import DBService from "../services/DBService";
 export interface TokenData {
     key: string,
     token: object,
-    created_at: Date
+    created_at: Date,
+    type?,
 }
 
 type success = () => void;
