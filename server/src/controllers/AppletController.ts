@@ -1,7 +1,17 @@
-import {Action, ActionType, Applet, getActionTypeByStr, Ingredient, Reaction, ReactionType} from "../models/Applet";
+import {
+    Action,
+    ActionType,
+    Applet,
+    AppletHistory,
+    getActionTypeByStr,
+    Ingredient,
+    Reaction,
+    ReactionType
+} from "../models/Applet";
 import DBService from "../services/DBService";
 import ServiceController from "./ServiceController";
 import ReactionManager from "../managers/ReactionManager";
+import Logger from "../utils/Logger";
 
 type successGet = (applet: Applet) => void;
 type successGets = (applet: Applet[]) => void;
@@ -14,16 +24,36 @@ export default class AppletController {
 
     public callReactions(applet: Applet, ingredients: Ingredient[], end: (error?: string | undefined) => void) {
         const reactions = applet.reactions;
+        const reactionErrors: string[] = [];
         reactions.forEach((reaction) => {
             const service = ReactionType[reaction.type].split('_')[0];
             new ServiceController().getTokenByKeyAndService(applet.user_uuid, service, reaction.token_key, (key) => {
                 ReactionManager.get().callReaction(reaction, ingredients, key, () => {
                     end(undefined)
                 }, (msg) => {
-                    end(msg);
+                    reactionErrors.push(msg);
                 });
             }, (err) => end(err));
         });
+        let history : AppletHistory;
+        if (reactionErrors.length === 0) {
+            history = {
+                successfullyCalled: true,
+                callDate: new Date()
+            }
+        } else {
+            history = {
+                successfullyCalled: false,
+                callDate: new Date(),
+                error: reactionErrors,
+            }
+        }
+        new AppletController().updateAppletHistory(applet.uuid, history, (historyError) => {
+            if (historyError)
+                return Logger.e(`AppletController->callReactions: '${historyError}'`);
+            Logger.i(`AppletController->callReactions: History for applet '${applet.uuid}' successfully added !`);
+        })
+
     }
 
     public registerApplets(applet: Applet, userUuid: string, success: successGet, errorCallback: error) {
@@ -32,6 +62,12 @@ export default class AppletController {
             result[0]['reactions'] = JSON.parse(result[0]['reactions']);
             return success(result[0]);
         }, errorCallback);
+    }
+
+    public updateAppletActionKey(appletUuid: string, newActionKey: string, callback: (error) => void) {
+        DBService.query(`UPDATE area.applets applet SET applet.action_key = '${newActionKey}' WHERE applet.uuid = '${appletUuid}'`, (response) => {
+            callback(undefined);
+        }, (err) => callback(err));
     }
 
     public getAppletsByTypeAndKey(type: string, key: string, success: successGets, errorCallback: error): void {
@@ -97,6 +133,7 @@ export default class AppletController {
     }
 
     public parseApplet(app: any) {
+        const history: AppletHistory[] = app.history;
         const action: Action = JSON.parse(app.action);
         const actionType: ActionType = getActionTypeByStr(app.action_type);
         const reactions: Reaction[] = JSON.parse(app.reactions);
@@ -107,6 +144,7 @@ export default class AppletController {
             user_uuid: app.user_uuid,
             enable: app.enable,
             action,
+            history,
             reactions: reactions.map((reaction) => {
                 const type: ReactionType = ReactionType[reaction.type as unknown as string];
                 return {
@@ -163,4 +201,22 @@ export default class AppletController {
             return callback(undefined, appletError);
         })
     }
+
+    public getAppletHistory(appletUuid: string, callback: (history: AppletHistory[], error?: string) => void) {
+        DBService.query(`SELECT history FROM applets WHERE uuid = '${appletUuid}'`, (result) => {
+            callback(result[0].history);
+        }, (err) => callback(undefined, err));
+    }
+
+    public updateAppletHistory(appletUuid: string, historyToAdd: AppletHistory, callback: (error?: string) => void)  {
+        this.getAppletHistory(appletUuid, (history, historyError) => {
+            if (historyError)
+                return callback(historyError);
+            history.push(historyToAdd);
+            DBService.query(`UPDATE area.applets applet SET applet.history = '${JSON.stringify(history)}' WHERE applet.uuid = '${appletUuid}'`, () => {
+                callback(undefined);
+            }, callback);
+        });
+    }
+
 }

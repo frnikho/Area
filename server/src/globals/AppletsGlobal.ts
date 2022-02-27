@@ -12,6 +12,11 @@ export const GmailAppletActionsAbout = [
                 required: true
             },
             {
+                name: "history_id",
+                type: 'string',
+                required: true,
+            },
+            {
                 name: "context_uuid",
                 type: 'string',
                 required: true,
@@ -540,6 +545,22 @@ export const TwitterAppletReactionsAbout = [
     }
 ]
 
+export const GmailAppletReactionsAbout = [
+    {
+        name: 'Send a email',
+        description: 'Send a normal email',
+        type: 'gmail_send_email',
+        then: "post a email",
+        parameters: [
+            {
+                name: 'text',
+                type: 'string',
+                required: true,
+            }
+        ]
+    }
+]
+
 export const AppAbout = {
     client: {
         host: '10.blabla'
@@ -601,7 +622,7 @@ export const AppAbout = {
             color: "#23448B",
             icon: "icons/gmail.png",
             actions: GmailAppletActionsAbout,
-            reactions: []
+            reactions: GmailAppletReactionsAbout
         }]
     }
 }

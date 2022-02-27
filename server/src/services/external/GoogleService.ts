@@ -2,7 +2,8 @@ import axios from "axios";
 import {GoogleUser} from "../../models/GoogleUser";
 import {buildAuthorizationHeaders} from "../../utils/Axios";
 import {Context} from "../../models/Context";
-import {response} from "express";
+import ContextController from "../../controllers/ContextController";
+import {Services} from "../../models/Services";
 
 const {OAuth2Client} = require('google-auth-library');
 
@@ -25,14 +26,24 @@ export default class GoogleService {
         });
     }
 
-    public static refreshToken(refreshToken: string) {
-        const oAuth2Client = GoogleService.buildOauth();
-
-        oAuth2Client.setCredentials({
-            refresh_token: refreshToken,
+    public static refreshToken(context: Context, userUuid: string, callback: (newContext: Context, error?) => void) {
+        GoogleService.refresh(context.tokenData.token['refresh_token'], (newToken) => {
+            context.tokenData.token['access_token'] = newToken['access_token'];
+            context.tokenData.token['id_token'] = newToken['id_token'];
+            context.tokenData.token['expiry_date'] = newToken['expiry_date'];
+            new ContextController().updateContext(userUuid, Services.GOOGLE, context, (updatedContext, updatedError) => {
+                if (updatedError)
+                    return callback(undefined, updatedError);
+                return callback(updatedContext);
+            });
         });
+    }
 
-        return oAuth2Client.getAccessToken();
+    private static refresh(refreshToken: string, callback: (newToken) => void) {
+        const oAuth2Client = GoogleService.buildOauth();
+        oAuth2Client.refreshToken(refreshToken).then((response) => {
+            callback(response['tokens']);
+        });
     }
 
     public static getOAuth2ClientOfflineToken(code: string, callback: (tokenData, error?) => void) {
@@ -60,6 +71,15 @@ export default class GoogleService {
         }).then((response) => {
             success(response.data);
         }).catch((err) => {
+            if (err.response.status === 401) {
+                /*GoogleService.refreshToken(context, userUuid, (newContext => {
+                    axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?alt=json`, buildAuthorizationHeaders(newContext.tokenData.token['access_token'])).then((response) => {
+                        return success(response.data);
+                    }).catch((secondError) => error("An error occured !"));
+                }));*/
+            } else {
+                error(err.response.data);
+            }
             error(err);
         })
     }
@@ -67,7 +87,6 @@ export default class GoogleService {
     public static sendWatchGmail(token: string, userEmail: string, callback: (successData: object | null, error: string | null) => void): void {
         axios.post(`https://gmail.googleapis.com/gmail/v1/users/${userEmail}/watch/`, {
             topicName: process.env.GMAIL_PUBSUB_TOPIC,
-            labelIds: ["INBOX"],
         }, buildAuthorizationHeaders(token)).then((response) => {
             return callback(response.data, null);
         }).catch((error) => {
@@ -85,15 +104,21 @@ export default class GoogleService {
         });
     }
 
-    public static getHistoryEmailId(context: Context, messageHistory: string, callback: (data, error?) => void) {
+    public static getHistoryEmailId(context: Context, userUuid: string, messageHistory: string, callback: (data, error?) => void) {
         try {
             const email = context.tokenData.token['email'];
-            const token = context.tokenData.token['access_token'];
-            axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId=${messageHistory}`, buildAuthorizationHeaders(token)).then((response) => {
+            axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId=${messageHistory}`, buildAuthorizationHeaders(context.tokenData.token['access_token'])).then((response) => {
                 return callback(response.data);
             }).catch((err) => {
-                console.log(err.response.status);
-                console.log(err.response.data);
+                if (err.response.status === 401) {
+                    GoogleService.refreshToken(context, userUuid, (newContext => {
+                        axios.get(`https://gmail.googleapis.com/gmail/v1/users/${email}/history?startHistoryId=${messageHistory}`, buildAuthorizationHeaders(newContext.tokenData.token['access_token'])).then((response) => {
+                            return callback(response.data);
+                        }).catch((secondError) => callback(undefined, secondError.response.data));
+                    }));
+                } else {
+                    callback(undefined, err.response.data);
+                }
             });
         } catch (ex) {
             return callback(undefined, "An error occurred ! please try again later !");
@@ -105,7 +130,17 @@ export default class GoogleService {
             axios.get(`https://gmail.googleapis.com/gmail/v1/users/${user['email']}/messages/${messageId}`, buildAuthorizationHeaders(context.tokenData.token['access_token'])).then((emailResponse) => {
                 callback(emailResponse.data);
             }).catch((emailError) => {
-                callback(emailError.response.data);
+                if (emailError === undefined || emailError.response === undefined)
+                    return callback(undefined, "An error occurred, please try again later");
+                if (emailError.response.status === 401) {
+                    GoogleService.refreshToken(context, userUuid, (newContext => {
+                        axios.get(`https://gmail.googleapis.com/gmail/v1/users/${user['email']}/messages/${messageId}`, buildAuthorizationHeaders(newContext.tokenData.token['access_token'])).then((response) => {
+                            return callback(response.data);
+                        }).catch((secondError) => callback(undefined, secondError.response.data));
+                    }));
+                } else {
+                    callback(undefined, emailError.response.data);
+                }
             });
         }, (error) => {
             callback(error.response.data);

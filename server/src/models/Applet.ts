@@ -44,6 +44,7 @@ export enum ReactionType {
     spotify_play_track,
     spotify_change_volume,
     twitter_post_tweet,
+    gmail_send_email,
 }
 
 export interface Ingredient {
@@ -72,4 +73,11 @@ export interface Applet {
     reactions: Reaction[],
     created_at?: Date,
     updated_at?: Date,
+    history?: AppletHistory[],
+}
+
+export interface AppletHistory {
+    callDate: Date,
+    successfullyCalled: boolean,
+    error?: string[],
 }

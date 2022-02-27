@@ -23,14 +23,19 @@ export default class GmailNewEmailDialog extends ActionSettingsDialog {
         const context = this.state.contexts.find((context) => context.uuid === this.state.selectedContextUuid);
         console.log(context);
         app.post(`services/google/watchGmail?context_uuid=${this.state.selectedContextUuid}&user_uuid=${this.context.getUser()['uuid']}`).then((response) => {
+            console.log(response.data);
             const action = {
                 action_type: "gmail_new_email",
-                base_key: this.state.selectedContextUuid,
+                base_key: response.data['historyId'],
                 action: {
                     parameters: [
                         {
                             name: "gmail_email",
                             value: context.tokenData.token.email,
+                        },
+                        {
+                            name: "history_id",
+                            value: response.data['historyId']
                         },
                         {
                             name: "context_uuid",

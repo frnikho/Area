@@ -41,7 +41,7 @@ export default class ReactionManager {
         return ReactionManager.instance;
     }
 
-    public callReaction(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData, success: () => void, error: (msg) => void) {
+    public callReaction(reaction: Reaction, ingredients: Ingredient[], tokenData: TokenData, success: () => void, error: (msg: string) => void) {
         try {
             this.reactions.forEach((hook) => {
                 if (hook.type === reaction.type)

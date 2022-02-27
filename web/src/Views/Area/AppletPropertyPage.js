@@ -1,6 +1,6 @@
 import { withCookies } from "react-cookie";
 import React from "react";
-import { ThemeProvider, CssBaseline, Box, Button, TextField, IconButton } from "@mui/material";
+import {ThemeProvider, CssBaseline, Box, Button, TextField, IconButton, Grid, Typography} from "@mui/material";
 
 import ControllerAppletProperty from "../../Controllers/Area/ControllerAppletProperty"
 import Page from "../Page"
@@ -95,10 +95,26 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
         )
     }
 
+    showHistory() {
+        if (this.state.applet === undefined || this.state.applet.history === undefined || this.state.applet.history.length === 0)
+            return;
+        return this.state.applet.history.map((history, index) => {
+            return (<Grid item xs={8} key={index} textAlign={"center"} justifyContent={"center"}>
+                <Box maxWidth={300} margin={"auto"}>
+                    <Typography textAlign={"center"} fontSize={30} color={history.successfullyCalled ? "#2ecc71" : "#db001e"}>
+                        {history.successfullyCalled ? "Applet Called" : "Applet failed"}
+                    </Typography>
+                    {new Date(Date.parse(history.callDate)).toLocaleDateString("fr-FR")}
+                    {new Date(Date.parse(history.callDate)).toLocaleTimeString("fr-FR")}
+                </Box>
+            </Grid>)
+        })
+    }
+
     pageRender() {
         // if (!this.authContext || !this.state.applet)
         if (!this.authContext)
-            return (null);
+            return null;
         if (this.getUrl())
             return (this.redirectUrl())
         const buttonMenu = { fontFamily: 'Dongle', fontSize: '30px', textTransform: "none", color: "white", margin: "auto" }
@@ -166,7 +182,12 @@ export default withCookies(withParams(class AppletPropertyPage extends Page {
                     <SwitchButton isOn={this.state.isOn} onClick={() => this.handleSwitch()} />
                 </div>
                 <Box sx={{ width: "225px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }} />
-                <Box sx={{ width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
+
+                <Grid container sx={{mb: 4, justifyContent: 'center', alignItems: 'center'}}>
+                    {this.showHistory()}
+                </Grid>
+
+                <Box sx={{width: "125px", height: "75px", display: 'flex', justifyContent: 'center', alignItems: 'center', margin: "0 auto", }}>
                     <Button variant="contained" color="error" style={buttonMenu} onClick={() => this.controllerAppletProperty.deleteApplet()}>Delete</Button>
                 </Box>
             </ThemeProvider >
